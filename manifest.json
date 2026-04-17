@@ -1,0 +1,133 @@
+{
+  "project": {
+    "name": "agentic-bbo-benchmark",
+    "package": "bbo",
+    "version": "0.1.0",
+    "python": ">=3.11",
+    "environment_manager": "uv"
+  },
+  "entrypoints": {
+    "module_cli": "uv run python -m bbo.run",
+    "script": "uv run bbo-demo"
+  },
+  "package_layout": {
+    "core": "bbo/core/",
+    "algorithms": "bbo/algorithms/",
+    "tasks": "bbo/tasks/",
+    "task_descriptions": "bbo/task_descriptions/"
+  },
+  "core_modules": [
+    "bbo/core/space.py",
+    "bbo/core/task.py",
+    "bbo/core/trial.py",
+    "bbo/core/logger.py",
+    "bbo/core/experimenter.py",
+    "bbo/core/description.py",
+    "bbo/core/plotting.py",
+    "bbo/core/adapters.py"
+  ],
+  "algorithm_families": {
+    "traditional": [
+      {
+        "name": "random_search",
+        "path": "bbo/algorithms/traditional/random_search.py",
+        "notes": "Deterministic replay-friendly random-search baseline."
+      },
+      {
+        "name": "pycma",
+        "path": "bbo/algorithms/traditional/pycma.py",
+        "notes": "CMA-ES baseline implemented on top of the core ExternalOptimizerAdapter base class."
+      }
+    ]
+  },
+  "task_families": {
+    "synthetic": [
+      {
+        "name": "branin_demo",
+        "definition": "bbo/tasks/synthetic/branin.py",
+        "description_dir": "bbo/task_descriptions/branin_demo"
+      },
+      {
+        "name": "sphere_demo",
+        "definition": "bbo/tasks/synthetic/sphere.py",
+        "description_dir": "bbo/task_descriptions/sphere_demo"
+      }
+    ]
+  },
+  "task_description_schema": {
+    "required": [
+      "background.md",
+      "goal.md",
+      "constraints.md",
+      "prior_knowledge.md"
+    ],
+    "optional": [
+      "evaluation.md",
+      "submission.md",
+      "environment.md",
+      "notes.md",
+      "history.md"
+    ],
+    "runtime_requirement": "Each task must provide either task-local Docker assets or an environment.md file.",
+    "localized_companions_ignored_at_runtime": [
+      "*.zh.md",
+      "*.en.md"
+    ],
+    "template_dir": "bbo/task_descriptions/_template"
+  },
+  "docs": [
+    "README.md",
+    "README.zh.md",
+    "AGENTS.md",
+    "AGENTS.zh.md",
+    "docs/collaborator_demo.md",
+    "docs/collaborator_demo.zh.md",
+    "bbo/task_descriptions/README.md",
+    "bbo/task_descriptions/README.zh.md",
+    "bbo/core/DEVELOPER_GUIDE_zh.md",
+    "bbo/core/IMPLEMENTATION_PLAN.md",
+    "bbo/core/IMPLEMENTATION_PLAN.zh.md",
+    "progress.md",
+    "progress.zh.md"
+  ],
+  "tests": [
+    "tests/test_space.py",
+    "tests/test_description.py",
+    "tests/test_experimenter.py",
+    "tests/test_pycma.py",
+    "tests/test_plotting.py"
+  ],
+  "validation": {
+    "commands": [
+      "uv sync --extra dev",
+      "uv run python -m compileall -q bbo examples tests",
+      "uv run pytest",
+      "uv run python -m bbo.run --algorithm suite --task branin_demo --results-root artifacts/final_demo_v3",
+      "uv run python -m bbo.run --algorithm random_search --task sphere_demo --max-evaluations 5 --results-root artifacts/smoke_cli_v3",
+      "uv run python examples/run_branin_suite.py"
+    ],
+    "pytest": "7 passed",
+    "demo_suite_summary": "artifacts/final_demo_v3/branin_demo/suite/seed_7/suite_summary.json"
+  },
+  "artifacts": {
+    "random_search": {
+      "summary": "artifacts/final_demo_v3/branin_demo/random_search/seed_7/summary.json",
+      "jsonl": "artifacts/final_demo_v3/branin_demo/random_search/seed_7/trials.jsonl",
+      "plots": [
+        "artifacts/final_demo_v3/branin_demo/random_search/seed_7/plots/trace.png",
+        "artifacts/final_demo_v3/branin_demo/random_search/seed_7/plots/distribution.png",
+        "artifacts/final_demo_v3/branin_demo/random_search/seed_7/plots/landscape.png"
+      ]
+    },
+    "pycma": {
+      "summary": "artifacts/final_demo_v3/branin_demo/pycma/seed_7/summary.json",
+      "jsonl": "artifacts/final_demo_v3/branin_demo/pycma/seed_7/trials.jsonl",
+      "plots": [
+        "artifacts/final_demo_v3/branin_demo/pycma/seed_7/plots/trace.png",
+        "artifacts/final_demo_v3/branin_demo/pycma/seed_7/plots/distribution.png",
+        "artifacts/final_demo_v3/branin_demo/pycma/seed_7/plots/landscape.png"
+      ]
+    },
+    "comparison_plot": "artifacts/final_demo_v3/branin_demo/suite/seed_7/plots/comparison.png"
+  }
+}

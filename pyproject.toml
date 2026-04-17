@@ -1,0 +1,40 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "agentic-bbo-benchmark"
+version = "0.1.0"
+description = "A lightweight benchmark core for agentic black-box optimization."
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [{ name = "OpenAI Codex" }]
+dependencies = [
+  "cma>=4.0.0",
+  "matplotlib>=3.9.0",
+  "numpy>=2.2.0",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.3.0",
+]
+interop = [
+  "ConfigSpace>=1.2.0",
+]
+
+[project.scripts]
+bbo-demo = "bbo.run:main"
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+include = ["bbo*"]
+
+[tool.setuptools.package-data]
+bbo = ["task_descriptions/**/*.md"]
+
+[tool.pytest.ini_options]
+addopts = "-q"
+testpaths = ["tests"]
