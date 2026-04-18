@@ -16,8 +16,9 @@ from .core import (
     ObjectiveDistributionPlotter,
     OptimizationTracePlotter,
     OptimizerComparisonPlotter,
+    Task,
 )
-from .tasks import SYNTHETIC_PROBLEM_REGISTRY, SyntheticFunctionTask, create_demo_task
+from .tasks import ALL_DEMO_TASK_NAMES, create_demo_task
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
@@ -135,7 +136,7 @@ def run_demo_suite(
 
 
 def generate_visualizations(
-    task: SyntheticFunctionTask,
+    task: Task,
     logger: JsonlMetricLogger,
     output_dir: Path,
     *,
@@ -178,7 +179,7 @@ def generate_visualizations(
 
 def generate_comparison_plot(
     *,
-    task: SyntheticFunctionTask,
+    task: Task,
     histories: dict[str, list],
     output_dir: Path,
 ) -> Path:
@@ -208,7 +209,7 @@ def _allocate_run_dir(base_dir: Path, *, resume: bool) -> Path:
 
 def build_arg_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="Run synthetic demos for the agentic BBO benchmark core.")
-    parser.add_argument("--task", default="branin_demo", choices=sorted(SYNTHETIC_PROBLEM_REGISTRY))
+    parser.add_argument("--task", default="branin_demo", choices=list(ALL_DEMO_TASK_NAMES))
     parser.add_argument(
         "--algorithm",
         default="suite",

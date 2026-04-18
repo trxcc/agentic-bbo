@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from ..core import Task
+from .bboplace import BBOPLACE_TASK_KEY, create_bboplace_task
 from .synthetic import BRANIN_DEFINITION, SPHERE_DEFINITION, SyntheticFunctionDefinition, SyntheticFunctionTask, SyntheticFunctionTaskConfig
 
 
@@ -12,7 +14,12 @@ SYNTHETIC_PROBLEM_REGISTRY: dict[str, SyntheticFunctionDefinition] = {
 
 TASK_FAMILIES: dict[str, tuple[str, ...]] = {
     "synthetic": tuple(sorted(SYNTHETIC_PROBLEM_REGISTRY)),
+    "bboplace": (BBOPLACE_TASK_KEY,),
 }
+
+ALL_DEMO_TASK_NAMES: tuple[str, ...] = tuple(
+    sorted([*SYNTHETIC_PROBLEM_REGISTRY.keys(), BBOPLACE_TASK_KEY]),
+)
 
 
 def get_synthetic_problem(name: str) -> SyntheticFunctionDefinition:
@@ -28,7 +35,9 @@ def create_demo_task(
     max_evaluations: int | None = None,
     seed: int = 0,
     noise_std: float = 0.0,
-) -> SyntheticFunctionTask:
+) -> Task:
+    if problem == BBOPLACE_TASK_KEY:
+        return create_bboplace_task(max_evaluations=max_evaluations, seed=seed)
     config = SyntheticFunctionTaskConfig(
         problem=problem,
         max_evaluations=max_evaluations,
@@ -39,6 +48,8 @@ def create_demo_task(
 
 
 __all__ = [
+    "ALL_DEMO_TASK_NAMES",
+    "BBOPLACE_TASK_KEY",
     "SYNTHETIC_PROBLEM_REGISTRY",
     "TASK_FAMILIES",
     "create_demo_task",
