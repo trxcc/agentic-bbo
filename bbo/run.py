@@ -8,20 +8,12 @@ from pathlib import Path
 from typing import Any
 
 from .algorithms import ALGORITHM_REGISTRY, create_algorithm
-from .core import (
-    ExperimentConfig,
-    Experimenter,
-    JsonlMetricLogger,
-    Landscape2DPlotter,
-    ObjectiveDistributionPlotter,
-    OptimizationTracePlotter,
-    OptimizerComparisonPlotter,
-)
-from .tasks import SYNTHETIC_PROBLEM_REGISTRY, SyntheticFunctionTask, create_demo_task
+from .core import ExperimentConfig, Experimenter, JsonlMetricLogger
+from .tasks import SYNTHETIC_PROBLEM_REGISTRY, SURROGATE_TASK_IDS, create_demo_task, create_surrogate_task
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_RESULTS_ROOT = PROJECT_ROOT / "artifacts" / "demo_runs"
+DEFAULT_RESULTS_ROOT = PROJECT_ROOT / "runs" / "demo"
 
 
 def run_single_experiment(
@@ -35,8 +27,26 @@ def run_single_experiment(
     sigma_fraction: float = 0.18,
     popsize: int | None = None,
     noise_std: float = 0.0,
+    surrogate_path: str | Path | None = None,
+    knobs_json_path: str | Path | None = None,
 ) -> dict[str, Any]:
-    task = create_demo_task(task_name, max_evaluations=max_evaluations, seed=seed, noise_std=noise_std)
+    # 兼容 synthetic demo 和 surrogate(knob) 任务：
+    # - synthetic: 支持 noise_std
+    # - surrogate: 支持 surrogate_path / knobs_json_path（以及环境变量覆盖）
+    if task_name in SYNTHETIC_PROBLEM_REGISTRY:
+        task = create_demo_task(task_name, max_evaluations=max_evaluations, seed=seed, noise_std=noise_std)
+    elif task_name in SURROGATE_TASK_IDS:
+        task = create_surrogate_task(
+            task_name,
+            max_evaluations=max_evaluations,
+            seed=seed,
+            surrogate_path=str(surrogate_path) if surrogate_path is not None else None,
+            knobs_json_path=str(knobs_json_path) if knobs_json_path is not None else None,
+        )
+    else:
+        known = ", ".join(sorted((*SYNTHETIC_PROBLEM_REGISTRY.keys(), *SURROGATE_TASK_IDS)))
+        raise ValueError(f"Unknown task `{task_name}`. Known tasks: {known}")
+
     run_dir = _allocate_run_dir(results_root / task_name / algorithm_name / f"seed_{seed}", resume=resume)
     results_jsonl = run_dir / "trials.jsonl"
 
@@ -54,7 +64,6 @@ def run_single_experiment(
     )
     summary = experiment.run()
     records = logger.load_records()
-    plot_paths = generate_visualizations(task, logger, run_dir / "plots", algorithm_label=algorithm.name)
 
     serializable_summary = {
         "task_name": summary.task_name,
@@ -77,7 +86,6 @@ def run_single_experiment(
         ],
         "logger_summary": summary.logger_summary,
         "results_jsonl": str(results_jsonl),
-        "plot_paths": [str(path) for path in plot_paths],
         "trial_count": len(records),
     }
     (run_dir / "summary.json").write_text(json.dumps(serializable_summary, indent=2, sort_keys=True), encoding="utf-8")
@@ -115,82 +123,14 @@ def run_demo_suite(
     )
 
     comparison_dir = _allocate_run_dir(results_root / task_name / "suite" / f"seed_{seed}", resume=resume)
-    comparison_plot = generate_comparison_plot(
-        task=create_demo_task(task_name, max_evaluations=random_evaluations, seed=seed),
-        histories={
-            "random_search": JsonlMetricLogger(Path(random_summary["results_jsonl"])).load_records(),
-            "pycma": JsonlMetricLogger(Path(pycma_summary["results_jsonl"])).load_records(),
-        },
-        output_dir=comparison_dir / "plots",
-    )
     suite_summary = {
         "task_name": task_name,
         "seed": seed,
         "random_search": random_summary,
         "pycma": pycma_summary,
-        "comparison_plot": str(comparison_plot),
     }
     (comparison_dir / "suite_summary.json").write_text(json.dumps(suite_summary, indent=2, sort_keys=True), encoding="utf-8")
     return suite_summary
-
-
-def generate_visualizations(
-    task: SyntheticFunctionTask,
-    logger: JsonlMetricLogger,
-    output_dir: Path,
-    *,
-    algorithm_label: str,
-) -> list[Path]:
-    records = logger.load_records()
-    if not records:
-        return []
-    output_dir.mkdir(parents=True, exist_ok=True)
-    objective_name = task.spec.primary_objective.name
-    direction = task.spec.primary_objective.direction
-    artifacts = [
-        OptimizationTracePlotter().plot(
-            records,
-            objective_name=objective_name,
-            direction=direction,
-            output_path=output_dir / "trace.png",
-            title=f"{task.spec.metadata['display_name']} - {algorithm_label} trace",
-        ).path,
-        ObjectiveDistributionPlotter().plot(
-            records,
-            objective_name=objective_name,
-            output_path=output_dir / "distribution.png",
-            title=f"{task.spec.metadata['display_name']} - {algorithm_label} distribution",
-        ).path,
-    ]
-    if int(task.spec.metadata.get("dimension", 0)) == 2:
-        artifacts.append(
-            Landscape2DPlotter().plot(
-                task,
-                records,
-                objective_name=objective_name,
-                output_path=output_dir / "landscape.png",
-                title=f"{task.spec.metadata['display_name']} - sampled landscape",
-                resolution=int(task.spec.metadata.get("plot_resolution", 180)),
-            ).path
-        )
-    return artifacts
-
-
-def generate_comparison_plot(
-    *,
-    task: SyntheticFunctionTask,
-    histories: dict[str, list],
-    output_dir: Path,
-) -> Path:
-    output_dir.mkdir(parents=True, exist_ok=True)
-    artifact = OptimizerComparisonPlotter().plot(
-        histories,
-        objective_name=task.spec.primary_objective.name,
-        direction=task.spec.primary_objective.direction,
-        output_path=output_dir / "comparison.png",
-        title=f"{task.spec.metadata['display_name']} - optimizer comparison",
-    )
-    return artifact.path
 
 
 def _allocate_run_dir(base_dir: Path, *, resume: bool) -> Path:
@@ -207,13 +147,14 @@ def _allocate_run_dir(base_dir: Path, *, resume: bool) -> Path:
 
 
 def build_arg_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(description="Run synthetic demos for the agentic BBO benchmark core.")
-    parser.add_argument("--task", default="branin_demo", choices=sorted(SYNTHETIC_PROBLEM_REGISTRY))
+    parser = argparse.ArgumentParser(description="Run synthetic and surrogate demos for the agentic BBO benchmark core.")
+    all_tasks = tuple(sorted((*SYNTHETIC_PROBLEM_REGISTRY.keys(), *SURROGATE_TASK_IDS)))
+    parser.add_argument("--task", default="branin_demo", choices=all_tasks)
     parser.add_argument(
         "--algorithm",
         default="suite",
         choices=["suite", *sorted({name for name in ALGORITHM_REGISTRY if name in {"random_search", "pycma"}})],
-        help="Which demo to run. `suite` runs both algorithms and a comparison plot.",
+        help="Which demo to run. `suite` runs both random_search and pycma (JSONL + summaries only).",
     )
     parser.add_argument("--seed", type=int, default=7)
     parser.add_argument("--max-evaluations", type=int, default=None)
@@ -221,6 +162,24 @@ def build_arg_parser() -> argparse.ArgumentParser:
     parser.add_argument("--pycma-evaluations", type=int, default=36)
     parser.add_argument("--sigma-fraction", type=float, default=0.18)
     parser.add_argument("--popsize", type=int, default=6)
+    parser.add_argument(
+        "--noise-std",
+        type=float,
+        default=0.0,
+        help="Synthetic-only: add Gaussian noise to objective evaluations.",
+    )
+    parser.add_argument(
+        "--surrogate-path",
+        type=Path,
+        default=None,
+        help="Surrogate-only: override path to .joblib (otherwise uses bundled assets or env var override).",
+    )
+    parser.add_argument(
+        "--knobs-json-path",
+        type=Path,
+        default=None,
+        help="Surrogate-only: override path to knobs_*.json (otherwise uses bundled assets).",
+    )
     parser.add_argument("--resume", action="store_true")
     parser.add_argument("--results-root", type=Path, default=DEFAULT_RESULTS_ROOT)
     return parser
@@ -251,6 +210,9 @@ def main(argv: list[str] | None = None) -> int:
             resume=args.resume,
             sigma_fraction=args.sigma_fraction,
             popsize=args.popsize,
+            noise_std=args.noise_std,
+            surrogate_path=args.surrogate_path,
+            knobs_json_path=args.knobs_json_path,
         )
 
     print(json.dumps(summary, indent=2, sort_keys=True))
