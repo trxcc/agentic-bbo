@@ -1,10 +1,20 @@
-# Environment
+# Environment Setup
 
+This task uses the repository Python environment and does not require a GPU or a task-local Docker image.
 Recommended setup:
 
 ```bash
 uv sync --extra dev --extra bo-tutorial
 ```
 
-The task looks for the tutorial source checkout through `BBO_BO_TUTORIAL_SOURCE_ROOT` and stages cached files under `BBO_BO_TUTORIAL_CACHE_ROOT` or the default artifact cache.
-Runtime dependencies include `pandas` and `scikit-learn`; no task-local Docker workflow is required for this smoke benchmark.
+By default, this task reads its bundled source data from `bbo/tasks/scientific/data/examples/` inside the workspace.
+If you want to override the bundled files with another uploaded dataset bundle, set `BBO_BO_TUTORIAL_SOURCE_ROOT=/path/to/source_root`; paths such as `examples/HER/HER_virtual_data.csv` are interpreted relative to that root.
+You may also redirect staged assets with `BBO_BO_TUTORIAL_CACHE_ROOT=/path/to/cache`.
+
+Minimal smoke test:
+
+```bash
+uv run python -m bbo.run --algorithm random_search --task her_demo --max-evaluations 3
+```
+
+Required runtime packages are `pandas` and `scikit-learn`.

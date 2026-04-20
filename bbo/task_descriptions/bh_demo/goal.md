@@ -1,6 +1,10 @@
 # Goal
 
-Optimize the selected continuous features to minimize `regret`, where `regret = yield.max() - predicted_yield`.
-Lower regret is better, so the optimizer is indirectly seeking higher predicted reaction yield.
+Minimize the primary objective `regret`, where `regret = yield.max() - predicted_yield`.
+Lower regret therefore means higher predicted Buchwald-Hartwig yield.
 
-Each evaluation returns `regret` and the reconstructed predicted yield.
+A valid submission may change only the active continuous descriptor coordinates exposed by the task instance after feature selection.
+One evaluation counts as one surrogate prediction on one proposed descriptor vector.
+
+Unless overridden, the packaged task stops after 40 evaluations.
+Repository smoke checks use the same interface with `--max-evaluations 3`.

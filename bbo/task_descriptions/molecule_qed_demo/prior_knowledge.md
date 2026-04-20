@@ -1,7 +1,6 @@
 # Domain Prior Knowledge
 
-QED is the only benchmark objective for this task.
-The staged archive is treated as a fixed categorical pool rather than a generative chemistry model.
-
-The benchmark assumes only the tutorial archive and RDKit's `Chem.MolFromSmiles` plus `QED.qed`.
-No external medicinal-chemistry heuristics are injected.
+- `qed` is deterministic and bounded in `[0, 1]`, so every improvement in raw QED maps linearly to a lower reported loss.
+- The benchmark search space is a fixed candidate library, not a molecular editing or generation policy; diversity must come from choosing different archive entries.
+- Invalid strings are allowed but strongly dominated because they collapse to the worst possible QED.
+- No medicinal-chemistry prior beyond the staged ZINC pool and RDKit's `MolFromSmiles` plus `QED.qed` should be assumed.

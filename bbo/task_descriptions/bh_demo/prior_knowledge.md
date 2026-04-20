@@ -1,6 +1,6 @@
 # Domain Prior Knowledge
 
-The tutorial BH workflow first converts yield into regret and then filters the design space with a random-forest feature-importance heuristic.
-The benchmark should preserve that ordering because the selected continuous coordinates define the optimizer-facing task.
-
-Only the staged dataset and tutorial feature-selection recipe are benchmark priors.
+- This benchmark operates in descriptor space rather than raw reagent identity space, so geometrically nearby points need not correspond to obviously similar chemistry.
+- The feature selector usually keeps a mix of reaction-condition variables (for example temperature or concentration) and ligand/solvent descriptors; both kinds of coordinates matter in the packaged task.
+- Minimizing regret is equivalent to maximizing predicted yield, but the regret transform makes the task direction consistent with the repository's minimize-first conventions.
+- Because feature selection depends on a random-forest seed, fixing the task seed is part of the domain protocol, not just an implementation detail.

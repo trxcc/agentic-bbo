@@ -15,10 +15,10 @@ SOURCE_REPO_URL = "https://github.com/zwyu-ai/BO-Tutorial-for-Sci"
 SOURCE_ROOT_ENV = "BBO_BO_TUTORIAL_SOURCE_ROOT"
 CACHE_ROOT_ENV = "BBO_BO_TUTORIAL_CACHE_ROOT"
 DEFAULT_CACHE_ROOT = PROJECT_ROOT / "artifacts" / "dataset_cache" / "bo_tutorial"
+VENDORED_SOURCE_ROOT = Path(__file__).resolve().parent / "data"
 DEFAULT_SOURCE_ROOT_CANDIDATES = (
-    Path("/tmp/bo_tutorial_her_source"),
+    VENDORED_SOURCE_ROOT,
     PROJECT_ROOT / "artifacts" / "sources" / "BO-Tutorial-for-Sci",
-    PROJECT_ROOT.parent / "BO-Tutorial-for-Sci",
 )
 
 
@@ -66,7 +66,7 @@ def resolve_source_root(
     *,
     required_paths: Iterable[str] = (),
 ) -> Path:
-    """Resolve the BO tutorial source checkout or raise a clear error."""
+    """Resolve the bundled scientific dataset root or raise a clear error."""
 
     candidates: list[Path] = []
     configured = source_root or os.environ.get(SOURCE_ROOT_ENV)
@@ -90,8 +90,10 @@ def resolve_source_root(
 
     hints = "\n".join(missing_messages)
     raise FileNotFoundError(
-        "Could not locate a BO tutorial source checkout. Set "
-        f"`{SOURCE_ROOT_ENV}` to a clone of {SOURCE_REPO_URL}.\n"
+        "Could not locate the scientific task datasets in the workspace. "
+        f"Expected bundled data under {VENDORED_SOURCE_ROOT} or set `{SOURCE_ROOT_ENV}` "
+        "to a workspace-local dataset root that preserves the original `examples/...` layout.\n"
+        f"Original tutorial repository for provenance: {SOURCE_REPO_URL}\n"
         f"Checked candidates:\n{hints}"
     )
 
@@ -161,10 +163,12 @@ def stage_dataset_asset(
 __all__ = [
     "CACHE_ROOT_ENV",
     "DEFAULT_CACHE_ROOT",
+    "DEFAULT_SOURCE_ROOT_CANDIDATES",
     "DatasetAsset",
     "PROJECT_ROOT",
     "SOURCE_REPO_URL",
     "SOURCE_ROOT_ENV",
+    "VENDORED_SOURCE_ROOT",
     "compute_sha256",
     "resolve_cache_root",
     "resolve_source_ref",

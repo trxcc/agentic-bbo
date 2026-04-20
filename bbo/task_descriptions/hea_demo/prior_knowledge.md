@@ -1,7 +1,6 @@
 # Domain Prior Knowledge
 
-The raw alloy representation uses five components: `Co`, `Fe`, `Mn`, `V`, and `Cu`.
-The tutorial constrains every component to the same feasible interval and uses an invertible transform between the optimizer-facing design variables and the physical composition simplex.
-
-Only these transform rules and the staged dataset are benchmark priors.
-The task does not assume external metallurgy knowledge beyond the tutorial materials.
+- This is a bounded simplex problem in disguise: increasing one alloy component necessarily reduces the remaining mass available to the others.
+- The exposed `x1..x4` coordinates are not raw compositions; they are decoder-friendly latent variables, so equal steps in design space do not correspond to equal steps in physical composition space.
+- Feasible compositions are symmetric only through the decoder and per-component bounds; there is no free permutation symmetry because the components keep distinct identities.
+- No metallurgy prior beyond the staged data, the simplex constraint, and the tutorial transform should be assumed.

@@ -1,7 +1,6 @@
 # Domain Prior Knowledge
 
-The tutorial OER workflow combines categorical catalyst identities with process settings such as hydrothermal temperature, annealing schedule, proton concentration, and catalyst loading.
-Missing categorical entries are normalized to `None`, and numerical preprocessing mirrors the tutorial cleaning rules.
-
-Use these preprocessing rules as benchmark priors.
-Do not infer additional chemistry constraints that are not present in the staged data.
+- Categorical metal identities and process settings interact strongly, so the best local numeric tweak often depends on which metal triplet is chosen first.
+- The cleaned dataset includes an explicit `None` level for missing secondary or tertiary metals; absence is therefore modeled as a real categorical state rather than dropped as missing data.
+- The benchmark search space intentionally leaves composition ratios independent; do not assume they are normalized to sum to `100` unless that rule is added explicitly by a future task revision.
+- Lower overpotential is always better, and there is no noise model beyond the deterministic fitted oracle.
