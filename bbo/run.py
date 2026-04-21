@@ -39,6 +39,21 @@ def run_single_experiment(
     pfns_device: str | None = None,
     pfns_pool_size: int = 256,
     pfns_model: str = "hebo_plus",
+    pablo_provider: str = "mock",
+    pablo_base_url: str | None = None,
+    pablo_api_key_env: str = "PABLO_API_KEY",
+    pablo_global_model: str | None = None,
+    pablo_worker_model: str | None = None,
+    pablo_planner_model: str | None = None,
+    pablo_explorer_model: str | None = None,
+    pablo_model: str = "gpt-4.1-mini",
+    pablo_init_points: int = 4,
+    pablo_max_fails: int = 3,
+    pablo_num_seeds: int = 2,
+    pablo_max_tasks: int = 20,
+    pablo_enable_explorer: bool = True,
+    pablo_enable_planner: bool = True,
+    pablo_enable_worker: bool = True,
 ) -> dict[str, Any]:
     task = create_task(task_name, max_evaluations=max_evaluations, seed=seed, noise_std=noise_std)
     _require_algorithm_support(task, algorithm_name)
@@ -53,6 +68,26 @@ def run_single_experiment(
             "device": pfns_device,
             "pool_size": pfns_pool_size,
             "model_name": pfns_model,
+        }
+    elif algorithm_name in {"pablo", "palbo"}:
+        algorithm_kwargs = {
+            "provider": pablo_provider,
+            "base_url": pablo_base_url,
+            "api_key_env": pablo_api_key_env,
+            "global_model": pablo_global_model,
+            "worker_model": pablo_worker_model,
+            "planner_model": pablo_planner_model,
+            "explorer_model": pablo_explorer_model,
+            "model": pablo_model,
+            "init_points": pablo_init_points,
+            "max_fails": pablo_max_fails,
+            "num_seeds": pablo_num_seeds,
+            "max_tasks": pablo_max_tasks,
+            "enable_explorer": pablo_enable_explorer,
+            "enable_planner": pablo_enable_planner,
+            "enable_worker": pablo_enable_worker,
+            "run_dir": run_dir,
+            "resume": resume,
         }
     algorithm = create_algorithm(algorithm_name, **algorithm_kwargs)
 
@@ -88,8 +123,11 @@ def run_single_experiment(
         ],
         "logger_summary": summary.logger_summary,
         "results_jsonl": str(results_jsonl),
+        "run_dir": str(run_dir),
         "plot_paths": [str(path) for path in plot_paths],
         "trial_count": len(records),
+        "internal_artifacts": getattr(algorithm, "artifact_paths", {}),
+        "role_model_routes": getattr(algorithm, "routing_table", {}),
     }
     (run_dir / "summary.json").write_text(json.dumps(serializable_summary, indent=2, sort_keys=True), encoding="utf-8")
     return serializable_summary
@@ -251,6 +289,21 @@ def build_arg_parser() -> argparse.ArgumentParser:
     parser.add_argument("--pfns-device", default=None)
     parser.add_argument("--pfns-pool-size", type=int, default=256)
     parser.add_argument("--pfns-model", default="hebo_plus")
+    parser.add_argument("--pablo-provider", default="mock", choices=["mock", "openai-compatible"])
+    parser.add_argument("--pablo-base-url", default=None)
+    parser.add_argument("--pablo-api-key-env", default="PABLO_API_KEY")
+    parser.add_argument("--pablo-global-model", default=None)
+    parser.add_argument("--pablo-worker-model", default=None)
+    parser.add_argument("--pablo-planner-model", default=None)
+    parser.add_argument("--pablo-explorer-model", default=None)
+    parser.add_argument("--pablo-model", default="gpt-4.1-mini")
+    parser.add_argument("--pablo-init-points", type=int, default=4)
+    parser.add_argument("--pablo-max-fails", type=int, default=3)
+    parser.add_argument("--pablo-num-seeds", type=int, default=2)
+    parser.add_argument("--pablo-max-tasks", type=int, default=20)
+    parser.add_argument("--pablo-enable-explorer", action=argparse.BooleanOptionalAction, default=True)
+    parser.add_argument("--pablo-enable-planner", action=argparse.BooleanOptionalAction, default=True)
+    parser.add_argument("--pablo-enable-worker", action=argparse.BooleanOptionalAction, default=True)
     parser.add_argument("--resume", action="store_true")
     parser.add_argument("--results-root", type=Path, default=DEFAULT_RESULTS_ROOT)
     return parser
@@ -284,6 +337,21 @@ def main(argv: list[str] | None = None) -> int:
             pfns_device=args.pfns_device,
             pfns_pool_size=args.pfns_pool_size,
             pfns_model=args.pfns_model,
+            pablo_provider=args.pablo_provider,
+            pablo_base_url=args.pablo_base_url,
+            pablo_api_key_env=args.pablo_api_key_env,
+            pablo_global_model=args.pablo_global_model,
+            pablo_worker_model=args.pablo_worker_model,
+            pablo_planner_model=args.pablo_planner_model,
+            pablo_explorer_model=args.pablo_explorer_model,
+            pablo_model=args.pablo_model,
+            pablo_init_points=args.pablo_init_points,
+            pablo_max_fails=args.pablo_max_fails,
+            pablo_num_seeds=args.pablo_num_seeds,
+            pablo_max_tasks=args.pablo_max_tasks,
+            pablo_enable_explorer=args.pablo_enable_explorer,
+            pablo_enable_planner=args.pablo_enable_planner,
+            pablo_enable_worker=args.pablo_enable_worker,
         )
 
     print(json.dumps(summary, indent=2, sort_keys=True))

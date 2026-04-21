@@ -21,13 +21,13 @@ from bbo.tasks import (
     create_molecule_qed_task,
     create_oer_task,
 )
-from bbo.tasks.scientific import CACHE_ROOT_ENV, SOURCE_ROOT_ENV
+from bbo.tasks.scientific import CACHE_ROOT_ENV, SOURCE_ROOT_ENV, VENDORED_SOURCE_ROOT
 
 
 def _require_bo_tutorial_source() -> Path:
-    source_root = Path(os.environ.get(SOURCE_ROOT_ENV, "/tmp/bo_tutorial_her_source"))
+    source_root = Path(os.environ.get(SOURCE_ROOT_ENV, str(VENDORED_SOURCE_ROOT)))
     if not source_root.exists():
-        pytest.skip("BO tutorial source checkout is not available for scientific-task tests.")
+        pytest.skip("Bundled scientific task datasets are not available in the workspace.")
     return source_root
 
 

@@ -6,6 +6,7 @@ from dataclasses import dataclass
 from typing import Any, Callable
 
 from ..core.algo import Algorithm
+from .agentic import PabloAlgorithm
 from .model_based import OptunaTpeAlgorithm, Pfns4BoAlgorithm
 from .traditional import PyCmaAlgorithm, RandomSearchAlgorithm
 
@@ -52,6 +53,16 @@ ALGORITHM_REGISTRY: dict[str, AlgorithmSpec] = {
         factory=Pfns4BoAlgorithm,
         description="PFNs4BO with fixed continuous/pool routing for benchmark smoke tasks.",
         family="model_based",
+    ),
+    "pablo": AlgorithmSpec(
+        factory=PabloAlgorithm,
+        description="Stateless Planner/Explorer/Worker agentic optimizer with mock and OpenAI-compatible providers.",
+        family="agentic",
+    ),
+    "palbo": AlgorithmSpec(
+        factory=PabloAlgorithm,
+        description="Alias for pablo.",
+        family="agentic",
     ),
 }
 
