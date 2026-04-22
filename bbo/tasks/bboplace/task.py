@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import math
 import os
 import time
 import urllib.error
@@ -183,7 +184,8 @@ class BBOPlaceTask(Task):
                 "n_grid_x": self.definition.n_grid_x,
                 "n_grid_y": self.definition.n_grid_y,
                 "placer": self.definition.placer,
-                "bench_seed": self.definition.bench_seed,
+                "bench_seed": int(config.seed),
+                "bench_seed_default": int(self.definition.bench_seed),
                 "base_url": self.definition.base_url,
                 "known_optimum": None,
                 "cma_initial_config": cma_initial,
@@ -204,7 +206,7 @@ class BBOPlaceTask(Task):
         url = f"{self.definition.base_url}{self.definition.evaluate_path}"
         payload: dict[str, Any] = {
             "benchmark": self.definition.benchmark,
-            "seed": self.definition.bench_seed,
+            "seed": int(self.config.seed),
             "n_macro": self.definition.n_macro,
             "placer": self.definition.placer,
             "x": [row],
@@ -234,7 +236,28 @@ class BBOPlaceTask(Task):
                 error_message="Response missing non-empty `hpwl` list.",
                 metadata={"problem_key": self.definition.key},
             )
-        hpwl = float(hpwl_raw[0])
+        try:
+            hpwl = float(hpwl_raw[0])
+        except (TypeError, ValueError) as exc:
+            return EvaluationResult(
+                status=TrialStatus.FAILED,
+                objectives={},
+                metrics={"dimension": float(self.definition.dimension)},
+                elapsed_seconds=elapsed,
+                error_type=type(exc).__name__,
+                error_message=f"Response `hpwl[0]` could not be converted to float: {hpwl_raw[0]!r}.",
+                metadata={"problem_key": self.definition.key},
+            )
+        if not math.isfinite(hpwl):
+            return EvaluationResult(
+                status=TrialStatus.FAILED,
+                objectives={},
+                metrics={"dimension": float(self.definition.dimension)},
+                elapsed_seconds=elapsed,
+                error_type="InvalidResponse",
+                error_message=f"Response `hpwl[0]` must be finite, got {hpwl!r}.",
+                metadata={"problem_key": self.definition.key},
+            )
         metrics: dict[str, Any] = {
             "dimension": float(self.definition.dimension),
             "n_macro": float(self.definition.n_macro),
@@ -251,6 +274,22 @@ class BBOPlaceTask(Task):
                 "display_name": self.definition.display_name,
             },
         )
+
+    def sanity_check(self):
+        report = super().sanity_check()
+        if self.definition.n_macro <= 0:
+            report.add_error("invalid_n_macro", "n_macro must be positive.")
+        expected_dim = int(self.definition.n_macro) * 2
+        if self.definition.dimension != expected_dim:
+            report.add_error(
+                "dimension_mismatch",
+                f"Search-space dimension {self.definition.dimension} does not match 2 * n_macro ({expected_dim}).",
+            )
+        if not self.definition.base_url:
+            report.add_error("invalid_base_url", "base_url must be non-empty.")
+        if not self.definition.evaluate_path.startswith("/"):
+            report.add_error("invalid_evaluate_path", "evaluate_path must start with '/'.")
+        return report
 
 
 def create_bboplace_task(
