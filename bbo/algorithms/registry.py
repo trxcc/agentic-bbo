@@ -6,6 +6,7 @@ from dataclasses import dataclass
 from typing import Any, Callable
 
 from ..core.algo import Algorithm
+from .agentic import LlamboAlgorithm, OproAlgorithm
 from .model_based import OptunaTpeAlgorithm
 from .traditional import PyCmaAlgorithm, RandomSearchAlgorithm
 
@@ -47,6 +48,16 @@ ALGORITHM_REGISTRY: dict[str, AlgorithmSpec] = {
         factory=OptunaTpeAlgorithm,
         description="Optuna TPE via the optional `optuna` package.",
         family="model_based",
+    ),
+    "llambo": AlgorithmSpec(
+        factory=LlamboAlgorithm,
+        description="LLAMBO-style prompt optimizer with pluggable chat backends and an offline heuristic mode.",
+        family="agentic",
+    ),
+    "opro": AlgorithmSpec(
+        factory=OproAlgorithm,
+        description="OPRO-style prompt optimizer over prior configuration/objective pairs.",
+        family="agentic",
     ),
 }
 

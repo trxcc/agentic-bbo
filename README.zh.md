@@ -56,6 +56,9 @@
 算法实现按家族组织。
 当前家族为：
 
+- `bbo/algorithms/agentic/`
+  - `llambo.py`
+  - `opro.py`
 - `bbo/algorithms/model_based/`
   - `optuna_tpe.py`
 - `bbo/algorithms/traditional/`
@@ -140,6 +143,18 @@ uv run python examples/run_pycma_demo.py
 uv run python examples/run_optuna_tpe_demo.py
 ```
 
+### LLAMBO baseline
+
+```bash
+uv run python examples/run_llambo_demo.py
+```
+
+### OPRO baseline
+
+```bash
+uv run python examples/run_opro_demo.py
+```
+
 ### 直接使用 CLI
 
 ```bash
@@ -161,6 +176,69 @@ uv run python -m bbo.run \
 ```
 
 `suite` 仍然只包含传统算法 `random_search` 与 `pycma`，不会把 `optuna_tpe` 混进去。
+
+LLAMBO 的公开算法名是 `llambo`。默认的 `heuristic` backend 是一个离线 smoke-test 路径，在不依赖网络的情况下保留了 LLAMBO 的 acquisition/surrogate 两阶段流程：
+
+```bash
+uv run python -m bbo.run \
+  --algorithm llambo \
+  --task branin_demo \
+  --max-evaluations 12 \
+  --llambo-backend heuristic
+```
+
+如果要走在线 OpenAI 路径，建议把凭证和 endpoint 选择放在用户可见的 runner / CLI 层，而不是写死在底层算法里。API key 放环境变量，模型、base-url、timeout 等通过 CLI 指定：
+
+```bash
+export OPENAI_API_KEY=your_key_here
+uv run python -m bbo.run \
+  --algorithm llambo \
+  --task branin_demo \
+  --max-evaluations 12 \
+  --llambo-backend openai \
+  --llambo-model gpt-4o-mini \
+  --llambo-openai-api-key-env OPENAI_API_KEY \
+  --llambo-openai-timeout-seconds 30
+```
+
+如果需要自定义 endpoint，也可以在 runner 层通过 `--llambo-openai-base-url`、`--llambo-openai-organization`、`--llambo-openai-project` 指定。
+
+其他调参开关：
+- `--llambo-openai-max-retries`（默认 3）—— 网络出错时指数退避重试。
+- `--no-llambo-openai-use-structured-outputs`—— 关闭 ``json_schema`` 结构化输出，用于不支持该特性的兼容 API；backend 会自动降级为普通文本补全 + 正则解析。
+
+在线 backend 的现成示例脚本位于 `examples/run_llambo_openai_demo.py`。
+
+OPRO 的公开算法名是 `opro`。默认的 `heuristic` backend 是一个离线 smoke-test 路径，它把原始 OPRO 的“历史配置/分数元提示词”模式适配到了本仓库的统一搜索空间接口上：
+
+```bash
+uv run python -m bbo.run \
+  --algorithm opro \
+  --task branin_demo \
+  --max-evaluations 12 \
+  --opro-backend heuristic
+```
+
+如果要走在线 OpenAI 路径，凭证和 endpoint 配置与 LLAMBO 保持一致，都放在 runner / CLI 层：
+
+```bash
+export OPENAI_API_KEY=your_key_here
+uv run python -m bbo.run \
+  --algorithm opro \
+  --task branin_demo \
+  --max-evaluations 12 \
+  --opro-backend openai \
+  --opro-model gpt-4o-mini \
+  --opro-openai-api-key-env OPENAI_API_KEY \
+  --opro-openai-timeout-seconds 30
+```
+
+如果需要自定义 endpoint，也可以在 runner 层通过 `--opro-openai-base-url`、`--opro-openai-organization`、`--opro-openai-project` 指定。
+
+其他调参开关：
+- `--opro-openai-max-retries`（默认 3）—— 网络出错时指数退避重试。
+
+在线 backend 的现成示例脚本位于 `examples/run_opro_openai_demo.py`。
 
 ## 输出结果
 
@@ -237,6 +315,7 @@ uv run python -m bbo.run --algorithm optuna_tpe --task branin_demo --max-evaluat
 uv run python -m bbo.run --algorithm optuna_tpe --task her_demo --max-evaluations 6 --results-root artifacts/optuna_tpe_smoke
 uv run python -m bbo.run --algorithm optuna_tpe --task oer_demo --max-evaluations 6 --results-root artifacts/optuna_tpe_smoke
 uv run python -m bbo.run --algorithm optuna_tpe --task molecule_qed_demo --max-evaluations 6 --results-root artifacts/optuna_tpe_smoke
+uv run python -m bbo.run --algorithm opro --task branin_demo --max-evaluations 6 --results-root artifacts/opro_smoke
 ```
 
 ## 当前参考 benchmark

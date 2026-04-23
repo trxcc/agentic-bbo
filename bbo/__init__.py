@@ -4,6 +4,8 @@ from . import core
 from .algorithms import (
     ALGORITHM_REGISTRY,
     AlgorithmSpec,
+    LlamboAlgorithm,
+    OproAlgorithm,
     PyCmaAlgorithm,
     RandomSearchAlgorithm,
     algorithms_by_family,
@@ -25,6 +27,8 @@ __all__ = [
     "ALGORITHM_REGISTRY",
     "AlgorithmSpec",
     "BRANIN_DEFINITION",
+    "LlamboAlgorithm",
+    "OproAlgorithm",
     "PyCmaAlgorithm",
     "RandomSearchAlgorithm",
     "SPHERE_DEFINITION",

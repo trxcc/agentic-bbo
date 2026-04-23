@@ -54,8 +54,11 @@ Reusable benchmark abstractions:
 ### `bbo/algorithms/`
 
 Algorithm implementations are grouped by family.
-Current family:
+Current families:
 
+- `bbo/algorithms/agentic/`
+  - `llambo.py`
+  - `opro.py`
 - `bbo/algorithms/model_based/`
   - `optuna_tpe.py`
 - `bbo/algorithms/traditional/`
@@ -140,6 +143,18 @@ uv run python examples/run_pycma_demo.py
 uv run python examples/run_optuna_tpe_demo.py
 ```
 
+### LLAMBO baseline
+
+```bash
+uv run python examples/run_llambo_demo.py
+```
+
+### OPRO baseline
+
+```bash
+uv run python examples/run_opro_demo.py
+```
+
 ### Direct CLI example
 
 ```bash
@@ -161,6 +176,69 @@ uv run python -m bbo.run \
 ```
 
 `suite` remains a traditional-only comparison between `random_search` and `pycma`; it does not include `optuna_tpe`.
+
+LLAMBO uses the public algorithm name `llambo`. The default `heuristic` backend is an offline smoke-test path that preserves the LLAMBO acquisition/surrogate loop without requiring network access:
+
+```bash
+uv run python -m bbo.run \
+  --algorithm llambo \
+  --task branin_demo \
+  --max-evaluations 12 \
+  --llambo-backend heuristic
+```
+
+For the online OpenAI path, keep credentials and endpoint selection at the user-facing runner layer instead of hard-coding them inside the low-level algorithm. Set the API key in an environment variable and configure model/base-url/timeout through the CLI:
+
+```bash
+export OPENAI_API_KEY=your_key_here
+uv run python -m bbo.run \
+  --algorithm llambo \
+  --task branin_demo \
+  --max-evaluations 12 \
+  --llambo-backend openai \
+  --llambo-model gpt-4o-mini \
+  --llambo-openai-api-key-env OPENAI_API_KEY \
+  --llambo-openai-timeout-seconds 30
+```
+
+Optional endpoint overrides such as `--llambo-openai-base-url`, `--llambo-openai-organization`, and `--llambo-openai-project` are also configured at the runner layer.
+
+Additional tuning flags:
+- `--llambo-openai-max-retries` (default 3) – retry transient network errors with exponential backoff.
+- `--no-llambo-openai-use-structured-outputs` – disable ``json_schema`` structured outputs for endpoints that do not support them; the backend will fall back to plain text completion + parsing.
+
+A ready-made demo script for the online backend is provided at `examples/run_llambo_openai_demo.py`.
+
+OPRO uses the public algorithm name `opro`. The default `heuristic` backend is an offline smoke-test path that adapts the original OPRO config/value meta-prompt pattern to repository-native search spaces:
+
+```bash
+uv run python -m bbo.run \
+  --algorithm opro \
+  --task branin_demo \
+  --max-evaluations 12 \
+  --opro-backend heuristic
+```
+
+For the online OpenAI path, credentials and endpoint selection follow the same runner-layer pattern as LLAMBO:
+
+```bash
+export OPENAI_API_KEY=your_key_here
+uv run python -m bbo.run \
+  --algorithm opro \
+  --task branin_demo \
+  --max-evaluations 12 \
+  --opro-backend openai \
+  --opro-model gpt-4o-mini \
+  --opro-openai-api-key-env OPENAI_API_KEY \
+  --opro-openai-timeout-seconds 30
+```
+
+Optional endpoint overrides such as `--opro-openai-base-url`, `--opro-openai-organization`, and `--opro-openai-project` are also configured at the runner layer.
+
+Additional tuning flags:
+- `--opro-openai-max-retries` (default 3) – retry transient network errors with exponential backoff.
+
+A ready-made demo script for the online backend is provided at `examples/run_opro_openai_demo.py`.
 
 ## Outputs
 
@@ -237,6 +315,7 @@ uv run python -m bbo.run --algorithm optuna_tpe --task branin_demo --max-evaluat
 uv run python -m bbo.run --algorithm optuna_tpe --task her_demo --max-evaluations 6 --results-root artifacts/optuna_tpe_smoke
 uv run python -m bbo.run --algorithm optuna_tpe --task oer_demo --max-evaluations 6 --results-root artifacts/optuna_tpe_smoke
 uv run python -m bbo.run --algorithm optuna_tpe --task molecule_qed_demo --max-evaluations 6 --results-root artifacts/optuna_tpe_smoke
+uv run python -m bbo.run --algorithm opro --task branin_demo --max-evaluations 6 --results-root artifacts/opro_smoke
 ```
 
 ## Current reference benchmarks

@@ -102,6 +102,13 @@ uv run pytest tests/test_scientific_tasks.py -q
 uv run pytest tests/test_pfns4bo.py -q
 ```
 
+如果改动了 LLAMBO 或 OPRO：
+
+```bash
+uv run pytest tests/test_llambo.py -q
+uv run pytest tests/test_opro.py -q
+```
+
 如果改动了 task / algorithm 通用运行链路，建议再补一轮 smoke：
 
 ```bash
@@ -110,6 +117,8 @@ uv run python -m bbo.run --algorithm random_search --task hea_demo --max-evaluat
 uv run python -m bbo.run --algorithm random_search --task oer_demo --max-evaluations 3
 uv run python -m bbo.run --algorithm random_search --task bh_demo --max-evaluations 3
 uv run python -m bbo.run --algorithm random_search --task molecule_qed_demo --max-evaluations 3
+uv run python -m bbo.run --algorithm llambo --task branin_demo --max-evaluations 6 --llambo-backend heuristic
+uv run python -m bbo.run --algorithm opro --task branin_demo --max-evaluations 6 --opro-backend heuristic
 ```
 
 ### 6. 一句话标准
