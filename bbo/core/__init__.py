@@ -2,6 +2,12 @@
 
 from .algo import Algorithm, Incumbent
 from .adapters import ExternalOptimizerAdapter, from_configspace, to_configspace
+from .conversion import (
+    ContinuousFeatureSpec,
+    ContinuousSearchSpaceConverter,
+    OneHotCategoricalConverter,
+    build_continuous_converter,
+)
 from .description import (
     DescriptionSectionSpec,
     MarkdownDescriptionLoader,
@@ -41,6 +47,8 @@ from .trial import EvaluationResult, TrialObservation, TrialRecord, TrialStatus,
 __all__ = [
     "Algorithm",
     "CategoricalParam",
+    "ContinuousFeatureSpec",
+    "ContinuousSearchSpaceConverter",
     "DescriptionSectionSpec",
     "EvaluationResult",
     "ExperimentConfig",
@@ -58,6 +66,7 @@ __all__ = [
     "ObjectiveDirection",
     "ObjectiveDistributionPlotter",
     "ObjectiveSpec",
+    "OneHotCategoricalConverter",
     "OptimizationTracePlotter",
     "OptimizerComparisonPlotter",
     "ParameterSpec",
@@ -82,6 +91,7 @@ __all__ = [
     "TrialRecord",
     "TrialStatus",
     "TrialSuggestion",
+    "build_continuous_converter",
     "from_configspace",
     "to_configspace",
     "write_task_description_template",

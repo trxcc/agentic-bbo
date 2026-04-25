@@ -505,11 +505,14 @@ def _generate_two_algorithm_suite_plots(
 
 def _require_algorithm_support(task: Task, algorithm_name: str) -> None:
     algorithm_spec = ALGORITHM_REGISTRY[algorithm_name]
-    if not algorithm_spec.numeric_only:
-        return
     try:
         task.spec.search_space.numeric_bounds()
+        return
     except TypeError as exc:
+        if algorithm_spec.categorical_to_continuous is not None:
+            return
+        if not algorithm_spec.numeric_only:
+            return
         raise ValueError(
             f"Algorithm `{algorithm_name}` only supports fully numeric search spaces; "
             f"task `{task.spec.name}` includes categorical parameters."

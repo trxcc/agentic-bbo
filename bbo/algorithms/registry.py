@@ -20,6 +20,7 @@ class AlgorithmSpec:
     description: str
     family: str
     numeric_only: bool = False
+    categorical_to_continuous: str | None = None
 
 
 ALGORITHM_REGISTRY: dict[str, AlgorithmSpec] = {
@@ -38,12 +39,14 @@ ALGORITHM_REGISTRY: dict[str, AlgorithmSpec] = {
         description="CMA-ES via the external `pycma` package.",
         family="traditional",
         numeric_only=True,
+        categorical_to_continuous="onehot",
     ),
     "cma_es": AlgorithmSpec(
         factory=PyCmaAlgorithm,
         description="Alias for pycma.",
         family="traditional",
         numeric_only=True,
+        categorical_to_continuous="onehot",
     ),
     "optuna_tpe": AlgorithmSpec(
         factory=OptunaTpeAlgorithm,
@@ -54,6 +57,7 @@ ALGORITHM_REGISTRY: dict[str, AlgorithmSpec] = {
         factory=Pfns4BoAlgorithm,
         description="PFNs4BO with fixed continuous/pool routing for benchmark smoke tasks.",
         family="model_based",
+        categorical_to_continuous="onehot",
     ),
     "llambo": AlgorithmSpec(
         factory=LlamboAlgorithm,
