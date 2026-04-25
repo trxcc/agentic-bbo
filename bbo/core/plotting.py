@@ -199,7 +199,7 @@ class OptimizerComparisonPlotter(ScientificPlotter):
         output = self._ensure_parent(output_path)
         with self.style():
             fig, ax = plt.subplots(figsize=(7.2, 4.4))
-            palette = ["#4c72b0", "#c44e52", "#55a868", "#8172b2"]
+            palette = ["#4c72b0", "#c44e52", "#55a868", "#8172b2", "#ccaa7a"]
             for color, (label, records) in zip(palette, histories.items(), strict=False):
                 values = self._primary_series(records, objective_name)
                 evaluations = np.arange(1, len(values) + 1)
@@ -214,11 +214,200 @@ class OptimizerComparisonPlotter(ScientificPlotter):
         return PlotArtifact(name="optimizer_comparison", path=output)
 
 
+def _per_trial_elapsed_sec(records: list[TrialRecord]) -> np.ndarray:
+    return np.asarray(
+        [float(r.elapsed_seconds) if r.elapsed_seconds is not None else 0.0 for r in records],
+        dtype=float,
+    )
+
+
+class RegretTracePlotter(ScientificPlotter):
+    """When ``known_optimum`` is in task metadata, plot incumbent regret vs global optimum (one objective)."""
+
+    def plot(
+        self,
+        records: list[TrialRecord],
+        *,
+        objective_name: str,
+        direction: ObjectiveDirection,
+        known_optimum: float,
+        output_path: Path | str,
+        title: str,
+    ) -> PlotArtifact:
+        output = self._ensure_parent(output_path)
+        values = self._primary_series(records, objective_name)
+        if values.size == 0:
+            with self.style():
+                fig, ax = plt.subplots(figsize=(6.0, 3.2))
+                ax.text(0.5, 0.5, "no trial records", ha="center", va="center", transform=ax.transAxes)
+                ax.set_axis_off()
+                fig.savefig(output)
+                plt.close(fig)
+            return PlotArtifact(name="regret_empty", path=output)
+        running = self._running_best(values, direction)
+        if direction == ObjectiveDirection.MINIMIZE:
+            regret = running - float(known_optimum)
+        else:
+            regret = float(known_optimum) - running
+        regret = np.maximum(regret, 0.0)
+        x = np.arange(1, len(regret) + 1)
+        with self.style():
+            fig, ax = plt.subplots(figsize=(7.0, 4.0))
+            ax.plot(x, regret, color="#c44e52", linewidth=2.0, marker="o", markersize=3.0, label="incumbent regret")
+            ax.set_xlabel("Evaluation")
+            ax.set_ylabel("Regret w.r.t. known optimum")
+            ax.set_title(title)
+            ax.legend(loc="best")
+            fig.savefig(output)
+            plt.close(fig)
+        return PlotArtifact(name="regret_trace", path=output)
+
+
+class PerTrialEvalTimePlotter(ScientificPlotter):
+    """Per-evaluation wall time (``elapsed_seconds``) as a bar chart."""
+
+    def plot(
+        self,
+        records: list[TrialRecord],
+        *,
+        output_path: Path | str,
+        title: str,
+    ) -> PlotArtifact:
+        output = self._ensure_parent(output_path)
+        times = _per_trial_elapsed_sec(records)
+        if not records:
+            with self.style():
+                fig, ax = plt.subplots(figsize=(7.0, 3.8))
+                ax.text(0.5, 0.5, "no trial records", ha="center", va="center", transform=ax.transAxes)
+                ax.set_axis_off()
+                fig.savefig(output)
+                plt.close(fig)
+            return PlotArtifact(name="per_trial_eval_time_empty", path=output)
+        n = len(times)
+        x = np.arange(1, n + 1)
+        with self.style():
+            fig, ax = plt.subplots(figsize=(7.0, 3.8))
+            ax.bar(x, times, color="#4c72b0", edgecolor="white", alpha=0.9, width=0.88)
+            ax.set_xlabel("Evaluation")
+            ax.set_ylabel("Elapsed time (s)")
+            ax.set_title(title)
+            fig.savefig(output)
+            plt.close(fig)
+        return PlotArtifact(name="per_trial_eval_time", path=output)
+
+
+class CumulativeEvalTimePlotter(ScientificPlotter):
+    """Cumulative sum of per-evaluation times (one algorithm)."""
+
+    def plot(
+        self,
+        records: list[TrialRecord],
+        *,
+        output_path: Path | str,
+        title: str,
+    ) -> PlotArtifact:
+        output = self._ensure_parent(output_path)
+        times = _per_trial_elapsed_sec(records)
+        if not records:
+            with self.style():
+                fig, ax = plt.subplots(figsize=(7.0, 3.8))
+                ax.text(0.5, 0.5, "no trial records", ha="center", va="center", transform=ax.transAxes)
+                ax.set_axis_off()
+                fig.savefig(output)
+                plt.close(fig)
+            return PlotArtifact(name="cumulative_eval_time_empty", path=output)
+        cum = np.cumsum(times)
+        x = np.arange(1, len(cum) + 1)
+        with self.style():
+            fig, ax = plt.subplots(figsize=(7.0, 3.8))
+            ax.fill_between(x, 0, cum, color="#4c72b0", alpha=0.15)
+            ax.plot(x, cum, color="#4c72b0", linewidth=2.0)
+            ax.set_xlabel("Evaluation")
+            ax.set_ylabel("Cumulative eval time (s)")
+            ax.set_title(title)
+            fig.savefig(output)
+            plt.close(fig)
+        return PlotArtifact(name="cumulative_eval_time", path=output)
+
+
+class CumulativeEvalTimeComparisonPlotter(ScientificPlotter):
+    """Compare cumulative evaluation wall time across optimizers (one metric: wall time)."""
+
+    def plot(
+        self,
+        histories: dict[str, list[TrialRecord]],
+        *,
+        output_path: Path | str,
+        title: str,
+    ) -> PlotArtifact:
+        output = self._ensure_parent(output_path)
+        with self.style():
+            fig, ax = plt.subplots(figsize=(7.2, 4.2))
+            palette = ["#4c72b0", "#c44e52", "#55a868", "#8172b2", "#ccaa7a"]
+            for color, (label, recs) in zip(palette, histories.items(), strict=False):
+                times = _per_trial_elapsed_sec(list(recs))
+                if not np.any(times > 0):
+                    continue
+                cum = np.cumsum(times)
+                x = np.arange(1, len(cum) + 1)
+                ax.plot(x, cum, linewidth=2.0, color=color, label=label)
+            ax.set_xlabel("Evaluation")
+            ax.set_ylabel("Cumulative eval time (s)")
+            ax.set_title(title)
+            ax.legend(loc="best")
+            fig.savefig(output)
+            plt.close(fig)
+        return PlotArtifact(name="cumulative_eval_time_comparison", path=output)
+
+
+class ScalarBarPlotter(ScientificPlotter):
+    """One figure, one metric: bar chart for numeric scalars (e.g. best objective, total time)."""
+
+    def plot(
+        self,
+        series: dict[str, float],
+        *,
+        ylabel: str,
+        output_path: Path | str,
+        title: str,
+    ) -> PlotArtifact:
+        output = self._ensure_parent(output_path)
+        if not series:
+            with self.style():
+                fig, ax = plt.subplots(figsize=(5.0, 3.0))
+                ax.text(0.5, 0.5, "no data", ha="center", va="center", transform=ax.transAxes)
+                ax.set_axis_off()
+                fig.savefig(output)
+                plt.close(fig)
+            return PlotArtifact(name="scalar_bar_empty", path=output)
+        labels = list(series.keys())
+        values = [float(v) for v in series.values()]
+        x = np.arange(len(labels))
+        with self.style():
+            fig, ax = plt.subplots(figsize=(max(5.0, 1.2 * len(labels)), 4.2))
+            colors = ["#4c72b0", "#c44e52", "#55a868", "#8172b2", "#ccaa7a", "#8c8c8c"] * 2
+            ax.bar(x, values, color=colors[: len(values)], edgecolor="white", alpha=0.9)
+            ax.set_xticks(x)
+            ax.set_xticklabels(labels, rotation=15, ha="right")
+            ax.set_ylabel(ylabel)
+            ax.set_title(title)
+            for i, v in enumerate(values):
+                ax.text(x[i], v, f"{v:.4g}", ha="center", va="bottom", fontsize=8, rotation=0)
+            fig.savefig(output)
+            plt.close(fig)
+        return PlotArtifact(name="scalar_bars", path=output)
+
+
 __all__ = [
+    "CumulativeEvalTimeComparisonPlotter",
+    "CumulativeEvalTimePlotter",
     "Landscape2DPlotter",
     "ObjectiveDistributionPlotter",
     "OptimizationTracePlotter",
     "OptimizerComparisonPlotter",
+    "PerTrialEvalTimePlotter",
     "PlotArtifact",
+    "RegretTracePlotter",
+    "ScalarBarPlotter",
     "ScientificPlotter",
 ]

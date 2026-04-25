@@ -9,13 +9,18 @@ from typing import Any
 
 from .algorithms import ALGORITHM_REGISTRY, create_algorithm
 from .core import (
+    CumulativeEvalTimeComparisonPlotter,
     ExperimentConfig,
     Experimenter,
     JsonlMetricLogger,
     Landscape2DPlotter,
     ObjectiveDistributionPlotter,
     OptimizationTracePlotter,
+    CumulativeEvalTimePlotter,
     OptimizerComparisonPlotter,
+    PerTrialEvalTimePlotter,
+    RegretTracePlotter,
+    ScalarBarPlotter,
     Task,
 )
 from .tasks import ALL_TASK_NAMES, create_task
@@ -38,6 +43,7 @@ def run_single_experiment(
     noise_std: float = 0.0,
     surrogate_path: str | Path | None = None,
     knobs_json_path: str | Path | None = None,
+    generate_plots: bool = True,
 ) -> dict[str, Any]:
     task = create_task(
         task_name,
@@ -89,6 +95,15 @@ def run_single_experiment(
         "results_jsonl": str(results_jsonl),
         "trial_count": len(records),
     }
+    plot_paths: list[Path] = []
+    if generate_plots:
+        plot_paths = generate_visualizations(
+            task=task,
+            logger=logger,
+            output_dir=run_dir / "plots",
+            algorithm_label=algorithm_name,
+        )
+    serializable_summary["plot_paths"] = [str(p) for p in plot_paths]
     (run_dir / "summary.json").write_text(json.dumps(serializable_summary, indent=2, sort_keys=True), encoding="utf-8")
     return serializable_summary
 
@@ -103,6 +118,7 @@ def run_demo_suite(
     sigma_fraction: float = 0.18,
     popsize: int | None = 6,
     resume: bool = False,
+    generate_plots: bool = True,
 ) -> dict[str, Any]:
     task = create_task(task_name, max_evaluations=random_evaluations, seed=seed)
     _require_algorithm_support(task, "random_search")
@@ -114,6 +130,7 @@ def run_demo_suite(
         max_evaluations=random_evaluations,
         results_root=results_root,
         resume=resume,
+        generate_plots=generate_plots,
     )
     pycma_summary = run_single_experiment(
         task_name=task_name,
@@ -124,22 +141,35 @@ def run_demo_suite(
         resume=resume,
         sigma_fraction=sigma_fraction,
         popsize=popsize,
+        generate_plots=generate_plots,
     )
 
     comparison_dir = _allocate_run_dir(results_root / task_name / "suite" / f"seed_{seed}", resume=resume)
-    comparison_plot = generate_comparison_plot(
-        task=task,
-        histories={
-            "random_search": JsonlMetricLogger(Path(random_summary["results_jsonl"])).load_records(),
-            "pycma": JsonlMetricLogger(Path(pycma_summary["results_jsonl"])).load_records(),
-        },
-        output_dir=comparison_dir / "plots",
-    )
-    suite_summary = {
+    comparison_plot_paths: list[str] = []
+    if generate_plots:
+        comparison_dir_plots = comparison_dir / "plots"
+        generate_comparison_plot(
+            task=task,
+            histories={
+                "random_search": JsonlMetricLogger(Path(random_summary["results_jsonl"])).load_records(),
+                "pycma": JsonlMetricLogger(Path(pycma_summary["results_jsonl"])).load_records(),
+            },
+            output_dir=comparison_dir_plots,
+        )
+        extra = _generate_two_algorithm_suite_plots(
+            task=task,
+            random_summary=random_summary,
+            pycma_summary=pycma_summary,
+            output_dir=comparison_dir_plots,
+        )
+        comparison_plot_paths = [str(comparison_dir_plots / "comparison.png"), *[str(p) for p in extra]]
+    suite_summary: dict[str, Any] = {
         "task_name": task_name,
         "seed": seed,
         "random_search": random_summary,
         "pycma": pycma_summary,
+        "comparison_dir": str(comparison_dir),
+        "comparison_plot_paths": comparison_plot_paths,
     }
     (comparison_dir / "suite_summary.json").write_text(json.dumps(suite_summary, indent=2, sort_keys=True), encoding="utf-8")
     return suite_summary
@@ -152,25 +182,37 @@ def generate_visualizations(
     *,
     algorithm_label: str,
 ) -> list[Path]:
+    """Emit one figure per metric: objective trace, distribution, per-trial time, cumulative time, optional 2D landscape."""
     records = logger.load_records()
     if not records:
         return []
     output_dir.mkdir(parents=True, exist_ok=True)
+    display = str(task.spec.metadata.get("display_name", task.spec.name))
     objective_name = task.spec.primary_objective.name
     direction = task.spec.primary_objective.direction
-    artifacts = [
+    artifacts: list[Path] = [
         OptimizationTracePlotter().plot(
             records,
             objective_name=objective_name,
             direction=direction,
             output_path=output_dir / "trace.png",
-            title=f"{task.spec.metadata['display_name']} - {algorithm_label} trace",
+            title=f"{display} | {algorithm_label} | {objective_name} trace",
         ).path,
         ObjectiveDistributionPlotter().plot(
             records,
             objective_name=objective_name,
             output_path=output_dir / "distribution.png",
-            title=f"{task.spec.metadata['display_name']} - {algorithm_label} distribution",
+            title=f"{display} | {algorithm_label} | {objective_name} distribution",
+        ).path,
+        PerTrialEvalTimePlotter().plot(
+            records,
+            output_path=output_dir / "per_trial_eval_time.png",
+            title=f"{display} | {algorithm_label} | eval wall time (per trial)",
+        ).path,
+        CumulativeEvalTimePlotter().plot(
+            records,
+            output_path=output_dir / "cumulative_eval_time.png",
+            title=f"{display} | {algorithm_label} | cumulative eval time",
         ).path,
     ]
     if int(task.spec.metadata.get("dimension", 0)) == 2 and hasattr(task, "surface_grid"):
@@ -180,8 +222,20 @@ def generate_visualizations(
                 records,
                 objective_name=objective_name,
                 output_path=output_dir / "landscape.png",
-                title=f"{task.spec.metadata['display_name']} - sampled landscape",
+                title=f"{display} | {algorithm_label} | sampled 2D landscape",
                 resolution=int(task.spec.metadata.get("plot_resolution", 180)),
+            ).path
+        )
+    known = task.spec.metadata.get("known_optimum")
+    if known is not None and isinstance(known, (int, float)):
+        artifacts.append(
+            RegretTracePlotter().plot(
+                records,
+                objective_name=objective_name,
+                direction=direction,
+                known_optimum=float(known),
+                output_path=output_dir / "regret.png",
+                title=f"{display} | {algorithm_label} | regret (known optimum in metadata)",
             ).path
         )
     return artifacts
@@ -194,14 +248,56 @@ def generate_comparison_plot(
     output_dir: Path,
 ) -> Path:
     output_dir.mkdir(parents=True, exist_ok=True)
+    display = str(task.spec.metadata.get("display_name", task.spec.name))
+    on = task.spec.primary_objective.name
     artifact = OptimizerComparisonPlotter().plot(
         histories,
-        objective_name=task.spec.primary_objective.name,
+        objective_name=on,
         direction=task.spec.primary_objective.direction,
         output_path=output_dir / "comparison.png",
-        title=f"{task.spec.metadata['display_name']} - optimizer comparison",
+        title=f"{display} | running best {on} (all algorithms)",
     )
     return artifact.path
+
+
+def _generate_two_algorithm_suite_plots(
+    *,
+    task: Task,
+    random_summary: dict[str, Any],
+    pycma_summary: dict[str, Any],
+    output_dir: Path,
+) -> list[Path]:
+    """Bar + cumulative-time comparison for the fixed suite (random_search vs pycma). One metric per figure."""
+    display = str(task.spec.metadata.get("display_name", task.spec.name))
+    on = task.spec.primary_objective.name
+    r_rs = JsonlMetricLogger(Path(random_summary["results_jsonl"])).load_records()
+    r_pc = JsonlMetricLogger(Path(pycma_summary["results_jsonl"])).load_records()
+    paths: list[Path] = [
+        CumulativeEvalTimeComparisonPlotter().plot(
+            {"random_search": r_rs, "pycma": r_pc},
+            output_path=output_dir / "comparison_cumulative_eval_time.png",
+            title=f"{display} | cumulative eval time (all algorithms)",
+        ).path,
+        ScalarBarPlotter().plot(
+            {
+                "random_search": float(random_summary["best_primary_objective"]),
+                "pycma": float(pycma_summary["best_primary_objective"]),
+            },
+            ylabel=f"best {on}",
+            output_path=output_dir / "bar_best_primary_objective.png",
+            title=f"{display} | best {on} (final, one bar per algorithm)",
+        ).path,
+        ScalarBarPlotter().plot(
+            {
+                "random_search": float(random_summary["total_eval_time"]),
+                "pycma": float(pycma_summary["total_eval_time"]),
+            },
+            ylabel="Total eval time (s)",
+            output_path=output_dir / "bar_total_eval_time.png",
+            title=f"{display} | total eval time (sum of trial times)",
+        ).path,
+    ]
+    return paths
 
 
 def _require_algorithm_support(task: Task, algorithm_name: str) -> None:
@@ -265,6 +361,11 @@ def build_arg_parser() -> argparse.ArgumentParser:
     )
     parser.add_argument("--resume", action="store_true")
     parser.add_argument("--results-root", type=Path, default=DEFAULT_RESULTS_ROOT)
+    parser.add_argument(
+        "--no-plots",
+        action="store_true",
+        help="Skip PNG plots under run_dir/plots (faster, for CI or headless runs).",
+    )
     return parser
 
 
@@ -282,6 +383,7 @@ def main(argv: list[str] | None = None) -> int:
             sigma_fraction=args.sigma_fraction,
             popsize=args.popsize,
             resume=args.resume,
+            generate_plots=not args.no_plots,
         )
     else:
         summary = run_single_experiment(
@@ -296,6 +398,7 @@ def main(argv: list[str] | None = None) -> int:
             noise_std=args.noise_std,
             surrogate_path=args.surrogate_path,
             knobs_json_path=args.knobs_json_path,
+            generate_plots=not args.no_plots,
         )
 
     print(json.dumps(summary, indent=2, sort_keys=True))

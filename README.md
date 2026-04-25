@@ -162,15 +162,19 @@ uv run python -m bbo.run \
 
 ## Outputs
 
-Runs write JSONL histories, summaries, and plots under `artifacts/`.
-A validated reference run is available under `artifacts/final_demo_v3/`.
+`python -m bbo.run` writes under `runs/demo/` (or `--results-root`): `trials.jsonl`, `summary.json`, and a `plots/` folder when plotting is enabled (default). Use `--no-plots` to skip PNG generation. `summary.json` includes `plot_paths` listing every generated figure.
 
-Generated visualization artifacts currently include:
+Legacy reference bundles may still live under `artifacts/` (e.g. `artifacts/final_demo_v3/`).
 
-- optimization trace plots
-- objective distribution plots
-- 2D landscape overlays for visualizable tasks
-- optimizer comparison plots
+Per single-algorithm run, `plots/` typically includes **one file per metric**, for example:
+
+- `trace.png` — objective over evaluations + incumbent curve
+- `distribution.png` — histogram of observed objectives
+- `per_trial_eval_time.png` / `cumulative_eval_time.png` — evaluation wall time
+- `regret.png` — only when the task exports `known_optimum` in metadata (e.g. some synthetic tasks)
+- `landscape.png` — only for 2D synthetic tasks with a surface
+
+For `suite` (random_search vs pycma), see also `.../suite/seed_*/plots/`: `comparison.png` (running-best curves), `comparison_cumulative_eval_time.png`, `bar_best_primary_objective.png`, `bar_total_eval_time.png`, plus each algorithm’s own `plots/` under its sub-run directory.
 
 ## Task-description standard
 

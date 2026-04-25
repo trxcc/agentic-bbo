@@ -1,0 +1,117 @@
+{
+  "comparison_dir": "/nas1/zyj/Agentbbo/runs/demo/branin_demo/suite/seed_7",
+  "comparison_plot_paths": [
+    "/nas1/zyj/Agentbbo/runs/demo/branin_demo/suite/seed_7/plots/comparison.png",
+    "/nas1/zyj/Agentbbo/runs/demo/branin_demo/suite/seed_7/plots/comparison_cumulative_eval_time.png",
+    "/nas1/zyj/Agentbbo/runs/demo/branin_demo/suite/seed_7/plots/bar_best_primary_objective.png",
+    "/nas1/zyj/Agentbbo/runs/demo/branin_demo/suite/seed_7/plots/bar_total_eval_time.png"
+  ],
+  "pycma": {
+    "algorithm_name": "pycma",
+    "best_primary_objective": 0.6141187323445294,
+    "description_fingerprint": "c522491b199b6427",
+    "incumbents": [
+      {
+        "config": {
+          "x1": 2.9830370428993334,
+          "x2": 2.0924055460878295
+        },
+        "metadata": {
+          "algorithm": "pycma"
+        },
+        "objectives": {
+          "loss": 0.6141187323445294
+        },
+        "score": 0.6141187323445294,
+        "trial_id": 26
+      }
+    ],
+    "logger_summary": {
+      "algorithm": "pycma",
+      "best_objectives": {
+        "loss": 0.6141187323445294
+      },
+      "best_primary_objective": 0.6141187323445294,
+      "best_trial_id": 26,
+      "description_fingerprint": "c522491b199b6427",
+      "failed_trials": 0,
+      "invalid_trials": 0,
+      "path": "/nas1/zyj/Agentbbo/runs/demo/branin_demo/pycma/seed_7/trials.jsonl",
+      "seed": 7,
+      "successful_trials": 36,
+      "task_name": "branin_demo",
+      "total_eval_time": 0.00037499889731407166,
+      "total_trials": 36
+    },
+    "n_completed": 36,
+    "plot_paths": [
+      "/nas1/zyj/Agentbbo/runs/demo/branin_demo/pycma/seed_7/plots/trace.png",
+      "/nas1/zyj/Agentbbo/runs/demo/branin_demo/pycma/seed_7/plots/distribution.png",
+      "/nas1/zyj/Agentbbo/runs/demo/branin_demo/pycma/seed_7/plots/per_trial_eval_time.png",
+      "/nas1/zyj/Agentbbo/runs/demo/branin_demo/pycma/seed_7/plots/cumulative_eval_time.png",
+      "/nas1/zyj/Agentbbo/runs/demo/branin_demo/pycma/seed_7/plots/landscape.png",
+      "/nas1/zyj/Agentbbo/runs/demo/branin_demo/pycma/seed_7/plots/regret.png"
+    ],
+    "results_jsonl": "/nas1/zyj/Agentbbo/runs/demo/branin_demo/pycma/seed_7/trials.jsonl",
+    "seed": 7,
+    "stop_reason": "task_budget",
+    "task_name": "branin_demo",
+    "total_eval_time": 0.00037499889731407166,
+    "trial_count": 36
+  },
+  "random_search": {
+    "algorithm_name": "random_search",
+    "best_primary_objective": 1.665515031871971,
+    "description_fingerprint": "c522491b199b6427",
+    "incumbents": [
+      {
+        "config": {
+          "x1": 9.702622712388731,
+          "x2": 1.7709866738244318
+        },
+        "metadata": {
+          "algorithm": "random_search"
+        },
+        "objectives": {
+          "loss": 1.665515031871971
+        },
+        "score": 1.665515031871971,
+        "trial_id": 25
+      }
+    ],
+    "logger_summary": {
+      "algorithm": "random_search",
+      "best_objectives": {
+        "loss": 1.665515031871971
+      },
+      "best_primary_objective": 1.665515031871971,
+      "best_trial_id": 25,
+      "description_fingerprint": "c522491b199b6427",
+      "failed_trials": 0,
+      "invalid_trials": 0,
+      "path": "/nas1/zyj/Agentbbo/runs/demo/branin_demo/random_search/seed_7/trials.jsonl",
+      "seed": 7,
+      "successful_trials": 45,
+      "task_name": "branin_demo",
+      "total_eval_time": 0.0004834919236600399,
+      "total_trials": 45
+    },
+    "n_completed": 45,
+    "plot_paths": [
+      "/nas1/zyj/Agentbbo/runs/demo/branin_demo/random_search/seed_7/plots/trace.png",
+      "/nas1/zyj/Agentbbo/runs/demo/branin_demo/random_search/seed_7/plots/distribution.png",
+      "/nas1/zyj/Agentbbo/runs/demo/branin_demo/random_search/seed_7/plots/per_trial_eval_time.png",
+      "/nas1/zyj/Agentbbo/runs/demo/branin_demo/random_search/seed_7/plots/cumulative_eval_time.png",
+      "/nas1/zyj/Agentbbo/runs/demo/branin_demo/random_search/seed_7/plots/landscape.png",
+      "/nas1/zyj/Agentbbo/runs/demo/branin_demo/random_search/seed_7/plots/regret.png"
+    ],
+    "results_jsonl": "/nas1/zyj/Agentbbo/runs/demo/branin_demo/random_search/seed_7/trials.jsonl",
+    "seed": 7,
+    "stop_reason": "task_budget",
+    "task_name": "branin_demo",
+    "total_eval_time": 0.0004834919236600399,
+    "trial_count": 45
+  },
+  "seed": 7,
+  "task_name": "branin_demo"
+}

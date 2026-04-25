@@ -15,11 +15,16 @@ from .description import (
 from .experimenter import ExperimentConfig, Experimenter, RunSummary
 from .logger import JsonlMetricLogger, MetricLogger, ResumeState
 from .plotting import (
+    CumulativeEvalTimeComparisonPlotter,
+    CumulativeEvalTimePlotter,
     Landscape2DPlotter,
     ObjectiveDistributionPlotter,
     OptimizationTracePlotter,
     OptimizerComparisonPlotter,
+    PerTrialEvalTimePlotter,
     PlotArtifact,
+    RegretTracePlotter,
+    ScalarBarPlotter,
     ScientificPlotter,
 )
 from .space import CategoricalParam, FloatParam, IntParam, ParameterSpec, SearchSpace
@@ -44,6 +49,8 @@ __all__ = [
     "FloatParam",
     "Incumbent",
     "IntParam",
+    "CumulativeEvalTimeComparisonPlotter",
+    "CumulativeEvalTimePlotter",
     "JsonlMetricLogger",
     "Landscape2DPlotter",
     "MarkdownDescriptionLoader",
@@ -54,7 +61,10 @@ __all__ = [
     "OptimizationTracePlotter",
     "OptimizerComparisonPlotter",
     "ParameterSpec",
+    "PerTrialEvalTimePlotter",
     "PlotArtifact",
+    "RegretTracePlotter",
+    "ScalarBarPlotter",
     "ResumeState",
     "RunSummary",
     "STANDARD_TASK_DESCRIPTION_SCHEMA",
