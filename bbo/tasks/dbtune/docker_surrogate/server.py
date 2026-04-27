@@ -8,11 +8,26 @@ Keep task_id / joblib filenames in sync with ``bbo/tasks/dbtune/catalog.py``.
 from __future__ import absolute_import, division, print_function
 
 import os
+import sys
 import threading
 from typing import Any, Dict, List, Optional, Tuple
 
 import numpy as np
 from flask import Flask, jsonify, request
+
+# 1. 解决 Random Forest 路径问题
+try:
+    import sklearn.ensemble.forest
+    sys.modules['sklearn.ensemble._forest'] = sys.modules['sklearn.ensemble.forest']
+except ImportError:
+    pass
+
+# 2. 解决 Decision Tree 路径问题 (本次的新报错)
+try:
+    import sklearn.tree.tree
+    sys.modules['sklearn.tree._classes'] = sys.modules['sklearn.tree.tree']
+except ImportError:
+    pass
 
 # --- 与 catalog.SURROGATE_BENCHMARKS 同步 ---
 # 每项: (joblib, objective, maximize, env_override, knobs_json 文件名) — 解码在容器内用 knobs + X-name

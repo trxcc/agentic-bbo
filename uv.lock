@@ -43,6 +43,7 @@ bo-tutorial = [
     { name = "rdkit" },
     { name = "scikit-learn", version = "1.8.0", source = { registry = "https://pypi.org/simple" } },
     { name = "scipy" },
+    { name = "selfies" },
     { name = "tqdm" },
 ]
 bo-tutorial-full = [
@@ -118,6 +119,7 @@ requires-dist = [
     { name = "scikit-learn", marker = "extra == 'surrogate'", specifier = ">=1.5.0" },
     { name = "scipy", marker = "extra == 'bo-tutorial'", specifier = ">=1.1" },
     { name = "scipy", marker = "extra == 'pfns4bo'", specifier = ">=1.1" },
+    { name = "selfies", marker = "extra == 'bo-tutorial'", specifier = ">=2.1.0" },
     { name = "torch", marker = "extra == 'bo-tutorial-full'", specifier = ">=1.9.0" },
     { name = "torch", marker = "extra == 'pfns4bo'", specifier = ">=1.9.0" },
     { name = "tqdm", marker = "extra == 'bo-tutorial'" },
@@ -4032,6 +4034,15 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/52/52/e57eceff0e342a1f50e274264ed47497b59e6a4e3118808ee58ddda7b74a/scipy-1.17.1-cp314-cp314t-musllinux_1_2_x86_64.whl", hash = "sha256:a77cbd07b940d326d39a1d1b37817e2ee4d79cb30e7338f3d0cddffae70fcaa2", size = 37682317, upload-time = "2026-02-23T00:22:18.513Z" },
     { url = "https://files.pythonhosted.org/packages/11/2f/b29eafe4a3fbc3d6de9662b36e028d5f039e72d345e05c250e121a230dd4/scipy-1.17.1-cp314-cp314t-win_amd64.whl", hash = "sha256:eb092099205ef62cd1782b006658db09e2fed75bffcae7cc0d44052d8aa0f484", size = 37345327, upload-time = "2026-02-23T00:22:24.442Z" },
     { url = "https://files.pythonhosted.org/packages/07/39/338d9219c4e87f3e708f18857ecd24d22a0c3094752393319553096b98af/scipy-1.17.1-cp314-cp314t-win_arm64.whl", hash = "sha256:200e1050faffacc162be6a486a984a0497866ec54149a01270adc8a59b7c7d21", size = 25489165, upload-time = "2026-02-23T00:22:29.563Z" },
+]
+
+[[package]]
+name = "selfies"
+version = "2.2.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/c9/de/466e2a24293929836690768eeda15ed2465e4527df05f569a0cddd2bf761/selfies-2.2.0.tar.gz", hash = "sha256:68dc2a0d8ef507fc01919c4490d6b712c5e5edab8fb6b85c38223d55ac0c65e2", size = 42263, upload-time = "2025-01-15T21:29:47.621Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/d8/28/e55116335f778c734b1211d3abacd429599a2f0f664d267eb1282f9906a2/selfies-2.2.0-py3-none-any.whl", hash = "sha256:8b80796832c0b2f33e63d4fa1617ca541338c57b463a4d06cda3da510506ff73", size = 36021, upload-time = "2025-01-15T21:29:45.226Z" },
 ]
 
 [[package]]
