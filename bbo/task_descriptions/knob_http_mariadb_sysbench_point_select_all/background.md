@@ -1,6 +1,6 @@
 # Background
 
-`knob_http_mariadb_sysbench_point_select_all` is a **real** MariaDB benchmark in *AgentBBO*. The optimizer proposes a point in the unit hypercube; the packaged evaluator service (Flask inside the image built from `bbo/tasks/dbtune/docker_mariadb/`) writes `mysqld` knobs, restarts MariaDB, and runs **sysbench**, returning a scalar **throughput** score.
+`knob_http_mariadb_sysbench_point_select_all` is a **real** MariaDB benchmark in *AgentBBO*. The optimizer proposes a point in the unit hypercube; the packaged evaluator service (Flask inside the reusable image `fakerstrawberry/agentbbo-dbtune-mariadb-eval:v1`) writes `mysqld` knobs, restarts MariaDB, and runs **sysbench**, returning a scalar **throughput** score.
 
 This packaging combines: **point-select (primary-key lookups)** with **the full **~197-dimensional** knob list (`knobs_mysql_all_197.json`), matching the offline `knob_surrogate_sysbench_all` space.**
 

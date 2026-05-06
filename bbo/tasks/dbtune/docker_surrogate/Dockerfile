@@ -1,6 +1,6 @@
 # Build from ``bbo/tasks/dbtune`` (context = this package root):
 #   cd bbo/tasks/dbtune && docker build -f docker_surrogate/Dockerfile -t agentbbo-surrogate-http-py37:v1 .
-# Includes ``assets/`` (joblib + knobs json for decode paths on the host; server reads joblib from here).
+# Includes ``assets/`` (joblib + knobs json); the server reads them from /app/assets.
 FROM python:3.7-slim-bullseye
 
 ENV PYTHONDONTWRITEBYTECODE=1 \

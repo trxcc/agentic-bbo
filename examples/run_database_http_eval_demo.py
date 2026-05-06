@@ -3,7 +3,7 @@
 Tasks are defined under ``bbo/tasks/dbtune/`` and registered in ``bbo.tasks.registry``.
 This script calls ``create_dbtune_mariadb_task`` directly (same shape as ``bbo.run.run_single_experiment``).
 
-Prerequisite: start the API from ``bbo/tasks/dbtune/docker_mariadb/`` (see each task's ``environment.md``).
+Prerequisite: start the reusable dbtune MariaDB evaluator image (see each task's ``environment.md``).
 """
 
 from __future__ import annotations

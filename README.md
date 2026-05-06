@@ -192,11 +192,13 @@ uv run python -m bbo.run \
 
 ### BBOPlace HTTP task
 
-If your Docker installation includes Compose and you want the full task-side service stack (`bboplace` + MariaDB + surrogate HTTP), start it from the repository root with:
+If your Docker installation includes Compose and you want the full task-side service stack (`bboplace` + reusable dbtune MariaDB + reusable dbtune surrogate HTTP), start it from the repository root with:
 
 ```bash
-docker compose -f docker-compose.task-services.yml up -d --build
+docker compose -f docker-compose.task-services.yml up -d
 ```
+
+The dbtune images default to `fakerstrawberry/agentbbo-dbtune-mariadb-eval:v1` and `fakerstrawberry/agentbbo-dbtune-surrogate-http-py37:v1`. Override them with `AGENTBBO_DBTUNE_MARIADB_IMAGE` and `AGENTBBO_DBTUNE_SURROGATE_IMAGE`.
 
 To start only the published BBOPlace evaluator service, run:
 

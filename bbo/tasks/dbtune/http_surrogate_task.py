@@ -35,6 +35,7 @@ from .http_surrogate_specs import (
 _EVALUATE_PATH = "/evaluate"
 _HEALTH_PATH = "/health"
 _TASK_META_PATH = "/task"  # GET {base}/task/<canonical_task_id>
+_DEFAULT_IMAGE = "fakerstrawberry/agentbbo-dbtune-surrogate-http-py37:v1"
 
 
 def _build_unit_hypercube_space(feature_names: tuple[str, ...]) -> SearchSpace:
@@ -153,7 +154,7 @@ class HttpSurrogateKnobTask(Task):
         except RuntimeError as exc:
             raise RuntimeError(
                 f"dbtune surrogate service not reachable at {self._base_url!r} ({exc!s}). "
-                f"Build/run ``bbo/tasks/dbtune/docker_surrogate/`` (Python 3.7) or set {_ENV_SURROGATE_BASE}."
+                f"Start Docker image {_DEFAULT_IMAGE!r} (Python 3.7) or set {_ENV_SURROGATE_BASE}."
             ) from exc
 
     def evaluate(self, suggestion: TrialSuggestion) -> EvaluationResult:

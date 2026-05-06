@@ -2,7 +2,38 @@
 
 Offline knob surrogates are sklearn models stored as `.joblib`. **Training and unpickling** are pinned to a Python 3.7 + compatible `numpy` / `scikit-learn` stack; the main AgentBBO code targets Python 3.11+. This image isolates that stack and exposes a small JSON API similar in spirit to `bbo/tasks/dbtune/docker_mariadb/` (MariaDB + sysbench), but for **in-memory prediction only**.
 
-## Build
+## Reusable image
+
+The compose stack and docs default to the reusable Docker Hub tag:
+
+```bash
+docker pull fakerstrawberry/agentbbo-dbtune-surrogate-http-py37:v1
+docker rm -f agentbbo_surrogate_http 2>/dev/null
+docker run -d --name agentbbo_surrogate_http -p 8090:8090 \
+  fakerstrawberry/agentbbo-dbtune-surrogate-http-py37:v1
+```
+
+Default port **8090** (distinct from the MariaDB evaluator on **8080**). Override with `-e PORT=...`.
+
+Override the tag used by `docker-compose.task-services.yml` with:
+
+```bash
+export AGENTBBO_DBTUNE_SURROGATE_IMAGE=<your-dockerhub-user>/agentbbo-dbtune-surrogate-http-py37:v1
+```
+
+The published image includes the full `.joblib` files under `/app/assets`. A bind mount is only needed when you intentionally want to replace those bundled assets.
+
+## Build/export for publishing
+
+From the repository root, after staging the full `.joblib` files in `bbo/tasks/dbtune/assets/`, build both dbtune evaluator images and export them as tar packages:
+
+```bash
+scripts/package_dbtune_images.sh --tag v1
+```
+
+The script writes two tarballs under `dist/docker-images/` and prints the `docker load` / `docker push` commands for the upload machine. It fails if any full surrogate checkpoint is missing unless `--allow-missing-surrogate-assets` is passed.
+
+## Local build
 
 From **`bbo/tasks/dbtune`** (repository root, then `cd bbo/tasks/dbtune`):
 
@@ -10,22 +41,19 @@ From **`bbo/tasks/dbtune`** (repository root, then `cd bbo/tasks/dbtune`):
 docker build -f docker_surrogate/Dockerfile -t agentbbo-surrogate-http-py37:v1 .
 ```
 
-Download the required `.joblib` files from the **Google Drive** link in `../assets/README.md`, place them under `bbo/tasks/dbtune/assets/`, then build; or **mount** that folder at run time (see below) so the container sees the same files.
+For a custom local build, stage the required `.joblib` files under `bbo/tasks/dbtune/assets/` before building, or mount an alternate assets folder at run time (see below).
 
-**Unpickling / `scikit-learn` version:** the image pins `scikit-learn==0.21.3` in `docker/requirements.txt` because many old RF models reference `sklearn.ensemble.forest`, which is incompatible with scikit-learn 0.22+ in the way joblib was serialized. If `joblib.load` still fails, align `scikit-learn` and `numpy` in `requirements.txt` to the same versions as the environment where the model was **trained** (`pip show scikit-learn`), then rebuild the image (no cache: `docker build --no-cache`).
+**Unpickling / `scikit-learn` version:** the image pins `scikit-learn==0.21.3` in `docker_surrogate/requirements.txt` because many old RF models reference `sklearn.ensemble.forest`, which is incompatible with scikit-learn 0.22+ in the way joblib was serialized. If `joblib.load` still fails, align `scikit-learn` and `numpy` in `requirements.txt` to the same versions as the environment where the model was **trained** (`pip show scikit-learn`), then rebuild the image (no cache: `docker build --no-cache`).
 
 **`pandas`:** some checkouts include a `No module named 'pandas'` error during `joblib.load` (indirect import). The image includes `pandas` in `requirements.txt` for that case; if another missing module appears, add it the same way and rebuild.
 
-## Run
+## Run a local build
 
 ```bash
 docker rm -f agentbbo_surrogate_http 2>/dev/null
 docker run -d --name agentbbo_surrogate_http -p 8090:8090 \
-  -e AGENTIC_BBO_SYSBENCH5_SURROGATE=/app/assets/RF_SYSBENCH_5knob.joblib \
   agentbbo-surrogate-http-py37:v1
 ```
-
-Default port **8090** (distinct from the MariaDB evaluator on **8080**). Override with `-e PORT=...`.
 
 **Bind-mount assets** (no rebuild) example:
 
@@ -52,7 +80,7 @@ Run BBO with e.g. the legacy task id `--task knob_http_surrogate_sysbench_5` and
 - `AGENTBBO_HTTP_SURROGATE_BASE_URL` (default `http://127.0.0.1:8090`)
 - `AGENTBBO_HTTP_SURROGATE_TIMEOUT_SEC` (default `120`)
 
-The host decodes normalized knobs using local `bbo/tasks/dbtune/assets/knobs_*.json` (must stay consistent with what you used offline).
+The host asks the service for feature metadata and sends normalized vectors; `.joblib` loading and knob decoding happen inside the Python 3.7 service.
 
 ## Keeping server metadata in sync
 

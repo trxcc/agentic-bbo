@@ -31,8 +31,8 @@ uv run python examples/run_all_registered_tasks.py
 |------|------|
 | OS | 常见 **x86_64 Linux**（如 Ubuntu 22.04+）。macOS/Windows 需自行对应 Docker Desktop。 |
 | CPU / 内存 | 全量批跑会启动真实 **MariaDB + sysbench**，单评估可能较慢；**≥8 GB RAM** 更稳。 |
-| 磁盘 | 克隆仓库、Docker 镜像、`.joblib` 资产、结果目录 **`Agentbbo/runs/`**；**≥20 GB 空闲** 更从容。 |
-| 网络 | 需能 **`git clone`**、**`docker pull`**（BBOPlace 公共镜像）、以及（Surrogate 资产）**访问 Google Drive 分享链接**或事先拷贝文件。 |
+| 磁盘 | 克隆仓库、Docker 镜像、结果目录 **`Agentbbo/runs/`**；**≥20 GB 空闲** 更从容。 |
+| 网络 | 需能 **`git clone`**、**`docker pull`**（BBOPlace 与 dbtune 公共镜像）。 |
 | GPU | BBOPlace 等镜像在多数 smoke 下 **CPU 即可**；需要时再按各镜像说明加 `--gpus all`。 |
 
 ---
@@ -49,7 +49,7 @@ sudo apt-get install -y git
 
 ### 2.2 Docker Engine
 
-按 [Docker 官方文档](https://docs.docker.com/engine/install/) 安装 **Docker Engine**（**不要**和仅 Swarm/Compose 的极简包混淆，需有 `docker build` / `docker run`）。
+按 [Docker 官方文档](https://docs.docker.com/engine/install/) 安装 **Docker Engine**（**不要**和仅 Swarm/Compose 的极简包混淆，需有 `docker pull` / `docker run`；重新发布镜像时还需要 `docker build`）。
 
 将当前用户加入 `docker` 组（**重新登录**后生效），避免每命令 `sudo`：
 
@@ -64,9 +64,9 @@ sudo usermod -aG docker "$USER"
 docker version
 ```
 
-### 2.3 构建自定义镜像的依赖
+### 2.3 构建自定义镜像的依赖（仅维护者需要）
 
-构建 **MariaDB / Surrogate** 镜像时，部分 Dockerfile 会安装系统包。若 `docker build` 报缺 `gcc` 等，在 Ubuntu 上可：
+普通运行直接拉取可复用镜像，不需要本地构建。只有重新构建 **MariaDB / Surrogate** 镜像时，部分 Dockerfile 会安装系统包。若 `docker build` 报缺 `gcc` 等，在 Ubuntu 上可：
 
 ```bash
 sudo apt-get install -y build-essential
@@ -135,8 +135,8 @@ uv run python -c "import optuna; from rdkit import Chem; from bbo.tasks import A
 | 宿主机端口 | 用途 | 典型容器 / 说明 |
 |------------|------|------------------|
 | **8070** | BBOPlace 评估服务（**映射到容器 8080**） | 公共镜像 `gaozhixuan/bboplace-bench` |
-| **8080** | MariaDB + sysbench HTTP 评估 | **本地 `docker build`** 见 §7 |
-| **8090** | Sklearn 代理 HTTP 评估 | **本地 `docker build`** 见 §8 |
+| **8080** | MariaDB + sysbench HTTP 评估 | 可复用镜像 `fakerstrawberry/agentbbo-dbtune-mariadb-eval:v1` |
+| **8090** | Sklearn 代理 HTTP 评估 | 可复用镜像 `fakerstrawberry/agentbbo-dbtune-surrogate-http-py37:v1` |
 
 默认**环境变量**（与代码、database.md 一致，一般**不必**另设，除非改端口/主机名）：
 
@@ -153,13 +153,13 @@ export AGENTBBO_HTTP_EVAL_TIMEOUT_SEC=600
 export AGENTBBO_HTTP_SURROGATE_TIMEOUT_SEC=300
 ```
 
-如果你的 Docker 安装提供 `docker compose`，并且你希望把三个服务一起拉起，而不是分别执行 `docker pull` / `docker build` / `docker run`，可以直接在仓库根目录执行：
+如果你的 Docker 安装提供 `docker compose`，并且你希望把三个服务一起拉起，可以直接在仓库根目录执行：
 
 ```bash
-docker compose -f docker-compose.task-services.yml up -d --build
+docker compose -f docker-compose.task-services.yml up -d
 ```
 
-这个 compose 文件遵循与代码相同的端口约定：BBOPlace `8070`、MariaDB `8080`、Surrogate `8090`。
+这个 compose 文件遵循与代码相同的端口约定：BBOPlace `8070`、MariaDB `8080`、Surrogate `8090`。如需使用你重新发布的镜像 tag，设置 `AGENTBBO_DBTUNE_MARIADB_IMAGE` / `AGENTBBO_DBTUNE_SURROGATE_IMAGE`。
 
 ---
 
@@ -178,13 +178,12 @@ docker run -d --name agentbbo_bboplace -p 8070:8080 gaozhixuan/bboplace-bench
 
 ## 7. 启动二：MariaDB HTTP 评估器（`8080`）
 
-在 **`Agentbbo/bbo/tasks/dbtune/docker_mariadb/`** 下构建，并**映射 8080:8080**（与 `database.md` 一致）：
+默认直接复用已发布镜像，并**映射 8080:8080**（与 `database.md` 一致）：
 
 ```bash
-cd Agentbbo/bbo/tasks/dbtune/docker_mariadb
-docker build -t agentbbo-http-mariadb-eval:v1 .
+docker pull fakerstrawberry/agentbbo-dbtune-mariadb-eval:v1
 docker rm -f agentbbo_http_mariadb_eval 2>/dev/null
-docker run -d --name agentbbo_http_mariadb_eval -p 8080:8080 agentbbo-http-mariadb-eval:v1
+docker run -d --name agentbbo_http_mariadb_eval -p 8080:8080 fakerstrawberry/agentbbo-dbtune-mariadb-eval:v1
 ```
 
 **健康检查**（应见 JSON 含 `"status":"ok"` 等）：
@@ -199,38 +198,17 @@ curl -sS http://127.0.0.1:8080/health
 
 ## 8. 启动三：Surrogate HTTP 评估器（`8090`）
 
-### 8.1 资产 `*.joblib`（**强烈建议**）
+### 8.1 拉取与运行
 
-`bbo/tasks/dbtune/assets/README.md` 说明：大 **`*.joblib` 不在 Git 中**；需从**文档内 Google Drive 链接**下载，放到：
+默认镜像已经把六个 surrogate checkpoint 和 `knobs_*.json` 打进 `/app/assets`，宿主机不需要准备 `.joblib` 文件。
 
-```text
-Agentbbo/bbo/tasks/dbtune/assets/
-```
-
-并与表里 **文件名** 一致。否则镜像内缺模型，**部分 `knob_http_surrogate_*` 在运行时会失败**。  
-仅做 **sysbench-5 最小烟测** 时，仓库提供生成占位小模型的方式（见该 README 的 `build_placeholder_surrogate`），**不能**保证覆盖全部 6 个 HTTP surrogate 名。
-
-### 8.2 构建与运行
-
-**“为什么只写了一个 joblib 环境变量？”——不需要只加载一个；其它任务也会用各自的文件。**
-
-- 镜像的 **`Dockerfile` 会 `COPY assets /app/assets`**：你在 §8.1 里放进 `bbo/tasks/dbtune/assets/` 的 **整目录**（多个 `*.joblib`、各 `knobs_*.json`）都会打进镜像。  
-- **`docker_surrogate/server.py` 的 `TASK_DEFS`** 为每个 canonical 任务写好了**默认文件名**（如 `SYSBENCH_all.joblib`、`pg_5.joblib` 等）与可选的**覆盖用环境变量名**（`AGENTIC_BBO_SYSBENCH_ALL_SURROGATE` 等）。  
-- 对某个 `POST /evaluate` 的 `task_id`，服务会在容器内按默认路径 **`/app/assets/<默认文件名>`** 去 `joblib.load`；**只有**当你要把某个模型改指到**别的路径**时，才设对应的 `AGENTIC_BBO_*`（与 `bbo/tasks/dbtune/assets/README.md` 表一致）。  
-- 因此下面 **`docker run` 不自带任何 `-e` 也成立**：与默认 `COPY` 布局一致时，**六个** surrogate 任务各自会在**第一次**用到该 `task_id` 时从 `/app/assets/` 加载对应文件；不是“只装了一个 `RF_SYSBENCH_5knob`”。
-
-**构建目录必须是 `bbo/tasks/dbtune`（父目录）**（与 `database.md`、`docker_surrogate/README.md` 一致）：
+默认直接复用已发布镜像：
 
 ```bash
-cd Agentbbo/bbo/tasks/dbtune
-docker build -f docker_surrogate/Dockerfile -t agentbbo-surrogate-http-py37:v1 .
+docker pull fakerstrawberry/agentbbo-dbtune-surrogate-http-py37:v1
 docker rm -f agentbbo_surrogate_http 2>/dev/null
-docker run -d --name agentbbo_surrogate_http -p 8090:8090 agentbbo-surrogate-http-py37:v1
+docker run -d --name agentbbo_surrogate_http -p 8090:8090 fakerstrawberry/agentbbo-dbtune-surrogate-http-py37:v1
 ```
-
-（若某个模型在**其他路径**，再按需加一行，例如  
-`-e AGENTIC_BBO_SYSBENCH5_SURROGATE=/path/in/container/to/custom.joblib`；  
-或**挂载** `-v /你的/assets:/app/assets:ro` 用宿主机上的整套文件替换镜像内 `assets`。）
 
 **健康检查**：
 
@@ -240,7 +218,7 @@ curl -sS http://127.0.0.1:8090/health
 
 > 该镜像为 **Python 3.7** 栈，与宿主机 3.11 分离，用于反序列化旧 sklearn；**与宿主机** `bbo` 的 **HTTP 任务** 通过 JSON 协议对接即可。
 
-若 `joblib` / sklearn 反序列化失败，见 **`docker_surrogate/README.md` 的 “Unpickling / scikit-learn”** 与 **重建镜像** 说明（版本对齐、`--no-cache` 等）。
+若 `GET /task/...` 返回缺模型或 `joblib` / sklearn 反序列化错误，先确认拉取的是完整发布镜像。重新发布镜像时，见 **`docker_surrogate/README.md` 的 “Unpickling / scikit-learn”** 与 `scripts/package_dbtune_images.sh` 说明。
 
 ---
 
@@ -294,7 +272,7 @@ uv run python examples/run_all_registered_tasks.py
 | `import optuna` 失败 | 未 `uv sync --extra optuna`。 |
 | `rdkit` / molecule 相关失败 | 未加 **`--extra bo-tutorial`**。 |
 | MariaDB 评估超时 | 调大 `AGENTBBO_HTTP_EVAL_TIMEOUT_SEC`；或减轻负载（`--max-evaluations`、先用 5-knob 任务等）。 |
-| Surrogate 503 / 反序列化错误 | 缺/坏 `.joblib`；按 `assets/README.md` 重下；或对齐 `docker_surrogate` 的 sklearn 版本并重建镜像。 |
+| Surrogate 503 / 反序列化错误 | 镜像不完整或自建镜像内 checkpoint 有问题；重新拉取发布镜像，或按 `docker_surrogate/README.md` 重新构建/发布。 |
 | BBOPlace 连接失败 | 8070 未映射；`BBOPLACE_BASE_URL` 是否指向**宿主机 8070**（不是 8080）。 |
 | 权限 / `denied` | 用户未进 `docker` 组，或应使用 `sudo docker`（不推荐长期使用）。 |
 
@@ -302,12 +280,12 @@ uv run python examples/run_all_registered_tasks.py
 
 ## 12. 最小依赖清单（复制粘贴用）
 
-- [ ] Git、Docker、可 `docker build` / `docker run`  
+- [ ] Git、Docker、可 `docker pull` / `docker run`  
 - [ ] `uv`、项目 `cd Agentbbo`  
 - [ ] `uv sync --extra dev --extra task-host`  
 - [ ] BBOPlace：`docker pull` + `run -d -p 8070:8080`  
-- [ ] MariaDB 评估：`docker_mariadb` 下 build + `run -d -p 8080:8080`，`curl /health`  
-- [ ] Surrogate 评估：`dbtune` 下 build（assets 已就位）+ `run -d -p 8090:8090`，`curl /health`  
+- [ ] MariaDB 评估：拉取 `fakerstrawberry/agentbbo-dbtune-mariadb-eval:v1` + `run -d -p 8080:8080`，`curl /health`  
+- [ ] Surrogate 评估：拉取 `fakerstrawberry/agentbbo-dbtune-surrogate-http-py37:v1` + `run -d -p 8090:8090`，`curl /health`  
 - [ ] `uv run python examples/run_all_registered_tasks.py --list` 探针为三路 ok  
 - [ ] 正式：`uv run python examples/run_all_registered_tasks.py`  
 
@@ -325,6 +303,7 @@ uv run python examples/run_all_registered_tasks.py
 | `bbo/task_descriptions/bboplace_bench/environment.md` | BBOPlace 环境与 `BBOPLACE_BASE_URL` |
 | `bbo/tasks/dbtune/docker_mariadb/` | MariaDB 镜像与构建说明 |
 | `bbo/tasks/dbtune/docker_surrogate/README.md` | Surrogate 镜像与 API |
-| `bbo/tasks/dbtune/assets/README.md` | `*.joblib` 下载与路径 |
+| `bbo/tasks/dbtune/assets/README.md` | 维护者本地 checkpoint 与镜像重建说明 |
+| `docs/dbtune_docker_images.md` | 两个 dbtune 镜像的打包、导出与上传说明 |
 
 完成以上步骤后，在新服务器上**应**具备与本文写作时设计一致的先决条件，以运行 `run_all_registered_tasks.py` 的**全任务**（在默认 `auto` 探测与**未**使用 `--skip-http` / `--skip-bboplace` 等的前提下）。若仓库后续增加了新的硬依赖，请同步更新本文件。

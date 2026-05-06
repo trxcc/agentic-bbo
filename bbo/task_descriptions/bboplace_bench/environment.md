@@ -62,7 +62,7 @@ uv run python -m bbo.run --algorithm random_search --task bboplace_bench --max-e
 If your Docker installation includes Compose and you also want the MariaDB and surrogate evaluators, start the full sidecar stack from the repository root with:
 
 ```bash
-docker compose -f docker-compose.task-services.yml up -d --build
+docker compose -f docker-compose.task-services.yml up -d
 ```
 
 ## Non-Docker local bridge

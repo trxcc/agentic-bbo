@@ -1,4 +1,4 @@
 # Background
 
-PostgreSQL 5-knob surrogate. Offline sklearn RF; download ``pg_5.joblib`` from the link in ``bbo/tasks/dbtune/assets/README.md``.
-PostgreSQL knobs; copy ``pg_5.joblib``. Objective name is ``throughput`` for API consistency.
+PostgreSQL 5-knob surrogate. The registered HTTP wrapper evaluates through the reusable Python 3.7 sidecar image `fakerstrawberry/agentbbo-dbtune-surrogate-http-py37:v1`, which bundles the RF checkpoint.
+The objective name is ``throughput`` for API consistency.

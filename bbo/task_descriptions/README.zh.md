@@ -58,7 +58,7 @@ bbo/task_descriptions/<task_name>/
 - `bbo/task_descriptions/bboplace_bench/`：通过评估服务接入 BBOPlace-Bench，并附带明确环境说明的任务文档
 - `bbo/task_descriptions/collaborator_problem_demo/`：更完整的协作者封装示例
 - `bbo/task_descriptions/_template/`：可直接复制的新任务模板
-- **dbtune MariaDB / sysbench（八个子任务）：**目录名形如 `knob_http_mariadb_sysbench_<workload>_<5|all>/`，其中 `<workload>` 为 `read_only`、`write_only`、`read_write`、`point_select`，`<5|all>` 分别对应 SHAP top-5 旋钮 JSON 与全量约 197 维旋钮。每个目录含完整英文说明及对应 `*.zh.md`。若修改 `bbo/tasks/dbtune/docker_mariadb/` 内评估服务，需重建镜像。
-- **dbtune surrogate：**如 `knob_surrogate_sysbench_5/`、`knob_surrogate_job_5/` 等；说明 sklearn 代理设定。数据与实现已并入 `bbo/tasks/dbtune/`（`assets/`、进程内任务、可选 `docker_surrogate/`）。文内路径应写 `bbo/tasks/dbtune/...`（原 `database/`、`surrogate/` 已移除合并）。
+- **dbtune MariaDB / sysbench（八个子任务）：**目录名形如 `knob_http_mariadb_sysbench_<workload>_<5|all>/`，其中 `<workload>` 为 `read_only`、`write_only`、`read_write`、`point_select`，`<5|all>` 分别对应 SHAP top-5 旋钮 JSON 与全量约 197 维旋钮。每个目录含完整英文说明及对应 `*.zh.md`。默认评估镜像是 `fakerstrawberry/agentbbo-dbtune-mariadb-eval:v1`；若修改评估服务，用 `scripts/package_dbtune_images.sh` 重新构建/导出并发布新 tag。
+- **dbtune surrogate：**如 `knob_surrogate_sysbench_5/`、`knob_surrogate_job_5/` 等；说明 sklearn 代理设定。数据与实现已并入 `bbo/tasks/dbtune/`（`assets/`、进程内任务、可选 `docker_surrogate/`）。注册的 `knob_http_surrogate_*` 任务使用可复用 sidecar 镜像 `fakerstrawberry/agentbbo-dbtune-surrogate-http-py37:v1`。文内路径应写 `bbo/tasks/dbtune/...`（原 `database/`、`surrogate/` 已移除合并）。
 
 像 `bbo/task_descriptions/autoresearch_train/` 这样的遗留目录目前只作为历史材料保留，不再是推荐 schema。

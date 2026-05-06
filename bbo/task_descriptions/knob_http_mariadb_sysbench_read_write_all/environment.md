@@ -1,15 +1,16 @@
 # Environment
 
-## Shared Docker build (all eight dbtune MariaDB/sysbench tasks)
+## Shared reusable Docker image (all eight dbtune MariaDB/sysbench tasks)
 
 ```bash
-cd bbo/tasks/dbtune/docker_mariadb
-docker build -t agentbbo-http-mariadb-eval:v1 .
+docker pull fakerstrawberry/agentbbo-dbtune-mariadb-eval:v1
 docker rm -f agentbbo_http_mariadb_eval 2>/dev/null
-docker run -d --name agentbbo_http_mariadb_eval -p 8080:8080 agentbbo-http-mariadb-eval:v1
+docker run -d --name agentbbo_http_mariadb_eval -p 8080:8080 fakerstrawberry/agentbbo-dbtune-mariadb-eval:v1
 ```
 
-After pulling changes to `server.py` (notably the `workload` field), **rebuild** the image so every task can select its sysbench test.
+If the evaluator implementation changes, rebuild and export the two dbtune images with `scripts/package_dbtune_images.sh`, then publish the new tag before using it for comparisons.
+
+`docker-compose.task-services.yml` uses the same image by default. Override it with `AGENTBBO_DBTUNE_MARIADB_IMAGE` if you publish under another Docker Hub namespace or tag.
 
 ## Client-side environment (Python)
 

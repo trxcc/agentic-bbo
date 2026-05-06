@@ -22,7 +22,7 @@ The image does **not** replace the separate legacy Python 3.7 surrogate service 
 
 - `knob_http_surrogate_*`
 
-Those surrogate-service tasks still require the dedicated `docker_surrogate` image because the old checkpoints are tied to a legacy sklearn/joblib ABI.
+Those surrogate-service tasks still require the dedicated Python 3.7 image `fakerstrawberry/agentbbo-dbtune-surrogate-http-py37:v1` because the old checkpoints are tied to a legacy sklearn/joblib ABI.
 
 ## Pull the image
 

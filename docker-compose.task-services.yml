@@ -7,18 +7,12 @@ services:
 
   dbtune-mariadb:
     container_name: agentbbo_http_mariadb_eval
-    build:
-      context: ./bbo/tasks/dbtune/docker_mariadb
-      dockerfile: Dockerfile
+    image: ${AGENTBBO_DBTUNE_MARIADB_IMAGE:-fakerstrawberry/agentbbo-dbtune-mariadb-eval:v1}
     ports:
       - "8080:8080"
 
   dbtune-surrogate:
     container_name: agentbbo_surrogate_http
-    build:
-      context: ./bbo/tasks/dbtune
-      dockerfile: docker_surrogate/Dockerfile
+    image: ${AGENTBBO_DBTUNE_SURROGATE_IMAGE:-fakerstrawberry/agentbbo-dbtune-surrogate-http-py37:v1}
     ports:
       - "8090:8090"
-    volumes:
-      - ./bbo/tasks/dbtune/assets:/app/assets:ro

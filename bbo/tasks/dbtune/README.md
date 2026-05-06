@@ -15,10 +15,32 @@ clear subfolders.
 | `offline_surrogate_task.py` | In-process sklearn surrogate: `SurrogateKnobTask`. |
 | `http_surrogate_task.py` | Remote evaluator service (Python 3.7 Docker) for the same surrogates. |
 | `cli_*.py` | Hooks for `bbo.tasks.registry` / `python -m bbo.run` (no changes to `bbo.run` needed for new task ids). |
-| `assets/` | Shared `knobs_*.json` and downloaded `*.joblib` (large files are not committed; see `assets/README.md`). |
-| `docker_mariadb/` | Image for the **live** MariaDB + sysbench evaluator (Flask API). |
-| `docker_surrogate/` | Image for **offline** sklearn inference via JSON (isolated old numpy/sklearn). |
+| `assets/` | Shared `knobs_*.json`; local `*.joblib` checkpoints are only needed for image rebuilds or in-process surrogate use. |
+| `docker_mariadb/` | Dockerfile and docs for the **live** MariaDB + sysbench evaluator (Flask API). |
+| `docker_surrogate/` | Dockerfile and docs for **offline** sklearn inference via JSON (isolated old numpy/sklearn). |
 | `gen_task_markdown.py` | One-off generator for `bbo/task_descriptions/knob_http_mariadb_sysbench_*/` packs. |
+
+## Reusable evaluator images
+
+The default sidecar images are:
+
+```text
+fakerstrawberry/agentbbo-dbtune-mariadb-eval:v1
+fakerstrawberry/agentbbo-dbtune-surrogate-http-py37:v1
+```
+
+Start the shared stack from the repository root with:
+
+```bash
+docker compose -f docker-compose.task-services.yml up -d
+```
+
+Override image refs with `AGENTBBO_DBTUNE_MARIADB_IMAGE` and `AGENTBBO_DBTUNE_SURROGATE_IMAGE`.
+To build both images locally and export the two tar packages for Docker Hub upload, run:
+
+```bash
+scripts/package_dbtune_images.sh --tag v1
+```
 
 ## Import surface
 

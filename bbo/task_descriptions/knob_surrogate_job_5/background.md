@@ -1,4 +1,4 @@
 # Background
 
-JOB 5-knob surrogate. Offline sklearn RF; download ``RF_JOB_5knob.joblib`` from the link in ``bbo/tasks/dbtune/assets/README.md``.
-Imdb JOB workload; surrogate predicts query latency. Copy ``RF_JOB_5knob.joblib``.
+JOB 5-knob surrogate. The registered HTTP wrapper evaluates through the reusable Python 3.7 sidecar image `fakerstrawberry/agentbbo-dbtune-surrogate-http-py37:v1`, which bundles the RF checkpoint.
+The IMDb JOB workload surrogate predicts query latency from decoded database knobs.

@@ -24,6 +24,9 @@ dist/
 artifacts/
 runs/
 
+# Large dbtune surrogate checkpoints are bundled in the published Docker image.
+bbo/tasks/dbtune/assets/*.joblib
+
 # Editor and OS files
 .DS_Store
 .idea/

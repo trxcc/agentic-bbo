@@ -2,7 +2,7 @@
 
 本文介绍如何在本仓库中运行 **knob（数据库参数调优）surrogate 实验**。
 
-这些任务是 **离线（offline）** benchmark：底层是序列化的 sklearn 模型（`*.joblib`）。它把归一化后的 knob 向量 \(x \in [0,1]^d\) 映射为预测指标（例如 throughput 或 latency）。**不需要真实数据库实例**。
+这些任务是 **离线（offline）** benchmark：底层是序列化的 sklearn 模型（`*.joblib`）。默认运行方式是 HTTP sidecar：模型和旧版 sklearn 运行时已经封在 `fakerstrawberry/agentbbo-dbtune-surrogate-http-py37:v1` 镜像内，宿主机只发送归一化 knob 向量并接收预测指标。**不需要真实数据库实例，也不需要在宿主机 assets 目录放 `.joblib`。**
 
 ### 你会用到的入口
 
@@ -14,13 +14,12 @@
 ### 前置条件
 
 - **Python 环境**：推荐用仓库管理的环境（`uv`）
-- **surrogate 依赖**：环境里必须有 `joblib`、`scikit-learn`
-- **模型 checkpoint**：需要一个可用的 `*.joblib`（Sysbench-5 支持仓库自带的 placeholder）
+- **Docker sidecar**：启动 `fakerstrawberry/agentbbo-dbtune-surrogate-http-py37:v1`，默认监听 `127.0.0.1:8090`
 
 用 `uv` 安装（推荐）：
 
 ```bash
-uv sync --extra dev --extra surrogate
+uv sync --extra dev --extra task-host
 ```
 
 ### 可用的 surrogate knob 任务
@@ -44,33 +43,25 @@ uv run python -c "from bbo.tasks import HTTP_SURROGATE_TASK_IDS; print(*HTTP_SUR
 `knob_surrogate_sysbench_all`、`knob_surrogate_job_5`、`knob_surrogate_job_all`、
 `knob_surrogate_pg_5`、`knob_surrogate_pg_20`；CLI 上对应 `knob_http_surrogate_...`（多 `http_` 前缀）。
 
-### 准备 `*.joblib` surrogate 文件
+### 启动 surrogate sidecar
 
-真实的大模型 checkpoint **不会**提交到仓库。请从**发布网盘**下载与任务对应的文件（见下），再放入 `bbo/tasks/dbtune/assets/` 或使用环境变量指向本地路径。
-
-**下载地址**（与仓库 `assets/README.md` 中一致）：
-
-<https://drive.google.com/drive/folders/1qalYsF7fuCB6MewOTPvr8DDZzIj7tIRt?usp=sharing>
-
-- **方式 A（推荐）**：从上述网盘下载所需 `*.joblib`，保存到 `bbo/tasks/dbtune/assets/`，**文件名**须与 `bbo/tasks/dbtune/assets/README.md` 中的表格一致。
-- **方式 B**：设置环境变量，指向本机已下载的 `.joblib` 的**绝对路径**（见下表/同页 README）。
-
-文件名 ↔ `task_id` ↔ 环境变量 的对应关系见 `bbo/tasks/dbtune/assets/README.md`。
-
-#### 示例：Sysbench 5-knob RF
-
-从网盘下载 `RF_SYSBENCH_5knob.joblib` 后，放入 assets（**不需要**环境变量）：
+默认使用已经封装好 checkpoint 的 Docker Hub 镜像：
 
 ```bash
-# 将下载好的文件放入（路径按你本机实际下载位置调整）
-cp /你的下载目录/RF_SYSBENCH_5knob.joblib bbo/tasks/dbtune/assets/RF_SYSBENCH_5knob.joblib
+docker pull fakerstrawberry/agentbbo-dbtune-surrogate-http-py37:v1
+docker rm -f agentbbo_surrogate_http 2>/dev/null
+docker run -d --name agentbbo_surrogate_http -p 8090:8090 \
+  fakerstrawberry/agentbbo-dbtune-surrogate-http-py37:v1
 ```
 
-或用环境变量覆盖路径：
+健康检查：
 
 ```bash
-export AGENTIC_BBO_SYSBENCH5_SURROGATE=/absolute/path/to/RF_SYSBENCH_5knob.joblib
+curl -sS http://127.0.0.1:8090/health
+curl -sS http://127.0.0.1:8090/task/knob_surrogate_sysbench_5
 ```
+
+只有在你要重新构建/发布 surrogate 镜像，或直接调用未注册的 in-process `create_surrogate_knob_task(...)` 时，才需要本地 `.joblib` 文件。
 
 ### 运行 knob 实验（推荐用 `bbo.run`）
 
@@ -130,7 +121,7 @@ runs/demo/<task>/<algorithm>/seed_<seed>/
 
 | 方式 | `task` 命名 | 说明 |
 |------|------------|------|
-| 进程内 | `create_surrogate_knob_task("knob_surrogate_sysbench_5", ...)` | 本机 `joblib` + 本机 `predict`；**不在** `bbo.run` / `ALL_TASK_NAMES` 注册。 |
+| 进程内 | `create_surrogate_knob_task("knob_surrogate_sysbench_5", ...)` | 本机 `joblib` + 本机 `predict`；只用于开发/维护，**不在** `bbo.run` / `ALL_TASK_NAMES` 注册。 |
 | 侧车 HTTP | `knob_http_surrogate_sysbench_5` 等 | 与**真实数据库任务同一思路**：BBO 只产生归一化点，**`POST` 发一个 `x`（`[0,1]^d` 列表）**，**容器里解码 knobs + 代理模型，返回一个标量 `y`**。模型与 sklearn 3.7 环境只在镜像里。 |
 
 **HTTP 合约（与「真实库：发配置、回吞吐」平行）**：
@@ -140,7 +131,7 @@ runs/demo/<task>/<algorithm>/seed_<seed>/
 
 **运行**（默认 `http://127.0.0.1:8090`，与数据库评估器 8080 错开）：
 
-- 起容器：见 `bbo/tasks/dbtune/docker_surrogate/README.md`（在 `bbo/tasks/dbtune` 下 `docker build -f docker_surrogate/Dockerfile ...`）。
+- 起容器：优先使用可复用镜像 `fakerstrawberry/agentbbo-dbtune-surrogate-http-py37:v1`，详见 `bbo/tasks/dbtune/docker_surrogate/README.md`。
 - 环境变量（宿主机）：`AGENTBBO_HTTP_SURROGATE_BASE_URL`、`AGENTBBO_HTTP_SURROGATE_TIMEOUT_SEC`（默认 120）
 - 列出 HTTP 型 task id：
 
@@ -153,14 +144,13 @@ export AGENTBBO_HTTP_SURROGATE_BASE_URL=http://127.0.0.1:8090
 uv run python -m bbo.run --task knob_http_surrogate_sysbench_5 --algorithm random_search --max-evaluations 20 --seed 1
 ```
 
-**注意**：`.joblib` 与 `knobs_*.json` 应打进或挂载到容器的 `/app/assets`；宿主机 BBO 仅通过 `GET /task/...` 取维度/名字，**不**在 3.11 上反序列化模型。
+**注意**：默认发布镜像已经包含 `.joblib` 与 `knobs_*.json`。宿主机 BBO 仅通过 `GET /task/...` 取维度/名字，**不**在 3.11 上反序列化模型。
 
 ### 常见问题排查
 
-- **`joblib.load` 报 `EOF` / `reading array data`**
-  - 通常是 `.joblib` 文件不完整（复制了一半、或 Git LFS 没拉全）。请重新拷贝完整的 `*.joblib`。
-- **`ModuleNotFoundError: joblib` 或 `sklearn`**
-  - 安装 surrogate 依赖：`uv sync --extra surrogate`
+- **`GET /task/...` 返回 503 或 `joblib.load` 错误**
+  - 检查你拉取的是完整发布镜像 `fakerstrawberry/agentbbo-dbtune-surrogate-http-py37:v1`；若使用自建镜像，则重新用完整 checkpoint 构建。
+- **HTTP 连接失败**
+  - 确认容器已启动，且 `AGENTBBO_HTTP_SURROGATE_BASE_URL` 指向 `http://127.0.0.1:8090` 或实际服务地址。
 - **使用 `--algorithm pycma` 时提示 `ModuleNotFoundError: cma`**
   - 你需要先在环境里安装 `cma` 依赖，然后再使用 `pycma`。
-

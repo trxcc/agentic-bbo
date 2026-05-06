@@ -177,11 +177,13 @@ uv run python -m bbo.run \
 
 ### BBOPlace HTTP 任务
 
-如果你的 Docker 安装带有 Compose，并且你想把 `bboplace`、MariaDB 评估器和 surrogate 评估器一起拉起，可以在仓库根目录执行：
+如果你的 Docker 安装带有 Compose，并且你想把 `bboplace`、可复用 MariaDB 评估器和可复用 surrogate 评估器一起拉起，可以在仓库根目录执行：
 
 ```bash
-docker compose -f docker-compose.task-services.yml up -d --build
+docker compose -f docker-compose.task-services.yml up -d
 ```
+
+dbtune 镜像默认使用 `fakerstrawberry/agentbbo-dbtune-mariadb-eval:v1` 和 `fakerstrawberry/agentbbo-dbtune-surrogate-http-py37:v1`。如需换成你自己上传的 tag，可设置 `AGENTBBO_DBTUNE_MARIADB_IMAGE` 和 `AGENTBBO_DBTUNE_SURROGATE_IMAGE`。
 
 如果只想单独启动公开发布的 BBOPlace evaluator service，再执行：
 

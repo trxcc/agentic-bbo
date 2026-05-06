@@ -1,9 +1,10 @@
 """
-Registry of surrogate benchmarks backed by ``*.joblib`` files under ``bbo/tasks/dbtune/assets/``.
+Registry of surrogate benchmarks backed by legacy sklearn ``*.joblib`` files.
 
-Large checkpoints are not in git: download from the URL in ``assets/README.md`` (same filenames
-as in ``SURROGATE_BENCHMARKS`` / ``default_joblib_filename``). ``knobs_*.json`` live in
-``assets/`` and define each benchmark's search space.
+Registered HTTP tasks use the published Python 3.7 sidecar image, which bundles
+the full checkpoints. Local ``*.joblib`` files under ``bbo/tasks/dbtune/assets/``
+are only needed for image rebuilds or direct in-process surrogate use.
+``knobs_*.json`` live in ``assets/`` and define each benchmark's search space.
 """
 
 from __future__ import annotations

@@ -62,7 +62,7 @@ uv run python -m bbo.run --algorithm random_search --task bboplace_bench --max-e
 如果你的 Docker 安装带有 Compose，并且你还想同时拉起 MariaDB 和 surrogate evaluator，可以在仓库根目录执行：
 
 ```bash
-docker compose -f docker-compose.task-services.yml up -d --build
+docker compose -f docker-compose.task-services.yml up -d
 ```
 
 ## 非 Docker 的本地 bridge

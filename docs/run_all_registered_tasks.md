@@ -95,7 +95,7 @@
 
 - Python **≥ 3.11**（见 `pyproject.toml`）。
 - 推荐统一宿主环境：`uv sync --extra dev --extra task-host`
-- 若你的 Docker 安装带有 Compose，可在仓库根目录执行 `docker compose -f docker-compose.task-services.yml up -d --build` 一次拉起三个任务服务
+- 若你的 Docker 安装带有 Compose，可在仓库根目录执行 `docker compose -f docker-compose.task-services.yml up -d` 一次拉起三个任务服务
 - 在仓库根目录：
 
   ```bash

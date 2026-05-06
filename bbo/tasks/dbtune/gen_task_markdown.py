@@ -24,6 +24,7 @@ from bbo.tasks.dbtune.http_mariadb_specs import (  # noqa: E402
 )
 
 _TASK_DESC = _REPO / "bbo" / "task_descriptions"
+_MARIADB_IMAGE = "fakerstrawberry/agentbbo-dbtune-mariadb-eval:v1"
 
 _WORKLOAD_COPY: dict[str, tuple[str, str, str]] = {
     "read_only": (
@@ -76,7 +77,7 @@ def _write_one(spec_id: str) -> None:
 
     background = f"""# Background
 
-`{spec.task_id}` is a **real** MariaDB benchmark in *AgentBBO*. The optimizer proposes a point in the unit hypercube; the packaged evaluator service (Flask inside the image built from `bbo/tasks/dbtune/docker_mariadb/`) writes `mysqld` knobs, restarts MariaDB, and runs **sysbench**, returning a scalar **throughput** score.
+`{spec.task_id}` is a **real** MariaDB benchmark in *AgentBBO*. The optimizer proposes a point in the unit hypercube; the packaged evaluator service (Flask inside the reusable image `{_MARIADB_IMAGE}`) writes `mysqld` knobs, restarts MariaDB, and runs **sysbench**, returning a scalar **throughput** score.
 
 This packaging combines: **{wl_en}** with **{knob_en}**
 
@@ -186,16 +187,17 @@ When reporting results, list **image digest / git commit**, this `task_id`, and 
 
     env_md = f"""# Environment
 
-## Shared Docker build (all eight dbtune MariaDB/sysbench tasks)
+## Shared reusable Docker image (all eight dbtune MariaDB/sysbench tasks)
 
 ```bash
-cd bbo/tasks/dbtune/docker_mariadb
-docker build -t agentbbo-http-mariadb-eval:v1 .
+docker pull {_MARIADB_IMAGE}
 docker rm -f agentbbo_http_mariadb_eval 2>/dev/null
-docker run -d --name agentbbo_http_mariadb_eval -p 8080:8080 agentbbo-http-mariadb-eval:v1
+docker run -d --name agentbbo_http_mariadb_eval -p 8080:8080 {_MARIADB_IMAGE}
 ```
 
-After pulling changes to `server.py` (notably the `workload` field), **rebuild** the image so every task can select its sysbench test.
+If the evaluator implementation changes, rebuild and export the two dbtune images with `scripts/package_dbtune_images.sh`, then publish the new tag before using it for comparisons.
+
+`docker-compose.task-services.yml` uses the same image by default. Override it with `AGENTBBO_DBTUNE_MARIADB_IMAGE` if you publish under another Docker Hub namespace or tag.
 
 ## Client-side environment (Python)
 

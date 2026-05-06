@@ -15,7 +15,7 @@ def main() -> None:
         "--task",
         default="knob_http_surrogate_sysbench_5",
         choices=sorted(HTTP_SURROGATE_TASK_IDS),
-        help="HTTP surrogate service task id (run docker_surrogate; large models e.g. *_20 need a complete .joblib on the service).",
+        help="HTTP surrogate service task id (run the reusable Python 3.7 surrogate image on port 8090).",
     )
     parser.add_argument(
         "--algorithm",

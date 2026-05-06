@@ -10,5 +10,5 @@ Use the shared MariaDB evaluator setup documented in:
 If your Docker installation includes Compose, you can also start all three sidecars from the repository root with:
 
 ```bash
-docker compose -f docker-compose.task-services.yml up -d --build
+docker compose -f docker-compose.task-services.yml up -d
 ```

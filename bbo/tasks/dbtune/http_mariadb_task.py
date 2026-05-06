@@ -38,6 +38,7 @@ _ENV_BASE_URL = "AGENTBBO_HTTP_EVAL_BASE_URL"
 _ENV_TIMEOUT = "AGENTBBO_HTTP_EVAL_TIMEOUT_SEC"
 _DEFAULT_BASE_URL = "http://127.0.0.1:8080"
 _DEFAULT_TIMEOUT = 300.0
+_DEFAULT_IMAGE = "fakerstrawberry/agentbbo-dbtune-mariadb-eval:v1"
 
 
 def _build_unit_hypercube_space(feature_names: tuple[str, ...]) -> SearchSpace:
@@ -82,8 +83,9 @@ class HttpDatabaseKnobTask(Task):
     """
     Normalized ``[0,1]^d`` knobs -> decode -> evaluator ``POST /evaluate`` -> TPS (maximize).
 
-    Requires a running container built from ``bbo/tasks/dbtune/docker_mariadb/`` (evaluator
-    must accept ``workload`` in the JSON body; see ``server.py`` in that directory).
+    Requires a running compatible evaluator container, normally
+    ``fakerstrawberry/agentbbo-dbtune-mariadb-eval:v1``. The evaluator must accept
+    ``workload`` in the JSON body; see ``docker_mariadb/server.py``.
     """
 
     def __init__(self, config: HttpDatabaseKnobTaskConfig) -> None:
@@ -145,7 +147,7 @@ class HttpDatabaseKnobTask(Task):
         except RuntimeError as exc:
             raise RuntimeError(
                 f"dbtune MariaDB evaluator service not reachable at {self._base_url!r} ({exc}). "
-                f"Start the Docker image from bbo/tasks/dbtune/docker_mariadb/ or set {_ENV_BASE_URL}."
+                f"Start Docker image {_DEFAULT_IMAGE!r} or set {_ENV_BASE_URL}."
             ) from exc
 
     def evaluate(self, suggestion: TrialSuggestion) -> EvaluationResult:

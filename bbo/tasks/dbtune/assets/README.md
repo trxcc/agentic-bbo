@@ -1,12 +1,19 @@
 # Surrogate assets
 
-## Download large `*.joblib` files
+## Large `*.joblib` checkpoints
 
-Large checkpoint files are **not** committed to this repository. **Download** them (same filenames as below) from the shared release folder, then place them under `bbo/tasks/dbtune/assets/`:
+Large checkpoint files are **not** committed to this repository. The registered HTTP tasks `knob_http_surrogate_*` use the reusable Docker image `fakerstrawberry/agentbbo-dbtune-surrogate-http-py37:v1`, which already bundles the full checkpoint set under `/app/assets`.
+
+You only need local `.joblib` files in this directory when:
+
+- rebuilding and publishing a new surrogate image tag
+- directly using the unregistered in-process helpers such as `create_surrogate_knob_task(...)`
+
+Source folder for maintainers:
 
 [https://drive.google.com/drive/folders/1qalYsF7fuCB6MewOTPvr8DDZzIj7tIRt?usp=sharing](https://drive.google.com/drive/folders/1qalYsF7fuCB6MewOTPvr8DDZzIj7tIRt?usp=sharing)
 
-If `joblib.load` fails with **`EOF` / `reading array data`**, the file on disk is **incomplete** (partial download, or Git LFS not pulled for a copy that lives in git). **Re-download** the same file from the link above, or set an env override to a full path (see table below).
+If a local `joblib.load` fails with **`EOF` / `reading array data`**, the file on disk is **incomplete** (partial download, or Git LFS not pulled for a copy that lives in git). Re-download the same file from the link above, or set an env override to a full path (see table below).
 
 Each `*.joblib` is a **serialized sklearn surrogate** (RF, etc.): it maps physical knob feature vectors to a predicted metric (throughput or latency). Names map to workloads: **Sysbench/MySQL** (`RF_SYSBENCH_*`, `SYSBENCH_all`), **JOB** (`RF_JOB_*`, `JOB_all`), **PostgreSQL** (`pg_5`, `pg_20`). The matching `knobs_*.json` files in this folder define the BBO search space.
 
@@ -24,6 +31,8 @@ Each `*.joblib` is a **serialized sklearn surrogate** (RF, etc.): it maps physic
 | `pg_20.joblib` | `knob_surrogate_pg_20` | `AGENTIC_BBO_PG20_SURROGATE` |
 
 For Sysbench-5, you can also use a **tiny** placeholder from `python -m bbo.tasks.dbtune.build_placeholder_surrogate` (`sysbench_5knob_surrogate.joblib`) for quick smoke tests.
+
+To rebuild/export the reusable HTTP surrogate image for Docker Hub upload, first place the full files in this directory, then run `scripts/package_dbtune_images.sh --tag v1` from the repository root.
 
 ## Bundled knobs JSON
 
