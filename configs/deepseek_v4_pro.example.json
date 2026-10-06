@@ -1,0 +1,11 @@
+{
+  "model": "deepseek/deepseek-v4-pro",
+  "reasoning_effort": "max",
+  "explicit_thinking_enabled": true,
+  "approved_response_model_ids": [
+    "deepseek/deepseek-v4-pro",
+    "deepseek-v4-pro"
+  ],
+  "api_base": "https://YOUR_PROVIDER.example/v1",
+  "api_key_env": "BBO_MODEL_API_KEY"
+}

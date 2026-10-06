@@ -1,174 +1,44 @@
-"""Algorithm registry grouped by algorithm family."""
-
-from __future__ import annotations
-
+"""Paper algorithms, with aliases only for established public names."""
 from dataclasses import dataclass
-from typing import Any, Callable
-
-from ..core.algo import Algorithm
-from .agentic import ClaudeCodeBBOAlgorithm, NanobotBBOAlgorithm, OpenAICompatibleBBOAlgorithm, PabloAlgorithm
-from .llm_based import LlamboAlgorithm, OproAlgorithm
-from .llm_based.skydiscover_interleaved import SkydiscoverInterleavedAlgorithm
-from .model_based import CustomPfnsBoAlgorithm, OptunaTpeAlgorithm, Pfns4BoAlgorithm, TabPfnV2BoAlgorithm
+from typing import Callable
+from .traditional import RandomSearchAlgorithm, SobolSearchAlgorithm, PyCmaAlgorithm, LocalPerturbationAlgorithm
+from .model_based import GpEiAlgorithm, BotorchTurboAlgorithm, OptunaTpeAlgorithm, GitBoAlgorithm
 from .molecular import GraphGAAlgorithm, GraphGPBOAlgorithm
-from .traditional import PyCmaAlgorithm, RandomSearchAlgorithm
+from .agentic.raw_agentic_bbo import create_raw_agentic_bbo
 
 
 @dataclass(frozen=True)
 class AlgorithmSpec:
-    """Metadata for one algorithm entrypoint."""
-
-    factory: Callable[..., Algorithm]
+    factory: Callable
     description: str
     family: str
     numeric_only: bool = False
     categorical_to_continuous: str | None = None
 
 
-ALGORITHM_REGISTRY: dict[str, AlgorithmSpec] = {
-    "random_search": AlgorithmSpec(
-        factory=RandomSearchAlgorithm,
-        description="Uniform random search over the declared search space.",
-        family="traditional",
-    ),
-    "random": AlgorithmSpec(
-        factory=RandomSearchAlgorithm,
-        description="Alias for random_search.",
-        family="traditional",
-    ),
-    "pycma": AlgorithmSpec(
-        factory=PyCmaAlgorithm,
-        description="CMA-ES via the external `pycma` package.",
-        family="traditional",
-        numeric_only=True,
-        categorical_to_continuous="onehot",
-    ),
-    "cma_es": AlgorithmSpec(
-        factory=PyCmaAlgorithm,
-        description="Alias for pycma.",
-        family="traditional",
-        numeric_only=True,
-        categorical_to_continuous="onehot",
-    ),
-    "optuna_tpe": AlgorithmSpec(
-        factory=OptunaTpeAlgorithm,
-        description="Optuna TPE via the optional `optuna` package.",
-        family="model_based",
-    ),
-    "pfns4bo": AlgorithmSpec(
-        factory=Pfns4BoAlgorithm,
-        description="PFNs4BO with fixed continuous/pool routing for benchmark smoke tasks.",
-        family="model_based",
-        categorical_to_continuous="onehot",
-    ),
-    "pfns4bo_tabpfn_v2": AlgorithmSpec(
-        factory=TabPfnV2BoAlgorithm,
-        description="TabPFN v2 surrogate over a deterministic candidate pool for arbitrary-dimensional BO tasks.",
-        family="model_based",
-    ),
-    "pfns4bo_custom": AlgorithmSpec(
-        factory=CustomPfnsBoAlgorithm,
-        description="Custom-trained PFN surrogate over a deterministic candidate pool for arbitrary-dimensional BO tasks.",
-        family="model_based",
-        categorical_to_continuous="onehot",
-    ),
-    "graph_ga": AlgorithmSpec(
-        factory=GraphGAAlgorithm,
-        description="PMO Graph GA over direct SMILES with ask/tell oracle evaluation.",
-        family="molecular",
-    ),
-    "gpbo": AlgorithmSpec(
-        factory=GraphGPBOAlgorithm,
-        description="PMO GPBO with Morgan fingerprints, Tanimoto GP, UCB, and Graph GA acquisition search.",
-        family="molecular",
-    ),
-    "graph_gpbo": AlgorithmSpec(
-        factory=GraphGPBOAlgorithm,
-        description="Alias for gpbo.",
-        family="molecular",
-    ),
-    "llambo": AlgorithmSpec(
-        factory=LlamboAlgorithm,
-        description="LLAMBO-style prompt optimizer with pluggable chat backends and an offline heuristic mode.",
-        family="llm_based",
-    ),
-    "opro": AlgorithmSpec(
-        factory=OproAlgorithm,
-        description="OPRO-style prompt optimizer over prior configuration/objective pairs.",
-        family="llm_based",
-    ),
-    "skydiscover_interleaved": AlgorithmSpec(
-        factory=SkydiscoverInterleavedAlgorithm,
-        description=(
-            "Interleave SkyDiscover meta-evolution of suggest_next_config with BBO dict optimization."
-        ),
-        family="llm_based",
-    ),
-    "skydiscover_meta": AlgorithmSpec(
-        factory=SkydiscoverInterleavedAlgorithm,
-        description="Alias for skydiscover_interleaved.",
-        family="llm_based",
-    ),
-    "pablo": AlgorithmSpec(
-        factory=PabloAlgorithm,
-        description="Stateless Planner/Explorer/Worker agentic optimizer with mock and OpenAI-compatible providers.",
-        family="agentic",
-    ),
-    "palbo": AlgorithmSpec(
-        factory=PabloAlgorithm,
-        description="Alias for pablo.",
-        family="agentic",
-    ),
-    "agentic_nanobot": AlgorithmSpec(
-        factory=NanobotBBOAlgorithm,
-        description="General-agent BBO optimizer backed by the Nanobot CLI agent.",
-        family="agentic",
-    ),
-    "nanobot": AlgorithmSpec(
-        factory=NanobotBBOAlgorithm,
-        description="Alias for agentic_nanobot.",
-        family="agentic",
-    ),
-    "agentic_claude_code": AlgorithmSpec(
-        factory=ClaudeCodeBBOAlgorithm,
-        description="General-agent BBO optimizer backed by Claude Code.",
-        family="agentic",
-    ),
-    "claude_code": AlgorithmSpec(
-        factory=ClaudeCodeBBOAlgorithm,
-        description="Alias for agentic_claude_code.",
-        family="agentic",
-    ),
-    "claude-code": AlgorithmSpec(
-        factory=ClaudeCodeBBOAlgorithm,
-        description="Alias for agentic_claude_code.",
-        family="agentic",
-    ),
-    "agentic_openai_compatible": AlgorithmSpec(
-        factory=OpenAICompatibleBBOAlgorithm,
-        description="General-agent BBO optimizer backed by OpenAI-compatible function calling.",
-        family="agentic",
-    ),
-    "openai_compatible_agent": AlgorithmSpec(
-        factory=OpenAICompatibleBBOAlgorithm,
-        description="Alias for agentic_openai_compatible.",
-        family="agentic",
-    ),
+ALGORITHM_REGISTRY = {
+    "random": AlgorithmSpec(RandomSearchAlgorithm, "Uniform random search", "traditional"),
+    "sobol": AlgorithmSpec(SobolSearchAlgorithm, "Scrambled Sobol search", "traditional", True),
+    "local_perturbation": AlgorithmSpec(LocalPerturbationAlgorithm, "Incumbent-centered local search", "traditional"),
+    "cma_es": AlgorithmSpec(PyCmaAlgorithm, "CMA-ES", "traditional", True, "onehot"),
+    "gp_ei": AlgorithmSpec(GpEiAlgorithm, "Fixed GP with EI", "model_based", False, "onehot"),
+    "optuna_tpe": AlgorithmSpec(OptunaTpeAlgorithm, "TPE", "model_based"),
+    "turbo": AlgorithmSpec(BotorchTurboAlgorithm, "TuRBO-1", "model_based", True),
+    "git_bo": AlgorithmSpec(GitBoAlgorithm, "Gradient-informed TabPFN BO", "model_based", True),
+    "graph_ga": AlgorithmSpec(GraphGAAlgorithm, "Graph GA", "molecular"),
+    "gpbo": AlgorithmSpec(GraphGPBOAlgorithm, "Tanimoto GPBO", "molecular"),
+    "raw_agentic_bbo": AlgorithmSpec(create_raw_agentic_bbo, "Persistent Docker workspace agent", "agentic"),
 }
+for alias, name in {"random_search":"random", "sobol_search":"sobol", "pycma":"cma_es",
+    "gp_bo":"gp_ei", "gpei":"gp_ei", "botorch_turbo":"turbo", "tpe":"optuna_tpe",
+    "graph_gpbo":"gpbo", "agentic":"raw_agentic_bbo"}.items():
+    ALGORITHM_REGISTRY[alias] = ALGORITHM_REGISTRY[name]
 
 
-def create_algorithm(name: str, **kwargs: Any) -> Algorithm:
-    if name not in ALGORITHM_REGISTRY:
-        available = ", ".join(sorted(ALGORITHM_REGISTRY))
-        raise ValueError(f"Unknown algorithm `{name}`. Available: {available}")
+def create_algorithm(name, **kwargs):
     return ALGORITHM_REGISTRY[name].factory(**kwargs)
 
 
-def algorithms_by_family() -> dict[str, dict[str, AlgorithmSpec]]:
-    grouped: dict[str, dict[str, AlgorithmSpec]] = {}
-    for name, spec in ALGORITHM_REGISTRY.items():
-        grouped.setdefault(spec.family, {})[name] = spec
-    return grouped
-
-
-__all__ = ["ALGORITHM_REGISTRY", "AlgorithmSpec", "algorithms_by_family", "create_algorithm"]
+def algorithms_by_family():
+    return {family: {k:v for k,v in ALGORITHM_REGISTRY.items() if v.family == family}
+            for family in sorted({v.family for v in ALGORITHM_REGISTRY.values()})}

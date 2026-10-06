@@ -5,157 +5,47 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "agentic-bbo-benchmark"
 version = "0.1.0"
-description = "A lightweight benchmark core for agentic black-box optimization."
+description = "Workspace-based black-box optimization across five benchmark domains."
 readme = "README.md"
+license = "MIT"
 requires-python = ">=3.11"
-authors = [{ name = "OpenAI Codex" }]
-dependencies = [
-  "cma>=4.0.0",
-  "matplotlib>=3.9.0",
-  "numpy>=1.26,<3",
-]
+dependencies = ["numpy==1.26.4", "scipy==1.17.1", "cma==4.4.4", "coco-experiment==2.8.2", "matplotlib>=3.9,<4"]
 
 [project.optional-dependencies]
-dev = [
-  "pytest>=8.3.0",
-]
-benchmark-main = [
-  "ConfigSpace>=1.2.0",
-  "flask>=3.0",
-  "igraph>=0.11,<0.12",
-  "joblib>=1.4",
-  "openpyxl>=3.1",
-  "optuna>=4.0",
-  "pandas>=1.0.1",
-  "psutil>=5.9",
-  "ray>=2.10,<3",
-  "rdkit",
-  "scikit-learn>=1.5.0",
-  "selfies>=2.1.0",
-  "tabpfn>=6.0.0",
-  "scipy>=1.1",
-  "tqdm",
-]
-task-host = [
-  "ConfigSpace>=1.2.0",
-  "joblib>=1.4",
-  "openpyxl>=3.1",
-  "optuna>=4.0",
-  "pandas>=1.0.1",
-  "rdkit",
-  "scikit-learn>=1.5.0",
-  "selfies>=2.1.0",
-  "scipy>=1.1",
-  "tqdm",
-]
-surrogate = [
-  "joblib>=1.4",
-  "scikit-learn>=1.5.0",
-]
-optuna = [
-  "optuna>=4.0",
-]
-bo-tutorial = [
-  "openpyxl>=3.1",
-  "pandas>=1.0.1",
-  "rdkit",
-  "scikit-learn>=1.5.0",
-  "selfies>=2.1.0",
-  "scipy>=1.1",
-  "tqdm",
-]
-bo-tutorial-full = [
-  "catboost>=0.24.4",
-  "disjoint-set",
-  "gpytorch>=1.4.0",
-  "hebo",
-  "pymoo==0.6.1.6",
-  "torch>=1.9.0",
-]
-molecular = [
-  "botorch",
-  "gpytorch>=1.4.0",
-  "rdkit",
-  "torch>=1.9.0",
-]
-pfns4bo = [
-  "botorch==0.7.2",
-  "gpytorch==1.9.0",
-  "numpy<2",
-  "pfns4bo==0.1.5",
-  "scikit-learn>=0.24.2,<1.2",
-  "scipy>=1.1",
-  "torch>=1.9.0",
-]
-tabpfn = [
-  "pandas>=2.2.0",
-  "tabpfn>=6.0.0",
-]
-pablo = [
-  "openai>=1.0",
-]
-nanobot = [
-  "nanobot-ai",
-]
-claude-code = [
-  "claude-agent-sdk>=0.1.0",
-]
-general-agent = [
-  "claude-agent-sdk>=0.1.0",
-  "nanobot-ai",
-]
-interop = [
-  "ConfigSpace>=1.2.0",
-]
-skydiscover = [
-  "skydiscover",
-]
-
-[tool.uv]
-conflicts = [
-  [
-    { extra = "bo-tutorial" },
-    { extra = "pfns4bo" },
-  ],
-  [
-    { extra = "surrogate" },
-    { extra = "pfns4bo" },
-  ],
-  [
-    { extra = "pfns4bo" },
-    { extra = "tabpfn" },
-  ],
-  [
-    { extra = "task-host" },
-    { extra = "pfns4bo" },
-  ],
-  [
-    { extra = "benchmark-main" },
-    { extra = "pfns4bo" },
-  ],
-]
+dev = ["pytest>=8.3,<9", "build>=1.2"]
+hpo = ["scikit-learn==1.8.0", "joblib==1.5.3"]
+molecular = ["rdkit==2026.3.1"]
+bo = ["botorch==0.18.1", "gpytorch==1.15.2", "torch==2.11.0", "scikit-learn==1.8.0", "optuna==4.8.0"]
+git-bo = ["tabpfn @ git+https://github.com/PriorLabs/TabPFN.git@f87b137bc7c4fe021dda76e62720098541575d37"]
+all = ["agentic-bbo-benchmark[hpo,molecular,bo]"]
 
 [project.scripts]
-bbo-demo = "bbo.run:main"
-bbo-train-pfn = "bbo.algorithms.model_based.pfns4bo_training:main"
-
-[tool.setuptools]
-include-package-data = true
+bbo = "bbo.run:main"
+bbo-frontier = "bbo.experiments.run:main"
+bbo-score = "bbo.experiments.report:main"
+bbo-placement-service = "bbo.tasks.bboplace.local_service:main"
 
 [tool.setuptools.packages.find]
 include = ["bbo*"]
 
+[tool.setuptools.data-files]
+"share/agentic-bbo-benchmark" = ["THIRD_PARTY_NOTICES.md"]
+
 [tool.setuptools.package-data]
 bbo = [
-  "task_descriptions/**/*.md",
-  "task_descriptions/**/*.json",
-  "algorithms/llm_based/skydiscover_bbo/prompt_templates/*.txt",
+  "task_descriptions/**/*.md", "task_descriptions/**/*.json",
+  "task_context_profiles/**/*.md", "task_context_profiles/**/*.json",
+  "tasks/hpo/assets/*.npz", "tasks/hpo/assets/*.json",
+  "tasks/dbtune/assets/*.json", "tasks/bboplace/assets/repair_bundles/*.json",
+  "tasks/dbtune/docker_surrogate/*", "tasks/dbtune/assets/README.md", "tasks/*/README.md",
+  "algorithms/model_based/_vendor/*.txt",
+  "algorithms/molecular/*.txt",
+  "experiments/assets/**/*.json", "experiments/assets/**/*.md", "experiments/assets/*.json", "experiments/assets/*.md",
+  "experiments/assets/**/*.py", "experiments/assets/**/*.csv", "experiments/assets/*.csv",
 ]
 
 [tool.pytest.ini_options]
 addopts = "-q"
 testpaths = ["tests"]
-markers = [
-  "unit: fast, isolated unit tests",
-  "integration: slower tests that may use external services or data",
-]
+pythonpath = ["."]
+markers = ["integration: requires Docker or external evaluator assets"]

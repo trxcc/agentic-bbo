@@ -1,0 +1,3 @@
+# Frozen CSV references use their original CRLF bytes for checksum verification.
+bbo/experiments/assets/*.csv -text -diff
+bbo/experiments/assets/developed_optimizers/*.csv -text -diff

@@ -1,0 +1,815 @@
+{
+  "row": {
+    "task": "knob_http_surrogate_job_5",
+    "family": "DBTune",
+    "seed": 4,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "knob_http_surrogate_job_5",
+    "case_id": "knob_http_surrogate_job_5__s4"
+  },
+  "short_task": "# MySQL JOB 5 knobs\n\nTask ID: `knob_http_surrogate_job_5`.\n\nTune 5 MySQL settings for a JOB analytical join-query workload to minimize predicted query latency. A fixed, previously built surrogate predicts performance; optimization does not execute a live database workload.\n\nObjective: minimize `latency`.\n\nBudget: 50 shared initial observations and 200 new evaluations (250 total).\n\n## Submission\n\n1. Submit all 5 settings as floating-point numbers u in [0,1]. Names identify real database settings, but physical values and enumeration labels from the table must not be submitted directly.\n2. For integer settings, decode as round(min + u*(max-min)). For physical floating-point settings, decode as min + u*(max-min) without rounding.\n3. For K enumeration options, divide [0,1] into K equal-width intervals. Select enum_values[min(floor(u*K),K-1)] using zero-based indexing; u=1 selects the last option. Option order does not imply a performance ranking.\n4. Encoding example: innodb_adaptive_hash_index_parts has physical range 1...512; input 0.25 decodes to 129. This illustrates encoding, not a recommended configuration.\n5. Enumeration example: for innodb_stats_method, input 0 selects \"nulls_equal\", and 1 selects \"nulls_ignored\". The order is part of the encoding, not a performance ranking.\n\n## Parameters\n\nEvery submitted parameter is a float in [0,1]. Physical definitions below are decoded using the rules above; they are not direct submission values.\n\n| Parameter | Meaning | Physical definition | Default |\n| --- | --- | --- | --- |\n| `innodb_adaptive_hash_index_parts` | Number of adaptive hash-index partitions. | Integer: `1` to `512` | `8` |\n| `innodb_compression_failure_threshold_pct` | Compression failure percentage that triggers adjustment of reserved page space. | Integer: `0` to `100` | `5` |\n| `innodb_stats_method` | How index statistics treat NULL values. | Enumeration: `[\"nulls_equal\",\"nulls_unequal\",\"nulls_ignored\"]` | `\"nulls_equal\"` |\n| `innodb_stats_persistent` | Controls persistent storage of optimizer statistics. | Enumeration: `[\"ON\",\"OFF\"]` | `\"ON\"` |\n| `innodb_thread_concurrency` | Maximum threads concurrently inside InnoDB; physical value 0 means no such cap. | Integer: `0` to `1000` | `0` |\n\n## Read details as needed\n\nThere are 5 active parameters. get_search_space supports names, query, optional annotated groups and paged index/details views.\n\nget_task_context sections: overview, submission, scoring, mechanisms, domain_knowledge, additional. Read scoring rules and relevant mechanisms before choosing a candidate.\n\nget_trial_history and get_incumbent return scores first; request parameter_names to inspect selected values.\n\nFollow instructions.md: submit_candidate accepts a full config or workspace JSON file directly; write_candidate is optional.\n",
+  "visible_task_id": "knob_http_surrogate_job_5",
+  "objective": {
+    "name": "latency",
+    "direction": "minimize"
+  },
+  "evaluation_budget": {
+    "initial_observations": 50,
+    "new_evaluations": 200,
+    "total_observations": 250
+  },
+  "task_facts": {
+    "overview": "# MySQL JOB 5 knobs\n\nTask ID: `knob_http_surrogate_job_5`.\n\nTune 5 MySQL settings for a JOB analytical join-query workload to minimize predicted query latency. A fixed, previously built surrogate predicts performance; optimization does not execute a live database workload.\n\nObjective: minimize `latency`.\n\nBudget: 50 shared initial observations and 200 new evaluations (250 total).",
+    "submission": "1. Submit all 5 settings as floating-point numbers u in [0,1]. Names identify real database settings, but physical values and enumeration labels from the table must not be submitted directly.\n2. For integer settings, decode as round(min + u*(max-min)). For physical floating-point settings, decode as min + u*(max-min) without rounding.\n3. For K enumeration options, divide [0,1] into K equal-width intervals. Select enum_values[min(floor(u*K),K-1)] using zero-based indexing; u=1 selects the last option. Option order does not imply a performance ranking.\n4. Encoding example: innodb_adaptive_hash_index_parts has physical range 1...512; input 0.25 decodes to 129. This illustrates encoding, not a recommended configuration.\n5. Enumeration example: for innodb_stats_method, input 0 selects \"nulls_equal\", and 1 selects \"nulls_ignored\". The order is part of the encoding, not a performance ranking.",
+    "scoring": "1. The evaluator decodes inputs and returns surrogate-predicted latency; lower is better.\n2. Use the ranges, defaults, and enumeration order in this task's parameter table. A default is a reference configuration value, not a known optimum.",
+    "mechanisms": "1. Settings cover memory and caching, I/O, concurrency, query optimization, logging, replication, and authentication. Increasing every resource setting is not a general improvement rule.\n2. Some settings apply only to particular storage engines or enabled features; some are legacy settings. A parameter's real database meaning does not establish its importance in this surrogate.\n3. The available materials do not specify the full hardware and database-version configuration used to train the surrogate. Do not assume every described mechanism is active in this workload.",
+    "domain_knowledge": "1. Client connection limits and internal InnoDB concurrency limits are different. More concurrency may increase throughput or intensify lock and resource contention. A physical innodb_thread_concurrency value of 0 means no such concurrency cap.\n2. Statistics and cache settings jointly affect query plans, temporary tables, and sorting. Directions suggested by these mechanisms still need to be checked against this task's evaluation feedback.\n3. JOB contains analytical joins. Statistics, memory, caching, and plan selection can interact, so parameter changes need not produce smooth latency changes.",
+    "additional": "**Workload (`workload`)**\n\nJOB\n\n**Database (`database`)**\n\nMySQL\n\n**Units (`units_policy`)**\n\nUse the units in this task's parameter definitions. Do not invent unit conversions for entries without an explicit unit."
+  },
+  "parameter_definitions": [
+    {
+      "name": "innodb_adaptive_hash_index_parts",
+      "type": "float",
+      "low": 0.0,
+      "high": 1.0,
+      "log": false,
+      "default": 0.5,
+      "meaning": "Number of adaptive hash-index partitions.",
+      "physical_definition": {
+        "default": 8,
+        "max": 512,
+        "min": 1,
+        "type": "integer"
+      }
+    },
+    {
+      "name": "innodb_compression_failure_threshold_pct",
+      "type": "float",
+      "low": 0.0,
+      "high": 1.0,
+      "log": false,
+      "default": 0.5,
+      "meaning": "Compression failure percentage that triggers adjustment of reserved page space.",
+      "physical_definition": {
+        "default": 5,
+        "max": 100,
+        "min": 0,
+        "type": "integer"
+      }
+    },
+    {
+      "name": "innodb_stats_method",
+      "type": "float",
+      "low": 0.0,
+      "high": 1.0,
+      "log": false,
+      "default": 0.5,
+      "meaning": "How index statistics treat NULL values.",
+      "physical_definition": {
+        "default": "nulls_equal",
+        "enum_values": [
+          "nulls_equal",
+          "nulls_unequal",
+          "nulls_ignored"
+        ],
+        "type": "enum"
+      }
+    },
+    {
+      "name": "innodb_stats_persistent",
+      "type": "float",
+      "low": 0.0,
+      "high": 1.0,
+      "log": false,
+      "default": 0.5,
+      "meaning": "Controls persistent storage of optimizer statistics.",
+      "physical_definition": {
+        "default": "ON",
+        "enum_values": [
+          "ON",
+          "OFF"
+        ],
+        "type": "enum"
+      }
+    },
+    {
+      "name": "innodb_thread_concurrency",
+      "type": "float",
+      "low": 0.0,
+      "high": 1.0,
+      "log": false,
+      "default": 0.5,
+      "meaning": "Maximum threads concurrently inside InnoDB; physical value 0 means no such cap.",
+      "physical_definition": {
+        "default": 0,
+        "max": 1000,
+        "min": 0,
+        "type": "integer"
+      }
+    }
+  ],
+  "initial_history": [
+    {
+      "trial_id": 0,
+      "config": {
+        "innodb_adaptive_hash_index_parts": 0.23604808973743452,
+        "innodb_compression_failure_threshold_pct": 0.1031660342307158,
+        "innodb_stats_method": 0.396058242610681,
+        "innodb_stats_persistent": 0.15497227080241027,
+        "innodb_thread_concurrency": 0.06651509567958991
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 240.0
+      }
+    },
+    {
+      "trial_id": 1,
+      "config": {
+        "innodb_adaptive_hash_index_parts": 0.40159101448507484,
+        "innodb_compression_failure_threshold_pct": 0.9179550430877189,
+        "innodb_stats_method": 0.8004523514958085,
+        "innodb_stats_persistent": 0.7651626025054384,
+        "innodb_thread_concurrency": 0.22192817569031764
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 240.0
+      }
+    },
+    {
+      "trial_id": 2,
+      "config": {
+        "innodb_adaptive_hash_index_parts": 0.5366800081748135,
+        "innodb_compression_failure_threshold_pct": 0.2766826434414502,
+        "innodb_stats_method": 0.1726645292853689,
+        "innodb_stats_persistent": 0.10618329243153013,
+        "innodb_thread_concurrency": 0.2144004325789165
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 240.0
+      }
+    },
+    {
+      "trial_id": 3,
+      "config": {
+        "innodb_adaptive_hash_index_parts": 0.9274756314280604,
+        "innodb_compression_failure_threshold_pct": 0.8289200487784194,
+        "innodb_stats_method": 0.8066523467023234,
+        "innodb_stats_persistent": 0.8004478385429662,
+        "innodb_thread_concurrency": 0.19343561801924003
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 240.0
+      }
+    },
+    {
+      "trial_id": 4,
+      "config": {
+        "innodb_adaptive_hash_index_parts": 0.30984995729953557,
+        "innodb_compression_failure_threshold_pct": 0.6269756024131301,
+        "innodb_stats_method": 0.731894708878718,
+        "innodb_stats_persistent": 0.8546483579913472,
+        "innodb_thread_concurrency": 0.8800507513611994
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 240.0
+      }
+    },
+    {
+      "trial_id": 5,
+      "config": {
+        "innodb_adaptive_hash_index_parts": 0.08671825263492183,
+        "innodb_compression_failure_threshold_pct": 0.6058518837198799,
+        "innodb_stats_method": 0.6717014565164733,
+        "innodb_stats_persistent": 0.5059537757104153,
+        "innodb_thread_concurrency": 0.17779017424078447
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 240.0
+      }
+    },
+    {
+      "trial_id": 6,
+      "config": {
+        "innodb_adaptive_hash_index_parts": 0.47358788758514514,
+        "innodb_compression_failure_threshold_pct": 0.08934620726539033,
+        "innodb_stats_method": 0.9345883638999081,
+        "innodb_stats_persistent": 0.8654841701850833,
+        "innodb_thread_concurrency": 0.5476388695870539
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 240.0
+      }
+    },
+    {
+      "trial_id": 7,
+      "config": {
+        "innodb_adaptive_hash_index_parts": 0.3002457395733247,
+        "innodb_compression_failure_threshold_pct": 0.9088702894146864,
+        "innodb_stats_method": 0.5723668016858915,
+        "innodb_stats_persistent": 0.88231723987879,
+        "innodb_thread_concurrency": 0.8480440882236346
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 240.0
+      }
+    },
+    {
+      "trial_id": 8,
+      "config": {
+        "innodb_adaptive_hash_index_parts": 0.5083723753327516,
+        "innodb_compression_failure_threshold_pct": 0.413946043131732,
+        "innodb_stats_method": 0.5989124721899894,
+        "innodb_stats_persistent": 0.4310430172933071,
+        "innodb_thread_concurrency": 0.16132060612160848
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 240.0
+      }
+    },
+    {
+      "trial_id": 9,
+      "config": {
+        "innodb_adaptive_hash_index_parts": 0.305111596432739,
+        "innodb_compression_failure_threshold_pct": 0.8125923186346207,
+        "innodb_stats_method": 0.04323846907224849,
+        "innodb_stats_persistent": 0.04632199900351264,
+        "innodb_thread_concurrency": 0.6263507455399034
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 240.0
+      }
+    },
+    {
+      "trial_id": 10,
+      "config": {
+        "innodb_adaptive_hash_index_parts": 0.2804332116162187,
+        "innodb_compression_failure_threshold_pct": 0.5346217948794222,
+        "innodb_stats_method": 0.471240086114993,
+        "innodb_stats_persistent": 0.34284326542215604,
+        "innodb_thread_concurrency": 0.9972788741721124
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 240.0
+      }
+    },
+    {
+      "trial_id": 11,
+      "config": {
+        "innodb_adaptive_hash_index_parts": 0.1955734943333154,
+        "innodb_compression_failure_threshold_pct": 0.41279465640732504,
+        "innodb_stats_method": 0.20267061617239635,
+        "innodb_stats_persistent": 0.632664981791019,
+        "innodb_thread_concurrency": 0.27630483495968317
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 240.0
+      }
+    },
+    {
+      "trial_id": 12,
+      "config": {
+        "innodb_adaptive_hash_index_parts": 0.35583075460735203,
+        "innodb_compression_failure_threshold_pct": 0.7469426809904626,
+        "innodb_stats_method": 0.32066890324974195,
+        "innodb_stats_persistent": 0.5585289835833921,
+        "innodb_thread_concurrency": 0.9043151015306578
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 240.0
+      }
+    },
+    {
+      "trial_id": 13,
+      "config": {
+        "innodb_adaptive_hash_index_parts": 0.10097943871785953,
+        "innodb_compression_failure_threshold_pct": 0.061610242040175844,
+        "innodb_stats_method": 0.22886944023876477,
+        "innodb_stats_persistent": 0.7651622413262759,
+        "innodb_thread_concurrency": 0.6154320751286971
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 239.95148748250003
+      }
+    },
+    {
+      "trial_id": 14,
+      "config": {
+        "innodb_adaptive_hash_index_parts": 0.2374171698253259,
+        "innodb_compression_failure_threshold_pct": 0.3310669953717347,
+        "innodb_stats_method": 0.17753969349655696,
+        "innodb_stats_persistent": 0.45901875217017585,
+        "innodb_thread_concurrency": 0.042811187782019644
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 240.0
+      }
+    },
+    {
+      "trial_id": 15,
+      "config": {
+        "innodb_adaptive_hash_index_parts": 0.6972918814615184,
+        "innodb_compression_failure_threshold_pct": 0.8959277791118226,
+        "innodb_stats_method": 0.9547375983423451,
+        "innodb_stats_persistent": 0.7348779564739258,
+        "innodb_thread_concurrency": 0.9598675916129511
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 240.0
+      }
+    },
+    {
+      "trial_id": 16,
+      "config": {
+        "innodb_adaptive_hash_index_parts": 0.01818752529330747,
+        "innodb_compression_failure_threshold_pct": 0.2889964679008432,
+        "innodb_stats_method": 0.9660067569681229,
+        "innodb_stats_persistent": 0.7752394352251485,
+        "innodb_thread_concurrency": 0.4104276810688755
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 107.82104734837507
+      }
+    },
+    {
+      "trial_id": 17,
+      "config": {
+        "innodb_adaptive_hash_index_parts": 0.9433083673529813,
+        "innodb_compression_failure_threshold_pct": 0.6205104714635291,
+        "innodb_stats_method": 0.8179278006982527,
+        "innodb_stats_persistent": 0.29341025365687634,
+        "innodb_thread_concurrency": 0.1914152048087393
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 240.0
+      }
+    },
+    {
+      "trial_id": 18,
+      "config": {
+        "innodb_adaptive_hash_index_parts": 0.4441422394811759,
+        "innodb_compression_failure_threshold_pct": 0.13643762655591496,
+        "innodb_stats_method": 0.38163463472433135,
+        "innodb_stats_persistent": 0.9618136224069048,
+        "innodb_thread_concurrency": 0.3313072291991864
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 240.0
+      }
+    },
+    {
+      "trial_id": 19,
+      "config": {
+        "innodb_adaptive_hash_index_parts": 0.009396466339564591,
+        "innodb_compression_failure_threshold_pct": 0.04479719292212525,
+        "innodb_stats_method": 0.16956704381995513,
+        "innodb_stats_persistent": 0.7837456748213549,
+        "innodb_thread_concurrency": 0.3627242669253443
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 92.1271196378748
+      }
+    },
+    {
+      "trial_id": 20,
+      "config": {
+        "innodb_adaptive_hash_index_parts": 0.29033423640918543,
+        "innodb_compression_failure_threshold_pct": 0.09710221319889101,
+        "innodb_stats_method": 0.9817486495318765,
+        "innodb_stats_persistent": 0.4239525192717448,
+        "innodb_thread_concurrency": 0.2079168417574333
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 240.0
+      }
+    },
+    {
+      "trial_id": 21,
+      "config": {
+        "innodb_adaptive_hash_index_parts": 0.059339523778924264,
+        "innodb_compression_failure_threshold_pct": 0.05527062518240078,
+        "innodb_stats_method": 0.16867027130376422,
+        "innodb_stats_persistent": 0.6768271175818056,
+        "innodb_thread_concurrency": 0.14964053486673146
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 236.98309039400183
+      }
+    },
+    {
+      "trial_id": 22,
+      "config": {
+        "innodb_adaptive_hash_index_parts": 0.04089236666433538,
+        "innodb_compression_failure_threshold_pct": 0.490667615701743,
+        "innodb_stats_method": 0.24905865133876315,
+        "innodb_stats_persistent": 0.9976365270880904,
+        "innodb_thread_concurrency": 0.12227325763441954
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 192.41344859106275
+      }
+    },
+    {
+      "trial_id": 23,
+      "config": {
+        "innodb_adaptive_hash_index_parts": 0.5292415864237204,
+        "innodb_compression_failure_threshold_pct": 0.7737921252616178,
+        "innodb_stats_method": 0.4093212310344887,
+        "innodb_stats_persistent": 0.987657384576361,
+        "innodb_thread_concurrency": 0.4777619630230422
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 240.0
+      }
+    },
+    {
+      "trial_id": 24,
+      "config": {
+        "innodb_adaptive_hash_index_parts": 0.24186216621707513,
+        "innodb_compression_failure_threshold_pct": 0.41062248864724227,
+        "innodb_stats_method": 0.036869184814851685,
+        "innodb_stats_persistent": 0.42122096153722777,
+        "innodb_thread_concurrency": 0.2485859740334425
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 240.0
+      }
+    },
+    {
+      "trial_id": 25,
+      "config": {
+        "innodb_adaptive_hash_index_parts": 0.8893004166173706,
+        "innodb_compression_failure_threshold_pct": 0.8310471193173511,
+        "innodb_stats_method": 0.49857971957109937,
+        "innodb_stats_persistent": 0.031650357222601455,
+        "innodb_thread_concurrency": 0.25439366141995323
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 240.0
+      }
+    },
+    {
+      "trial_id": 26,
+      "config": {
+        "innodb_adaptive_hash_index_parts": 0.24238912407813318,
+        "innodb_compression_failure_threshold_pct": 0.20806549319860035,
+        "innodb_stats_method": 0.2314666540707253,
+        "innodb_stats_persistent": 0.8697095160312,
+        "innodb_thread_concurrency": 0.14170176777999155
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 240.0
+      }
+    },
+    {
+      "trial_id": 27,
+      "config": {
+        "innodb_adaptive_hash_index_parts": 0.05127372511495265,
+        "innodb_compression_failure_threshold_pct": 0.928033175427591,
+        "innodb_stats_method": 0.5653442004088759,
+        "innodb_stats_persistent": 0.9905707133539692,
+        "innodb_thread_concurrency": 0.40296206595566275
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 209.44544166262534
+      }
+    },
+    {
+      "trial_id": 28,
+      "config": {
+        "innodb_adaptive_hash_index_parts": 0.900952157772835,
+        "innodb_compression_failure_threshold_pct": 0.6539734666861452,
+        "innodb_stats_method": 0.7908577227395212,
+        "innodb_stats_persistent": 0.7447262856401745,
+        "innodb_thread_concurrency": 0.49428802272284544
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 240.0
+      }
+    },
+    {
+      "trial_id": 29,
+      "config": {
+        "innodb_adaptive_hash_index_parts": 0.09290861658832106,
+        "innodb_compression_failure_threshold_pct": 0.2109212944651223,
+        "innodb_stats_method": 0.8738062275372805,
+        "innodb_stats_persistent": 0.8997618551860671,
+        "innodb_thread_concurrency": 0.9245773715187279
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 239.91194343631253
+      }
+    },
+    {
+      "trial_id": 30,
+      "config": {
+        "innodb_adaptive_hash_index_parts": 0.33658958447132015,
+        "innodb_compression_failure_threshold_pct": 0.6569089999141473,
+        "innodb_stats_method": 0.7995046593300813,
+        "innodb_stats_persistent": 0.6424939208853032,
+        "innodb_thread_concurrency": 0.8148261712490704
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 240.0
+      }
+    },
+    {
+      "trial_id": 31,
+      "config": {
+        "innodb_adaptive_hash_index_parts": 0.5280238927545994,
+        "innodb_compression_failure_threshold_pct": 0.6547321885928308,
+        "innodb_stats_method": 0.685959851750019,
+        "innodb_stats_persistent": 0.26829904570080787,
+        "innodb_thread_concurrency": 0.9227999627007681
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 240.0
+      }
+    },
+    {
+      "trial_id": 32,
+      "config": {
+        "innodb_adaptive_hash_index_parts": 0.9562790579824927,
+        "innodb_compression_failure_threshold_pct": 0.07438056810654337,
+        "innodb_stats_method": 0.9710882774001429,
+        "innodb_stats_persistent": 0.9617738174487724,
+        "innodb_thread_concurrency": 0.6683518826310155
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 240.0
+      }
+    },
+    {
+      "trial_id": 33,
+      "config": {
+        "innodb_adaptive_hash_index_parts": 0.04454396959245033,
+        "innodb_compression_failure_threshold_pct": 0.8989697219397559,
+        "innodb_stats_method": 0.1276327875764688,
+        "innodb_stats_persistent": 0.9685349633503075,
+        "innodb_thread_concurrency": 0.6671899173879098
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 217.81258724512517
+      }
+    },
+    {
+      "trial_id": 34,
+      "config": {
+        "innodb_adaptive_hash_index_parts": 0.060483111963271385,
+        "innodb_compression_failure_threshold_pct": 0.16726561403164808,
+        "innodb_stats_method": 0.6351897900147457,
+        "innodb_stats_persistent": 0.5692059358372037,
+        "innodb_thread_concurrency": 0.7464945569912055
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 239.99193789600002
+      }
+    },
+    {
+      "trial_id": 35,
+      "config": {
+        "innodb_adaptive_hash_index_parts": 0.9274809464100172,
+        "innodb_compression_failure_threshold_pct": 0.21854146419475406,
+        "innodb_stats_method": 0.0032730267285946413,
+        "innodb_stats_persistent": 0.9223619934673792,
+        "innodb_thread_concurrency": 0.01311027713126689
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 240.0
+      }
+    },
+    {
+      "trial_id": 36,
+      "config": {
+        "innodb_adaptive_hash_index_parts": 0.8764235843519795,
+        "innodb_compression_failure_threshold_pct": 0.11588996943669883,
+        "innodb_stats_method": 0.8098723424208862,
+        "innodb_stats_persistent": 0.7829697309515223,
+        "innodb_thread_concurrency": 0.8778778703684761
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 240.0
+      }
+    },
+    {
+      "trial_id": 37,
+      "config": {
+        "innodb_adaptive_hash_index_parts": 0.5506083969280183,
+        "innodb_compression_failure_threshold_pct": 0.878707468144288,
+        "innodb_stats_method": 0.20166944833026434,
+        "innodb_stats_persistent": 0.6714817926904405,
+        "innodb_thread_concurrency": 0.33064311607501784
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 240.0
+      }
+    },
+    {
+      "trial_id": 38,
+      "config": {
+        "innodb_adaptive_hash_index_parts": 0.8917500269589722,
+        "innodb_compression_failure_threshold_pct": 0.7735738589192733,
+        "innodb_stats_method": 0.4715101191046449,
+        "innodb_stats_persistent": 0.5264086458060319,
+        "innodb_thread_concurrency": 0.026393458835699768
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 240.0
+      }
+    },
+    {
+      "trial_id": 39,
+      "config": {
+        "innodb_adaptive_hash_index_parts": 0.03418314975073167,
+        "innodb_compression_failure_threshold_pct": 0.5944868409105872,
+        "innodb_stats_method": 0.48883122623567477,
+        "innodb_stats_persistent": 0.8647198249172529,
+        "innodb_thread_concurrency": 0.6081251485207142
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 175.36766891531283
+      }
+    },
+    {
+      "trial_id": 40,
+      "config": {
+        "innodb_adaptive_hash_index_parts": 0.13876171440911478,
+        "innodb_compression_failure_threshold_pct": 0.36256968289382685,
+        "innodb_stats_method": 0.7675794875552631,
+        "innodb_stats_persistent": 0.522986292131511,
+        "innodb_thread_concurrency": 0.010551268584567564
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 240.0
+      }
+    },
+    {
+      "trial_id": 41,
+      "config": {
+        "innodb_adaptive_hash_index_parts": 0.8376889627196834,
+        "innodb_compression_failure_threshold_pct": 0.8275614758933684,
+        "innodb_stats_method": 0.08514101028344034,
+        "innodb_stats_persistent": 0.5433786768747104,
+        "innodb_thread_concurrency": 0.3811580256026439
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 240.0
+      }
+    },
+    {
+      "trial_id": 42,
+      "config": {
+        "innodb_adaptive_hash_index_parts": 0.7873874826473551,
+        "innodb_compression_failure_threshold_pct": 0.3111693739043967,
+        "innodb_stats_method": 0.23370059399837007,
+        "innodb_stats_persistent": 0.4866520006617505,
+        "innodb_thread_concurrency": 0.9662786081437614
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 240.0
+      }
+    },
+    {
+      "trial_id": 43,
+      "config": {
+        "innodb_adaptive_hash_index_parts": 0.09511967060859683,
+        "innodb_compression_failure_threshold_pct": 0.11445112463649654,
+        "innodb_stats_method": 0.6209617316600201,
+        "innodb_stats_persistent": 0.8853428912601056,
+        "innodb_thread_concurrency": 0.5124746486513734
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 239.9924965924375
+      }
+    },
+    {
+      "trial_id": 44,
+      "config": {
+        "innodb_adaptive_hash_index_parts": 0.43395325106302496,
+        "innodb_compression_failure_threshold_pct": 0.8578439556899257,
+        "innodb_stats_method": 0.7765862378793907,
+        "innodb_stats_persistent": 0.06691787115180847,
+        "innodb_thread_concurrency": 0.8813249389880585
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 240.0
+      }
+    },
+    {
+      "trial_id": 45,
+      "config": {
+        "innodb_adaptive_hash_index_parts": 0.19585267183882693,
+        "innodb_compression_failure_threshold_pct": 0.30230546690337146,
+        "innodb_stats_method": 0.8364419749280637,
+        "innodb_stats_persistent": 0.42246444611379863,
+        "innodb_thread_concurrency": 0.7983488705626961
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 240.0
+      }
+    },
+    {
+      "trial_id": 46,
+      "config": {
+        "innodb_adaptive_hash_index_parts": 0.16737696805300517,
+        "innodb_compression_failure_threshold_pct": 0.8742871520133363,
+        "innodb_stats_method": 0.17635094155911546,
+        "innodb_stats_persistent": 0.149306962836942,
+        "innodb_thread_concurrency": 0.4942552287863299
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 240.0
+      }
+    },
+    {
+      "trial_id": 47,
+      "config": {
+        "innodb_adaptive_hash_index_parts": 0.33858490927972695,
+        "innodb_compression_failure_threshold_pct": 0.5418630314898528,
+        "innodb_stats_method": 0.9040723368889024,
+        "innodb_stats_persistent": 0.7105117080264377,
+        "innodb_thread_concurrency": 0.005562124014677927
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 240.0
+      }
+    },
+    {
+      "trial_id": 48,
+      "config": {
+        "innodb_adaptive_hash_index_parts": 0.31181714028829965,
+        "innodb_compression_failure_threshold_pct": 0.5449484743985434,
+        "innodb_stats_method": 0.486506691472383,
+        "innodb_stats_persistent": 0.715586659319672,
+        "innodb_thread_concurrency": 0.4842494541876725
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 240.0
+      }
+    },
+    {
+      "trial_id": 49,
+      "config": {
+        "innodb_adaptive_hash_index_parts": 0.07568432778652445,
+        "innodb_compression_failure_threshold_pct": 0.24544117906076357,
+        "innodb_stats_method": 0.8475701011229381,
+        "innodb_stats_persistent": 0.3567905666620208,
+        "innodb_thread_concurrency": 0.7666699303717416
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 217.91635033612462
+      }
+    }
+  ]
+}

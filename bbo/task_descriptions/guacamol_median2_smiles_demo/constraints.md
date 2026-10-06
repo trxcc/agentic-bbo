@@ -1,9 +1,17 @@
 # Constraints
 
-Implementation source: `bbo/tasks/scientific/guacamol_smiles.py`.
+Change only the declared parameters, using their exact names, types, and bounds.
 
-Input parameter: `StringParam("smiles", default="", min_length=0, max_length=512)`.
+| Parameter | Meaning | Type | Allowed values | Search transform |
+| --- | --- | --- | --- | --- |
+| `smiles` | Molecular structure encoded as SMILES. | string | SMILES string; maximum length 512 | — |
 
-Invalid or empty SMILES receive score `0.0` and loss `1.0`.
+## Fixed task definitions
 
-The schema default role is `schema_only_not_initial_population`.
+**Fingerprint types (`fingerprint_types`)**
+
+`["ECFP6"]`
+
+**Score aggregation (`aggregation`)**
+
+geometric mean

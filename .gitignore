@@ -1,35 +1,28 @@
-# Python bytecode and caches
+.venv/
+.venv-*/
+configs/*.json
+!configs/*.example.json
+.env
+.env.*
+*.apikey
+*.key
+*.pem
 __pycache__/
 *.py[cod]
-*.so
-
-# Virtual environments
-.venv/
-.venv*/
-venv/
-
-# Test and type-check caches
 .pytest_cache/
-.mypy_cache/
-.ruff_cache/
-.coverage
-.coverage.*
-
-# Packaging artifacts
-*.egg-info/
-build/
 dist/
-
-# Local outputs
-artifacts/
+build/
+*.egg-info/
 runs/
-
-# Editor and OS files
+results/
+outputs/
+logs/
+scratch/
+validation/
+*.log
+*.sqlite
+*.sqlite3
+*.joblib
+agent-bbo-bench.pdf
+model_catalog.json
 .DS_Store
-.idea/
-.vscode/
-
-runs/
-third_party/
-
-.apikey

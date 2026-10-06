@@ -1,0 +1,308 @@
+{
+  "task_id": "knob_http_surrogate_pg_20",
+  "task_name": "PostgreSQL JOB 20 knobs",
+  "family": "DBTune",
+  "objective": "minimize latency",
+  "parameters": [
+    {
+      "name": "bgwriter_delay",
+      "type": "float",
+      "low": 0,
+      "high": 1,
+      "physical_definition": {
+        "default": 200,
+        "type": "integer",
+        "min": 10,
+        "max": 10000
+      },
+      "meaning": "Delay between background-writer rounds."
+    },
+    {
+      "name": "bgwriter_flush_after",
+      "type": "float",
+      "low": 0,
+      "high": 1,
+      "physical_definition": {
+        "default": 64,
+        "type": "integer",
+        "min": 0,
+        "max": 256
+      },
+      "meaning": "Amount written by the background writer before requesting operating-system writeback."
+    },
+    {
+      "name": "bgwriter_lru_maxpages",
+      "type": "float",
+      "low": 0,
+      "high": 1,
+      "physical_definition": {
+        "default": 100,
+        "type": "integer",
+        "min": 0,
+        "max": 1073741823
+      },
+      "meaning": "Maximum buffers written per background-writer round."
+    },
+    {
+      "name": "bgwriter_lru_multiplier",
+      "type": "float",
+      "low": 0,
+      "high": 1,
+      "physical_definition": {
+        "default": 2.0,
+        "type": "float",
+        "min": 0.0,
+        "max": 10.0
+      },
+      "meaning": "Multiplier on recent buffer demand used to estimate background cleaning needs."
+    },
+    {
+      "name": "checkpoint_completion_target",
+      "type": "float",
+      "low": 0,
+      "high": 1,
+      "physical_definition": {
+        "default": 0.5,
+        "type": "float",
+        "min": 0.0,
+        "max": 1.0
+      },
+      "meaning": "Fraction of the checkpoint interval over which checkpoint writes are spread."
+    },
+    {
+      "name": "checkpoint_flush_after",
+      "type": "float",
+      "low": 0,
+      "high": 1,
+      "physical_definition": {
+        "default": 32,
+        "type": "integer",
+        "min": 0,
+        "max": 256
+      },
+      "meaning": "Amount written during a checkpoint before requesting operating-system writeback."
+    },
+    {
+      "name": "checkpoint_timeout",
+      "type": "float",
+      "low": 0,
+      "high": 1,
+      "physical_definition": {
+        "default": 300,
+        "type": "integer",
+        "min": 30,
+        "max": 86400
+      },
+      "meaning": "Maximum interval between automatic WAL checkpoints."
+    },
+    {
+      "name": "commit_siblings",
+      "type": "float",
+      "low": 0,
+      "high": 1,
+      "physical_definition": {
+        "default": 5,
+        "type": "integer",
+        "min": 0,
+        "max": 1000
+      },
+      "meaning": "Minimum concurrent open transactions considered before applying commit_delay."
+    },
+    {
+      "name": "deadlock_timeout",
+      "type": "float",
+      "low": 0,
+      "high": 1,
+      "physical_definition": {
+        "default": 1000,
+        "type": "integer",
+        "min": 1,
+        "max": 2147483647
+      },
+      "meaning": "Lock-wait interval before checking for a deadlock."
+    },
+    {
+      "name": "default_statistics_target",
+      "type": "float",
+      "low": 0,
+      "high": 1,
+      "physical_definition": {
+        "default": 100,
+        "type": "integer",
+        "min": 1,
+        "max": 10000
+      },
+      "meaning": "Default target controlling the detail of collected column statistics."
+    },
+    {
+      "name": "effective_cache_size",
+      "type": "float",
+      "low": 0,
+      "high": 1,
+      "physical_definition": {
+        "default": 524288,
+        "type": "integer",
+        "min": 1,
+        "max": 1000000
+      },
+      "meaning": "Planner estimate of cache available to a query; does not allocate memory."
+    },
+    {
+      "name": "effective_io_concurrency",
+      "type": "float",
+      "low": 0,
+      "high": 1,
+      "physical_definition": {
+        "default": 1,
+        "type": "integer",
+        "min": 0,
+        "max": 1000
+      },
+      "meaning": "Estimated concurrent disk I/O operations supported by the storage system."
+    },
+    {
+      "name": "min_wal_size",
+      "type": "float",
+      "low": 0,
+      "high": 1,
+      "physical_definition": {
+        "default": 80,
+        "type": "integer",
+        "min": 2,
+        "max": 8000
+      },
+      "meaning": "Lower WAL disk-usage threshold below which old WAL files are recycled for reuse."
+    },
+    {
+      "name": "random_page_cost",
+      "type": "float",
+      "low": 0,
+      "high": 1,
+      "physical_definition": {
+        "default": 4.0,
+        "type": "float",
+        "min": 0.0,
+        "max": 100
+      },
+      "meaning": "Planner cost estimate for a nonsequential disk-page read."
+    },
+    {
+      "name": "seq_page_cost",
+      "type": "float",
+      "low": 0,
+      "high": 1,
+      "physical_definition": {
+        "default": 1.0,
+        "type": "float",
+        "min": 0.0,
+        "max": 100
+      },
+      "meaning": "Planner cost estimate for a sequential disk-page read."
+    },
+    {
+      "name": "temp_buffers",
+      "type": "float",
+      "low": 0,
+      "high": 1,
+      "physical_definition": {
+        "default": 1024,
+        "type": "integer",
+        "min": 100,
+        "max": 10000
+      },
+      "meaning": "Per-session buffer limit for access to temporary tables."
+    },
+    {
+      "name": "wal_buffers",
+      "type": "float",
+      "low": 0,
+      "high": 1,
+      "physical_definition": {
+        "default": -1,
+        "type": "integer",
+        "min": -1,
+        "max": 262143
+      },
+      "meaning": "Shared buffer space for WAL data; physical value -1 selects automatic sizing."
+    },
+    {
+      "name": "wal_sync_method",
+      "type": "float",
+      "low": 0,
+      "high": 1,
+      "physical_definition": {
+        "default": "fdatasync",
+        "type": "enum",
+        "enum_values": [
+          "fsync",
+          "fdatasync",
+          "open_sync",
+          "open_datasync"
+        ]
+      },
+      "meaning": "Operating-system method used to force WAL updates to disk."
+    },
+    {
+      "name": "wal_writer_delay",
+      "type": "float",
+      "low": 0,
+      "high": 1,
+      "physical_definition": {
+        "default": 200,
+        "type": "integer",
+        "min": 1,
+        "max": 10000
+      },
+      "meaning": "Delay between WAL-writer activity rounds."
+    },
+    {
+      "name": "work_mem",
+      "type": "float",
+      "low": 0,
+      "high": 1,
+      "physical_definition": {
+        "default": 4096,
+        "type": "integer",
+        "min": 64,
+        "max": 1000000
+      },
+      "meaning": "Base memory limit per sort or hash operation before spilling to temporary disk files."
+    }
+  ],
+  "prior_facts": [
+    "Settings cover memory and caching, I/O, concurrency, query optimization, logging, replication, and authentication. Increasing every resource setting is not a general improvement rule.",
+    "Some settings apply only to particular storage engines or enabled features; some are legacy settings. A parameter's real database meaning does not establish its importance in this surrogate.",
+    "The available materials do not specify the full hardware and database-version configuration used to train the surrogate. Do not assume every described mechanism is active in this workload."
+  ],
+  "evaluation_budget": {
+    "initial": 50,
+    "optimization": 200
+  },
+  "workload": "JOB",
+  "database": "PostgreSQL",
+  "mechanism_sources": [
+    "https://www.postgresql.org/docs/14/runtime-config-resource.html",
+    "https://www.postgresql.org/docs/14/runtime-config-query.html",
+    "https://www.postgresql.org/docs/14/runtime-config-wal.html",
+    "https://www.postgresql.org/docs/14/runtime-config-locks.html"
+  ],
+  "units_policy": "Use the units in this task's parameter definitions. Do not invent unit conversions for entries without an explicit unit.",
+  "background": "Tune 20 PostgreSQL settings for a JOB analytical join-query workload to minimize predicted query latency. A fixed, previously built surrogate predicts performance; optimization does not execute a live database workload.",
+  "input_instructions": [
+    "Submit all 20 settings as floating-point numbers u in [0,1]. Names identify real database settings, but physical values and enumeration labels from the table must not be submitted directly.",
+    "For integer settings, decode as round(min + u*(max-min)). For physical floating-point settings, decode as min + u*(max-min) without rounding.",
+    "For K enumeration options, divide [0,1] into K equal-width intervals. Select enum_values[min(floor(u*K),K-1)] using zero-based indexing; u=1 selects the last option. Option order does not imply a performance ranking.",
+    "Encoding example: bgwriter_delay has physical range 10...10000; input 0.25 decodes to 2508. This illustrates encoding, not a recommended configuration.",
+    "Enumeration example: for wal_sync_method, input 0 selects \"fsync\", and 1 selects \"open_datasync\". The order is part of the encoding, not a performance ranking."
+  ],
+  "evaluation_details": [
+    "The evaluator decodes inputs and returns surrogate-predicted latency; lower is better.",
+    "Use the ranges, defaults, and enumeration order in this task's parameter table. A default is a reference configuration value, not a known optimum."
+  ],
+  "domain_knowledge": [
+    "effective_cache_size and page-cost settings influence planner estimates; they do not allocate cache or directly change disk speed. A changed estimate can select a different query plan.",
+    "More work_mem may reduce sort or hash spills, but this is a per-operation budget. Several operations and sessions can consume it concurrently.",
+    "WAL buffers and checkpoint pacing concern logging and background I/O. Their benefit depends on workload and storage conditions; the surrogate response must test any proposed direction.",
+    "JOB contains analytical joins. Statistics, memory, caching, and plan selection can interact, so parameter changes need not produce smooth latency changes."
+  ]
+}

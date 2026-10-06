@@ -1,0 +1,49 @@
+# Constraints
+
+Change only the declared parameters, using their exact names, types, and bounds.
+
+| Parameter | Meaning | Type | Allowed values | Search transform |
+| --- | --- | --- | --- | --- |
+| `max_depth` | Maximum depth of each tree. | integer | [1, 15] | linear |
+| `min_samples_split` | Minimum fraction of fitting samples required to split an internal node. | float | [0.01, 0.99] | logit |
+| `min_samples_leaf` | Minimum fraction of fitting samples required in each leaf after a split. | float | [0.01, 0.49] | logit |
+| `min_weight_fraction_leaf` | Minimum fraction of total fitting-sample weight required in a leaf. | float | [0.01, 0.49] | logit |
+| `max_features` | Fraction of input features considered at each split. | float | [0.01, 0.99] | logit |
+| `min_impurity_decrease` | Minimum weighted impurity decrease required for a split. | float | [0.0, 0.5] | linear |
+
+## Fixed task definitions
+
+**Dataset (`dataset`)**
+
+| Field | Value |
+| --- | --- |
+| `key` | `"digits"` |
+| `display_name` | `"Optical Digits"` |
+| `problem_type` | `"classification"` |
+| `total_samples` | `1797` |
+| `train_samples` | `1437` |
+| `test_samples` | `360` |
+| `feature_count` | `64` |
+| `class_counts_train` | `[151,147,141,154,151,142,137,140,135,139]` |
+
+**Estimator (`estimator`)**
+
+RandomForestClassifier
+
+**Fixed estimator settings (`fixed_estimator_parameters`)**
+
+| Field | Value |
+| --- | --- |
+| `bootstrap` | `true` |
+| `ccp_alpha` | `0.0` |
+| `class_weight` | `null` |
+| `criterion` | `"gini"` |
+| `max_leaf_nodes` | `null` |
+| `max_samples` | `null` |
+| `monotonic_cst` | `null` |
+| `n_estimators` | `10` |
+| `n_jobs` | `null` |
+| `oob_score` | `false` |
+| `random_state` | `0` |
+| `verbose` | `0` |
+| `warm_start` | `false` |

@@ -1,0 +1,82 @@
+[
+  {
+    "default": 125,
+    "high": 200,
+    "log": false,
+    "low": 50,
+    "meaning": "Number of neurons in the single hidden layer.",
+    "name": "hidden_layer_sizes",
+    "transform": "linear",
+    "type": "int"
+  },
+  {
+    "default": 0.01,
+    "high": 10.0,
+    "log": true,
+    "low": 1e-05,
+    "meaning": "L2 regularization strength.",
+    "name": "alpha",
+    "transform": "log",
+    "type": "float"
+  },
+  {
+    "default": 130,
+    "high": 250,
+    "log": false,
+    "low": 10,
+    "meaning": "Mini-batch size for stochastic gradient descent.",
+    "name": "batch_size",
+    "transform": "linear",
+    "type": "int"
+  },
+  {
+    "default": 0.001,
+    "high": 0.1,
+    "log": true,
+    "low": 1e-05,
+    "meaning": "Initial SGD learning rate before inverse scaling.",
+    "name": "learning_rate_init",
+    "transform": "log",
+    "type": "float"
+  },
+  {
+    "default": 0.5000000000000001,
+    "high": 0.9,
+    "log": false,
+    "low": 0.1,
+    "meaning": "Exponent controlling the inverse-scaling learning-rate schedule.",
+    "name": "power_t",
+    "transform": "logit",
+    "type": "float"
+  },
+  {
+    "default": 0.001,
+    "high": 0.1,
+    "log": true,
+    "low": 1e-05,
+    "meaning": "Minimum improvement in the internal validation score for early stopping.",
+    "name": "tol",
+    "transform": "log",
+    "type": "float"
+  },
+  {
+    "default": 0.4999999999999999,
+    "high": 0.999,
+    "log": false,
+    "low": 0.001,
+    "meaning": "Momentum coefficient in SGD updates.",
+    "name": "momentum",
+    "transform": "logit",
+    "type": "float"
+  },
+  {
+    "default": 0.5000000000000001,
+    "high": 0.9,
+    "log": false,
+    "low": 0.1,
+    "meaning": "Fraction held out from each fitting fold for internal early stopping.",
+    "name": "validation_fraction",
+    "transform": "logit",
+    "type": "float"
+  }
+]

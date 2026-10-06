@@ -1,0 +1,68 @@
+{
+  "parameters": [
+    {
+      "default": 125,
+      "high": 200,
+      "log": false,
+      "low": 50,
+      "name": "hidden_layer_sizes",
+      "type": "int"
+    },
+    {
+      "default": 0.01,
+      "high": 10.0,
+      "log": true,
+      "low": 1e-05,
+      "name": "alpha",
+      "type": "float"
+    },
+    {
+      "default": 130,
+      "high": 250,
+      "log": false,
+      "low": 10,
+      "name": "batch_size",
+      "type": "int"
+    },
+    {
+      "default": 0.001,
+      "high": 0.1,
+      "log": true,
+      "low": 1e-05,
+      "name": "learning_rate_init",
+      "type": "float"
+    },
+    {
+      "default": 0.5000000000000001,
+      "high": 0.9,
+      "log": false,
+      "low": 0.1,
+      "name": "power_t",
+      "type": "float"
+    },
+    {
+      "default": 0.001,
+      "high": 0.1,
+      "log": true,
+      "low": 1e-05,
+      "name": "tol",
+      "type": "float"
+    },
+    {
+      "default": 0.4999999999999999,
+      "high": 0.999,
+      "log": false,
+      "low": 0.001,
+      "name": "momentum",
+      "type": "float"
+    },
+    {
+      "default": 0.5000000000000001,
+      "high": 0.9,
+      "log": false,
+      "low": 0.1,
+      "name": "validation_fraction",
+      "type": "float"
+    }
+  ]
+}

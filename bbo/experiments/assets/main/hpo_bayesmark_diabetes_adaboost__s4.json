@@ -1,0 +1,110 @@
+{
+  "row": {
+    "task": "hpo_bayesmark_diabetes_adaboost",
+    "family": "HPO",
+    "seed": 4,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_diabetes_adaboost",
+    "case_id": "hpo_bayesmark_diabetes_adaboost__s4"
+  },
+  "short_task": "# Diabetes Progression / AdaBoostRegressor\n\nTask ID: `hpo_bayesmark_diabetes_adaboost`.\n\nTune 2 hyperparameters of AdaBoostRegressor on Diabetes Progression to reduce cross-validation prediction mean squared error.\n\nObjective: minimize `loss`.\n\nBudget: 5 shared initial observations and 25 new evaluations (30 total).\n\n## Submission\n\n1. Submit every parameter listed below, using its declared integer or floating-point type and inclusive bounds.\n2. Submit original hyperparameter values. The transform column describes search coordinates, not a transformation to apply before submission: for example, submit 0.1 itself rather than log(0.1) or logit(0.1).\n\n## Parameters\n\n| Parameter | Meaning | Type | Allowed values | Search transform |\n| --- | --- | --- | --- | --- |\n| `n_estimators` | Maximum number of boosting rounds. | integer | [10, 100] | linear |\n| `learning_rate` | Weight scaling for each boosting learner. | float | [0.0001, 10.0] | log |\n\n## Read details as needed\n\nThere are 2 active parameters. get_search_space supports names, query, optional annotated groups and paged index/details views.\n\nget_task_context sections: overview, submission, scoring, mechanisms, domain_knowledge, additional. Read scoring rules and relevant mechanisms before choosing a candidate.\n\nget_trial_history and get_incumbent return scores first; request parameter_names to inspect selected values.\n\nFollow instructions.md: submit_candidate accepts a full config or workspace JSON file directly; write_candidate is optional.\n",
+  "visible_task_id": "hpo_bayesmark_diabetes_adaboost",
+  "objective": {
+    "name": "loss",
+    "direction": "minimize"
+  },
+  "evaluation_budget": {
+    "initial_observations": 5,
+    "new_evaluations": 25,
+    "total_observations": 30
+  },
+  "task_facts": {
+    "overview": "# Diabetes Progression / AdaBoostRegressor\n\nTask ID: `hpo_bayesmark_diabetes_adaboost`.\n\nTune 2 hyperparameters of AdaBoostRegressor on Diabetes Progression to reduce cross-validation prediction mean squared error.\n\nObjective: minimize `loss`.\n\nBudget: 5 shared initial observations and 25 new evaluations (30 total).",
+    "submission": "1. Submit every parameter listed below, using its declared integer or floating-point type and inclusive bounds.\n2. Submit original hyperparameter values. The transform column describes search coordinates, not a transformation to apply before submission: for example, submit 0.1 itself rather than log(0.1) or logit(0.1).",
+    "scoring": "1. The fixed split has 353 training and 89 held-out samples, with 10 features per sample. Feedback uses five-fold KFold cross-validation on the training split, with shuffle=False.\n2. The objective is mean cross-validation squared prediction error on the released standardized regression target; lower is better.\n3. Held-out results are not optimization feedback. No extra input scaling or preprocessing is added to the released arrays. Fixed estimator settings are listed below.",
+    "mechanisms": "1. n_estimators is an upper bound on boosting rounds; fitting can stop early after a perfect fit.\n2. learning_rate scales learner contributions and interacts with the number of rounds.\n3. With estimator=None, this regressor uses a default decision tree of maximum depth 3 as its weak learner.\n4. random_state is fixed at 0. Other fixed settings are listed below.",
+    "domain_knowledge": "1. Learning rate and round count jointly determine how the ensemble fits the data. A larger value for either is not automatically an improvement.",
+    "additional": "**Dataset (`dataset`)**\n\n| Field | Value |\n| --- | --- |\n| `key` | `\"diabetes\"` |\n| `display_name` | `\"Diabetes Progression\"` |\n| `problem_type` | `\"regression\"` |\n| `total_samples` | `442` |\n| `train_samples` | `353` |\n| `test_samples` | `89` |\n| `feature_count` | `10` |\n| `class_counts_train` | `[]` |\n\n**Estimator (`estimator`)**\n\nAdaBoostRegressor\n\n**Fixed estimator settings (`fixed_estimator_parameters`)**\n\n| Field | Value |\n| --- | --- |\n| `estimator` | `null` |\n| `loss` | `\"linear\"` |\n| `random_state` | `0` |"
+  },
+  "parameter_definitions": [
+    {
+      "name": "n_estimators",
+      "type": "int",
+      "low": 10,
+      "high": 100,
+      "log": false,
+      "default": 55,
+      "meaning": "Maximum number of boosting rounds.",
+      "transform": "linear"
+    },
+    {
+      "name": "learning_rate",
+      "type": "float",
+      "low": 0.0001,
+      "high": 10.0,
+      "log": true,
+      "default": 0.03162277660168379,
+      "meaning": "Weight scaling for each boosting learner.",
+      "transform": "log"
+    }
+  ],
+  "initial_history": [
+    {
+      "trial_id": 0,
+      "config": {
+        "learning_rate": 0.0007302585582149577,
+        "n_estimators": 91
+      },
+      "status": "success",
+      "objectives": {
+        "loss": 0.5150928703044977
+      }
+    },
+    {
+      "trial_id": 1,
+      "config": {
+        "learning_rate": 0.11096295335135392,
+        "n_estimators": 87
+      },
+      "status": "success",
+      "objectives": {
+        "loss": 0.516455126792249
+      }
+    },
+    {
+      "trial_id": 2,
+      "config": {
+        "learning_rate": 0.0005097073170297146,
+        "n_estimators": 64
+      },
+      "status": "success",
+      "objectives": {
+        "loss": 0.5240028356263382
+      }
+    },
+    {
+      "trial_id": 3,
+      "config": {
+        "learning_rate": 0.3105282955657252,
+        "n_estimators": 30
+      },
+      "status": "success",
+      "objectives": {
+        "loss": 0.5342218889847017
+      }
+    },
+    {
+      "trial_id": 4,
+      "config": {
+        "learning_rate": 0.14615562080255187,
+        "n_estimators": 91
+      },
+      "status": "success",
+      "objectives": {
+        "loss": 0.5116356421042791
+      }
+    }
+  ]
+}

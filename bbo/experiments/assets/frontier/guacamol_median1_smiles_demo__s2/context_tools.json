@@ -1,0 +1,247 @@
+{
+  "tools": [
+    {
+      "function": {
+        "description": "Return the best observed trial; request configuration columns only as needed, or export one row to a scratch JSON file without printing it.",
+        "name": "get_incumbent",
+        "parameters": {
+          "additionalProperties": false,
+          "properties": {
+            "include_config": {
+              "description": "Return the full configuration when parameter_names is omitted; default false.",
+              "type": "boolean"
+            },
+            "max_chars": {
+              "description": "Response character budget, default 24000. Use output_path for larger configurations.",
+              "maximum": 24000,
+              "minimum": 1000,
+              "type": "integer"
+            },
+            "output_path": {
+              "description": "Export only the best selected row to scratch/*.json (items array, empty if no incumbent). Omit max_chars.",
+              "type": "string"
+            },
+            "parameter_names": {
+              "description": "Return only these configuration columns; takes precedence over include_config.",
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          },
+          "required": [],
+          "type": "object"
+        }
+      },
+      "type": "function"
+    },
+    {
+      "function": {
+        "description": "Find parameter names or retrieve exact definitions; default is a paged index.",
+        "name": "get_search_space",
+        "parameters": {
+          "additionalProperties": false,
+          "properties": {
+            "cursor": {
+              "description": "Use the exact returned next_cursor, with the same query.",
+              "type": "string"
+            },
+            "group": {
+              "type": "string"
+            },
+            "limit": {
+              "description": "Upper bound on rows; max_chars may return fewer.",
+              "maximum": 100,
+              "minimum": 1,
+              "type": "integer"
+            },
+            "max_chars": {
+              "description": "Page character budget, default 6000. Follow next_cursor until null.",
+              "maximum": 24000,
+              "minimum": 1000,
+              "type": "integer"
+            },
+            "names": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "query": {
+              "type": "string"
+            },
+            "view": {
+              "enum": [
+                "index",
+                "details"
+              ],
+              "type": "string"
+            }
+          },
+          "required": [],
+          "type": "object"
+        }
+      },
+      "type": "function"
+    },
+    {
+      "function": {
+        "description": "Read a named section of task details with pagination.",
+        "name": "get_task_context",
+        "parameters": {
+          "additionalProperties": false,
+          "properties": {
+            "cursor": {
+              "description": "Use the exact returned next_cursor, with the same query.",
+              "type": "string"
+            },
+            "limit": {
+              "description": "Upper bound on rows; max_chars may return fewer.",
+              "maximum": 100,
+              "minimum": 1,
+              "type": "integer"
+            },
+            "max_chars": {
+              "description": "Page character budget, default 6000. Follow next_cursor until null.",
+              "maximum": 24000,
+              "minimum": 1000,
+              "type": "integer"
+            },
+            "section": {
+              "type": "string"
+            }
+          },
+          "required": [],
+          "type": "object"
+        }
+      },
+      "type": "function"
+    },
+    {
+      "function": {
+        "description": "Read observed scores with pagination; mode=all still returns a page. Follow next_cursor, or export all selected rows to a scratch JSON file with output_path. Default is 5 recent trials; after_trial_id gives incremental feedback.",
+        "name": "get_trial_history",
+        "parameters": {
+          "additionalProperties": false,
+          "properties": {
+            "after_trial_id": {
+              "type": [
+                "string",
+                "integer"
+              ]
+            },
+            "cursor": {
+              "description": "Use the exact returned next_cursor, with the same query.",
+              "type": "string"
+            },
+            "include_config": {
+              "description": "Return the full configuration when parameter_names is omitted; default false.",
+              "type": "boolean"
+            },
+            "limit": {
+              "description": "Upper bound on rows; max_chars may return fewer.",
+              "maximum": 100,
+              "minimum": 1,
+              "type": "integer"
+            },
+            "max_chars": {
+              "description": "Page character budget, default 6000. Follow next_cursor until null.",
+              "maximum": 24000,
+              "minimum": 1000,
+              "type": "integer"
+            },
+            "mode": {
+              "enum": [
+                "recent",
+                "best",
+                "all"
+              ],
+              "type": "string"
+            },
+            "output_path": {
+              "description": "Export all selected rows to scratch/*.json, without printing rows. Omit pagination arguments.",
+              "type": "string"
+            },
+            "parameter_names": {
+              "description": "Return only these configuration columns; takes precedence over include_config.",
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "trial_ids": {
+              "items": {
+                "type": [
+                  "string",
+                  "integer"
+                ]
+              },
+              "type": "array"
+            }
+          },
+          "required": [],
+          "type": "object"
+        }
+      },
+      "type": "function"
+    },
+    {
+      "function": {
+        "description": "Validate, commit and end this round in one call. Choose config, workspace JSON path, base_trial_id plus changes, or a saved candidate_id. Idempotent; host evaluates afterward.",
+        "name": "submit_candidate",
+        "parameters": {
+          "additionalProperties": false,
+          "properties": {
+            "base_trial_id": {
+              "type": [
+                "string",
+                "integer"
+              ]
+            },
+            "candidate_id": {
+              "type": "string"
+            },
+            "changes": {
+              "type": "object"
+            },
+            "config": {
+              "type": "object"
+            },
+            "path": {
+              "type": "string"
+            }
+          },
+          "required": [],
+          "type": "object"
+        }
+      },
+      "type": "function"
+    },
+    {
+      "function": {
+        "description": "Optional: validate and save a draft, without submitting. Direct submit_candidate does not require this step.",
+        "name": "write_candidate",
+        "parameters": {
+          "additionalProperties": false,
+          "properties": {
+            "base_trial_id": {
+              "type": [
+                "string",
+                "integer"
+              ]
+            },
+            "changes": {
+              "type": "object"
+            },
+            "config": {
+              "type": "object"
+            }
+          },
+          "required": [],
+          "type": "object"
+        }
+      },
+      "type": "function"
+    }
+  ]
+}

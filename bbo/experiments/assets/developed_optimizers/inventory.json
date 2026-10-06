@@ -1,0 +1,68 @@
+[
+  {
+    "session": "continuous__rep1",
+    "family": "BBOB",
+    "replicate": "1",
+    "pick": "5",
+    "development_reporting_S": "0.6337685836227829",
+    "historical_selection_score": "0.8187167330880187",
+    "held_out_S": "0.5481691448043109",
+    "sha256": "2719bfe91b4dc49033d006286e61f2fc8aa73370e66b22e22a469a3852d600ee",
+    "program_file": "bbob_1_v5.py"
+  },
+  {
+    "session": "continuous__rep2",
+    "family": "BBOB",
+    "replicate": "2",
+    "pick": "5",
+    "development_reporting_S": "0.4603999270328618",
+    "historical_selection_score": "0.6781967118448231",
+    "held_out_S": "0.484203426637702",
+    "sha256": "114c45c04c6b73e8f2d7674294d8772118440f1eb7211664ff8c9b078e0fa699",
+    "program_file": "bbob_2_v5.py"
+  },
+  {
+    "session": "continuous__rep3",
+    "family": "BBOB",
+    "replicate": "3",
+    "pick": "4",
+    "development_reporting_S": "0.7354178754583438",
+    "historical_selection_score": "0.8389875688452876",
+    "held_out_S": "0.6302962269701236",
+    "sha256": "09c9d8b65b8f7565bbfc085a6edfc0936550b645d4bc4bbc67905f6943b8218e",
+    "program_file": "bbob_3_v4.py"
+  },
+  {
+    "session": "hpo__rep1",
+    "family": "HPO",
+    "replicate": "1",
+    "pick": "4",
+    "development_reporting_S": "0.5937131547793706",
+    "historical_selection_score": "0.39289245891128277",
+    "held_out_S": "0.5320376226114796",
+    "sha256": "dd8e8bf1361d63f1cad785a809cbbd8365f3d53b73531c91f6d091be47464619",
+    "program_file": "hpo_1_v4.py"
+  },
+  {
+    "session": "hpo__rep2",
+    "family": "HPO",
+    "replicate": "2",
+    "pick": "5",
+    "development_reporting_S": "0.6217954060320333",
+    "historical_selection_score": "0.36547401487984843",
+    "held_out_S": "0.531396385488458",
+    "sha256": "e69f21ddb74b68a37bf4b785c7a1eeb13a3ebdfe3e75f032fb30c5ddab50e13d",
+    "program_file": "hpo_2_v5.py"
+  },
+  {
+    "session": "hpo__rep3",
+    "family": "HPO",
+    "replicate": "3",
+    "pick": "6",
+    "development_reporting_S": "0.607157843380581",
+    "historical_selection_score": "0.3690003039090733",
+    "held_out_S": "0.2791288302650222",
+    "sha256": "34df7052eb3c60d7c6fce9fe999a3937819bca430f52249636770fdc9e0b5d63",
+    "program_file": "hpo_3_v6.py"
+  }
+]

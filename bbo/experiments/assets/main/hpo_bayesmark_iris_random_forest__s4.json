@@ -1,0 +1,169 @@
+{
+  "row": {
+    "task": "hpo_bayesmark_iris_random_forest",
+    "family": "HPO",
+    "seed": 4,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_iris_random_forest",
+    "case_id": "hpo_bayesmark_iris_random_forest__s4"
+  },
+  "short_task": "# Iris / RandomForestClassifier\n\nTask ID: `hpo_bayesmark_iris_random_forest`.\n\nTune six hyperparameters of a random forest classifier on the Iris flower classification dataset to reduce cross-validation prediction error.\n\nObjective: minimize `loss`.\n\nBudget: 5 shared initial observations and 25 new evaluations (30 total).\n\n## Submission\n\n1. Submit all six hyperparameters using values within the parameter table bounds. max_depth is an integer; the other parameters are floating-point values.\n2. The transform field describes search coordinates, not the submission format. For example, submit min_samples_leaf=0.1 directly, not its logit transform.\n\n## Parameters\n\n| Parameter | Meaning | Type | Allowed values | Search transform |\n| --- | --- | --- | --- | --- |\n| `max_depth` | Maximum depth of each tree. | integer | [1, 15] | linear |\n| `min_samples_split` | Minimum fraction of fitting samples required to split an internal node. | float | [0.01, 0.99] | logit |\n| `min_samples_leaf` | Minimum fraction of fitting samples required in each leaf after a split. | float | [0.01, 0.49] | logit |\n| `min_weight_fraction_leaf` | Minimum fraction of total fitting-sample weight required in a leaf. | float | [0.01, 0.49] | logit |\n| `max_features` | Fraction of input features considered at each split. | float | [0.01, 0.99] | logit |\n| `min_impurity_decrease` | Minimum weighted impurity decrease required for a split. | float | [0.0, 0.5] | linear |\n\n## Read details as needed\n\nThere are 6 active parameters. get_search_space supports names, query, optional annotated groups and paged index/details views.\n\nget_task_context sections: overview, submission, scoring, mechanisms, additional. Read scoring rules and relevant mechanisms before choosing a candidate.\n\nget_trial_history and get_incumbent return scores first; request parameter_names to inspect selected values.\n\nFollow instructions.md: submit_candidate accepts a full config or workspace JSON file directly; write_candidate is optional.\n",
+  "visible_task_id": "hpo_bayesmark_iris_random_forest",
+  "objective": {
+    "name": "loss",
+    "direction": "minimize"
+  },
+  "evaluation_budget": {
+    "initial_observations": 5,
+    "new_evaluations": 25,
+    "total_observations": 30
+  },
+  "task_facts": {
+    "overview": "# Iris / RandomForestClassifier\n\nTask ID: `hpo_bayesmark_iris_random_forest`.\n\nTune six hyperparameters of a random forest classifier on the Iris flower classification dataset to reduce cross-validation prediction error.\n\nObjective: minimize `loss`.\n\nBudget: 5 shared initial observations and 25 new evaluations (30 total).",
+    "submission": "1. Submit all six hyperparameters using values within the parameter table bounds. max_depth is an integer; the other parameters are floating-point values.\n2. The transform field describes search coordinates, not the submission format. For example, submit min_samples_leaf=0.1 directly, not its logit transform.",
+    "scoring": "1. The 150 samples are split into 120 training samples and 30 held-out samples, with four features per sample. Optimization feedback uses five-fold stratified cross-validation on the training split, without shuffling (shuffle=False).\n2. Cross-validation error is 1 - mean fold accuracy. Minimizing this error is equivalent to maximizing mean accuracy. The run objective below specifies which metric the interface returns; held-out results are not optimization feedback.\n3. The random forest uses 10 trees and random_state=0. Other fixed settings appear under fixed_estimator_parameters. No additional data preprocessing is applied.",
+    "mechanisms": "1. Floating-point min_samples_split and min_samples_leaf become sample-count thresholds through ceil(fraction * number of samples fitted in the fold).\n2. Without sample_weight, samples start with equal weights. min_weight_fraction_leaf constrains the fraction of total sample weight in each leaf.\n3. Floating-point max_features becomes max(1, int(max_features * n_features_in_)) features per split. Different inputs can select the same number of features. Finding a valid split may require inspecting more features than this number.\n4. Depth, leaf size, minimum split size, and minimum impurity decrease jointly constrain tree growth.",
+    "additional": "**Dataset (`dataset`)**\n\n| Field | Value |\n| --- | --- |\n| `key` | `\"iris\"` |\n| `display_name` | `\"Iris\"` |\n| `problem_type` | `\"classification\"` |\n| `total_samples` | `150` |\n| `train_samples` | `120` |\n| `test_samples` | `30` |\n| `feature_count` | `4` |\n| `class_counts_train` | `[39,37,44]` |\n\n**Estimator (`estimator`)**\n\nRandomForestClassifier\n\n**Fixed estimator settings (`fixed_estimator_parameters`)**\n\n| Field | Value |\n| --- | --- |\n| `bootstrap` | `true` |\n| `ccp_alpha` | `0.0` |\n| `class_weight` | `null` |\n| `criterion` | `\"gini\"` |\n| `max_leaf_nodes` | `null` |\n| `max_samples` | `null` |\n| `monotonic_cst` | `null` |\n| `n_estimators` | `10` |\n| `n_jobs` | `null` |\n| `oob_score` | `false` |\n| `random_state` | `0` |\n| `verbose` | `0` |\n| `warm_start` | `false` |"
+  },
+  "parameter_definitions": [
+    {
+      "name": "max_depth",
+      "type": "int",
+      "low": 1,
+      "high": 15,
+      "log": false,
+      "default": 8,
+      "meaning": "Maximum depth of each tree.",
+      "transform": "linear"
+    },
+    {
+      "name": "min_samples_split",
+      "type": "float",
+      "low": 0.01,
+      "high": 0.99,
+      "log": false,
+      "default": 0.4999999999999999,
+      "meaning": "Minimum fraction of fitting samples required to split an internal node.",
+      "transform": "logit"
+    },
+    {
+      "name": "min_samples_leaf",
+      "type": "float",
+      "low": 0.01,
+      "high": 0.49,
+      "log": false,
+      "default": 0.0896788419715469,
+      "meaning": "Minimum fraction of fitting samples required in each leaf after a split.",
+      "transform": "logit"
+    },
+    {
+      "name": "min_weight_fraction_leaf",
+      "type": "float",
+      "low": 0.01,
+      "high": 0.49,
+      "log": false,
+      "default": 0.0896788419715469,
+      "meaning": "Minimum fraction of total fitting-sample weight required in a leaf.",
+      "transform": "logit"
+    },
+    {
+      "name": "max_features",
+      "type": "float",
+      "low": 0.01,
+      "high": 0.99,
+      "log": false,
+      "default": 0.4999999999999999,
+      "meaning": "Fraction of input features considered at each split.",
+      "transform": "logit"
+    },
+    {
+      "name": "min_impurity_decrease",
+      "type": "float",
+      "low": 0.0,
+      "high": 0.5,
+      "log": false,
+      "default": 0.25,
+      "meaning": "Minimum weighted impurity decrease required for a split.",
+      "transform": "linear"
+    }
+  ],
+  "initial_history": [
+    {
+      "trial_id": 0,
+      "config": {
+        "max_depth": 15,
+        "max_features": 0.123616355684702,
+        "min_impurity_decrease": 0.48634217998244217,
+        "min_samples_leaf": 0.16150247806327767,
+        "min_samples_split": 0.2468381021678784,
+        "min_weight_fraction_leaf": 0.023186415725322512
+      },
+      "status": "success",
+      "objectives": {
+        "loss": 0.65
+      }
+    },
+    {
+      "trial_id": 1,
+      "config": {
+        "max_depth": 15,
+        "max_features": 0.010290425114510175,
+        "min_impurity_decrease": 0.12649118119172198,
+        "min_samples_leaf": 0.054310392782503124,
+        "min_samples_split": 0.35922287866378627,
+        "min_weight_fraction_leaf": 0.021583731917407766
+      },
+      "status": "success",
+      "objectives": {
+        "loss": 0.07499999999999996
+      }
+    },
+    {
+      "trial_id": 2,
+      "config": {
+        "max_depth": 13,
+        "max_features": 0.9172949482616565,
+        "min_impurity_decrease": 0.08192112070234936,
+        "min_samples_leaf": 0.10223779880806912,
+        "min_samples_split": 0.010421565748011563,
+        "min_weight_fraction_leaf": 0.04501748894332788
+      },
+      "status": "success",
+      "objectives": {
+        "loss": 0.05833333333333335
+      }
+    },
+    {
+      "trial_id": 3,
+      "config": {
+        "max_depth": 2,
+        "max_features": 0.8112044630651188,
+        "min_impurity_decrease": 0.21807332343989883,
+        "min_samples_leaf": 0.4017517007540776,
+        "min_samples_split": 0.37083430190365313,
+        "min_weight_fraction_leaf": 0.29120496585491235
+      },
+      "status": "success",
+      "objectives": {
+        "loss": 0.65
+      }
+    },
+    {
+      "trial_id": 4,
+      "config": {
+        "max_depth": 3,
+        "max_features": 0.014111397905356916,
+        "min_impurity_decrease": 0.30037136068888465,
+        "min_samples_leaf": 0.019226752087066347,
+        "min_samples_split": 0.2907764789411799,
+        "min_weight_fraction_leaf": 0.04901739320886911
+      },
+      "status": "success",
+      "objectives": {
+        "loss": 0.09166666666666656
+      }
+    }
+  ]
+}

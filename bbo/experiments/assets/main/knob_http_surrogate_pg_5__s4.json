@@ -1,0 +1,810 @@
+{
+  "row": {
+    "task": "knob_http_surrogate_pg_5",
+    "family": "DBTune",
+    "seed": 4,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "knob_http_surrogate_pg_5",
+    "case_id": "knob_http_surrogate_pg_5__s4"
+  },
+  "short_task": "# PostgreSQL JOB 5 knobs\n\nTask ID: `knob_http_surrogate_pg_5`.\n\nTune 5 PostgreSQL settings for a JOB analytical join-query workload to minimize predicted query latency. A fixed, previously built surrogate predicts performance; optimization does not execute a live database workload.\n\nObjective: minimize `latency`.\n\nBudget: 50 shared initial observations and 200 new evaluations (250 total).\n\n## Submission\n\n1. Submit all 5 settings as floating-point numbers u in [0,1]. Names identify real database settings, but physical values and enumeration labels from the table must not be submitted directly.\n2. For integer settings, decode as round(min + u*(max-min)). For physical floating-point settings, decode as min + u*(max-min) without rounding.\n3. For K enumeration options, divide [0,1] into K equal-width intervals. Select enum_values[min(floor(u*K),K-1)] using zero-based indexing; u=1 selects the last option. Option order does not imply a performance ranking.\n4. Encoding example: backend_flush_after has physical range 0...256; input 0.25 decodes to 64. This illustrates encoding, not a recommended configuration.\n\n## Parameters\n\nEvery submitted parameter is a float in [0,1]. Physical definitions below are decoded using the rules above; they are not direct submission values.\n\n| Parameter | Meaning | Physical definition | Default |\n| --- | --- | --- | --- |\n| `backend_flush_after` | Amount written by one backend before requesting operating-system writeback. | Integer: `0` to `256` | `0` |\n| `checkpoint_completion_target` | Fraction of the checkpoint interval over which checkpoint writes are spread. | Float: `0.0` to `1.0` | `0.5` |\n| `max_worker_processes` | Maximum background worker processes supported by the server. | Integer: `0` to `262143` | `8` |\n| `shared_buffers` | Memory allocated to shared database-page buffers. | Integer: `16` to `1000000` | `1024` |\n| `wal_buffers` | Shared buffer space for WAL data; physical value -1 selects automatic sizing. | Integer: `-1` to `262143` | `-1` |\n\n## Read details as needed\n\nThere are 5 active parameters. get_search_space supports names, query, optional annotated groups and paged index/details views.\n\nget_task_context sections: overview, submission, scoring, mechanisms, domain_knowledge, additional. Read scoring rules and relevant mechanisms before choosing a candidate.\n\nget_trial_history and get_incumbent return scores first; request parameter_names to inspect selected values.\n\nFollow instructions.md: submit_candidate accepts a full config or workspace JSON file directly; write_candidate is optional.\n",
+  "visible_task_id": "knob_http_surrogate_pg_5",
+  "objective": {
+    "name": "latency",
+    "direction": "minimize"
+  },
+  "evaluation_budget": {
+    "initial_observations": 50,
+    "new_evaluations": 200,
+    "total_observations": 250
+  },
+  "task_facts": {
+    "overview": "# PostgreSQL JOB 5 knobs\n\nTask ID: `knob_http_surrogate_pg_5`.\n\nTune 5 PostgreSQL settings for a JOB analytical join-query workload to minimize predicted query latency. A fixed, previously built surrogate predicts performance; optimization does not execute a live database workload.\n\nObjective: minimize `latency`.\n\nBudget: 50 shared initial observations and 200 new evaluations (250 total).",
+    "submission": "1. Submit all 5 settings as floating-point numbers u in [0,1]. Names identify real database settings, but physical values and enumeration labels from the table must not be submitted directly.\n2. For integer settings, decode as round(min + u*(max-min)). For physical floating-point settings, decode as min + u*(max-min) without rounding.\n3. For K enumeration options, divide [0,1] into K equal-width intervals. Select enum_values[min(floor(u*K),K-1)] using zero-based indexing; u=1 selects the last option. Option order does not imply a performance ranking.\n4. Encoding example: backend_flush_after has physical range 0...256; input 0.25 decodes to 64. This illustrates encoding, not a recommended configuration.",
+    "scoring": "1. The evaluator decodes inputs and returns surrogate-predicted latency; lower is better.\n2. Use the ranges, defaults, and enumeration order in this task's parameter table. A default is a reference configuration value, not a known optimum.",
+    "mechanisms": "1. Settings cover memory and caching, I/O, concurrency, query optimization, logging, replication, and authentication. Increasing every resource setting is not a general improvement rule.\n2. Some settings apply only to particular storage engines or enabled features; some are legacy settings. A parameter's real database meaning does not establish its importance in this surrogate.\n3. The available materials do not specify the full hardware and database-version configuration used to train the surrogate. Do not assume every described mechanism is active in this workload.",
+    "domain_knowledge": "1. shared_buffers allocates database-page cache. More cache may reduce reads, but it competes with other database memory and the operating-system cache.\n2. WAL buffers and checkpoint pacing concern logging and background I/O. Their benefit depends on workload and storage conditions; the surrogate response must test any proposed direction.\n3. JOB contains analytical joins. Statistics, memory, caching, and plan selection can interact, so parameter changes need not produce smooth latency changes.",
+    "additional": "**Workload (`workload`)**\n\nJOB\n\n**Database (`database`)**\n\nPostgreSQL\n\n**Units (`units_policy`)**\n\nUse the units in this task's parameter definitions. Do not invent unit conversions for entries without an explicit unit."
+  },
+  "parameter_definitions": [
+    {
+      "name": "backend_flush_after",
+      "type": "float",
+      "low": 0.0,
+      "high": 1.0,
+      "log": false,
+      "default": 0.5,
+      "meaning": "Amount written by one backend before requesting operating-system writeback.",
+      "physical_definition": {
+        "default": 0,
+        "type": "integer",
+        "min": 0,
+        "max": 256
+      }
+    },
+    {
+      "name": "checkpoint_completion_target",
+      "type": "float",
+      "low": 0.0,
+      "high": 1.0,
+      "log": false,
+      "default": 0.5,
+      "meaning": "Fraction of the checkpoint interval over which checkpoint writes are spread.",
+      "physical_definition": {
+        "default": 0.5,
+        "type": "float",
+        "min": 0.0,
+        "max": 1.0
+      }
+    },
+    {
+      "name": "max_worker_processes",
+      "type": "float",
+      "low": 0.0,
+      "high": 1.0,
+      "log": false,
+      "default": 0.5,
+      "meaning": "Maximum background worker processes supported by the server.",
+      "physical_definition": {
+        "default": 8,
+        "type": "integer",
+        "min": 0,
+        "max": 262143
+      }
+    },
+    {
+      "name": "shared_buffers",
+      "type": "float",
+      "low": 0.0,
+      "high": 1.0,
+      "log": false,
+      "default": 0.5,
+      "meaning": "Memory allocated to shared database-page buffers.",
+      "physical_definition": {
+        "default": 1024,
+        "type": "integer",
+        "min": 16,
+        "max": 1000000
+      }
+    },
+    {
+      "name": "wal_buffers",
+      "type": "float",
+      "low": 0.0,
+      "high": 1.0,
+      "log": false,
+      "default": 0.5,
+      "meaning": "Shared buffer space for WAL data; physical value -1 selects automatic sizing.",
+      "physical_definition": {
+        "default": -1,
+        "type": "integer",
+        "min": -1,
+        "max": 262143
+      }
+    }
+  ],
+  "initial_history": [
+    {
+      "trial_id": 0,
+      "config": {
+        "backend_flush_after": 0.06651509567958991,
+        "checkpoint_completion_target": 0.15497227080241027,
+        "max_worker_processes": 0.23604808973743452,
+        "shared_buffers": 0.1031660342307158,
+        "wal_buffers": 0.396058242610681
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 64.23060946666668
+      }
+    },
+    {
+      "trial_id": 1,
+      "config": {
+        "backend_flush_after": 0.22192817569031764,
+        "checkpoint_completion_target": 0.7651626025054384,
+        "max_worker_processes": 0.40159101448507484,
+        "shared_buffers": 0.9179550430877189,
+        "wal_buffers": 0.8004523514958085
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 240.0
+      }
+    },
+    {
+      "trial_id": 2,
+      "config": {
+        "backend_flush_after": 0.2144004325789165,
+        "checkpoint_completion_target": 0.10618329243153013,
+        "max_worker_processes": 0.5366800081748135,
+        "shared_buffers": 0.2766826434414502,
+        "wal_buffers": 0.1726645292853689
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 235.83730799999998
+      }
+    },
+    {
+      "trial_id": 3,
+      "config": {
+        "backend_flush_after": 0.19343561801924003,
+        "checkpoint_completion_target": 0.8004478385429662,
+        "max_worker_processes": 0.9274756314280604,
+        "shared_buffers": 0.8289200487784194,
+        "wal_buffers": 0.8066523467023234
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 300.0
+      }
+    },
+    {
+      "trial_id": 4,
+      "config": {
+        "backend_flush_after": 0.8800507513611994,
+        "checkpoint_completion_target": 0.8546483579913472,
+        "max_worker_processes": 0.30984995729953557,
+        "shared_buffers": 0.6269756024131301,
+        "wal_buffers": 0.731894708878718
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 240.0
+      }
+    },
+    {
+      "trial_id": 5,
+      "config": {
+        "backend_flush_after": 0.17779017424078447,
+        "checkpoint_completion_target": 0.5059537757104153,
+        "max_worker_processes": 0.08671825263492183,
+        "shared_buffers": 0.6058518837198799,
+        "wal_buffers": 0.6717014565164733
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 240.0
+      }
+    },
+    {
+      "trial_id": 6,
+      "config": {
+        "backend_flush_after": 0.5476388695870539,
+        "checkpoint_completion_target": 0.8654841701850833,
+        "max_worker_processes": 0.47358788758514514,
+        "shared_buffers": 0.08934620726539033,
+        "wal_buffers": 0.9345883638999081
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 214.707473
+      }
+    },
+    {
+      "trial_id": 7,
+      "config": {
+        "backend_flush_after": 0.8480440882236346,
+        "checkpoint_completion_target": 0.88231723987879,
+        "max_worker_processes": 0.3002457395733247,
+        "shared_buffers": 0.9088702894146864,
+        "wal_buffers": 0.5723668016858915
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 240.0
+      }
+    },
+    {
+      "trial_id": 8,
+      "config": {
+        "backend_flush_after": 0.16132060612160848,
+        "checkpoint_completion_target": 0.4310430172933071,
+        "max_worker_processes": 0.5083723753327516,
+        "shared_buffers": 0.413946043131732,
+        "wal_buffers": 0.5989124721899894
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 240.0
+      }
+    },
+    {
+      "trial_id": 9,
+      "config": {
+        "backend_flush_after": 0.6263507455399034,
+        "checkpoint_completion_target": 0.04632199900351264,
+        "max_worker_processes": 0.305111596432739,
+        "shared_buffers": 0.8125923186346207,
+        "wal_buffers": 0.04323846907224849
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 240.0
+      }
+    },
+    {
+      "trial_id": 10,
+      "config": {
+        "backend_flush_after": 0.9972788741721124,
+        "checkpoint_completion_target": 0.34284326542215604,
+        "max_worker_processes": 0.2804332116162187,
+        "shared_buffers": 0.5346217948794222,
+        "wal_buffers": 0.471240086114993
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 240.0
+      }
+    },
+    {
+      "trial_id": 11,
+      "config": {
+        "backend_flush_after": 0.27630483495968317,
+        "checkpoint_completion_target": 0.632664981791019,
+        "max_worker_processes": 0.1955734943333154,
+        "shared_buffers": 0.41279465640732504,
+        "wal_buffers": 0.20267061617239635
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 93.29039500000003
+      }
+    },
+    {
+      "trial_id": 12,
+      "config": {
+        "backend_flush_after": 0.9043151015306578,
+        "checkpoint_completion_target": 0.5585289835833921,
+        "max_worker_processes": 0.35583075460735203,
+        "shared_buffers": 0.7469426809904626,
+        "wal_buffers": 0.32066890324974195
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 240.0
+      }
+    },
+    {
+      "trial_id": 13,
+      "config": {
+        "backend_flush_after": 0.6154320751286971,
+        "checkpoint_completion_target": 0.7651622413262759,
+        "max_worker_processes": 0.10097943871785953,
+        "shared_buffers": 0.061610242040175844,
+        "wal_buffers": 0.22886944023876477
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 40.38286474999998
+      }
+    },
+    {
+      "trial_id": 14,
+      "config": {
+        "backend_flush_after": 0.042811187782019644,
+        "checkpoint_completion_target": 0.45901875217017585,
+        "max_worker_processes": 0.2374171698253259,
+        "shared_buffers": 0.3310669953717347,
+        "wal_buffers": 0.17753969349655696
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 69.05053749999998
+      }
+    },
+    {
+      "trial_id": 15,
+      "config": {
+        "backend_flush_after": 0.9598675916129511,
+        "checkpoint_completion_target": 0.7348779564739258,
+        "max_worker_processes": 0.6972918814615184,
+        "shared_buffers": 0.8959277791118226,
+        "wal_buffers": 0.9547375983423451
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 272.4
+      }
+    },
+    {
+      "trial_id": 16,
+      "config": {
+        "backend_flush_after": 0.4104276810688755,
+        "checkpoint_completion_target": 0.7752394352251485,
+        "max_worker_processes": 0.01818752529330747,
+        "shared_buffers": 0.2889964679008432,
+        "wal_buffers": 0.9660067569681229
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 32.40261499999999
+      }
+    },
+    {
+      "trial_id": 17,
+      "config": {
+        "backend_flush_after": 0.1914152048087393,
+        "checkpoint_completion_target": 0.29341025365687634,
+        "max_worker_processes": 0.9433083673529813,
+        "shared_buffers": 0.6205104714635291,
+        "wal_buffers": 0.8179278006982527
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 300.0
+      }
+    },
+    {
+      "trial_id": 18,
+      "config": {
+        "backend_flush_after": 0.3313072291991864,
+        "checkpoint_completion_target": 0.9618136224069048,
+        "max_worker_processes": 0.4441422394811759,
+        "shared_buffers": 0.13643762655591496,
+        "wal_buffers": 0.38163463472433135
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 221.71487900000002
+      }
+    },
+    {
+      "trial_id": 19,
+      "config": {
+        "backend_flush_after": 0.3627242669253443,
+        "checkpoint_completion_target": 0.7837456748213549,
+        "max_worker_processes": 0.009396466339564591,
+        "shared_buffers": 0.04479719292212525,
+        "wal_buffers": 0.16956704381995513
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 41.13570458333331
+      }
+    },
+    {
+      "trial_id": 20,
+      "config": {
+        "backend_flush_after": 0.2079168417574333,
+        "checkpoint_completion_target": 0.4239525192717448,
+        "max_worker_processes": 0.29033423640918543,
+        "shared_buffers": 0.09710221319889101,
+        "wal_buffers": 0.9817486495318765
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 66.15513283333338
+      }
+    },
+    {
+      "trial_id": 21,
+      "config": {
+        "backend_flush_after": 0.14964053486673146,
+        "checkpoint_completion_target": 0.6768271175818056,
+        "max_worker_processes": 0.059339523778924264,
+        "shared_buffers": 0.05527062518240078,
+        "wal_buffers": 0.16867027130376422
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 41.057546833333305
+      }
+    },
+    {
+      "trial_id": 22,
+      "config": {
+        "backend_flush_after": 0.12227325763441954,
+        "checkpoint_completion_target": 0.9976365270880904,
+        "max_worker_processes": 0.04089236666433538,
+        "shared_buffers": 0.490667615701743,
+        "wal_buffers": 0.24905865133876315
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 33.880599499999995
+      }
+    },
+    {
+      "trial_id": 23,
+      "config": {
+        "backend_flush_after": 0.4777619630230422,
+        "checkpoint_completion_target": 0.987657384576361,
+        "max_worker_processes": 0.5292415864237204,
+        "shared_buffers": 0.7737921252616178,
+        "wal_buffers": 0.4093212310344887
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 240.0
+      }
+    },
+    {
+      "trial_id": 24,
+      "config": {
+        "backend_flush_after": 0.2485859740334425,
+        "checkpoint_completion_target": 0.42122096153722777,
+        "max_worker_processes": 0.24186216621707513,
+        "shared_buffers": 0.41062248864724227,
+        "wal_buffers": 0.036869184814851685
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 194.04818050000003
+      }
+    },
+    {
+      "trial_id": 25,
+      "config": {
+        "backend_flush_after": 0.25439366141995323,
+        "checkpoint_completion_target": 0.031650357222601455,
+        "max_worker_processes": 0.8893004166173706,
+        "shared_buffers": 0.8310471193173511,
+        "wal_buffers": 0.49857971957109937
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 295.8
+      }
+    },
+    {
+      "trial_id": 26,
+      "config": {
+        "backend_flush_after": 0.14170176777999155,
+        "checkpoint_completion_target": 0.8697095160312,
+        "max_worker_processes": 0.24238912407813318,
+        "shared_buffers": 0.20806549319860035,
+        "wal_buffers": 0.2314666540707253
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 36.14943812500001
+      }
+    },
+    {
+      "trial_id": 27,
+      "config": {
+        "backend_flush_after": 0.40296206595566275,
+        "checkpoint_completion_target": 0.9905707133539692,
+        "max_worker_processes": 0.05127372511495265,
+        "shared_buffers": 0.928033175427591,
+        "wal_buffers": 0.5653442004088759
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 218.93268899999998
+      }
+    },
+    {
+      "trial_id": 28,
+      "config": {
+        "backend_flush_after": 0.49428802272284544,
+        "checkpoint_completion_target": 0.7447262856401745,
+        "max_worker_processes": 0.900952157772835,
+        "shared_buffers": 0.6539734666861452,
+        "wal_buffers": 0.7908577227395212
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 300.0
+      }
+    },
+    {
+      "trial_id": 29,
+      "config": {
+        "backend_flush_after": 0.9245773715187279,
+        "checkpoint_completion_target": 0.8997618551860671,
+        "max_worker_processes": 0.09290861658832106,
+        "shared_buffers": 0.2109212944651223,
+        "wal_buffers": 0.8738062275372805
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 33.9554565
+      }
+    },
+    {
+      "trial_id": 30,
+      "config": {
+        "backend_flush_after": 0.8148261712490704,
+        "checkpoint_completion_target": 0.6424939208853032,
+        "max_worker_processes": 0.33658958447132015,
+        "shared_buffers": 0.6569089999141473,
+        "wal_buffers": 0.7995046593300813
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 240.0
+      }
+    },
+    {
+      "trial_id": 31,
+      "config": {
+        "backend_flush_after": 0.9227999627007681,
+        "checkpoint_completion_target": 0.26829904570080787,
+        "max_worker_processes": 0.5280238927545994,
+        "shared_buffers": 0.6547321885928308,
+        "wal_buffers": 0.685959851750019
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 240.0
+      }
+    },
+    {
+      "trial_id": 32,
+      "config": {
+        "backend_flush_after": 0.6683518826310155,
+        "checkpoint_completion_target": 0.9617738174487724,
+        "max_worker_processes": 0.9562790579824927,
+        "shared_buffers": 0.07438056810654337,
+        "wal_buffers": 0.9710882774001429
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 294.0
+      }
+    },
+    {
+      "trial_id": 33,
+      "config": {
+        "backend_flush_after": 0.6671899173879098,
+        "checkpoint_completion_target": 0.9685349633503075,
+        "max_worker_processes": 0.04454396959245033,
+        "shared_buffers": 0.8989697219397559,
+        "wal_buffers": 0.1276327875764688
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 216.8219935
+      }
+    },
+    {
+      "trial_id": 34,
+      "config": {
+        "backend_flush_after": 0.7464945569912055,
+        "checkpoint_completion_target": 0.5692059358372037,
+        "max_worker_processes": 0.060483111963271385,
+        "shared_buffers": 0.16726561403164808,
+        "wal_buffers": 0.6351897900147457
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 39.419421
+      }
+    },
+    {
+      "trial_id": 35,
+      "config": {
+        "backend_flush_after": 0.01311027713126689,
+        "checkpoint_completion_target": 0.9223619934673792,
+        "max_worker_processes": 0.9274809464100172,
+        "shared_buffers": 0.21854146419475406,
+        "wal_buffers": 0.0032730267285946413
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 288.180535
+      }
+    },
+    {
+      "trial_id": 36,
+      "config": {
+        "backend_flush_after": 0.8778778703684761,
+        "checkpoint_completion_target": 0.7829697309515223,
+        "max_worker_processes": 0.8764235843519795,
+        "shared_buffers": 0.11588996943669883,
+        "wal_buffers": 0.8098723424208862
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 295.2
+      }
+    },
+    {
+      "trial_id": 37,
+      "config": {
+        "backend_flush_after": 0.33064311607501784,
+        "checkpoint_completion_target": 0.6714817926904405,
+        "max_worker_processes": 0.5506083969280183,
+        "shared_buffers": 0.878707468144288,
+        "wal_buffers": 0.20166944833026434
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 240.0
+      }
+    },
+    {
+      "trial_id": 38,
+      "config": {
+        "backend_flush_after": 0.026393458835699768,
+        "checkpoint_completion_target": 0.5264086458060319,
+        "max_worker_processes": 0.8917500269589722,
+        "shared_buffers": 0.7735738589192733,
+        "wal_buffers": 0.4715101191046449
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 300.0
+      }
+    },
+    {
+      "trial_id": 39,
+      "config": {
+        "backend_flush_after": 0.6081251485207142,
+        "checkpoint_completion_target": 0.8647198249172529,
+        "max_worker_processes": 0.03418314975073167,
+        "shared_buffers": 0.5944868409105872,
+        "wal_buffers": 0.48883122623567477
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 218.919945
+      }
+    },
+    {
+      "trial_id": 40,
+      "config": {
+        "backend_flush_after": 0.010551268584567564,
+        "checkpoint_completion_target": 0.522986292131511,
+        "max_worker_processes": 0.13876171440911478,
+        "shared_buffers": 0.36256968289382685,
+        "wal_buffers": 0.7675794875552631
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 41.178232500000014
+      }
+    },
+    {
+      "trial_id": 41,
+      "config": {
+        "backend_flush_after": 0.3811580256026439,
+        "checkpoint_completion_target": 0.5433786768747104,
+        "max_worker_processes": 0.8376889627196834,
+        "shared_buffers": 0.8275614758933684,
+        "wal_buffers": 0.08514101028344034
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 272.4
+      }
+    },
+    {
+      "trial_id": 42,
+      "config": {
+        "backend_flush_after": 0.9662786081437614,
+        "checkpoint_completion_target": 0.4866520006617505,
+        "max_worker_processes": 0.7873874826473551,
+        "shared_buffers": 0.3111693739043967,
+        "wal_buffers": 0.23370059399837007
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 271.2
+      }
+    },
+    {
+      "trial_id": 43,
+      "config": {
+        "backend_flush_after": 0.5124746486513734,
+        "checkpoint_completion_target": 0.8853428912601056,
+        "max_worker_processes": 0.09511967060859683,
+        "shared_buffers": 0.11445112463649654,
+        "wal_buffers": 0.6209617316600201
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 38.1559215
+      }
+    },
+    {
+      "trial_id": 44,
+      "config": {
+        "backend_flush_after": 0.8813249389880585,
+        "checkpoint_completion_target": 0.06691787115180847,
+        "max_worker_processes": 0.43395325106302496,
+        "shared_buffers": 0.8578439556899257,
+        "wal_buffers": 0.7765862378793907
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 240.0
+      }
+    },
+    {
+      "trial_id": 45,
+      "config": {
+        "backend_flush_after": 0.7983488705626961,
+        "checkpoint_completion_target": 0.42246444611379863,
+        "max_worker_processes": 0.19585267183882693,
+        "shared_buffers": 0.30230546690337146,
+        "wal_buffers": 0.8364419749280637
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 97.09405999999997
+      }
+    },
+    {
+      "trial_id": 46,
+      "config": {
+        "backend_flush_after": 0.4942552287863299,
+        "checkpoint_completion_target": 0.149306962836942,
+        "max_worker_processes": 0.16737696805300517,
+        "shared_buffers": 0.8742871520133363,
+        "wal_buffers": 0.17635094155911546
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 240.0
+      }
+    },
+    {
+      "trial_id": 47,
+      "config": {
+        "backend_flush_after": 0.005562124014677927,
+        "checkpoint_completion_target": 0.7105117080264377,
+        "max_worker_processes": 0.33858490927972695,
+        "shared_buffers": 0.5418630314898528,
+        "wal_buffers": 0.9040723368889024
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 240.0
+      }
+    },
+    {
+      "trial_id": 48,
+      "config": {
+        "backend_flush_after": 0.4842494541876725,
+        "checkpoint_completion_target": 0.715586659319672,
+        "max_worker_processes": 0.31181714028829965,
+        "shared_buffers": 0.5449484743985434,
+        "wal_buffers": 0.486506691472383
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 240.0
+      }
+    },
+    {
+      "trial_id": 49,
+      "config": {
+        "backend_flush_after": 0.7666699303717416,
+        "checkpoint_completion_target": 0.3567905666620208,
+        "max_worker_processes": 0.07568432778652445,
+        "shared_buffers": 0.24544117906076357,
+        "wal_buffers": 0.8475701011229381
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 33.11532550000001
+      }
+    }
+  ]
+}

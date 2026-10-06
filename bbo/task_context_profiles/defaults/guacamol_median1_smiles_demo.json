@@ -1,0 +1,49 @@
+{
+  "task_id": "guacamol_median1_smiles_demo",
+  "task_name": "GuacaMol Median Molecules 1 SMILES",
+  "family": "GuacaMol",
+  "objective": "minimize (1 - GuacaMol score)",
+  "parameters": [
+    {
+      "name": "smiles",
+      "type": "string",
+      "max_length": 512,
+      "representation": "direct SMILES"
+    }
+  ],
+  "prior_facts": [
+    "The geometric mean rewards balancing both similarities. For example, s1=0.9 and s2=0.1 give score 0.3, whereas two similarities of 0.5 give score 0.5. These are formula examples, not evaluated molecules.",
+    "If either similarity is 0, the combined score is 0. Improving similarity to just one reference does not guarantee a higher combined score.",
+    "Changes to atoms, bonds, and rings alter local fingerprint features and may affect both similarities. A small string edit need not imply a small structural or score change.",
+    "This task uses only ECFP4. Candidate validity, objective evaluation, and evaluation budgets follow the shared task instructions."
+  ],
+  "evaluation_budget": {
+    "initial": 50,
+    "optimization": 200
+  },
+  "public_reference_smiles": [
+    "CC1(C)C2CCC1(C)C(=O)C2",
+    "CC(C)C1CCC(C)CC1O"
+  ],
+  "fingerprint_types": [
+    "ECFP4"
+  ],
+  "aggregation": "geometric mean",
+  "source": "https://github.com/BenevolentAI/guacamol/blob/master/guacamol/standard_benchmarks.py",
+  "background": "Find a molecule whose structure is simultaneously similar to camphor and menthol.",
+  "input_instructions": [
+    "Submit one molecule per candidate as a SMILES string in the smiles field, with a maximum length of 512.",
+    "SMILES represents atoms and connections on one line: C and O denote carbon and oxygen, parentheses denote branches, paired digits mark ring closures, and = denotes a double bond.",
+    "Scoring compares the molecular structures represented by the strings. Different SMILES strings can represent the same molecule."
+  ],
+  "reference_names": [
+    "Camphor",
+    "Menthol"
+  ],
+  "evaluation_details": [
+    "An ECFP4 molecular fingerprint describes local environments around atoms. This implementation uses a Morgan count fingerprint with radius 2, covering neighborhoods up to two bonds away.",
+    "Compute Tanimoto fingerprint similarities to the two reference molecules, s1 and s2, each in [0,1]. Larger values indicate more similar fingerprints.",
+    "score = sqrt(s1*s2), and loss = 1-score. The returned objective is median1_loss, which is minimized. Only the combined objective is returned, not s1 and s2 separately.",
+    "Empty or unparseable SMILES receive score 0, hence loss 1. There are no additional drug-efficacy, toxicity, or synthesizability scores."
+  ]
+}

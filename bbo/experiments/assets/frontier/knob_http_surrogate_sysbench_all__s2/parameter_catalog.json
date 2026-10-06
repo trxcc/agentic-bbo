@@ -1,0 +1,3109 @@
+[
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Controls whether ordinary statements automatically commit transactions.",
+    "name": "autocommit",
+    "physical_definition": {
+      "default": "ON",
+      "enum_values": [
+        "ON",
+        "OFF"
+      ],
+      "type": "enum"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Controls automatic execution and alteration privileges for stored-routine creators.",
+    "name": "automatic_sp_privileges",
+    "physical_definition": {
+      "default": "ON",
+      "enum_values": [
+        "ON",
+        "OFF"
+      ],
+      "type": "enum"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Limits the queue of connection requests waiting to be accepted.",
+    "name": "back_log",
+    "physical_definition": {
+      "default": 900,
+      "max": 65535,
+      "min": 1,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Memory allocated per transaction to cache binary-log entries.",
+    "name": "binlog_cache_size",
+    "physical_definition": {
+      "default": 32768,
+      "max": 4294967296,
+      "min": 4096,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Controls whether nontransactional table updates bypass the transaction cache and go directly to the binary log.",
+    "name": "binlog_direct_non_transactional_updates",
+    "physical_definition": {
+      "default": "OFF",
+      "enum_values": [
+        "ON",
+        "OFF"
+      ],
+      "type": "enum"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Chooses whether the server continues or aborts after a binary-log write error.",
+    "name": "binlog_error_action",
+    "physical_definition": {
+      "default": "ABORT_SERVER",
+      "enum_values": [
+        "IGNORE_ERROR",
+        "ABORT_SERVER"
+      ],
+      "type": "enum"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Selects statement-based, row-based, or mixed binary logging.",
+    "name": "binlog_format",
+    "physical_definition": {
+      "default": "ROW",
+      "enum_values": [
+        "ROW",
+        "STATEMENT",
+        "MIXED"
+      ],
+      "type": "enum"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Delay before synchronizing a binary-log commit group.",
+    "name": "binlog_group_commit_sync_delay",
+    "physical_definition": {
+      "default": 0,
+      "max": 1000000,
+      "min": 0,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Number of grouped transactions that ends the synchronization delay early.",
+    "name": "binlog_group_commit_sync_no_delay_count",
+    "physical_definition": {
+      "default": 0,
+      "max": 100000,
+      "min": 0,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Controls whether transaction commit order follows binary-log order.",
+    "name": "binlog_order_commits",
+    "physical_definition": {
+      "default": "ON",
+      "enum_values": [
+        "ON",
+        "OFF"
+      ],
+      "type": "enum"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Chooses whether row events include all columns, necessary columns, or omit unnecessary large-object columns.",
+    "name": "binlog_row_image",
+    "physical_definition": {
+      "default": "full",
+      "enum_values": [
+        "full",
+        "minimal",
+        "noblob"
+      ],
+      "type": "enum"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Controls inclusion of original query events in row-based logs.",
+    "name": "binlog_rows_query_log_events",
+    "physical_definition": {
+      "default": "OFF",
+      "enum_values": [
+        "ON",
+        "OFF"
+      ],
+      "type": "enum"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Binary-log cache allocated to nontransactional statements.",
+    "name": "binlog_stmt_cache_size",
+    "physical_definition": {
+      "default": 32768,
+      "max": 4294967296,
+      "min": 4096,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Size of the tree cache used for MyISAM bulk inserts.",
+    "name": "bulk_insert_buffer_size",
+    "physical_definition": {
+      "default": 8388608,
+      "max": 83886080,
+      "min": 0,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Controls whether built-in authentication plugins check and apply proxy-user mappings.",
+    "name": "check_proxy_users",
+    "physical_definition": {
+      "default": "OFF",
+      "enum_values": [
+        "ON",
+        "OFF"
+      ],
+      "type": "enum"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Conditions under which MyISAM tables allow concurrent inserts.",
+    "name": "concurrent_insert",
+    "physical_definition": {
+      "default": "AUTO",
+      "enum_values": [
+        "NEVER",
+        "AUTO",
+        "ALWAYS"
+      ],
+      "type": "enum"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Timeout for receiving the client connection handshake.",
+    "name": "connect_timeout",
+    "physical_definition": {
+      "default": 10,
+      "max": 31536000,
+      "min": 2,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Default week-numbering mode for WEEK() when no mode is supplied.",
+    "name": "default_week_format",
+    "physical_definition": {
+      "default": 0,
+      "max": 7,
+      "min": 0,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Controls delayed writeback of MyISAM index updates.",
+    "name": "delay_key_write",
+    "physical_definition": {
+      "default": "ON",
+      "enum_values": [
+        "ON",
+        "OFF",
+        "ALL"
+      ],
+      "type": "enum"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Additional decimal precision of a division result relative to its dividend.",
+    "name": "div_precision_increment",
+    "physical_definition": {
+      "default": 4,
+      "max": 30,
+      "min": 0,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Controls end markers in optimizer JSON output.",
+    "name": "end_markers_in_json",
+    "physical_definition": {
+      "default": "OFF",
+      "enum_values": [
+        "ON",
+        "OFF"
+      ],
+      "type": "enum"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Threshold for switching multiple equality-range estimates from index dives to statistics.",
+    "name": "eq_range_index_dive_limit",
+    "physical_definition": {
+      "default": 200,
+      "max": 4294967295,
+      "min": 0,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Automatic binary-log retention period in days.",
+    "name": "expire_logs_days",
+    "physical_definition": {
+      "default": 0,
+      "max": 99,
+      "min": 0,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Controls explicit default-value rules for TIMESTAMP columns.",
+    "name": "explicit_defaults_for_timestamp",
+    "physical_definition": {
+      "default": "OFF",
+      "enum_values": [
+        "ON",
+        "OFF"
+      ],
+      "type": "enum"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Controls synchronization of changes to disk after each SQL statement.",
+    "name": "flush",
+    "physical_definition": {
+      "default": "OFF",
+      "enum_values": [
+        "ON",
+        "OFF"
+      ],
+      "type": "enum"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Interval for periodically closing tables and synchronizing data; ignored when flush is enabled.",
+    "name": "flush_time",
+    "physical_definition": {
+      "default": 0,
+      "max": 10,
+      "min": 0,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Minimum word length indexed by MyISAM full-text indexes.",
+    "name": "ft_min_word_len",
+    "physical_definition": {
+      "default": 4,
+      "max": 8,
+      "min": 1,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Maximum number of highly relevant matches used for full-text query expansion.",
+    "name": "ft_query_expansion_limit",
+    "physical_definition": {
+      "default": 20,
+      "max": 1000,
+      "min": 0,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Controls the general query log.",
+    "name": "general_log",
+    "physical_definition": {
+      "default": "OFF",
+      "enum_values": [
+        "ON",
+        "OFF"
+      ],
+      "type": "enum"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Maximum length of GROUP_CONCAT() results.",
+    "name": "group_concat_max_len",
+    "physical_definition": {
+      "default": 1024,
+      "max": 18446700000000000000,
+      "min": 4,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Capacity of the client host-information cache.",
+    "name": "host_cache_size",
+    "physical_definition": {
+      "default": 0,
+      "max": 65536,
+      "min": 0,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Controls workload-adaptive dirty-page flushing.",
+    "name": "innodb_adaptive_flushing",
+    "physical_definition": {
+      "default": "ON",
+      "enum_values": [
+        "ON",
+        "OFF"
+      ],
+      "type": "enum"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Redo-log occupancy low-water mark for adaptive flushing.",
+    "name": "innodb_adaptive_flushing_lwm",
+    "physical_definition": {
+      "default": 10,
+      "max": 70,
+      "min": 0,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Number of adaptive hash-index partitions.",
+    "name": "innodb_adaptive_hash_index_parts",
+    "physical_definition": {
+      "default": 8,
+      "max": 512,
+      "min": 1,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Upper bound for automatically adjusted InnoDB thread sleep delays; 0 disables adjustment.",
+    "name": "innodb_adaptive_max_sleep_delay",
+    "physical_definition": {
+      "default": 150000,
+      "max": 1000000,
+      "min": 0,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Background automatic commit interval for the InnoDB memcached interface.",
+    "name": "innodb_api_bk_commit_interval",
+    "physical_definition": {
+      "default": 5,
+      "max": 1073741824,
+      "min": 1,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Controls disabling of row locks in the InnoDB memcached interface.",
+    "name": "innodb_api_disable_rowlock",
+    "physical_definition": {
+      "default": "OFF",
+      "enum_values": [
+        "ON",
+        "OFF"
+      ],
+      "type": "enum"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Controls binary logging for the InnoDB memcached interface.",
+    "name": "innodb_api_enable_binlog",
+    "physical_definition": {
+      "default": "OFF",
+      "enum_values": [
+        "ON",
+        "OFF"
+      ],
+      "type": "enum"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Controls table locking against DDL changes for tables used by the InnoDB memcached interface.",
+    "name": "innodb_api_enable_mdl",
+    "physical_definition": {
+      "default": "OFF",
+      "enum_values": [
+        "ON",
+        "OFF"
+      ],
+      "type": "enum"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Growth increment for the auto-extending InnoDB system tablespace.",
+    "name": "innodb_autoextend_increment",
+    "physical_definition": {
+      "default": 64,
+      "max": 1000,
+      "min": 1,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Size of the InnoDB memory pool caching data and index pages.",
+    "name": "innodb_buffer_pool_size",
+    "physical_definition": {
+      "default": 13958643712,
+      "max": 15618062894,
+      "min": 10307921510,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Maximum share of the buffer pool used by the change buffer.",
+    "name": "innodb_change_buffer_max_size",
+    "physical_definition": {
+      "default": 25,
+      "max": 50,
+      "min": 0,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Selects which nonunique secondary-index modifications may be buffered.",
+    "name": "innodb_change_buffering",
+    "physical_definition": {
+      "default": "all",
+      "enum_values": [
+        "none",
+        "inserts",
+        "deletes",
+        "changes",
+        "purges",
+        "all"
+      ],
+      "type": "enum"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Controls collection of per-index compression statistics.",
+    "name": "innodb_cmp_per_index_enabled",
+    "physical_definition": {
+      "default": "OFF",
+      "enum_values": [
+        "ON",
+        "OFF"
+      ],
+      "type": "enum"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Maximum number of threads committing concurrently; 0 means unlimited.",
+    "name": "innodb_commit_concurrency",
+    "physical_definition": {
+      "default": 0,
+      "max": 1000,
+      "min": 0,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Compression failure percentage that triggers adjustment of reserved page space.",
+    "name": "innodb_compression_failure_threshold_pct",
+    "physical_definition": {
+      "default": 5,
+      "max": 100,
+      "min": 0,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Compression level, affecting computation cost and compression effectiveness.",
+    "name": "innodb_compression_level",
+    "physical_definition": {
+      "default": 6,
+      "max": 9,
+      "min": 0,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Maximum reserved free-space percentage in compressed pages to reduce compression failures.",
+    "name": "innodb_compression_pad_pct_max",
+    "physical_definition": {
+      "default": 50,
+      "max": 75,
+      "min": 0,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Operation allowance for a thread after it enters InnoDB.",
+    "name": "innodb_concurrency_tickets",
+    "physical_definition": {
+      "default": 5000,
+      "max": 4294967295,
+      "min": 1,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Controls active deadlock detection.",
+    "name": "innodb_deadlock_detect",
+    "physical_definition": {
+      "default": "ON",
+      "enum_values": [
+        "ON",
+        "OFF"
+      ],
+      "type": "enum"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Default row format for new InnoDB tables.",
+    "name": "innodb_default_row_format",
+    "physical_definition": {
+      "default": "DYNAMIC",
+      "enum_values": [
+        "DYNAMIC",
+        "COMPACT",
+        "REDUNDANT"
+      ],
+      "type": "enum"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Controls bypassing the operating-system cache for temporary index-build files.",
+    "name": "innodb_disable_sort_file_cache",
+    "physical_definition": {
+      "default": "OFF",
+      "enum_values": [
+        "ON",
+        "OFF"
+      ],
+      "type": "enum"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Controls doublewrite-buffer protection against incomplete data-page writes.",
+    "name": "innodb_doublewrite",
+    "physical_definition": {
+      "default": "ON",
+      "enum_values": [
+        "ON",
+        "OFF"
+      ],
+      "type": "enum"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Controls separate tablespace files for newly created tables.",
+    "name": "innodb_file_per_table",
+    "physical_definition": {
+      "default": "ON",
+      "enum_values": [
+        "ON",
+        "OFF"
+      ],
+      "type": "enum"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Target page fill for sorted B-tree index builds, reserving space for growth.",
+    "name": "innodb_fill_factor",
+    "physical_definition": {
+      "default": 100,
+      "max": 100,
+      "min": 10,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Interval for periodic redo-log flushing.",
+    "name": "innodb_flush_log_at_timeout",
+    "physical_definition": {
+      "default": 1,
+      "max": 2700,
+      "min": 1,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Redo-log write and disk-flush policy at transaction commit.",
+    "name": "innodb_flush_log_at_trx_commit",
+    "physical_definition": {
+      "default": 1,
+      "enum_values": [
+        "0",
+        "1",
+        "2"
+      ],
+      "type": "enum"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Controls whether dirty neighbors are flushed along with a dirty page.",
+    "name": "innodb_flush_neighbors",
+    "physical_definition": {
+      "default": 1,
+      "enum_values": [
+        "0",
+        "1",
+        "2"
+      ],
+      "type": "enum"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Controls whether checkpoint bursts can exceed configured I/O rate limits.",
+    "name": "innodb_flush_sync",
+    "physical_definition": {
+      "default": "ON",
+      "enum_values": [
+        "ON",
+        "OFF"
+      ],
+      "type": "enum"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Number of flushing-state snapshots retained, affecting adaptation to workload changes.",
+    "name": "innodb_flushing_avg_loops",
+    "physical_definition": {
+      "default": 30,
+      "max": 1000,
+      "min": 1,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Per-table full-text index memory-cache size.",
+    "name": "innodb_ft_cache_size",
+    "physical_definition": {
+      "default": 8000000,
+      "max": 80000000,
+      "min": 1600000,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Controls additional full-text search diagnostics.",
+    "name": "innodb_ft_enable_diag_print",
+    "physical_definition": {
+      "default": "OFF",
+      "enum_values": [
+        "ON",
+        "OFF"
+      ],
+      "type": "enum"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Controls stopword filtering in full-text indexes.",
+    "name": "innodb_ft_enable_stopword",
+    "physical_definition": {
+      "default": "ON",
+      "enum_values": [
+        "ON",
+        "OFF"
+      ],
+      "type": "enum"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Maximum InnoDB full-text token length; the ngram parser uses a separate setting.",
+    "name": "innodb_ft_max_token_size",
+    "physical_definition": {
+      "default": 84,
+      "max": 84,
+      "min": 10,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Minimum InnoDB full-text token length; the ngram parser uses a separate setting.",
+    "name": "innodb_ft_min_token_size",
+    "physical_definition": {
+      "default": 3,
+      "max": 16,
+      "min": 0,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Maximum words processed per full-text index optimization.",
+    "name": "innodb_ft_num_word_optimize",
+    "physical_definition": {
+      "default": 2000,
+      "max": 10000,
+      "min": 1000,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Result-cache size limit for one full-text query.",
+    "name": "innodb_ft_result_cache_limit",
+    "physical_definition": {
+      "default": 2000000000,
+      "max": 4294967295,
+      "min": 1000000,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Parallel threads for tokenization and indexing during full-text index construction.",
+    "name": "innodb_ft_sort_pll_degree",
+    "physical_definition": {
+      "default": 2,
+      "max": 16,
+      "min": 1,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Combined full-text index cache limit across all tables.",
+    "name": "innodb_ft_total_cache_size",
+    "physical_definition": {
+      "default": 640000000,
+      "max": 1600000000,
+      "min": 32000000,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Normal I/O capacity estimate for InnoDB background tasks.",
+    "name": "innodb_io_capacity",
+    "physical_definition": {
+      "default": 200,
+      "max": 2000000,
+      "min": 100,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Maximum I/O capacity for accelerated background flushing.",
+    "name": "innodb_io_capacity_max",
+    "physical_definition": {
+      "default": 400,
+      "max": 40000,
+      "min": 100,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Memory buffer size for redo entries before writing redo-log files.",
+    "name": "innodb_log_buffer_size",
+    "physical_definition": {
+      "default": 16777216,
+      "max": 4294967295,
+      "min": 262144,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Controls logging of recompressed page images in the redo log.",
+    "name": "innodb_log_compressed_pages",
+    "physical_definition": {
+      "default": "ON",
+      "enum_values": [
+        "ON",
+        "OFF"
+      ],
+      "type": "enum"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Size of one redo-log file.",
+    "name": "innodb_log_file_size",
+    "physical_definition": {
+      "default": 50331648,
+      "max": 1073741824,
+      "min": 4194304,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Number of files in the redo-log group.",
+    "name": "innodb_log_files_in_group",
+    "physical_definition": {
+      "default": 2,
+      "max": 10,
+      "min": 2,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Redo-log write-ahead block size.",
+    "name": "innodb_log_write_ahead_size",
+    "physical_definition": {
+      "default": 8192,
+      "max": 16384,
+      "min": 512,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Depth of each buffer-pool LRU scan by page-cleaning threads.",
+    "name": "innodb_lru_scan_depth",
+    "physical_definition": {
+      "default": 1024,
+      "max": 10240,
+      "min": 100,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Target upper percentage of dirty pages in the buffer pool.",
+    "name": "innodb_max_dirty_pages_pct",
+    "physical_definition": {
+      "default": 75,
+      "max": 99,
+      "min": 0,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Dirty-page low-water mark for starting flushing early.",
+    "name": "innodb_max_dirty_pages_pct_lwm",
+    "physical_definition": {
+      "default": 0,
+      "max": 99,
+      "min": 0,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Purge backlog threshold that triggers delays to foreground operations.",
+    "name": "innodb_max_purge_lag",
+    "physical_definition": {
+      "default": 0,
+      "max": 4294967295,
+      "min": 0,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Maximum foreground-operation delay caused by purge backlog.",
+    "name": "innodb_max_purge_lag_delay",
+    "physical_definition": {
+      "default": 0,
+      "max": 10000000,
+      "min": 0,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Undo-tablespace size threshold for marking a tablespace for truncation.",
+    "name": "innodb_max_undo_log_size",
+    "physical_definition": {
+      "default": 1073741824,
+      "max": 18446700000000000000,
+      "min": 10485760,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Protection interval after first access before an old page can enter the new-page region.",
+    "name": "innodb_old_blocks_time",
+    "physical_definition": {
+      "default": 1000,
+      "max": 4294967295,
+      "min": 0,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Maximum temporary-log size for concurrent changes during online DDL.",
+    "name": "innodb_online_alter_log_max_size",
+    "physical_definition": {
+      "default": 134217728,
+      "max": 18446700000000000000,
+      "min": 65536,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Maximum tablespace files InnoDB may keep open simultaneously.",
+    "name": "innodb_open_files",
+    "physical_definition": {
+      "default": 2000,
+      "max": 655350,
+      "min": 10,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Controls whether OPTIMIZE TABLE optimizes only full-text indexes.",
+    "name": "innodb_optimize_fulltext_only",
+    "physical_definition": {
+      "default": "OFF",
+      "enum_values": [
+        "ON",
+        "OFF"
+      ],
+      "type": "enum"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Number of background dirty-page cleaner threads.",
+    "name": "innodb_page_cleaners",
+    "physical_definition": {
+      "default": 4,
+      "max": 8,
+      "min": 1,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Controls logging of every deadlock to the error log.",
+    "name": "innodb_print_all_deadlocks",
+    "physical_definition": {
+      "default": "OFF",
+      "enum_values": [
+        "ON",
+        "OFF"
+      ],
+      "type": "enum"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Number of undo-log pages processed per purge batch.",
+    "name": "innodb_purge_batch_size",
+    "physical_definition": {
+      "default": 300,
+      "max": 5000,
+      "min": 1,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Frequency of purge checks for freeing rollback segments.",
+    "name": "innodb_purge_rseg_truncate_frequency",
+    "physical_definition": {
+      "default": 128,
+      "max": 128,
+      "min": 1,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Number of background threads purging old record versions.",
+    "name": "innodb_purge_threads",
+    "physical_definition": {
+      "default": 4,
+      "max": 32,
+      "min": 1,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Controls random read-ahead.",
+    "name": "innodb_random_read_ahead",
+    "physical_definition": {
+      "default": "OFF",
+      "enum_values": [
+        "ON",
+        "OFF"
+      ],
+      "type": "enum"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Sequential-page-access threshold for linear read-ahead.",
+    "name": "innodb_read_ahead_threshold",
+    "physical_definition": {
+      "default": 56,
+      "max": 64,
+      "min": 0,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Number of background read I/O threads.",
+    "name": "innodb_read_io_threads",
+    "physical_definition": {
+      "default": 4,
+      "max": 64,
+      "min": 1,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Replication-thread delay when the InnoDB concurrency limit is reached.",
+    "name": "innodb_replication_delay",
+    "physical_definition": {
+      "default": 0,
+      "max": 10000,
+      "min": 0,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Chooses whole-transaction or current-statement rollback after a lock-wait timeout.",
+    "name": "innodb_rollback_on_timeout",
+    "physical_definition": {
+      "default": "OFF",
+      "enum_values": [
+        "ON",
+        "OFF"
+      ],
+      "type": "enum"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Number of rollback segments available to transactions generating undo records.",
+    "name": "innodb_rollback_segments",
+    "physical_definition": {
+      "default": 128,
+      "max": 128,
+      "min": 1,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Sort-buffer size for building InnoDB indexes.",
+    "name": "innodb_sort_buffer_size",
+    "physical_definition": {
+      "default": 1048576,
+      "max": 67108864,
+      "min": 65536,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Delay between mutex spin checks.",
+    "name": "innodb_spin_wait_delay",
+    "physical_definition": {
+      "default": 6,
+      "max": 6000,
+      "min": 0,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Controls automatic persistent-statistics recalculation after substantial table changes.",
+    "name": "innodb_stats_auto_recalc",
+    "physical_definition": {
+      "default": "ON",
+      "enum_values": [
+        "ON",
+        "OFF"
+      ],
+      "type": "enum"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Controls inclusion of delete-marked, unpurged records in persistent statistics.",
+    "name": "innodb_stats_include_delete_marked",
+    "physical_definition": {
+      "default": "OFF",
+      "enum_values": [
+        "ON",
+        "OFF"
+      ],
+      "type": "enum"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "How index statistics treat NULL values.",
+    "name": "innodb_stats_method",
+    "physical_definition": {
+      "default": "nulls_equal",
+      "enum_values": [
+        "nulls_equal",
+        "nulls_unequal",
+        "nulls_ignored"
+      ],
+      "type": "enum"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Controls updating nonpersistent statistics during metadata queries.",
+    "name": "innodb_stats_on_metadata",
+    "physical_definition": {
+      "default": "OFF",
+      "enum_values": [
+        "ON",
+        "OFF"
+      ],
+      "type": "enum"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Controls persistent storage of optimizer statistics.",
+    "name": "innodb_stats_persistent",
+    "physical_definition": {
+      "default": "ON",
+      "enum_values": [
+        "ON",
+        "OFF"
+      ],
+      "type": "enum"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Sample-page count for estimating nonpersistent index statistics.",
+    "name": "innodb_stats_transient_sample_pages",
+    "physical_definition": {
+      "default": 8,
+      "max": 100,
+      "min": 1,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Controls treating certain invalid InnoDB table-definition options as errors.",
+    "name": "innodb_strict_mode",
+    "physical_definition": {
+      "default": "ON",
+      "enum_values": [
+        "ON",
+        "OFF"
+      ],
+      "type": "enum"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Number of internal wait arrays coordinating threads waiting for locks.",
+    "name": "innodb_sync_array_size",
+    "physical_definition": {
+      "default": 1,
+      "max": 1024,
+      "min": 1,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Mutex spin-loop count before a waiting thread sleeps.",
+    "name": "innodb_sync_spin_loops",
+    "physical_definition": {
+      "default": 30,
+      "max": 30000,
+      "min": 0,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Controls InnoDB recognition and handling of explicit MySQL table locks.",
+    "name": "innodb_table_locks",
+    "physical_definition": {
+      "default": "ON",
+      "enum_values": [
+        "ON",
+        "OFF"
+      ],
+      "type": "enum"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Maximum threads concurrently inside InnoDB; physical value 0 means no such cap.",
+    "name": "innodb_thread_concurrency",
+    "physical_definition": {
+      "default": 0,
+      "max": 1000,
+      "min": 0,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Initial sleep delay for threads waiting to enter InnoDB.",
+    "name": "innodb_thread_sleep_delay",
+    "physical_definition": {
+      "default": 10000,
+      "max": 1000000,
+      "min": 0,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Controls automatic undo-tablespace truncation and reclamation.",
+    "name": "innodb_undo_log_truncate",
+    "physical_definition": {
+      "default": "OFF",
+      "enum_values": [
+        "ON",
+        "OFF"
+      ],
+      "type": "enum"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Controls operating-system native asynchronous I/O on supported platforms.",
+    "name": "innodb_use_native_aio",
+    "physical_definition": {
+      "default": "ON",
+      "enum_values": [
+        "ON",
+        "OFF"
+      ],
+      "type": "enum"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Number of background write I/O threads.",
+    "name": "innodb_write_io_threads",
+    "physical_definition": {
+      "default": 4,
+      "max": 64,
+      "min": 1,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Buffer size for joins that cannot directly use indexes and related operations.",
+    "name": "join_buffer_size",
+    "physical_definition": {
+      "default": 262144,
+      "max": 1073741824,
+      "min": 128,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Controls preserving existing MyISAM data or index files and reporting an error on name conflicts at table creation.",
+    "name": "keep_files_on_create",
+    "physical_definition": {
+      "default": "OFF",
+      "enum_values": [
+        "ON",
+        "OFF"
+      ],
+      "type": "enum"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "MyISAM index-block cache size.",
+    "name": "key_buffer_size",
+    "physical_definition": {
+      "default": 8388608,
+      "max": 17179869184,
+      "min": 8,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "How long an unused hot MyISAM key-cache block waits before moving to the warm region.",
+    "name": "key_cache_age_threshold",
+    "physical_definition": {
+      "default": 300,
+      "max": 30000,
+      "min": 100,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "MyISAM key-cache block size.",
+    "name": "key_cache_block_size",
+    "physical_definition": {
+      "default": 1024,
+      "max": 16384,
+      "min": 512,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Minimum fraction of the MyISAM key cache assigned to the warm region.",
+    "name": "key_cache_division_limit",
+    "physical_definition": {
+      "default": 100,
+      "max": 100,
+      "min": 1,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Controls client-side file reads through LOAD DATA LOCAL INFILE.",
+    "name": "local_infile",
+    "physical_definition": {
+      "default": "ON",
+      "enum_values": [
+        "ON",
+        "OFF"
+      ],
+      "type": "enum"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Controls relaxed stored-function safety checks when binary logging is enabled.",
+    "name": "log_bin_trust_function_creators",
+    "physical_definition": {
+      "default": "OFF",
+      "enum_values": [
+        "ON",
+        "OFF"
+      ],
+      "type": "enum"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Controls use of the older row-event format in binary logs.",
+    "name": "log_bin_use_v1_row_events",
+    "physical_definition": {
+      "default": "OFF",
+      "enum_values": [
+        "ON",
+        "OFF"
+      ],
+      "type": "enum"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Controls legacy-compatible binary-log representation of account-management statements.",
+    "name": "log_builtin_as_identified_by_password",
+    "physical_definition": {
+      "default": "OFF",
+      "enum_values": [
+        "ON",
+        "OFF"
+      ],
+      "type": "enum"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Selects file, table, or no output for general and slow query logs.",
+    "name": "log_output",
+    "physical_definition": {
+      "default": "FILE",
+      "enum_values": [
+        "TABLE",
+        "FILE",
+        "NONE"
+      ],
+      "type": "enum"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Controls slow logging of queries that do not use indexes.",
+    "name": "log_queries_not_using_indexes",
+    "physical_definition": {
+      "default": "OFF",
+      "enum_values": [
+        "ON",
+        "OFF"
+      ],
+      "type": "enum"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Controls writing replicated updates to the replica's own binary log.",
+    "name": "log_slave_updates",
+    "physical_definition": {
+      "default": "OFF",
+      "enum_values": [
+        "ON",
+        "OFF"
+      ],
+      "type": "enum"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Controls slow logging of long-running administrative statements.",
+    "name": "log_slow_admin_statements",
+    "physical_definition": {
+      "default": "OFF",
+      "enum_values": [
+        "ON",
+        "OFF"
+      ],
+      "type": "enum"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Controls warnings for statements unsafe for statement-based replication.",
+    "name": "log_statements_unsafe_for_binlog",
+    "physical_definition": {
+      "default": "ON",
+      "enum_values": [
+        "ON",
+        "OFF"
+      ],
+      "type": "enum"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Controls process identifiers in error messages sent to the system log.",
+    "name": "log_syslog_include_pid",
+    "physical_definition": {
+      "default": "ON",
+      "enum_values": [
+        "ON",
+        "OFF"
+      ],
+      "type": "enum"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Selects UTC or system time zone for log timestamps.",
+    "name": "log_timestamps",
+    "physical_definition": {
+      "default": "UTC",
+      "enum_values": [
+        "UTC",
+        "SYSTEM"
+      ],
+      "type": "enum"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Execution-time threshold for treating a query as slow.",
+    "name": "long_query_time",
+    "physical_definition": {
+      "default": 10,
+      "max": 20,
+      "min": 0,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Controls read priority over updates in engines using table-level locks.",
+    "name": "low_priority_updates",
+    "physical_definition": {
+      "default": "OFF",
+      "enum_values": [
+        "ON",
+        "OFF"
+      ],
+      "type": "enum"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Table-name letter casing on storage and name-comparison rules.",
+    "name": "lower_case_table_names",
+    "physical_definition": {
+      "default": 0,
+      "max": 2,
+      "min": 0,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Controls source-server checksum verification when sending binary-log events.",
+    "name": "master_verify_checksum",
+    "physical_definition": {
+      "default": "OFF",
+      "enum_values": [
+        "ON",
+        "OFF"
+      ],
+      "type": "enum"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Maximum communication packet or generated intermediate-string size.",
+    "name": "max_allowed_packet",
+    "physical_definition": {
+      "default": 4194304,
+      "max": 1073741824,
+      "min": 1024,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Maximum total size of a transaction's binary-log cache.",
+    "name": "max_binlog_cache_size",
+    "physical_definition": {
+      "default": 18446744073709500416,
+      "max": 18446744073709551615,
+      "min": 4096,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Rotation size threshold for one binary-log file.",
+    "name": "max_binlog_size",
+    "physical_definition": {
+      "default": 1073741824,
+      "max": 1073741824,
+      "min": 4096,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Maximum total binary-log cache size for nontransactional statements.",
+    "name": "max_binlog_stmt_cache_size",
+    "physical_definition": {
+      "default": 18446744073709500416,
+      "max": 18446744073709500416,
+      "min": 4096,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Maximum simultaneous client connections accepted by the server.",
+    "name": "max_connections",
+    "physical_definition": {
+      "default": 151,
+      "max": 100000,
+      "min": 1,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Legacy delayed-insert thread limit; MySQL 5.7 no longer supports DELAYED inserts.",
+    "name": "max_delayed_threads",
+    "physical_definition": {
+      "default": 20,
+      "max": 16384,
+      "min": 0,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Parser memory limit for statement-digest computation.",
+    "name": "max_digest_length",
+    "physical_definition": {
+      "default": 1024,
+      "max": 1048576,
+      "min": 0,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Maximum retained diagnostic errors, warnings, and notes.",
+    "name": "max_error_count",
+    "physical_definition": {
+      "default": 64,
+      "max": 65535,
+      "min": 0,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Size limit for user-created MEMORY tables; also constrains in-memory temporary tables.",
+    "name": "max_heap_table_size",
+    "physical_definition": {
+      "default": 16777216,
+      "max": 1073741824,
+      "min": 16384,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Limits joins expected to examine a large number of rows.",
+    "name": "max_join_size",
+    "physical_definition": {
+      "default": 18446744073709551615,
+      "max": 18446744073709551615,
+      "min": 1,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Threshold for additional row data carried during sorting.",
+    "name": "max_length_for_sort_data",
+    "physical_definition": {
+      "default": 1024,
+      "max": 8388608,
+      "min": 4,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Upper bound on the points-per-circle argument of ST_Buffer_Strategy().",
+    "name": "max_points_in_geometry",
+    "physical_definition": {
+      "default": 65536,
+      "max": 1048576,
+      "min": 3,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Maximum simultaneous prepared statements on the server.",
+    "name": "max_prepared_stmt_count",
+    "physical_definition": {
+      "default": 16382,
+      "max": 1048576,
+      "min": 0,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Upper bound on assumed index seeks when the optimizer estimates lookup costs.",
+    "name": "max_seeks_for_key",
+    "physical_definition": {
+      "default": 18446744073709500416,
+      "max": 18446744073709551615,
+      "min": 1,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Maximum variable-length value prefix used for sorting comparisons.",
+    "name": "max_sort_length",
+    "physical_definition": {
+      "default": 1024,
+      "max": 8388608,
+      "min": 4,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Maximum concurrent connections per user; 0 disables this global cap.",
+    "name": "max_user_connections",
+    "physical_definition": {
+      "default": 0,
+      "max": 4294967295,
+      "min": 0,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Number of successive write-lock requests before waiting readers receive a turn.",
+    "name": "max_write_lock_count",
+    "physical_definition": {
+      "default": 18446744073709500416,
+      "max": 18446744073709551615,
+      "min": 1,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Legacy setting documented as having no effect in MySQL 5.7.",
+    "name": "multi_range_count",
+    "physical_definition": {
+      "default": 256,
+      "max": 4294967295,
+      "min": 1,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Controls proxy-user mapping support in the mysql_native_password plugin.",
+    "name": "mysql_native_password_proxy_users",
+    "physical_definition": {
+      "default": "OFF",
+      "enum_values": [
+        "ON",
+        "OFF"
+      ],
+      "type": "enum"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Initial connection communication-buffer size.",
+    "name": "net_buffer_length",
+    "physical_definition": {
+      "default": 16384,
+      "max": 1048576,
+      "min": 1024,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Timeout while waiting to read more client data.",
+    "name": "net_read_timeout",
+    "physical_definition": {
+      "default": 30,
+      "max": 60,
+      "min": 1,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Timeout while waiting to write data to a client.",
+    "name": "net_write_timeout",
+    "physical_definition": {
+      "default": 60,
+      "max": 120,
+      "min": 1,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Token length for the ngram full-text parser.",
+    "name": "ngram_token_size",
+    "physical_definition": {
+      "default": 2,
+      "max": 10,
+      "min": 1,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Controls rejection or disconnection of ordinary clients while preserving administrative access.",
+    "name": "offline_mode",
+    "physical_definition": {
+      "default": "OFF",
+      "enum_values": [
+        "ON",
+        "OFF"
+      ],
+      "type": "enum"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Controls preference for the older table-copy implementation of ALTER TABLE.",
+    "name": "old_alter_table",
+    "physical_definition": {
+      "default": "OFF",
+      "enum_values": [
+        "ON",
+        "OFF"
+      ],
+      "type": "enum"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Password-hashing method used by PASSWORD(); a legacy authentication setting.",
+    "name": "old_passwords",
+    "physical_definition": {
+      "default": 0,
+      "enum_values": [
+        "0",
+        "2"
+      ],
+      "type": "enum"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Open-file limit requested by the server from the operating system.",
+    "name": "open_files_limit",
+    "physical_definition": {
+      "default": 50000,
+      "max": 655350,
+      "min": 0,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Controls pruning of the optimizer's join-order search.",
+    "name": "optimizer_prune_level",
+    "physical_definition": {
+      "default": 1,
+      "max": 1,
+      "min": 0,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Depth of the optimizer's join-order search.",
+    "name": "optimizer_search_depth",
+    "physical_definition": {
+      "default": 62,
+      "max": 62,
+      "min": 0,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Buffer size for preloading MyISAM indexes.",
+    "name": "preload_buffer_size",
+    "physical_definition": {
+      "default": 32768,
+      "max": 1073741824,
+      "min": 1024,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Memory allocation block size for statement parsing and execution.",
+    "name": "query_alloc_block_size",
+    "physical_definition": {
+      "default": 8192,
+      "max": 134217728,
+      "min": 1024,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Maximum individual result size admitted to the query cache.",
+    "name": "query_cache_limit",
+    "physical_definition": {
+      "default": 1048576,
+      "max": 134217728,
+      "min": 0,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Minimum allocation unit for cached query-result storage.",
+    "name": "query_cache_min_res_unit",
+    "physical_definition": {
+      "default": 4096,
+      "max": 65536,
+      "min": 512,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Memory size of the legacy query-result cache.",
+    "name": "query_cache_size",
+    "physical_definition": {
+      "default": 1048576,
+      "max": 2147483648,
+      "min": 0,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Controls whether a table's write lock prevents use of its cached query results.",
+    "name": "query_cache_wlock_invalidate",
+    "physical_definition": {
+      "default": "OFF",
+      "enum_values": [
+        "ON",
+        "OFF"
+      ],
+      "type": "enum"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Preallocated memory size for statement parsing and execution.",
+    "name": "query_prealloc_size",
+    "physical_definition": {
+      "default": 8192,
+      "max": 134217728,
+      "min": 8192,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Allocation block size during range-access optimization.",
+    "name": "range_alloc_block_size",
+    "physical_definition": {
+      "default": 4096,
+      "max": 65536,
+      "min": 4096,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Read-buffer size for MyISAM sequential scans and related operations.",
+    "name": "read_buffer_size",
+    "physical_definition": {
+      "default": 131072,
+      "max": 2147479552,
+      "min": 8192,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Buffer size for reading MyISAM rows in sorted order and related operations.",
+    "name": "read_rnd_buffer_size",
+    "physical_definition": {
+      "default": 262144,
+      "max": 134217728,
+      "min": 1,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Controls rejection of insecure client transports.",
+    "name": "require_secure_transport",
+    "physical_definition": {
+      "default": "OFF",
+      "enum_values": [
+        "ON",
+        "OFF"
+      ],
+      "type": "enum"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Selects which transactions' GTIDs are reported to clients.",
+    "name": "session_track_gtids",
+    "physical_definition": {
+      "default": "OFF",
+      "enum_values": [
+        "OFF",
+        "OWN_GTID",
+        "ALL_GTIDS"
+      ],
+      "type": "enum"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Controls reporting of default-database changes to clients.",
+    "name": "session_track_schema",
+    "physical_definition": {
+      "default": "ON",
+      "enum_values": [
+        "ON",
+        "OFF"
+      ],
+      "type": "enum"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Controls reporting of session-state-change flags to clients.",
+    "name": "session_track_state_change",
+    "physical_definition": {
+      "default": "OFF",
+      "enum_values": [
+        "ON",
+        "OFF"
+      ],
+      "type": "enum"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Selects transaction-state or transaction-characteristic information reported to clients.",
+    "name": "session_track_transaction_info",
+    "physical_definition": {
+      "default": "OFF",
+      "enum_values": [
+        "OFF",
+        "STATE",
+        "CHARACTERISTICS"
+      ],
+      "type": "enum"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Controls MySQL 5.6 compatibility in system-variable and status interfaces.",
+    "name": "show_compatibility_56",
+    "physical_definition": {
+      "default": "OFF",
+      "enum_values": [
+        "ON",
+        "OFF"
+      ],
+      "type": "enum"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Controls skipping operating-system external file locks for MyISAM.",
+    "name": "skip_external_locking",
+    "physical_definition": {
+      "default": "ON",
+      "enum_values": [
+        "ON",
+        "OFF"
+      ],
+      "type": "enum"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Controls skipping DNS hostname resolution during client authentication.",
+    "name": "skip_name_resolve",
+    "physical_definition": {
+      "default": "OFF",
+      "enum_values": [
+        "ON",
+        "OFF"
+      ],
+      "type": "enum"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Controls disabling TCP/IP client connections.",
+    "name": "skip_networking",
+    "physical_definition": {
+      "default": "OFF",
+      "enum_values": [
+        "ON",
+        "OFF"
+      ],
+      "type": "enum"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Controls the slow query log.",
+    "name": "slow_query_log",
+    "physical_definition": {
+      "default": "OFF",
+      "enum_values": [
+        "ON",
+        "OFF"
+      ],
+      "type": "enum"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Per-session buffer size for operations requiring sorting.",
+    "name": "sort_buffer_size",
+    "physical_definition": {
+      "default": 262144,
+      "max": 134217728,
+      "min": 32768,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Soft limit on stored routines cached per connection.",
+    "name": "stored_program_cache",
+    "physical_definition": {
+      "default": 256,
+      "max": 524288,
+      "min": 16,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Commit-group interval for synchronizing the binary log to disk; 0 delegates flushing to the operating system.",
+    "name": "sync_binlog",
+    "physical_definition": {
+      "default": 1,
+      "max": 4294967295,
+      "min": 0,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Controls synchronization of legacy table-definition files after writes.",
+    "name": "sync_frm",
+    "physical_definition": {
+      "default": "ON",
+      "enum_values": [
+        "ON",
+        "OFF"
+      ],
+      "type": "enum"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Number of tables accommodated by the table-definition cache.",
+    "name": "table_definition_cache",
+    "physical_definition": {
+      "default": 1400,
+      "max": 524288,
+      "min": 400,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Open-table cache capacity across threads.",
+    "name": "table_open_cache",
+    "physical_definition": {
+      "default": 2000,
+      "max": 250000,
+      "min": 1,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Number of open-table cache instances used to distribute lock contention.",
+    "name": "table_open_cache_instances",
+    "physical_definition": {
+      "default": 16,
+      "max": 64,
+      "min": 1,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Number of reusable client-connection threads cached.",
+    "name": "thread_cache_size",
+    "physical_definition": {
+      "default": 0,
+      "max": 16384,
+      "min": 0,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Size limit for internal in-memory temporary tables, jointly constrained by max_heap_table_size.",
+    "name": "tmp_table_size",
+    "physical_definition": {
+      "default": 16777216,
+      "max": 1073741824,
+      "min": 1024,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "On-demand allocation block size for the transaction memory pool.",
+    "name": "transaction_alloc_block_size",
+    "physical_definition": {
+      "default": 8192,
+      "max": 131072,
+      "min": 1024,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Initial preallocated size of the transaction memory pool.",
+    "name": "transaction_prealloc_size",
+    "physical_definition": {
+      "default": 4096,
+      "max": 131072,
+      "min": 1024,
+      "type": "integer"
+    },
+    "type": "float"
+  },
+  {
+    "default": 0.5,
+    "high": 1.0,
+    "log": false,
+    "low": 0.0,
+    "meaning": "Controls updates through views with LIMIT when a complete unique key is absent.",
+    "name": "updatable_views_with_limit",
+    "physical_definition": {
+      "default": "YES",
+      "enum_values": [
+        "YES",
+        "NO"
+      ],
+      "type": "enum"
+    },
+    "type": "float"
+  }
+]

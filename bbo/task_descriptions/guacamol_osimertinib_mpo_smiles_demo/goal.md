@@ -1,11 +1,5 @@
 # Goal
 
-Implementation source: `bbo/tasks/scientific/guacamol_smiles.py`, `_score_mol()`.
+minimize (1 - GuacaMol score).
 
-Maximize `osimertinib_mpo_score`.
-
-Optimized objective: minimize `osimertinib_mpo_loss = 1 - osimertinib_mpo_score`.
-
-Fingerprint type recorded in the task definition: `FCFP4, ECFP6`.
-
-The implemented score uses `_geometric_mean()` over Osimertinib FCFP4 similarity, ECFP6 dissimilarity, TPSA, and logP modifiers.
+The reference protocol uses 50 initialization and 200 optimization evaluations. The active run contract supplies the actual budget and objective direction.

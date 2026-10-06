@@ -19,7 +19,7 @@ from bbo.core import (
     TrialObservation,
     TrialSuggestion,
 )
-from bbo.tasks import SyntheticFunctionTask, SyntheticFunctionTaskConfig
+from bbo.tasks import create_task
 
 
 class _SingleSuggestionAlgorithm(Algorithm):
@@ -72,7 +72,7 @@ class _StrictNumericTask(Task):
 
 
 def test_experimenter_resume_keeps_append_only_history(tmp_path: Path) -> None:
-    task = SyntheticFunctionTask(SyntheticFunctionTaskConfig(problem="sphere_demo", max_evaluations=6, seed=11))
+    task = create_task("bbob_f01_d10", max_evaluations=6, seed=11)
     logger = JsonlMetricLogger(tmp_path / "trials.jsonl")
     experiment = Experimenter(
         task=task,
@@ -84,7 +84,7 @@ def test_experimenter_resume_keeps_append_only_history(tmp_path: Path) -> None:
     assert summary.n_completed == 6
     assert len(logger.load_records()) == 6
 
-    task_resume = SyntheticFunctionTask(SyntheticFunctionTaskConfig(problem="sphere_demo", max_evaluations=6, seed=11))
+    task_resume = create_task("bbob_f01_d10", max_evaluations=6, seed=11)
     resume_experiment = Experimenter(
         task=task_resume,
         algorithm=RandomSearchAlgorithm(),
@@ -94,6 +94,37 @@ def test_experimenter_resume_keeps_append_only_history(tmp_path: Path) -> None:
     resumed = resume_experiment.run()
     assert resumed.n_completed == 6
     assert len(logger.load_records()) == 6
+
+
+def test_final_evaluation_runs_once_after_incumbent_freeze_and_is_not_logged(
+    tmp_path: Path,
+) -> None:
+    task = _StrictNumericTask()
+    final_configs: list[dict[str, float]] = []
+
+    def evaluate_final(suggestion: TrialSuggestion) -> EvaluationResult:
+        final_configs.append(dict(suggestion.config))
+        return EvaluationResult(
+            metrics={"holdout_loss": float(suggestion.config["x"]) ** 2},
+            metadata={"evaluation_split": "test", "optimizer_feedback": False},
+        )
+
+    task.evaluate_final = evaluate_final  # type: ignore[method-assign]
+    logger = JsonlMetricLogger(tmp_path / "final_holdout.jsonl")
+    summary = Experimenter(
+        task=task,
+        algorithm=RandomSearchAlgorithm(),
+        logger_backend=logger,
+        config=ExperimentConfig(seed=3, resume=False, fail_fast_on_sanity=False),
+    ).run()
+
+    records = logger.load_records()
+    assert len(final_configs) == 1
+    assert summary.final_evaluation is not None
+    assert summary.final_evaluation.metrics == {"holdout_loss": final_configs[0]["x"] ** 2}
+    assert summary.final_evaluation.metadata["optimizer_feedback"] is False
+    assert len(records) == 1
+    assert "holdout_loss" not in records[0].metrics
 
 
 def test_experimenter_marks_missing_parameters_invalid(tmp_path: Path) -> None:

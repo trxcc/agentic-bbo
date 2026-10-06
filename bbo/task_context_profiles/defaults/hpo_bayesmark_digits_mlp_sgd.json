@@ -1,0 +1,138 @@
+{
+  "task_id": "hpo_bayesmark_digits_mlp_sgd",
+  "task_name": "Optical Digits / MLPClassifier",
+  "family": "HPO",
+  "objective": "minimize (1 - mean CV accuracy)",
+  "parameters": [
+    {
+      "name": "hidden_layer_sizes",
+      "type": "integer",
+      "low": 50,
+      "high": 200,
+      "transform": "linear",
+      "meaning": "Number of neurons in the single hidden layer."
+    },
+    {
+      "name": "alpha",
+      "type": "float",
+      "low": 1e-05,
+      "high": 10.0,
+      "transform": "log",
+      "meaning": "L2 regularization strength."
+    },
+    {
+      "name": "batch_size",
+      "type": "integer",
+      "low": 10,
+      "high": 250,
+      "transform": "linear",
+      "meaning": "Mini-batch size for stochastic gradient descent."
+    },
+    {
+      "name": "learning_rate_init",
+      "type": "float",
+      "low": 1e-05,
+      "high": 0.1,
+      "transform": "log",
+      "meaning": "Initial SGD learning rate before inverse scaling."
+    },
+    {
+      "name": "power_t",
+      "type": "float",
+      "low": 0.1,
+      "high": 0.9,
+      "transform": "logit",
+      "meaning": "Exponent controlling the inverse-scaling learning-rate schedule."
+    },
+    {
+      "name": "tol",
+      "type": "float",
+      "low": 1e-05,
+      "high": 0.1,
+      "transform": "log",
+      "meaning": "Minimum improvement in the internal validation score for early stopping."
+    },
+    {
+      "name": "momentum",
+      "type": "float",
+      "low": 0.001,
+      "high": 0.999,
+      "transform": "logit",
+      "meaning": "Momentum coefficient in SGD updates."
+    },
+    {
+      "name": "validation_fraction",
+      "type": "float",
+      "low": 0.1,
+      "high": 0.9,
+      "transform": "logit",
+      "meaning": "Fraction held out from each fitting fold for internal early stopping."
+    }
+  ],
+  "prior_facts": [
+    "hidden_layer_sizes is one integer: the width of one hidden layer, not a list of layer sizes.",
+    "The solver is SGD with inverse-scaling learning rate, early stopping, and Nesterov momentum. random_state=0 and max_iter=40 are fixed.",
+    "The effective learning rate follows learning_rate_init / t**power_t; t is the training time counter, not simply an epoch index.",
+    "batch_size controls mini-batches, and momentum controls the contribution of accumulated update direction. Nesterov momentum is active when momentum is positive.",
+    "Each fitting fold reserves validation_fraction for internal early stopping. tol is the required validation-score improvement; n_iter_no_change=10 consecutive epochs without it trigger stopping.",
+    "max_iter limits epochs, not individual gradient updates. The L2 penalty controlled by alpha is divided by the sample count when added to the loss.",
+    "The fixed activation is relu. The internal early-stopping metric is validation accuracy."
+  ],
+  "evaluation_budget": {
+    "initial": 5,
+    "optimization": 25
+  },
+  "dataset": {
+    "key": "digits",
+    "display_name": "Optical Digits",
+    "problem_type": "classification",
+    "total_samples": 1797,
+    "train_samples": 1437,
+    "test_samples": 360,
+    "feature_count": 64,
+    "class_counts_train": [
+      151,
+      147,
+      141,
+      154,
+      151,
+      142,
+      137,
+      140,
+      135,
+      139
+    ]
+  },
+  "estimator": "MLPClassifier",
+  "fixed_estimator_parameters": {
+    "activation": "relu",
+    "beta_1": 0.9,
+    "beta_2": 0.999,
+    "early_stopping": true,
+    "epsilon": 1e-08,
+    "learning_rate": "invscaling",
+    "max_fun": 15000,
+    "max_iter": 40,
+    "n_iter_no_change": 10,
+    "nesterovs_momentum": true,
+    "random_state": 0,
+    "shuffle": true,
+    "solver": "sgd",
+    "verbose": false,
+    "warm_start": false
+  },
+  "documentation": "https://scikit-learn.org/1.8/modules/generated/sklearn.neural_network.MLPClassifier.html",
+  "background": "Tune 8 hyperparameters of MLPClassifier on Optical Digits to reduce cross-validation classification error.",
+  "input_instructions": [
+    "Submit every parameter listed below, using its declared integer or floating-point type and inclusive bounds.",
+    "Submit original hyperparameter values. The transform column describes search coordinates, not a transformation to apply before submission: for example, submit 0.1 itself rather than log(0.1) or logit(0.1)."
+  ],
+  "evaluation_details": [
+    "The fixed split has 1437 training and 360 held-out samples, with 64 features per sample. Feedback uses five-fold StratifiedKFold cross-validation on the training split, with shuffle=False.",
+    "Cross-validation error is 1 - mean fold accuracy. Minimizing this error is equivalent to maximizing mean accuracy. The run objective below specifies which metric the interface returns; held-out results are not optimization feedback.",
+    "Held-out results are not optimization feedback. No extra input scaling or preprocessing is added to the released arrays. Fixed estimator settings are listed below."
+  ],
+  "domain_knowledge": [
+    "Learning rate, its decay, momentum, and batch size jointly affect training within the 40-epoch limit. A larger validation fraction leaves fewer samples for fitting inside each fold."
+  ]
+}

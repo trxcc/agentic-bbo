@@ -1,9 +1,9 @@
 # Background
 
-Implementation source: `bbo/tasks/scientific/guacamol_smiles.py`, `GUACAMOL_SMILES_TASK_DEFINITIONS["guacamol_osimertinib_mpo_smiles_demo"]`.
+Retain similarity to osimertinib in functional-group features while limiting excessive atom-environment similarity and favoring higher polar surface area and lower logP.
 
-Source benchmark: `guacamol.standard_benchmarks.hard_osimertinib`.
+## Reference molecules
 
-Representation: direct SMILES string parameter named `smiles`.
-
-Target source: `OSIMERTINIB_SMILES` defined in `bbo/tasks/scientific/guacamol_smiles.py`.
+| Name | SMILES |
+| --- | --- |
+| Osimertinib | `COc1cc(N(C)CCN(C)C)c(NC(=O)C=C)cc1Nc2nccc(n2)c3cn(C)c4ccccc34` |

@@ -1,23 +1,47 @@
-"""Synthetic benchmark task families."""
+"""Official COCO/BBOB synthetic benchmark tasks."""
 
-from .base import SyntheticFunctionDefinition, SyntheticFunctionTask, SyntheticFunctionTaskConfig
-from .branin import BRANIN_DEFINITION
-from .budgeted_sphere import (
-    BUDGETED_SPHERE_TASK_KEY,
-    BudgetedSphereTask,
-    BudgetedSphereTaskConfig,
-    create_budgeted_sphere_task,
+from .bbob import (
+    BBOB_DESCRIPTION_ROOT,
+    BBOB_DIMENSION,
+    BBOB_FUNCTION_IDS,
+    BBOB_INITIAL_DESIGN_SIZE,
+    BBOB_INSTANCE_IDS,
+    BBOB_MODEL_CANDIDATES,
+    BBOB_OPTIMIZATION_BUDGET,
+    BBOB_PROBLEM_DEFINITIONS,
+    BBOB_PROBLEM_REGISTRY,
+    BBOB_SUITE_NAME,
+    BBOB_TASK_IDS,
+    BBOB_TOTAL_BUDGET,
+    BbobProblemDefinition,
+    BbobTask,
+    BbobTaskConfig,
+    bbob_initial_configurations,
+    bbob_instance_for_seed,
+    bbob_protocol_metadata,
+    bbob_search_space,
+    create_bbob_task,
 )
-from .sphere import SPHERE_DEFINITION
 
 __all__ = [
-    "BRANIN_DEFINITION",
-    "BUDGETED_SPHERE_TASK_KEY",
-    "BudgetedSphereTask",
-    "BudgetedSphereTaskConfig",
-    "SPHERE_DEFINITION",
-    "SyntheticFunctionDefinition",
-    "SyntheticFunctionTask",
-    "SyntheticFunctionTaskConfig",
-    "create_budgeted_sphere_task",
+    "BBOB_DESCRIPTION_ROOT",
+    "BBOB_DIMENSION",
+    "BBOB_FUNCTION_IDS",
+    "BBOB_INITIAL_DESIGN_SIZE",
+    "BBOB_INSTANCE_IDS",
+    "BBOB_MODEL_CANDIDATES",
+    "BBOB_OPTIMIZATION_BUDGET",
+    "BBOB_PROBLEM_DEFINITIONS",
+    "BBOB_PROBLEM_REGISTRY",
+    "BBOB_SUITE_NAME",
+    "BBOB_TASK_IDS",
+    "BBOB_TOTAL_BUDGET",
+    "BbobProblemDefinition",
+    "BbobTask",
+    "BbobTaskConfig",
+    "bbob_initial_configurations",
+    "bbob_instance_for_seed",
+    "bbob_protocol_metadata",
+    "bbob_search_space",
+    "create_bbob_task",
 ]

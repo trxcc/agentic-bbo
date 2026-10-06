@@ -1,11 +1,5 @@
 # Goal
 
-Implementation source: `bbo/tasks/scientific/guacamol_smiles.py`, `_score_mol()`.
+minimize (1 - GuacaMol score).
 
-Maximize `fexofenadine_mpo_score`.
-
-Optimized objective: minimize `fexofenadine_mpo_loss = 1 - fexofenadine_mpo_score`.
-
-Fingerprint type recorded in the task definition: `AP`.
-
-The implemented score uses `_geometric_mean()`.
+The reference protocol uses 50 initialization and 200 optimization evaluations. The active run contract supplies the actual budget and objective direction.

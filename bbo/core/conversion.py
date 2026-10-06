@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
+import math
 from typing import Any, Iterable
 
 import numpy as np
@@ -152,6 +153,138 @@ class OneHotCategoricalConverter(ContinuousSearchSpaceConverter):
         return config
 
 
+class UnitCubeSearchSpaceConverter(ContinuousSearchSpaceConverter):
+    """Map a numeric search space to ``[0, 1]^d`` with declared warps.
+
+    Supported transforms match Bayesmark's optimizer-facing spaces:
+    ``linear``, ``log``, and ``logit``.  Unspecified parameters inherit
+    ``log`` from ``FloatParam.log`` / ``IntParam.log`` and otherwise use
+    ``linear``.
+    """
+
+    strategy_name = "unit_cube"
+    VALID_TRANSFORMS = frozenset({"linear", "log", "logit"})
+
+    def __init__(
+        self,
+        search_space: SearchSpace,
+        *,
+        transforms: dict[str, str] | None = None,
+    ) -> None:
+        super().__init__(search_space)
+        self._parameters = search_space.numeric_parameters()
+        declared = dict(transforms or {})
+        unexpected = sorted(set(declared) - set(search_space.names()))
+        if unexpected:
+            raise ValueError(f"Transforms reference unknown parameters: {unexpected!r}")
+        normalized: dict[str, str] = {}
+        for parameter in self._parameters:
+            transform = declared.get(parameter.name, "log" if parameter.log else "linear")
+            if transform not in self.VALID_TRANSFORMS:
+                raise ValueError(
+                    f"Parameter `{parameter.name}` has unsupported transform `{transform}`."
+                )
+            if transform == "log" and parameter.low <= 0:
+                raise ValueError(f"Log transform for `{parameter.name}` requires low > 0.")
+            if transform == "logit" and not (0 < parameter.low <= parameter.high < 1):
+                raise ValueError(
+                    f"Logit transform for `{parameter.name}` requires 0 < low <= high < 1."
+                )
+            normalized[parameter.name] = transform
+        self.transforms = normalized
+        self._feature_specs = tuple(
+            ContinuousFeatureSpec(name=parameter.name, low=0.0, high=1.0)
+            for parameter in self._parameters
+        )
+
+    @property
+    def feature_specs(self) -> tuple[ContinuousFeatureSpec, ...]:
+        return self._feature_specs
+
+    def encode_vector(self, config: dict[str, Any]) -> np.ndarray:
+        normalized = self.search_space.coerce_config(config, use_defaults=False)
+        result = [
+            self._encode_scalar(
+                float(normalized[parameter.name]),
+                low=float(parameter.low),
+                high=float(parameter.high),
+                transform=self.transforms[parameter.name],
+            )
+            for parameter in self._parameters
+        ]
+        return np.asarray(result, dtype=float)
+
+    def decode_vector(self, values: Iterable[float], *, clip: bool = True) -> dict[str, Any]:
+        vector = np.asarray([float(value) for value in values], dtype=float)
+        if len(vector) != len(self._parameters):
+            raise ValueError(f"Expected {len(self._parameters)} unit-cube values, got {len(vector)}.")
+        if not np.all(np.isfinite(vector)):
+            raise ValueError("Unit-cube values must be finite.")
+        if not clip and (np.any(vector < 0.0) or np.any(vector > 1.0)):
+            raise ValueError("Unit-cube values must lie in [0, 1] when clip=False.")
+        if clip:
+            vector = np.clip(vector, 0.0, 1.0)
+
+        config: dict[str, Any] = {}
+        for parameter, unit_value in zip(self._parameters, vector, strict=True):
+            physical = self._decode_scalar(
+                float(unit_value),
+                low=float(parameter.low),
+                high=float(parameter.high),
+                transform=self.transforms[parameter.name],
+            )
+            if isinstance(parameter, IntParam):
+                config[parameter.name] = parameter.coerce(int(round(physical)))
+            else:
+                config[parameter.name] = parameter.coerce(physical)
+        return config
+
+    @staticmethod
+    def _encode_scalar(value: float, *, low: float, high: float, transform: str) -> float:
+        if high == low:
+            return 0.0
+        warped_value = UnitCubeSearchSpaceConverter._warp(value, transform)
+        warped_low = UnitCubeSearchSpaceConverter._warp(low, transform)
+        warped_high = UnitCubeSearchSpaceConverter._warp(high, transform)
+        return float(np.clip((warped_value - warped_low) / (warped_high - warped_low), 0.0, 1.0))
+
+    @staticmethod
+    def _decode_scalar(unit_value: float, *, low: float, high: float, transform: str) -> float:
+        if high == low or unit_value <= 0.0:
+            return low
+        if unit_value >= 1.0:
+            return high
+        warped_low = UnitCubeSearchSpaceConverter._warp(low, transform)
+        warped_high = UnitCubeSearchSpaceConverter._warp(high, transform)
+        warped_value = warped_low + unit_value * (warped_high - warped_low)
+        value = UnitCubeSearchSpaceConverter._inverse_warp(warped_value, transform)
+        return float(min(max(value, low), high))
+
+    @staticmethod
+    def _warp(value: float, transform: str) -> float:
+        if transform == "linear":
+            return value
+        if transform == "log":
+            return math.log(value)
+        if transform == "logit":
+            return math.log(value / (1.0 - value))
+        raise ValueError(f"Unknown transform: {transform}")
+
+    @staticmethod
+    def _inverse_warp(value: float, transform: str) -> float:
+        if transform == "linear":
+            return value
+        if transform == "log":
+            return math.exp(value)
+        if transform == "logit":
+            if value >= 0:
+                inverse = math.exp(-value)
+                return 1.0 / (1.0 + inverse)
+            inverse = math.exp(value)
+            return inverse / (1.0 + inverse)
+        raise ValueError(f"Unknown transform: {transform}")
+
+
 def build_continuous_converter(
     search_space: SearchSpace,
     *,
@@ -168,5 +301,6 @@ __all__ = [
     "ContinuousFeatureSpec",
     "ContinuousSearchSpaceConverter",
     "OneHotCategoricalConverter",
+    "UnitCubeSearchSpaceConverter",
     "build_continuous_converter",
 ]

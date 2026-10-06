@@ -29,6 +29,27 @@ class BBOToolCallLogger:
             return text
         return text[: self.preview_chars - 3] + "..."
 
+    @staticmethod
+    def structured_result(tool_name: str, result: dict[str, Any]) -> dict[str, Any] | None:
+        if tool_name != "optimizer_suggest":
+            return None
+        payload = result.get("result") if isinstance(result, dict) else None
+        if not isinstance(payload, dict):
+            return None
+        candidate = payload.get("candidate")
+        if not isinstance(candidate, dict):
+            candidates = payload.get("candidates")
+            if isinstance(candidates, list) and candidates and isinstance(candidates[0], dict):
+                candidate = candidates[0].get("candidate")
+        if not isinstance(candidate, dict):
+            return None
+        structured = {
+            "candidate": candidate,
+            "identity": payload.get("identity"),
+            "backend": payload.get("backend"),
+        }
+        return structured
+
 
 class BBOToolRegistry:
     """Registry for function-callable BBO tools."""
@@ -53,6 +74,18 @@ class BBOToolRegistry:
     def get_tool_specs(self) -> list[dict[str, Any]]:
         return [self._tools[name].function_spec() for name in self.names]
 
+    async def execute_payload(
+        self,
+        tool_name: str,
+        arguments: dict[str, Any],
+        context: BBOToolContext,
+    ) -> Any:
+        """Execute a tool and return its native payload without transport wrapping."""
+        tool = self._tools.get(tool_name)
+        if tool is None:
+            raise ValueError(f"BBO tool `{tool_name}` not found.")
+        return await tool.execute(context, **dict(arguments or {}))
+
     async def execute_tool(
         self,
         tool_name: str,
@@ -69,7 +102,7 @@ class BBOToolRegistry:
             self._log_call(tool_name, arguments, result, started, timestamp, call_id, tool_call_id, False)
             return json.dumps(result, ensure_ascii=False, sort_keys=True)
         try:
-            payload = await self._tools[tool_name].execute(context, **dict(arguments or {}))
+            payload = await self.execute_payload(tool_name, arguments, context)
             result = {"ok": True, "result": payload}
             success = True
         except Exception as exc:
@@ -92,8 +125,7 @@ class BBOToolRegistry:
         if self.logger is None:
             return
         duration_ms = round((time.monotonic() - started) * 1000.0, 3)
-        self.logger.log(
-            {
+        record = {
                 "timestamp": timestamp,
                 "call_id": call_id,
                 "tool_call_id": tool_call_id,
@@ -103,7 +135,10 @@ class BBOToolRegistry:
                 "duration_ms": duration_ms,
                 "result_preview": self.logger.preview(result),
             }
-        )
+        structured = self.logger.structured_result(tool_name, result)
+        if structured is not None:
+            record["result_data"] = structured
+        self.logger.log(record)
 
 
 __all__ = ["BBOToolCallLogger", "BBOToolRegistry"]

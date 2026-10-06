@@ -1,0 +1,3082 @@
+[
+  {
+    "task": "hpo_bayesmark_breast_random_forest",
+    "family": "HPO",
+    "seed": 2,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_breast_random_forest",
+    "case_id": "hpo_bayesmark_breast_random_forest__s2"
+  },
+  {
+    "task": "hpo_bayesmark_breast_random_forest",
+    "family": "HPO",
+    "seed": 3,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_breast_random_forest",
+    "case_id": "hpo_bayesmark_breast_random_forest__s3"
+  },
+  {
+    "task": "hpo_bayesmark_breast_random_forest",
+    "family": "HPO",
+    "seed": 4,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_breast_random_forest",
+    "case_id": "hpo_bayesmark_breast_random_forest__s4"
+  },
+  {
+    "task": "hpo_bayesmark_breast_random_forest",
+    "family": "HPO",
+    "seed": 5,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_breast_random_forest",
+    "case_id": "hpo_bayesmark_breast_random_forest__s5"
+  },
+  {
+    "task": "hpo_bayesmark_breast_svm",
+    "family": "HPO",
+    "seed": 2,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_breast_svm",
+    "case_id": "hpo_bayesmark_breast_svm__s2"
+  },
+  {
+    "task": "hpo_bayesmark_breast_svm",
+    "family": "HPO",
+    "seed": 3,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_breast_svm",
+    "case_id": "hpo_bayesmark_breast_svm__s3"
+  },
+  {
+    "task": "hpo_bayesmark_breast_svm",
+    "family": "HPO",
+    "seed": 4,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_breast_svm",
+    "case_id": "hpo_bayesmark_breast_svm__s4"
+  },
+  {
+    "task": "hpo_bayesmark_breast_svm",
+    "family": "HPO",
+    "seed": 5,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_breast_svm",
+    "case_id": "hpo_bayesmark_breast_svm__s5"
+  },
+  {
+    "task": "hpo_bayesmark_breast_decision_tree",
+    "family": "HPO",
+    "seed": 2,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_breast_decision_tree",
+    "case_id": "hpo_bayesmark_breast_decision_tree__s2"
+  },
+  {
+    "task": "hpo_bayesmark_breast_decision_tree",
+    "family": "HPO",
+    "seed": 3,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_breast_decision_tree",
+    "case_id": "hpo_bayesmark_breast_decision_tree__s3"
+  },
+  {
+    "task": "hpo_bayesmark_breast_decision_tree",
+    "family": "HPO",
+    "seed": 4,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_breast_decision_tree",
+    "case_id": "hpo_bayesmark_breast_decision_tree__s4"
+  },
+  {
+    "task": "hpo_bayesmark_breast_decision_tree",
+    "family": "HPO",
+    "seed": 5,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_breast_decision_tree",
+    "case_id": "hpo_bayesmark_breast_decision_tree__s5"
+  },
+  {
+    "task": "hpo_bayesmark_breast_mlp_sgd",
+    "family": "HPO",
+    "seed": 2,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_breast_mlp_sgd",
+    "case_id": "hpo_bayesmark_breast_mlp_sgd__s2"
+  },
+  {
+    "task": "hpo_bayesmark_breast_mlp_sgd",
+    "family": "HPO",
+    "seed": 3,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_breast_mlp_sgd",
+    "case_id": "hpo_bayesmark_breast_mlp_sgd__s3"
+  },
+  {
+    "task": "hpo_bayesmark_breast_mlp_sgd",
+    "family": "HPO",
+    "seed": 4,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_breast_mlp_sgd",
+    "case_id": "hpo_bayesmark_breast_mlp_sgd__s4"
+  },
+  {
+    "task": "hpo_bayesmark_breast_mlp_sgd",
+    "family": "HPO",
+    "seed": 5,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_breast_mlp_sgd",
+    "case_id": "hpo_bayesmark_breast_mlp_sgd__s5"
+  },
+  {
+    "task": "hpo_bayesmark_breast_adaboost",
+    "family": "HPO",
+    "seed": 2,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_breast_adaboost",
+    "case_id": "hpo_bayesmark_breast_adaboost__s2"
+  },
+  {
+    "task": "hpo_bayesmark_breast_adaboost",
+    "family": "HPO",
+    "seed": 3,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_breast_adaboost",
+    "case_id": "hpo_bayesmark_breast_adaboost__s3"
+  },
+  {
+    "task": "hpo_bayesmark_breast_adaboost",
+    "family": "HPO",
+    "seed": 4,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_breast_adaboost",
+    "case_id": "hpo_bayesmark_breast_adaboost__s4"
+  },
+  {
+    "task": "hpo_bayesmark_breast_adaboost",
+    "family": "HPO",
+    "seed": 5,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_breast_adaboost",
+    "case_id": "hpo_bayesmark_breast_adaboost__s5"
+  },
+  {
+    "task": "hpo_bayesmark_wine_random_forest",
+    "family": "HPO",
+    "seed": 2,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_wine_random_forest",
+    "case_id": "hpo_bayesmark_wine_random_forest__s2"
+  },
+  {
+    "task": "hpo_bayesmark_wine_random_forest",
+    "family": "HPO",
+    "seed": 3,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_wine_random_forest",
+    "case_id": "hpo_bayesmark_wine_random_forest__s3"
+  },
+  {
+    "task": "hpo_bayesmark_wine_random_forest",
+    "family": "HPO",
+    "seed": 4,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_wine_random_forest",
+    "case_id": "hpo_bayesmark_wine_random_forest__s4"
+  },
+  {
+    "task": "hpo_bayesmark_wine_random_forest",
+    "family": "HPO",
+    "seed": 5,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_wine_random_forest",
+    "case_id": "hpo_bayesmark_wine_random_forest__s5"
+  },
+  {
+    "task": "hpo_bayesmark_wine_svm",
+    "family": "HPO",
+    "seed": 2,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_wine_svm",
+    "case_id": "hpo_bayesmark_wine_svm__s2"
+  },
+  {
+    "task": "hpo_bayesmark_wine_svm",
+    "family": "HPO",
+    "seed": 3,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_wine_svm",
+    "case_id": "hpo_bayesmark_wine_svm__s3"
+  },
+  {
+    "task": "hpo_bayesmark_wine_svm",
+    "family": "HPO",
+    "seed": 4,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_wine_svm",
+    "case_id": "hpo_bayesmark_wine_svm__s4"
+  },
+  {
+    "task": "hpo_bayesmark_wine_svm",
+    "family": "HPO",
+    "seed": 5,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_wine_svm",
+    "case_id": "hpo_bayesmark_wine_svm__s5"
+  },
+  {
+    "task": "hpo_bayesmark_wine_decision_tree",
+    "family": "HPO",
+    "seed": 2,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_wine_decision_tree",
+    "case_id": "hpo_bayesmark_wine_decision_tree__s2"
+  },
+  {
+    "task": "hpo_bayesmark_wine_decision_tree",
+    "family": "HPO",
+    "seed": 3,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_wine_decision_tree",
+    "case_id": "hpo_bayesmark_wine_decision_tree__s3"
+  },
+  {
+    "task": "hpo_bayesmark_wine_decision_tree",
+    "family": "HPO",
+    "seed": 4,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_wine_decision_tree",
+    "case_id": "hpo_bayesmark_wine_decision_tree__s4"
+  },
+  {
+    "task": "hpo_bayesmark_wine_decision_tree",
+    "family": "HPO",
+    "seed": 5,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_wine_decision_tree",
+    "case_id": "hpo_bayesmark_wine_decision_tree__s5"
+  },
+  {
+    "task": "hpo_bayesmark_wine_mlp_sgd",
+    "family": "HPO",
+    "seed": 2,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_wine_mlp_sgd",
+    "case_id": "hpo_bayesmark_wine_mlp_sgd__s2"
+  },
+  {
+    "task": "hpo_bayesmark_wine_mlp_sgd",
+    "family": "HPO",
+    "seed": 3,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_wine_mlp_sgd",
+    "case_id": "hpo_bayesmark_wine_mlp_sgd__s3"
+  },
+  {
+    "task": "hpo_bayesmark_wine_mlp_sgd",
+    "family": "HPO",
+    "seed": 4,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_wine_mlp_sgd",
+    "case_id": "hpo_bayesmark_wine_mlp_sgd__s4"
+  },
+  {
+    "task": "hpo_bayesmark_wine_mlp_sgd",
+    "family": "HPO",
+    "seed": 5,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_wine_mlp_sgd",
+    "case_id": "hpo_bayesmark_wine_mlp_sgd__s5"
+  },
+  {
+    "task": "hpo_bayesmark_wine_adaboost",
+    "family": "HPO",
+    "seed": 2,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_wine_adaboost",
+    "case_id": "hpo_bayesmark_wine_adaboost__s2"
+  },
+  {
+    "task": "hpo_bayesmark_wine_adaboost",
+    "family": "HPO",
+    "seed": 3,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_wine_adaboost",
+    "case_id": "hpo_bayesmark_wine_adaboost__s3"
+  },
+  {
+    "task": "hpo_bayesmark_wine_adaboost",
+    "family": "HPO",
+    "seed": 4,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_wine_adaboost",
+    "case_id": "hpo_bayesmark_wine_adaboost__s4"
+  },
+  {
+    "task": "hpo_bayesmark_wine_adaboost",
+    "family": "HPO",
+    "seed": 5,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_wine_adaboost",
+    "case_id": "hpo_bayesmark_wine_adaboost__s5"
+  },
+  {
+    "task": "hpo_bayesmark_iris_random_forest",
+    "family": "HPO",
+    "seed": 2,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_iris_random_forest",
+    "case_id": "hpo_bayesmark_iris_random_forest__s2"
+  },
+  {
+    "task": "hpo_bayesmark_iris_random_forest",
+    "family": "HPO",
+    "seed": 3,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_iris_random_forest",
+    "case_id": "hpo_bayesmark_iris_random_forest__s3"
+  },
+  {
+    "task": "hpo_bayesmark_iris_random_forest",
+    "family": "HPO",
+    "seed": 4,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_iris_random_forest",
+    "case_id": "hpo_bayesmark_iris_random_forest__s4"
+  },
+  {
+    "task": "hpo_bayesmark_iris_random_forest",
+    "family": "HPO",
+    "seed": 5,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_iris_random_forest",
+    "case_id": "hpo_bayesmark_iris_random_forest__s5"
+  },
+  {
+    "task": "hpo_bayesmark_iris_svm",
+    "family": "HPO",
+    "seed": 2,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_iris_svm",
+    "case_id": "hpo_bayesmark_iris_svm__s2"
+  },
+  {
+    "task": "hpo_bayesmark_iris_svm",
+    "family": "HPO",
+    "seed": 3,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_iris_svm",
+    "case_id": "hpo_bayesmark_iris_svm__s3"
+  },
+  {
+    "task": "hpo_bayesmark_iris_svm",
+    "family": "HPO",
+    "seed": 4,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_iris_svm",
+    "case_id": "hpo_bayesmark_iris_svm__s4"
+  },
+  {
+    "task": "hpo_bayesmark_iris_svm",
+    "family": "HPO",
+    "seed": 5,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_iris_svm",
+    "case_id": "hpo_bayesmark_iris_svm__s5"
+  },
+  {
+    "task": "hpo_bayesmark_iris_decision_tree",
+    "family": "HPO",
+    "seed": 2,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_iris_decision_tree",
+    "case_id": "hpo_bayesmark_iris_decision_tree__s2"
+  },
+  {
+    "task": "hpo_bayesmark_iris_decision_tree",
+    "family": "HPO",
+    "seed": 3,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_iris_decision_tree",
+    "case_id": "hpo_bayesmark_iris_decision_tree__s3"
+  },
+  {
+    "task": "hpo_bayesmark_iris_decision_tree",
+    "family": "HPO",
+    "seed": 4,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_iris_decision_tree",
+    "case_id": "hpo_bayesmark_iris_decision_tree__s4"
+  },
+  {
+    "task": "hpo_bayesmark_iris_decision_tree",
+    "family": "HPO",
+    "seed": 5,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_iris_decision_tree",
+    "case_id": "hpo_bayesmark_iris_decision_tree__s5"
+  },
+  {
+    "task": "hpo_bayesmark_iris_mlp_sgd",
+    "family": "HPO",
+    "seed": 2,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_iris_mlp_sgd",
+    "case_id": "hpo_bayesmark_iris_mlp_sgd__s2"
+  },
+  {
+    "task": "hpo_bayesmark_iris_mlp_sgd",
+    "family": "HPO",
+    "seed": 3,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_iris_mlp_sgd",
+    "case_id": "hpo_bayesmark_iris_mlp_sgd__s3"
+  },
+  {
+    "task": "hpo_bayesmark_iris_mlp_sgd",
+    "family": "HPO",
+    "seed": 4,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_iris_mlp_sgd",
+    "case_id": "hpo_bayesmark_iris_mlp_sgd__s4"
+  },
+  {
+    "task": "hpo_bayesmark_iris_mlp_sgd",
+    "family": "HPO",
+    "seed": 5,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_iris_mlp_sgd",
+    "case_id": "hpo_bayesmark_iris_mlp_sgd__s5"
+  },
+  {
+    "task": "hpo_bayesmark_iris_adaboost",
+    "family": "HPO",
+    "seed": 2,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_iris_adaboost",
+    "case_id": "hpo_bayesmark_iris_adaboost__s2"
+  },
+  {
+    "task": "hpo_bayesmark_iris_adaboost",
+    "family": "HPO",
+    "seed": 3,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_iris_adaboost",
+    "case_id": "hpo_bayesmark_iris_adaboost__s3"
+  },
+  {
+    "task": "hpo_bayesmark_iris_adaboost",
+    "family": "HPO",
+    "seed": 4,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_iris_adaboost",
+    "case_id": "hpo_bayesmark_iris_adaboost__s4"
+  },
+  {
+    "task": "hpo_bayesmark_iris_adaboost",
+    "family": "HPO",
+    "seed": 5,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_iris_adaboost",
+    "case_id": "hpo_bayesmark_iris_adaboost__s5"
+  },
+  {
+    "task": "hpo_bayesmark_digits_random_forest",
+    "family": "HPO",
+    "seed": 2,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_digits_random_forest",
+    "case_id": "hpo_bayesmark_digits_random_forest__s2"
+  },
+  {
+    "task": "hpo_bayesmark_digits_random_forest",
+    "family": "HPO",
+    "seed": 3,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_digits_random_forest",
+    "case_id": "hpo_bayesmark_digits_random_forest__s3"
+  },
+  {
+    "task": "hpo_bayesmark_digits_random_forest",
+    "family": "HPO",
+    "seed": 4,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_digits_random_forest",
+    "case_id": "hpo_bayesmark_digits_random_forest__s4"
+  },
+  {
+    "task": "hpo_bayesmark_digits_random_forest",
+    "family": "HPO",
+    "seed": 5,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_digits_random_forest",
+    "case_id": "hpo_bayesmark_digits_random_forest__s5"
+  },
+  {
+    "task": "hpo_bayesmark_digits_svm",
+    "family": "HPO",
+    "seed": 2,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_digits_svm",
+    "case_id": "hpo_bayesmark_digits_svm__s2"
+  },
+  {
+    "task": "hpo_bayesmark_digits_svm",
+    "family": "HPO",
+    "seed": 3,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_digits_svm",
+    "case_id": "hpo_bayesmark_digits_svm__s3"
+  },
+  {
+    "task": "hpo_bayesmark_digits_svm",
+    "family": "HPO",
+    "seed": 4,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_digits_svm",
+    "case_id": "hpo_bayesmark_digits_svm__s4"
+  },
+  {
+    "task": "hpo_bayesmark_digits_svm",
+    "family": "HPO",
+    "seed": 5,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_digits_svm",
+    "case_id": "hpo_bayesmark_digits_svm__s5"
+  },
+  {
+    "task": "hpo_bayesmark_digits_decision_tree",
+    "family": "HPO",
+    "seed": 2,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_digits_decision_tree",
+    "case_id": "hpo_bayesmark_digits_decision_tree__s2"
+  },
+  {
+    "task": "hpo_bayesmark_digits_decision_tree",
+    "family": "HPO",
+    "seed": 3,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_digits_decision_tree",
+    "case_id": "hpo_bayesmark_digits_decision_tree__s3"
+  },
+  {
+    "task": "hpo_bayesmark_digits_decision_tree",
+    "family": "HPO",
+    "seed": 4,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_digits_decision_tree",
+    "case_id": "hpo_bayesmark_digits_decision_tree__s4"
+  },
+  {
+    "task": "hpo_bayesmark_digits_decision_tree",
+    "family": "HPO",
+    "seed": 5,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_digits_decision_tree",
+    "case_id": "hpo_bayesmark_digits_decision_tree__s5"
+  },
+  {
+    "task": "hpo_bayesmark_digits_mlp_sgd",
+    "family": "HPO",
+    "seed": 2,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_digits_mlp_sgd",
+    "case_id": "hpo_bayesmark_digits_mlp_sgd__s2"
+  },
+  {
+    "task": "hpo_bayesmark_digits_mlp_sgd",
+    "family": "HPO",
+    "seed": 3,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_digits_mlp_sgd",
+    "case_id": "hpo_bayesmark_digits_mlp_sgd__s3"
+  },
+  {
+    "task": "hpo_bayesmark_digits_mlp_sgd",
+    "family": "HPO",
+    "seed": 4,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_digits_mlp_sgd",
+    "case_id": "hpo_bayesmark_digits_mlp_sgd__s4"
+  },
+  {
+    "task": "hpo_bayesmark_digits_mlp_sgd",
+    "family": "HPO",
+    "seed": 5,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_digits_mlp_sgd",
+    "case_id": "hpo_bayesmark_digits_mlp_sgd__s5"
+  },
+  {
+    "task": "hpo_bayesmark_digits_adaboost",
+    "family": "HPO",
+    "seed": 2,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_digits_adaboost",
+    "case_id": "hpo_bayesmark_digits_adaboost__s2"
+  },
+  {
+    "task": "hpo_bayesmark_digits_adaboost",
+    "family": "HPO",
+    "seed": 3,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_digits_adaboost",
+    "case_id": "hpo_bayesmark_digits_adaboost__s3"
+  },
+  {
+    "task": "hpo_bayesmark_digits_adaboost",
+    "family": "HPO",
+    "seed": 4,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_digits_adaboost",
+    "case_id": "hpo_bayesmark_digits_adaboost__s4"
+  },
+  {
+    "task": "hpo_bayesmark_digits_adaboost",
+    "family": "HPO",
+    "seed": 5,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_digits_adaboost",
+    "case_id": "hpo_bayesmark_digits_adaboost__s5"
+  },
+  {
+    "task": "hpo_bayesmark_diabetes_random_forest",
+    "family": "HPO",
+    "seed": 2,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_diabetes_random_forest",
+    "case_id": "hpo_bayesmark_diabetes_random_forest__s2"
+  },
+  {
+    "task": "hpo_bayesmark_diabetes_random_forest",
+    "family": "HPO",
+    "seed": 3,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_diabetes_random_forest",
+    "case_id": "hpo_bayesmark_diabetes_random_forest__s3"
+  },
+  {
+    "task": "hpo_bayesmark_diabetes_random_forest",
+    "family": "HPO",
+    "seed": 4,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_diabetes_random_forest",
+    "case_id": "hpo_bayesmark_diabetes_random_forest__s4"
+  },
+  {
+    "task": "hpo_bayesmark_diabetes_random_forest",
+    "family": "HPO",
+    "seed": 5,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_diabetes_random_forest",
+    "case_id": "hpo_bayesmark_diabetes_random_forest__s5"
+  },
+  {
+    "task": "hpo_bayesmark_diabetes_svm",
+    "family": "HPO",
+    "seed": 2,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_diabetes_svm",
+    "case_id": "hpo_bayesmark_diabetes_svm__s2"
+  },
+  {
+    "task": "hpo_bayesmark_diabetes_svm",
+    "family": "HPO",
+    "seed": 3,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_diabetes_svm",
+    "case_id": "hpo_bayesmark_diabetes_svm__s3"
+  },
+  {
+    "task": "hpo_bayesmark_diabetes_svm",
+    "family": "HPO",
+    "seed": 4,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_diabetes_svm",
+    "case_id": "hpo_bayesmark_diabetes_svm__s4"
+  },
+  {
+    "task": "hpo_bayesmark_diabetes_svm",
+    "family": "HPO",
+    "seed": 5,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_diabetes_svm",
+    "case_id": "hpo_bayesmark_diabetes_svm__s5"
+  },
+  {
+    "task": "hpo_bayesmark_diabetes_decision_tree",
+    "family": "HPO",
+    "seed": 2,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_diabetes_decision_tree",
+    "case_id": "hpo_bayesmark_diabetes_decision_tree__s2"
+  },
+  {
+    "task": "hpo_bayesmark_diabetes_decision_tree",
+    "family": "HPO",
+    "seed": 3,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_diabetes_decision_tree",
+    "case_id": "hpo_bayesmark_diabetes_decision_tree__s3"
+  },
+  {
+    "task": "hpo_bayesmark_diabetes_decision_tree",
+    "family": "HPO",
+    "seed": 4,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_diabetes_decision_tree",
+    "case_id": "hpo_bayesmark_diabetes_decision_tree__s4"
+  },
+  {
+    "task": "hpo_bayesmark_diabetes_decision_tree",
+    "family": "HPO",
+    "seed": 5,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_diabetes_decision_tree",
+    "case_id": "hpo_bayesmark_diabetes_decision_tree__s5"
+  },
+  {
+    "task": "hpo_bayesmark_diabetes_mlp_sgd",
+    "family": "HPO",
+    "seed": 2,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_diabetes_mlp_sgd",
+    "case_id": "hpo_bayesmark_diabetes_mlp_sgd__s2"
+  },
+  {
+    "task": "hpo_bayesmark_diabetes_mlp_sgd",
+    "family": "HPO",
+    "seed": 3,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_diabetes_mlp_sgd",
+    "case_id": "hpo_bayesmark_diabetes_mlp_sgd__s3"
+  },
+  {
+    "task": "hpo_bayesmark_diabetes_mlp_sgd",
+    "family": "HPO",
+    "seed": 4,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_diabetes_mlp_sgd",
+    "case_id": "hpo_bayesmark_diabetes_mlp_sgd__s4"
+  },
+  {
+    "task": "hpo_bayesmark_diabetes_mlp_sgd",
+    "family": "HPO",
+    "seed": 5,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_diabetes_mlp_sgd",
+    "case_id": "hpo_bayesmark_diabetes_mlp_sgd__s5"
+  },
+  {
+    "task": "hpo_bayesmark_diabetes_adaboost",
+    "family": "HPO",
+    "seed": 2,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_diabetes_adaboost",
+    "case_id": "hpo_bayesmark_diabetes_adaboost__s2"
+  },
+  {
+    "task": "hpo_bayesmark_diabetes_adaboost",
+    "family": "HPO",
+    "seed": 3,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_diabetes_adaboost",
+    "case_id": "hpo_bayesmark_diabetes_adaboost__s3"
+  },
+  {
+    "task": "hpo_bayesmark_diabetes_adaboost",
+    "family": "HPO",
+    "seed": 4,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_diabetes_adaboost",
+    "case_id": "hpo_bayesmark_diabetes_adaboost__s4"
+  },
+  {
+    "task": "hpo_bayesmark_diabetes_adaboost",
+    "family": "HPO",
+    "seed": 5,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_diabetes_adaboost",
+    "case_id": "hpo_bayesmark_diabetes_adaboost__s5"
+  },
+  {
+    "task": "bboplace_adaptec1_n32",
+    "family": "BBOPlace",
+    "seed": 2,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "bboplace_adaptec1_n32",
+    "case_id": "bboplace_adaptec1_n32__s2"
+  },
+  {
+    "task": "bboplace_adaptec1_n32",
+    "family": "BBOPlace",
+    "seed": 3,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "bboplace_adaptec1_n32",
+    "case_id": "bboplace_adaptec1_n32__s3"
+  },
+  {
+    "task": "bboplace_adaptec1_n32",
+    "family": "BBOPlace",
+    "seed": 4,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "bboplace_adaptec1_n32",
+    "case_id": "bboplace_adaptec1_n32__s4"
+  },
+  {
+    "task": "bboplace_adaptec1_n32",
+    "family": "BBOPlace",
+    "seed": 5,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "bboplace_adaptec1_n32",
+    "case_id": "bboplace_adaptec1_n32__s5"
+  },
+  {
+    "task": "bboplace_adaptec3_n32",
+    "family": "BBOPlace",
+    "seed": 2,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "bboplace_adaptec3_n32",
+    "case_id": "bboplace_adaptec3_n32__s2"
+  },
+  {
+    "task": "bboplace_adaptec3_n32",
+    "family": "BBOPlace",
+    "seed": 3,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "bboplace_adaptec3_n32",
+    "case_id": "bboplace_adaptec3_n32__s3"
+  },
+  {
+    "task": "bboplace_adaptec3_n32",
+    "family": "BBOPlace",
+    "seed": 4,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "bboplace_adaptec3_n32",
+    "case_id": "bboplace_adaptec3_n32__s4"
+  },
+  {
+    "task": "bboplace_adaptec3_n32",
+    "family": "BBOPlace",
+    "seed": 5,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "bboplace_adaptec3_n32",
+    "case_id": "bboplace_adaptec3_n32__s5"
+  },
+  {
+    "task": "bboplace_adaptec4_n32",
+    "family": "BBOPlace",
+    "seed": 2,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "bboplace_adaptec4_n32",
+    "case_id": "bboplace_adaptec4_n32__s2"
+  },
+  {
+    "task": "bboplace_adaptec4_n32",
+    "family": "BBOPlace",
+    "seed": 3,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "bboplace_adaptec4_n32",
+    "case_id": "bboplace_adaptec4_n32__s3"
+  },
+  {
+    "task": "bboplace_adaptec4_n32",
+    "family": "BBOPlace",
+    "seed": 4,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "bboplace_adaptec4_n32",
+    "case_id": "bboplace_adaptec4_n32__s4"
+  },
+  {
+    "task": "bboplace_adaptec4_n32",
+    "family": "BBOPlace",
+    "seed": 5,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "bboplace_adaptec4_n32",
+    "case_id": "bboplace_adaptec4_n32__s5"
+  },
+  {
+    "task": "bboplace_bigblue1_n32",
+    "family": "BBOPlace",
+    "seed": 2,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "bboplace_bigblue1_n32",
+    "case_id": "bboplace_bigblue1_n32__s2"
+  },
+  {
+    "task": "bboplace_bigblue1_n32",
+    "family": "BBOPlace",
+    "seed": 3,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "bboplace_bigblue1_n32",
+    "case_id": "bboplace_bigblue1_n32__s3"
+  },
+  {
+    "task": "bboplace_bigblue1_n32",
+    "family": "BBOPlace",
+    "seed": 4,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "bboplace_bigblue1_n32",
+    "case_id": "bboplace_bigblue1_n32__s4"
+  },
+  {
+    "task": "bboplace_bigblue1_n32",
+    "family": "BBOPlace",
+    "seed": 5,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "bboplace_bigblue1_n32",
+    "case_id": "bboplace_bigblue1_n32__s5"
+  },
+  {
+    "task": "bboplace_bigblue2_n32",
+    "family": "BBOPlace",
+    "seed": 2,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "bboplace_bigblue2_n32",
+    "case_id": "bboplace_bigblue2_n32__s2"
+  },
+  {
+    "task": "bboplace_bigblue2_n32",
+    "family": "BBOPlace",
+    "seed": 3,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "bboplace_bigblue2_n32",
+    "case_id": "bboplace_bigblue2_n32__s3"
+  },
+  {
+    "task": "bboplace_bigblue2_n32",
+    "family": "BBOPlace",
+    "seed": 4,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "bboplace_bigblue2_n32",
+    "case_id": "bboplace_bigblue2_n32__s4"
+  },
+  {
+    "task": "bboplace_bigblue2_n32",
+    "family": "BBOPlace",
+    "seed": 5,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "bboplace_bigblue2_n32",
+    "case_id": "bboplace_bigblue2_n32__s5"
+  },
+  {
+    "task": "bboplace_bigblue4_n32",
+    "family": "BBOPlace",
+    "seed": 2,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "bboplace_bigblue4_n32",
+    "case_id": "bboplace_bigblue4_n32__s2"
+  },
+  {
+    "task": "bboplace_bigblue4_n32",
+    "family": "BBOPlace",
+    "seed": 3,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "bboplace_bigblue4_n32",
+    "case_id": "bboplace_bigblue4_n32__s3"
+  },
+  {
+    "task": "bboplace_bigblue4_n32",
+    "family": "BBOPlace",
+    "seed": 4,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "bboplace_bigblue4_n32",
+    "case_id": "bboplace_bigblue4_n32__s4"
+  },
+  {
+    "task": "bboplace_bigblue4_n32",
+    "family": "BBOPlace",
+    "seed": 5,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "bboplace_bigblue4_n32",
+    "case_id": "bboplace_bigblue4_n32__s5"
+  },
+  {
+    "task": "bboplace_superblue1_n32",
+    "family": "BBOPlace",
+    "seed": 2,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "bboplace_superblue1_n32",
+    "case_id": "bboplace_superblue1_n32__s2"
+  },
+  {
+    "task": "bboplace_superblue1_n32",
+    "family": "BBOPlace",
+    "seed": 3,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "bboplace_superblue1_n32",
+    "case_id": "bboplace_superblue1_n32__s3"
+  },
+  {
+    "task": "bboplace_superblue1_n32",
+    "family": "BBOPlace",
+    "seed": 4,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "bboplace_superblue1_n32",
+    "case_id": "bboplace_superblue1_n32__s4"
+  },
+  {
+    "task": "bboplace_superblue1_n32",
+    "family": "BBOPlace",
+    "seed": 5,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "bboplace_superblue1_n32",
+    "case_id": "bboplace_superblue1_n32__s5"
+  },
+  {
+    "task": "bboplace_superblue4_n32",
+    "family": "BBOPlace",
+    "seed": 2,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "bboplace_superblue4_n32",
+    "case_id": "bboplace_superblue4_n32__s2"
+  },
+  {
+    "task": "bboplace_superblue4_n32",
+    "family": "BBOPlace",
+    "seed": 3,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "bboplace_superblue4_n32",
+    "case_id": "bboplace_superblue4_n32__s3"
+  },
+  {
+    "task": "bboplace_superblue4_n32",
+    "family": "BBOPlace",
+    "seed": 4,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "bboplace_superblue4_n32",
+    "case_id": "bboplace_superblue4_n32__s4"
+  },
+  {
+    "task": "bboplace_superblue4_n32",
+    "family": "BBOPlace",
+    "seed": 5,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "bboplace_superblue4_n32",
+    "case_id": "bboplace_superblue4_n32__s5"
+  },
+  {
+    "task": "bboplace_superblue5_n32",
+    "family": "BBOPlace",
+    "seed": 2,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "bboplace_superblue5_n32",
+    "case_id": "bboplace_superblue5_n32__s2"
+  },
+  {
+    "task": "bboplace_superblue5_n32",
+    "family": "BBOPlace",
+    "seed": 3,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "bboplace_superblue5_n32",
+    "case_id": "bboplace_superblue5_n32__s3"
+  },
+  {
+    "task": "bboplace_superblue5_n32",
+    "family": "BBOPlace",
+    "seed": 4,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "bboplace_superblue5_n32",
+    "case_id": "bboplace_superblue5_n32__s4"
+  },
+  {
+    "task": "bboplace_superblue5_n32",
+    "family": "BBOPlace",
+    "seed": 5,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "bboplace_superblue5_n32",
+    "case_id": "bboplace_superblue5_n32__s5"
+  },
+  {
+    "task": "bboplace_superblue7_n32",
+    "family": "BBOPlace",
+    "seed": 2,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "bboplace_superblue7_n32",
+    "case_id": "bboplace_superblue7_n32__s2"
+  },
+  {
+    "task": "bboplace_superblue7_n32",
+    "family": "BBOPlace",
+    "seed": 3,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "bboplace_superblue7_n32",
+    "case_id": "bboplace_superblue7_n32__s3"
+  },
+  {
+    "task": "bboplace_superblue7_n32",
+    "family": "BBOPlace",
+    "seed": 4,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "bboplace_superblue7_n32",
+    "case_id": "bboplace_superblue7_n32__s4"
+  },
+  {
+    "task": "bboplace_superblue7_n32",
+    "family": "BBOPlace",
+    "seed": 5,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "bboplace_superblue7_n32",
+    "case_id": "bboplace_superblue7_n32__s5"
+  },
+  {
+    "task": "bboplace_superblue16_n32",
+    "family": "BBOPlace",
+    "seed": 2,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "bboplace_superblue16_n32",
+    "case_id": "bboplace_superblue16_n32__s2"
+  },
+  {
+    "task": "bboplace_superblue16_n32",
+    "family": "BBOPlace",
+    "seed": 3,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "bboplace_superblue16_n32",
+    "case_id": "bboplace_superblue16_n32__s3"
+  },
+  {
+    "task": "bboplace_superblue16_n32",
+    "family": "BBOPlace",
+    "seed": 4,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "bboplace_superblue16_n32",
+    "case_id": "bboplace_superblue16_n32__s4"
+  },
+  {
+    "task": "bboplace_superblue16_n32",
+    "family": "BBOPlace",
+    "seed": 5,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "bboplace_superblue16_n32",
+    "case_id": "bboplace_superblue16_n32__s5"
+  },
+  {
+    "task": "bboplace_superblue18_n32",
+    "family": "BBOPlace",
+    "seed": 2,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "bboplace_superblue18_n32",
+    "case_id": "bboplace_superblue18_n32__s2"
+  },
+  {
+    "task": "bboplace_superblue18_n32",
+    "family": "BBOPlace",
+    "seed": 3,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "bboplace_superblue18_n32",
+    "case_id": "bboplace_superblue18_n32__s3"
+  },
+  {
+    "task": "bboplace_superblue18_n32",
+    "family": "BBOPlace",
+    "seed": 4,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "bboplace_superblue18_n32",
+    "case_id": "bboplace_superblue18_n32__s4"
+  },
+  {
+    "task": "bboplace_superblue18_n32",
+    "family": "BBOPlace",
+    "seed": 5,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "bboplace_superblue18_n32",
+    "case_id": "bboplace_superblue18_n32__s5"
+  },
+  {
+    "task": "knob_http_surrogate_job_5",
+    "family": "DBTune",
+    "seed": 2,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "knob_http_surrogate_job_5",
+    "case_id": "knob_http_surrogate_job_5__s2"
+  },
+  {
+    "task": "knob_http_surrogate_job_5",
+    "family": "DBTune",
+    "seed": 3,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "knob_http_surrogate_job_5",
+    "case_id": "knob_http_surrogate_job_5__s3"
+  },
+  {
+    "task": "knob_http_surrogate_job_5",
+    "family": "DBTune",
+    "seed": 4,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "knob_http_surrogate_job_5",
+    "case_id": "knob_http_surrogate_job_5__s4"
+  },
+  {
+    "task": "knob_http_surrogate_job_5",
+    "family": "DBTune",
+    "seed": 5,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "knob_http_surrogate_job_5",
+    "case_id": "knob_http_surrogate_job_5__s5"
+  },
+  {
+    "task": "knob_http_surrogate_job_all",
+    "family": "DBTune",
+    "seed": 2,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "knob_http_surrogate_job_all",
+    "case_id": "knob_http_surrogate_job_all__s2"
+  },
+  {
+    "task": "knob_http_surrogate_job_all",
+    "family": "DBTune",
+    "seed": 3,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "knob_http_surrogate_job_all",
+    "case_id": "knob_http_surrogate_job_all__s3"
+  },
+  {
+    "task": "knob_http_surrogate_job_all",
+    "family": "DBTune",
+    "seed": 4,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "knob_http_surrogate_job_all",
+    "case_id": "knob_http_surrogate_job_all__s4"
+  },
+  {
+    "task": "knob_http_surrogate_job_all",
+    "family": "DBTune",
+    "seed": 5,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "knob_http_surrogate_job_all",
+    "case_id": "knob_http_surrogate_job_all__s5"
+  },
+  {
+    "task": "knob_http_surrogate_sysbench_5",
+    "family": "DBTune",
+    "seed": 2,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "knob_http_surrogate_sysbench_5",
+    "case_id": "knob_http_surrogate_sysbench_5__s2"
+  },
+  {
+    "task": "knob_http_surrogate_sysbench_5",
+    "family": "DBTune",
+    "seed": 3,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "knob_http_surrogate_sysbench_5",
+    "case_id": "knob_http_surrogate_sysbench_5__s3"
+  },
+  {
+    "task": "knob_http_surrogate_sysbench_5",
+    "family": "DBTune",
+    "seed": 4,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "knob_http_surrogate_sysbench_5",
+    "case_id": "knob_http_surrogate_sysbench_5__s4"
+  },
+  {
+    "task": "knob_http_surrogate_sysbench_5",
+    "family": "DBTune",
+    "seed": 5,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "knob_http_surrogate_sysbench_5",
+    "case_id": "knob_http_surrogate_sysbench_5__s5"
+  },
+  {
+    "task": "knob_http_surrogate_sysbench_all",
+    "family": "DBTune",
+    "seed": 2,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "knob_http_surrogate_sysbench_all",
+    "case_id": "knob_http_surrogate_sysbench_all__s2"
+  },
+  {
+    "task": "knob_http_surrogate_sysbench_all",
+    "family": "DBTune",
+    "seed": 3,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "knob_http_surrogate_sysbench_all",
+    "case_id": "knob_http_surrogate_sysbench_all__s3"
+  },
+  {
+    "task": "knob_http_surrogate_sysbench_all",
+    "family": "DBTune",
+    "seed": 4,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "knob_http_surrogate_sysbench_all",
+    "case_id": "knob_http_surrogate_sysbench_all__s4"
+  },
+  {
+    "task": "knob_http_surrogate_sysbench_all",
+    "family": "DBTune",
+    "seed": 5,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "knob_http_surrogate_sysbench_all",
+    "case_id": "knob_http_surrogate_sysbench_all__s5"
+  },
+  {
+    "task": "knob_http_surrogate_pg_5",
+    "family": "DBTune",
+    "seed": 2,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "knob_http_surrogate_pg_5",
+    "case_id": "knob_http_surrogate_pg_5__s2"
+  },
+  {
+    "task": "knob_http_surrogate_pg_5",
+    "family": "DBTune",
+    "seed": 3,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "knob_http_surrogate_pg_5",
+    "case_id": "knob_http_surrogate_pg_5__s3"
+  },
+  {
+    "task": "knob_http_surrogate_pg_5",
+    "family": "DBTune",
+    "seed": 4,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "knob_http_surrogate_pg_5",
+    "case_id": "knob_http_surrogate_pg_5__s4"
+  },
+  {
+    "task": "knob_http_surrogate_pg_5",
+    "family": "DBTune",
+    "seed": 5,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "knob_http_surrogate_pg_5",
+    "case_id": "knob_http_surrogate_pg_5__s5"
+  },
+  {
+    "task": "knob_http_surrogate_pg_20",
+    "family": "DBTune",
+    "seed": 2,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "knob_http_surrogate_pg_20",
+    "case_id": "knob_http_surrogate_pg_20__s2"
+  },
+  {
+    "task": "knob_http_surrogate_pg_20",
+    "family": "DBTune",
+    "seed": 3,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "knob_http_surrogate_pg_20",
+    "case_id": "knob_http_surrogate_pg_20__s3"
+  },
+  {
+    "task": "knob_http_surrogate_pg_20",
+    "family": "DBTune",
+    "seed": 4,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "knob_http_surrogate_pg_20",
+    "case_id": "knob_http_surrogate_pg_20__s4"
+  },
+  {
+    "task": "knob_http_surrogate_pg_20",
+    "family": "DBTune",
+    "seed": 5,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "knob_http_surrogate_pg_20",
+    "case_id": "knob_http_surrogate_pg_20__s5"
+  },
+  {
+    "task": "guacamol_fexofenadine_mpo_smiles_demo",
+    "family": "GuacaMol",
+    "seed": 2,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "guacamol_fexofenadine_mpo_smiles_demo",
+    "case_id": "guacamol_fexofenadine_mpo_smiles_demo__s2"
+  },
+  {
+    "task": "guacamol_fexofenadine_mpo_smiles_demo",
+    "family": "GuacaMol",
+    "seed": 3,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "guacamol_fexofenadine_mpo_smiles_demo",
+    "case_id": "guacamol_fexofenadine_mpo_smiles_demo__s3"
+  },
+  {
+    "task": "guacamol_fexofenadine_mpo_smiles_demo",
+    "family": "GuacaMol",
+    "seed": 4,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "guacamol_fexofenadine_mpo_smiles_demo",
+    "case_id": "guacamol_fexofenadine_mpo_smiles_demo__s4"
+  },
+  {
+    "task": "guacamol_fexofenadine_mpo_smiles_demo",
+    "family": "GuacaMol",
+    "seed": 5,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "guacamol_fexofenadine_mpo_smiles_demo",
+    "case_id": "guacamol_fexofenadine_mpo_smiles_demo__s5"
+  },
+  {
+    "task": "guacamol_median1_smiles_demo",
+    "family": "GuacaMol",
+    "seed": 2,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "guacamol_median1_smiles_demo",
+    "case_id": "guacamol_median1_smiles_demo__s2"
+  },
+  {
+    "task": "guacamol_median1_smiles_demo",
+    "family": "GuacaMol",
+    "seed": 3,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "guacamol_median1_smiles_demo",
+    "case_id": "guacamol_median1_smiles_demo__s3"
+  },
+  {
+    "task": "guacamol_median1_smiles_demo",
+    "family": "GuacaMol",
+    "seed": 4,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "guacamol_median1_smiles_demo",
+    "case_id": "guacamol_median1_smiles_demo__s4"
+  },
+  {
+    "task": "guacamol_median1_smiles_demo",
+    "family": "GuacaMol",
+    "seed": 5,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "guacamol_median1_smiles_demo",
+    "case_id": "guacamol_median1_smiles_demo__s5"
+  },
+  {
+    "task": "guacamol_amlodipine_mpo_smiles_demo",
+    "family": "GuacaMol",
+    "seed": 2,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "guacamol_amlodipine_mpo_smiles_demo",
+    "case_id": "guacamol_amlodipine_mpo_smiles_demo__s2"
+  },
+  {
+    "task": "guacamol_amlodipine_mpo_smiles_demo",
+    "family": "GuacaMol",
+    "seed": 3,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "guacamol_amlodipine_mpo_smiles_demo",
+    "case_id": "guacamol_amlodipine_mpo_smiles_demo__s3"
+  },
+  {
+    "task": "guacamol_amlodipine_mpo_smiles_demo",
+    "family": "GuacaMol",
+    "seed": 4,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "guacamol_amlodipine_mpo_smiles_demo",
+    "case_id": "guacamol_amlodipine_mpo_smiles_demo__s4"
+  },
+  {
+    "task": "guacamol_amlodipine_mpo_smiles_demo",
+    "family": "GuacaMol",
+    "seed": 5,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "guacamol_amlodipine_mpo_smiles_demo",
+    "case_id": "guacamol_amlodipine_mpo_smiles_demo__s5"
+  },
+  {
+    "task": "guacamol_median2_smiles_demo",
+    "family": "GuacaMol",
+    "seed": 2,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "guacamol_median2_smiles_demo",
+    "case_id": "guacamol_median2_smiles_demo__s2"
+  },
+  {
+    "task": "guacamol_median2_smiles_demo",
+    "family": "GuacaMol",
+    "seed": 3,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "guacamol_median2_smiles_demo",
+    "case_id": "guacamol_median2_smiles_demo__s3"
+  },
+  {
+    "task": "guacamol_median2_smiles_demo",
+    "family": "GuacaMol",
+    "seed": 4,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "guacamol_median2_smiles_demo",
+    "case_id": "guacamol_median2_smiles_demo__s4"
+  },
+  {
+    "task": "guacamol_median2_smiles_demo",
+    "family": "GuacaMol",
+    "seed": 5,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "guacamol_median2_smiles_demo",
+    "case_id": "guacamol_median2_smiles_demo__s5"
+  },
+  {
+    "task": "guacamol_osimertinib_mpo_smiles_demo",
+    "family": "GuacaMol",
+    "seed": 2,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "guacamol_osimertinib_mpo_smiles_demo",
+    "case_id": "guacamol_osimertinib_mpo_smiles_demo__s2"
+  },
+  {
+    "task": "guacamol_osimertinib_mpo_smiles_demo",
+    "family": "GuacaMol",
+    "seed": 3,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "guacamol_osimertinib_mpo_smiles_demo",
+    "case_id": "guacamol_osimertinib_mpo_smiles_demo__s3"
+  },
+  {
+    "task": "guacamol_osimertinib_mpo_smiles_demo",
+    "family": "GuacaMol",
+    "seed": 4,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "guacamol_osimertinib_mpo_smiles_demo",
+    "case_id": "guacamol_osimertinib_mpo_smiles_demo__s4"
+  },
+  {
+    "task": "guacamol_osimertinib_mpo_smiles_demo",
+    "family": "GuacaMol",
+    "seed": 5,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "guacamol_osimertinib_mpo_smiles_demo",
+    "case_id": "guacamol_osimertinib_mpo_smiles_demo__s5"
+  },
+  {
+    "task": "guacamol_perindopril_mpo_smiles_demo",
+    "family": "GuacaMol",
+    "seed": 2,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "guacamol_perindopril_mpo_smiles_demo",
+    "case_id": "guacamol_perindopril_mpo_smiles_demo__s2"
+  },
+  {
+    "task": "guacamol_perindopril_mpo_smiles_demo",
+    "family": "GuacaMol",
+    "seed": 3,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "guacamol_perindopril_mpo_smiles_demo",
+    "case_id": "guacamol_perindopril_mpo_smiles_demo__s3"
+  },
+  {
+    "task": "guacamol_perindopril_mpo_smiles_demo",
+    "family": "GuacaMol",
+    "seed": 4,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "guacamol_perindopril_mpo_smiles_demo",
+    "case_id": "guacamol_perindopril_mpo_smiles_demo__s4"
+  },
+  {
+    "task": "guacamol_perindopril_mpo_smiles_demo",
+    "family": "GuacaMol",
+    "seed": 5,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "guacamol_perindopril_mpo_smiles_demo",
+    "case_id": "guacamol_perindopril_mpo_smiles_demo__s5"
+  },
+  {
+    "task": "guacamol_ranolazine_mpo_smiles_demo",
+    "family": "GuacaMol",
+    "seed": 2,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "guacamol_ranolazine_mpo_smiles_demo",
+    "case_id": "guacamol_ranolazine_mpo_smiles_demo__s2"
+  },
+  {
+    "task": "guacamol_ranolazine_mpo_smiles_demo",
+    "family": "GuacaMol",
+    "seed": 3,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "guacamol_ranolazine_mpo_smiles_demo",
+    "case_id": "guacamol_ranolazine_mpo_smiles_demo__s3"
+  },
+  {
+    "task": "guacamol_ranolazine_mpo_smiles_demo",
+    "family": "GuacaMol",
+    "seed": 4,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "guacamol_ranolazine_mpo_smiles_demo",
+    "case_id": "guacamol_ranolazine_mpo_smiles_demo__s4"
+  },
+  {
+    "task": "guacamol_ranolazine_mpo_smiles_demo",
+    "family": "GuacaMol",
+    "seed": 5,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "guacamol_ranolazine_mpo_smiles_demo",
+    "case_id": "guacamol_ranolazine_mpo_smiles_demo__s5"
+  },
+  {
+    "task": "guacamol_sitagliptin_mpo_smiles_demo",
+    "family": "GuacaMol",
+    "seed": 2,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "guacamol_sitagliptin_mpo_smiles_demo",
+    "case_id": "guacamol_sitagliptin_mpo_smiles_demo__s2"
+  },
+  {
+    "task": "guacamol_sitagliptin_mpo_smiles_demo",
+    "family": "GuacaMol",
+    "seed": 3,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "guacamol_sitagliptin_mpo_smiles_demo",
+    "case_id": "guacamol_sitagliptin_mpo_smiles_demo__s3"
+  },
+  {
+    "task": "guacamol_sitagliptin_mpo_smiles_demo",
+    "family": "GuacaMol",
+    "seed": 4,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "guacamol_sitagliptin_mpo_smiles_demo",
+    "case_id": "guacamol_sitagliptin_mpo_smiles_demo__s4"
+  },
+  {
+    "task": "guacamol_sitagliptin_mpo_smiles_demo",
+    "family": "GuacaMol",
+    "seed": 5,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "guacamol_sitagliptin_mpo_smiles_demo",
+    "case_id": "guacamol_sitagliptin_mpo_smiles_demo__s5"
+  },
+  {
+    "task": "guacamol_valsartan_smarts_smiles_demo",
+    "family": "GuacaMol",
+    "seed": 2,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "guacamol_valsartan_smarts_smiles_demo",
+    "case_id": "guacamol_valsartan_smarts_smiles_demo__s2"
+  },
+  {
+    "task": "guacamol_valsartan_smarts_smiles_demo",
+    "family": "GuacaMol",
+    "seed": 3,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "guacamol_valsartan_smarts_smiles_demo",
+    "case_id": "guacamol_valsartan_smarts_smiles_demo__s3"
+  },
+  {
+    "task": "guacamol_valsartan_smarts_smiles_demo",
+    "family": "GuacaMol",
+    "seed": 4,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "guacamol_valsartan_smarts_smiles_demo",
+    "case_id": "guacamol_valsartan_smarts_smiles_demo__s4"
+  },
+  {
+    "task": "guacamol_valsartan_smarts_smiles_demo",
+    "family": "GuacaMol",
+    "seed": 5,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "guacamol_valsartan_smarts_smiles_demo",
+    "case_id": "guacamol_valsartan_smarts_smiles_demo__s5"
+  },
+  {
+    "task": "guacamol_zaleplon_mpo_smiles_demo",
+    "family": "GuacaMol",
+    "seed": 2,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "guacamol_zaleplon_mpo_smiles_demo",
+    "case_id": "guacamol_zaleplon_mpo_smiles_demo__s2"
+  },
+  {
+    "task": "guacamol_zaleplon_mpo_smiles_demo",
+    "family": "GuacaMol",
+    "seed": 3,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "guacamol_zaleplon_mpo_smiles_demo",
+    "case_id": "guacamol_zaleplon_mpo_smiles_demo__s3"
+  },
+  {
+    "task": "guacamol_zaleplon_mpo_smiles_demo",
+    "family": "GuacaMol",
+    "seed": 4,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "guacamol_zaleplon_mpo_smiles_demo",
+    "case_id": "guacamol_zaleplon_mpo_smiles_demo__s4"
+  },
+  {
+    "task": "guacamol_zaleplon_mpo_smiles_demo",
+    "family": "GuacaMol",
+    "seed": 5,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "guacamol_zaleplon_mpo_smiles_demo",
+    "case_id": "guacamol_zaleplon_mpo_smiles_demo__s5"
+  },
+  {
+    "task": "bbob_f01_d10",
+    "family": "BBOB",
+    "seed": 2,
+    "initial": 20,
+    "budget": 100,
+    "total": 120,
+    "visible_task_id": "task_b94ce8fe9ab8",
+    "case_id": "task_b94ce8fe9ab8__s2"
+  },
+  {
+    "task": "bbob_f01_d10",
+    "family": "BBOB",
+    "seed": 3,
+    "initial": 20,
+    "budget": 100,
+    "total": 120,
+    "visible_task_id": "task_b94ce8fe9ab8",
+    "case_id": "task_b94ce8fe9ab8__s3"
+  },
+  {
+    "task": "bbob_f01_d10",
+    "family": "BBOB",
+    "seed": 4,
+    "initial": 20,
+    "budget": 100,
+    "total": 120,
+    "visible_task_id": "task_b94ce8fe9ab8",
+    "case_id": "task_b94ce8fe9ab8__s4"
+  },
+  {
+    "task": "bbob_f01_d10",
+    "family": "BBOB",
+    "seed": 5,
+    "initial": 20,
+    "budget": 100,
+    "total": 120,
+    "visible_task_id": "task_b94ce8fe9ab8",
+    "case_id": "task_b94ce8fe9ab8__s5"
+  },
+  {
+    "task": "bbob_f02_d10",
+    "family": "BBOB",
+    "seed": 2,
+    "initial": 20,
+    "budget": 100,
+    "total": 120,
+    "visible_task_id": "task_2a583c2685a8",
+    "case_id": "task_2a583c2685a8__s2"
+  },
+  {
+    "task": "bbob_f02_d10",
+    "family": "BBOB",
+    "seed": 3,
+    "initial": 20,
+    "budget": 100,
+    "total": 120,
+    "visible_task_id": "task_2a583c2685a8",
+    "case_id": "task_2a583c2685a8__s3"
+  },
+  {
+    "task": "bbob_f02_d10",
+    "family": "BBOB",
+    "seed": 4,
+    "initial": 20,
+    "budget": 100,
+    "total": 120,
+    "visible_task_id": "task_2a583c2685a8",
+    "case_id": "task_2a583c2685a8__s4"
+  },
+  {
+    "task": "bbob_f02_d10",
+    "family": "BBOB",
+    "seed": 5,
+    "initial": 20,
+    "budget": 100,
+    "total": 120,
+    "visible_task_id": "task_2a583c2685a8",
+    "case_id": "task_2a583c2685a8__s5"
+  },
+  {
+    "task": "bbob_f03_d10",
+    "family": "BBOB",
+    "seed": 2,
+    "initial": 20,
+    "budget": 100,
+    "total": 120,
+    "visible_task_id": "task_15179f8f81cf",
+    "case_id": "task_15179f8f81cf__s2"
+  },
+  {
+    "task": "bbob_f03_d10",
+    "family": "BBOB",
+    "seed": 3,
+    "initial": 20,
+    "budget": 100,
+    "total": 120,
+    "visible_task_id": "task_15179f8f81cf",
+    "case_id": "task_15179f8f81cf__s3"
+  },
+  {
+    "task": "bbob_f03_d10",
+    "family": "BBOB",
+    "seed": 4,
+    "initial": 20,
+    "budget": 100,
+    "total": 120,
+    "visible_task_id": "task_15179f8f81cf",
+    "case_id": "task_15179f8f81cf__s4"
+  },
+  {
+    "task": "bbob_f03_d10",
+    "family": "BBOB",
+    "seed": 5,
+    "initial": 20,
+    "budget": 100,
+    "total": 120,
+    "visible_task_id": "task_15179f8f81cf",
+    "case_id": "task_15179f8f81cf__s5"
+  },
+  {
+    "task": "bbob_f04_d10",
+    "family": "BBOB",
+    "seed": 2,
+    "initial": 20,
+    "budget": 100,
+    "total": 120,
+    "visible_task_id": "task_6102cd63ed8d",
+    "case_id": "task_6102cd63ed8d__s2"
+  },
+  {
+    "task": "bbob_f04_d10",
+    "family": "BBOB",
+    "seed": 3,
+    "initial": 20,
+    "budget": 100,
+    "total": 120,
+    "visible_task_id": "task_6102cd63ed8d",
+    "case_id": "task_6102cd63ed8d__s3"
+  },
+  {
+    "task": "bbob_f04_d10",
+    "family": "BBOB",
+    "seed": 4,
+    "initial": 20,
+    "budget": 100,
+    "total": 120,
+    "visible_task_id": "task_6102cd63ed8d",
+    "case_id": "task_6102cd63ed8d__s4"
+  },
+  {
+    "task": "bbob_f04_d10",
+    "family": "BBOB",
+    "seed": 5,
+    "initial": 20,
+    "budget": 100,
+    "total": 120,
+    "visible_task_id": "task_6102cd63ed8d",
+    "case_id": "task_6102cd63ed8d__s5"
+  },
+  {
+    "task": "bbob_f05_d10",
+    "family": "BBOB",
+    "seed": 2,
+    "initial": 20,
+    "budget": 100,
+    "total": 120,
+    "visible_task_id": "task_a13a8d9911f0",
+    "case_id": "task_a13a8d9911f0__s2"
+  },
+  {
+    "task": "bbob_f05_d10",
+    "family": "BBOB",
+    "seed": 3,
+    "initial": 20,
+    "budget": 100,
+    "total": 120,
+    "visible_task_id": "task_a13a8d9911f0",
+    "case_id": "task_a13a8d9911f0__s3"
+  },
+  {
+    "task": "bbob_f05_d10",
+    "family": "BBOB",
+    "seed": 4,
+    "initial": 20,
+    "budget": 100,
+    "total": 120,
+    "visible_task_id": "task_a13a8d9911f0",
+    "case_id": "task_a13a8d9911f0__s4"
+  },
+  {
+    "task": "bbob_f05_d10",
+    "family": "BBOB",
+    "seed": 5,
+    "initial": 20,
+    "budget": 100,
+    "total": 120,
+    "visible_task_id": "task_a13a8d9911f0",
+    "case_id": "task_a13a8d9911f0__s5"
+  },
+  {
+    "task": "bbob_f06_d10",
+    "family": "BBOB",
+    "seed": 2,
+    "initial": 20,
+    "budget": 100,
+    "total": 120,
+    "visible_task_id": "task_821a658ec4c5",
+    "case_id": "task_821a658ec4c5__s2"
+  },
+  {
+    "task": "bbob_f06_d10",
+    "family": "BBOB",
+    "seed": 3,
+    "initial": 20,
+    "budget": 100,
+    "total": 120,
+    "visible_task_id": "task_821a658ec4c5",
+    "case_id": "task_821a658ec4c5__s3"
+  },
+  {
+    "task": "bbob_f06_d10",
+    "family": "BBOB",
+    "seed": 4,
+    "initial": 20,
+    "budget": 100,
+    "total": 120,
+    "visible_task_id": "task_821a658ec4c5",
+    "case_id": "task_821a658ec4c5__s4"
+  },
+  {
+    "task": "bbob_f06_d10",
+    "family": "BBOB",
+    "seed": 5,
+    "initial": 20,
+    "budget": 100,
+    "total": 120,
+    "visible_task_id": "task_821a658ec4c5",
+    "case_id": "task_821a658ec4c5__s5"
+  },
+  {
+    "task": "bbob_f07_d10",
+    "family": "BBOB",
+    "seed": 2,
+    "initial": 20,
+    "budget": 100,
+    "total": 120,
+    "visible_task_id": "task_123c3a1b9131",
+    "case_id": "task_123c3a1b9131__s2"
+  },
+  {
+    "task": "bbob_f07_d10",
+    "family": "BBOB",
+    "seed": 3,
+    "initial": 20,
+    "budget": 100,
+    "total": 120,
+    "visible_task_id": "task_123c3a1b9131",
+    "case_id": "task_123c3a1b9131__s3"
+  },
+  {
+    "task": "bbob_f07_d10",
+    "family": "BBOB",
+    "seed": 4,
+    "initial": 20,
+    "budget": 100,
+    "total": 120,
+    "visible_task_id": "task_123c3a1b9131",
+    "case_id": "task_123c3a1b9131__s4"
+  },
+  {
+    "task": "bbob_f07_d10",
+    "family": "BBOB",
+    "seed": 5,
+    "initial": 20,
+    "budget": 100,
+    "total": 120,
+    "visible_task_id": "task_123c3a1b9131",
+    "case_id": "task_123c3a1b9131__s5"
+  },
+  {
+    "task": "bbob_f08_d10",
+    "family": "BBOB",
+    "seed": 2,
+    "initial": 20,
+    "budget": 100,
+    "total": 120,
+    "visible_task_id": "task_ffdd8f0d1888",
+    "case_id": "task_ffdd8f0d1888__s2"
+  },
+  {
+    "task": "bbob_f08_d10",
+    "family": "BBOB",
+    "seed": 3,
+    "initial": 20,
+    "budget": 100,
+    "total": 120,
+    "visible_task_id": "task_ffdd8f0d1888",
+    "case_id": "task_ffdd8f0d1888__s3"
+  },
+  {
+    "task": "bbob_f08_d10",
+    "family": "BBOB",
+    "seed": 4,
+    "initial": 20,
+    "budget": 100,
+    "total": 120,
+    "visible_task_id": "task_ffdd8f0d1888",
+    "case_id": "task_ffdd8f0d1888__s4"
+  },
+  {
+    "task": "bbob_f08_d10",
+    "family": "BBOB",
+    "seed": 5,
+    "initial": 20,
+    "budget": 100,
+    "total": 120,
+    "visible_task_id": "task_ffdd8f0d1888",
+    "case_id": "task_ffdd8f0d1888__s5"
+  },
+  {
+    "task": "bbob_f09_d10",
+    "family": "BBOB",
+    "seed": 2,
+    "initial": 20,
+    "budget": 100,
+    "total": 120,
+    "visible_task_id": "task_275df80e16b2",
+    "case_id": "task_275df80e16b2__s2"
+  },
+  {
+    "task": "bbob_f09_d10",
+    "family": "BBOB",
+    "seed": 3,
+    "initial": 20,
+    "budget": 100,
+    "total": 120,
+    "visible_task_id": "task_275df80e16b2",
+    "case_id": "task_275df80e16b2__s3"
+  },
+  {
+    "task": "bbob_f09_d10",
+    "family": "BBOB",
+    "seed": 4,
+    "initial": 20,
+    "budget": 100,
+    "total": 120,
+    "visible_task_id": "task_275df80e16b2",
+    "case_id": "task_275df80e16b2__s4"
+  },
+  {
+    "task": "bbob_f09_d10",
+    "family": "BBOB",
+    "seed": 5,
+    "initial": 20,
+    "budget": 100,
+    "total": 120,
+    "visible_task_id": "task_275df80e16b2",
+    "case_id": "task_275df80e16b2__s5"
+  },
+  {
+    "task": "bbob_f10_d10",
+    "family": "BBOB",
+    "seed": 2,
+    "initial": 20,
+    "budget": 100,
+    "total": 120,
+    "visible_task_id": "task_143f6ccd8218",
+    "case_id": "task_143f6ccd8218__s2"
+  },
+  {
+    "task": "bbob_f10_d10",
+    "family": "BBOB",
+    "seed": 3,
+    "initial": 20,
+    "budget": 100,
+    "total": 120,
+    "visible_task_id": "task_143f6ccd8218",
+    "case_id": "task_143f6ccd8218__s3"
+  },
+  {
+    "task": "bbob_f10_d10",
+    "family": "BBOB",
+    "seed": 4,
+    "initial": 20,
+    "budget": 100,
+    "total": 120,
+    "visible_task_id": "task_143f6ccd8218",
+    "case_id": "task_143f6ccd8218__s4"
+  },
+  {
+    "task": "bbob_f10_d10",
+    "family": "BBOB",
+    "seed": 5,
+    "initial": 20,
+    "budget": 100,
+    "total": 120,
+    "visible_task_id": "task_143f6ccd8218",
+    "case_id": "task_143f6ccd8218__s5"
+  },
+  {
+    "task": "bbob_f11_d10",
+    "family": "BBOB",
+    "seed": 2,
+    "initial": 20,
+    "budget": 100,
+    "total": 120,
+    "visible_task_id": "task_5f94360c4dc5",
+    "case_id": "task_5f94360c4dc5__s2"
+  },
+  {
+    "task": "bbob_f11_d10",
+    "family": "BBOB",
+    "seed": 3,
+    "initial": 20,
+    "budget": 100,
+    "total": 120,
+    "visible_task_id": "task_5f94360c4dc5",
+    "case_id": "task_5f94360c4dc5__s3"
+  },
+  {
+    "task": "bbob_f11_d10",
+    "family": "BBOB",
+    "seed": 4,
+    "initial": 20,
+    "budget": 100,
+    "total": 120,
+    "visible_task_id": "task_5f94360c4dc5",
+    "case_id": "task_5f94360c4dc5__s4"
+  },
+  {
+    "task": "bbob_f11_d10",
+    "family": "BBOB",
+    "seed": 5,
+    "initial": 20,
+    "budget": 100,
+    "total": 120,
+    "visible_task_id": "task_5f94360c4dc5",
+    "case_id": "task_5f94360c4dc5__s5"
+  },
+  {
+    "task": "bbob_f12_d10",
+    "family": "BBOB",
+    "seed": 2,
+    "initial": 20,
+    "budget": 100,
+    "total": 120,
+    "visible_task_id": "task_274172bfaa3b",
+    "case_id": "task_274172bfaa3b__s2"
+  },
+  {
+    "task": "bbob_f12_d10",
+    "family": "BBOB",
+    "seed": 3,
+    "initial": 20,
+    "budget": 100,
+    "total": 120,
+    "visible_task_id": "task_274172bfaa3b",
+    "case_id": "task_274172bfaa3b__s3"
+  },
+  {
+    "task": "bbob_f12_d10",
+    "family": "BBOB",
+    "seed": 4,
+    "initial": 20,
+    "budget": 100,
+    "total": 120,
+    "visible_task_id": "task_274172bfaa3b",
+    "case_id": "task_274172bfaa3b__s4"
+  },
+  {
+    "task": "bbob_f12_d10",
+    "family": "BBOB",
+    "seed": 5,
+    "initial": 20,
+    "budget": 100,
+    "total": 120,
+    "visible_task_id": "task_274172bfaa3b",
+    "case_id": "task_274172bfaa3b__s5"
+  },
+  {
+    "task": "bbob_f13_d10",
+    "family": "BBOB",
+    "seed": 2,
+    "initial": 20,
+    "budget": 100,
+    "total": 120,
+    "visible_task_id": "task_f6c07d7688b6",
+    "case_id": "task_f6c07d7688b6__s2"
+  },
+  {
+    "task": "bbob_f13_d10",
+    "family": "BBOB",
+    "seed": 3,
+    "initial": 20,
+    "budget": 100,
+    "total": 120,
+    "visible_task_id": "task_f6c07d7688b6",
+    "case_id": "task_f6c07d7688b6__s3"
+  },
+  {
+    "task": "bbob_f13_d10",
+    "family": "BBOB",
+    "seed": 4,
+    "initial": 20,
+    "budget": 100,
+    "total": 120,
+    "visible_task_id": "task_f6c07d7688b6",
+    "case_id": "task_f6c07d7688b6__s4"
+  },
+  {
+    "task": "bbob_f13_d10",
+    "family": "BBOB",
+    "seed": 5,
+    "initial": 20,
+    "budget": 100,
+    "total": 120,
+    "visible_task_id": "task_f6c07d7688b6",
+    "case_id": "task_f6c07d7688b6__s5"
+  },
+  {
+    "task": "bbob_f14_d10",
+    "family": "BBOB",
+    "seed": 2,
+    "initial": 20,
+    "budget": 100,
+    "total": 120,
+    "visible_task_id": "task_6d573310c820",
+    "case_id": "task_6d573310c820__s2"
+  },
+  {
+    "task": "bbob_f14_d10",
+    "family": "BBOB",
+    "seed": 3,
+    "initial": 20,
+    "budget": 100,
+    "total": 120,
+    "visible_task_id": "task_6d573310c820",
+    "case_id": "task_6d573310c820__s3"
+  },
+  {
+    "task": "bbob_f14_d10",
+    "family": "BBOB",
+    "seed": 4,
+    "initial": 20,
+    "budget": 100,
+    "total": 120,
+    "visible_task_id": "task_6d573310c820",
+    "case_id": "task_6d573310c820__s4"
+  },
+  {
+    "task": "bbob_f14_d10",
+    "family": "BBOB",
+    "seed": 5,
+    "initial": 20,
+    "budget": 100,
+    "total": 120,
+    "visible_task_id": "task_6d573310c820",
+    "case_id": "task_6d573310c820__s5"
+  },
+  {
+    "task": "bbob_f15_d10",
+    "family": "BBOB",
+    "seed": 2,
+    "initial": 20,
+    "budget": 100,
+    "total": 120,
+    "visible_task_id": "task_fba2c8e59457",
+    "case_id": "task_fba2c8e59457__s2"
+  },
+  {
+    "task": "bbob_f15_d10",
+    "family": "BBOB",
+    "seed": 3,
+    "initial": 20,
+    "budget": 100,
+    "total": 120,
+    "visible_task_id": "task_fba2c8e59457",
+    "case_id": "task_fba2c8e59457__s3"
+  },
+  {
+    "task": "bbob_f15_d10",
+    "family": "BBOB",
+    "seed": 4,
+    "initial": 20,
+    "budget": 100,
+    "total": 120,
+    "visible_task_id": "task_fba2c8e59457",
+    "case_id": "task_fba2c8e59457__s4"
+  },
+  {
+    "task": "bbob_f15_d10",
+    "family": "BBOB",
+    "seed": 5,
+    "initial": 20,
+    "budget": 100,
+    "total": 120,
+    "visible_task_id": "task_fba2c8e59457",
+    "case_id": "task_fba2c8e59457__s5"
+  },
+  {
+    "task": "bbob_f16_d10",
+    "family": "BBOB",
+    "seed": 2,
+    "initial": 20,
+    "budget": 100,
+    "total": 120,
+    "visible_task_id": "task_4b13ac963424",
+    "case_id": "task_4b13ac963424__s2"
+  },
+  {
+    "task": "bbob_f16_d10",
+    "family": "BBOB",
+    "seed": 3,
+    "initial": 20,
+    "budget": 100,
+    "total": 120,
+    "visible_task_id": "task_4b13ac963424",
+    "case_id": "task_4b13ac963424__s3"
+  },
+  {
+    "task": "bbob_f16_d10",
+    "family": "BBOB",
+    "seed": 4,
+    "initial": 20,
+    "budget": 100,
+    "total": 120,
+    "visible_task_id": "task_4b13ac963424",
+    "case_id": "task_4b13ac963424__s4"
+  },
+  {
+    "task": "bbob_f16_d10",
+    "family": "BBOB",
+    "seed": 5,
+    "initial": 20,
+    "budget": 100,
+    "total": 120,
+    "visible_task_id": "task_4b13ac963424",
+    "case_id": "task_4b13ac963424__s5"
+  },
+  {
+    "task": "bbob_f17_d10",
+    "family": "BBOB",
+    "seed": 2,
+    "initial": 20,
+    "budget": 100,
+    "total": 120,
+    "visible_task_id": "task_d07a778938b0",
+    "case_id": "task_d07a778938b0__s2"
+  },
+  {
+    "task": "bbob_f17_d10",
+    "family": "BBOB",
+    "seed": 3,
+    "initial": 20,
+    "budget": 100,
+    "total": 120,
+    "visible_task_id": "task_d07a778938b0",
+    "case_id": "task_d07a778938b0__s3"
+  },
+  {
+    "task": "bbob_f17_d10",
+    "family": "BBOB",
+    "seed": 4,
+    "initial": 20,
+    "budget": 100,
+    "total": 120,
+    "visible_task_id": "task_d07a778938b0",
+    "case_id": "task_d07a778938b0__s4"
+  },
+  {
+    "task": "bbob_f17_d10",
+    "family": "BBOB",
+    "seed": 5,
+    "initial": 20,
+    "budget": 100,
+    "total": 120,
+    "visible_task_id": "task_d07a778938b0",
+    "case_id": "task_d07a778938b0__s5"
+  },
+  {
+    "task": "bbob_f18_d10",
+    "family": "BBOB",
+    "seed": 2,
+    "initial": 20,
+    "budget": 100,
+    "total": 120,
+    "visible_task_id": "task_2b01130ec953",
+    "case_id": "task_2b01130ec953__s2"
+  },
+  {
+    "task": "bbob_f18_d10",
+    "family": "BBOB",
+    "seed": 3,
+    "initial": 20,
+    "budget": 100,
+    "total": 120,
+    "visible_task_id": "task_2b01130ec953",
+    "case_id": "task_2b01130ec953__s3"
+  },
+  {
+    "task": "bbob_f18_d10",
+    "family": "BBOB",
+    "seed": 4,
+    "initial": 20,
+    "budget": 100,
+    "total": 120,
+    "visible_task_id": "task_2b01130ec953",
+    "case_id": "task_2b01130ec953__s4"
+  },
+  {
+    "task": "bbob_f18_d10",
+    "family": "BBOB",
+    "seed": 5,
+    "initial": 20,
+    "budget": 100,
+    "total": 120,
+    "visible_task_id": "task_2b01130ec953",
+    "case_id": "task_2b01130ec953__s5"
+  },
+  {
+    "task": "bbob_f19_d10",
+    "family": "BBOB",
+    "seed": 2,
+    "initial": 20,
+    "budget": 100,
+    "total": 120,
+    "visible_task_id": "task_9165b6c3a996",
+    "case_id": "task_9165b6c3a996__s2"
+  },
+  {
+    "task": "bbob_f19_d10",
+    "family": "BBOB",
+    "seed": 3,
+    "initial": 20,
+    "budget": 100,
+    "total": 120,
+    "visible_task_id": "task_9165b6c3a996",
+    "case_id": "task_9165b6c3a996__s3"
+  },
+  {
+    "task": "bbob_f19_d10",
+    "family": "BBOB",
+    "seed": 4,
+    "initial": 20,
+    "budget": 100,
+    "total": 120,
+    "visible_task_id": "task_9165b6c3a996",
+    "case_id": "task_9165b6c3a996__s4"
+  },
+  {
+    "task": "bbob_f19_d10",
+    "family": "BBOB",
+    "seed": 5,
+    "initial": 20,
+    "budget": 100,
+    "total": 120,
+    "visible_task_id": "task_9165b6c3a996",
+    "case_id": "task_9165b6c3a996__s5"
+  },
+  {
+    "task": "bbob_f20_d10",
+    "family": "BBOB",
+    "seed": 2,
+    "initial": 20,
+    "budget": 100,
+    "total": 120,
+    "visible_task_id": "task_ed1b7d03eb8d",
+    "case_id": "task_ed1b7d03eb8d__s2"
+  },
+  {
+    "task": "bbob_f20_d10",
+    "family": "BBOB",
+    "seed": 3,
+    "initial": 20,
+    "budget": 100,
+    "total": 120,
+    "visible_task_id": "task_ed1b7d03eb8d",
+    "case_id": "task_ed1b7d03eb8d__s3"
+  },
+  {
+    "task": "bbob_f20_d10",
+    "family": "BBOB",
+    "seed": 4,
+    "initial": 20,
+    "budget": 100,
+    "total": 120,
+    "visible_task_id": "task_ed1b7d03eb8d",
+    "case_id": "task_ed1b7d03eb8d__s4"
+  },
+  {
+    "task": "bbob_f20_d10",
+    "family": "BBOB",
+    "seed": 5,
+    "initial": 20,
+    "budget": 100,
+    "total": 120,
+    "visible_task_id": "task_ed1b7d03eb8d",
+    "case_id": "task_ed1b7d03eb8d__s5"
+  },
+  {
+    "task": "bbob_f21_d10",
+    "family": "BBOB",
+    "seed": 2,
+    "initial": 20,
+    "budget": 100,
+    "total": 120,
+    "visible_task_id": "task_20c34630feb3",
+    "case_id": "task_20c34630feb3__s2"
+  },
+  {
+    "task": "bbob_f21_d10",
+    "family": "BBOB",
+    "seed": 3,
+    "initial": 20,
+    "budget": 100,
+    "total": 120,
+    "visible_task_id": "task_20c34630feb3",
+    "case_id": "task_20c34630feb3__s3"
+  },
+  {
+    "task": "bbob_f21_d10",
+    "family": "BBOB",
+    "seed": 4,
+    "initial": 20,
+    "budget": 100,
+    "total": 120,
+    "visible_task_id": "task_20c34630feb3",
+    "case_id": "task_20c34630feb3__s4"
+  },
+  {
+    "task": "bbob_f21_d10",
+    "family": "BBOB",
+    "seed": 5,
+    "initial": 20,
+    "budget": 100,
+    "total": 120,
+    "visible_task_id": "task_20c34630feb3",
+    "case_id": "task_20c34630feb3__s5"
+  },
+  {
+    "task": "bbob_f22_d10",
+    "family": "BBOB",
+    "seed": 2,
+    "initial": 20,
+    "budget": 100,
+    "total": 120,
+    "visible_task_id": "task_98927b2a4617",
+    "case_id": "task_98927b2a4617__s2"
+  },
+  {
+    "task": "bbob_f22_d10",
+    "family": "BBOB",
+    "seed": 3,
+    "initial": 20,
+    "budget": 100,
+    "total": 120,
+    "visible_task_id": "task_98927b2a4617",
+    "case_id": "task_98927b2a4617__s3"
+  },
+  {
+    "task": "bbob_f22_d10",
+    "family": "BBOB",
+    "seed": 4,
+    "initial": 20,
+    "budget": 100,
+    "total": 120,
+    "visible_task_id": "task_98927b2a4617",
+    "case_id": "task_98927b2a4617__s4"
+  },
+  {
+    "task": "bbob_f22_d10",
+    "family": "BBOB",
+    "seed": 5,
+    "initial": 20,
+    "budget": 100,
+    "total": 120,
+    "visible_task_id": "task_98927b2a4617",
+    "case_id": "task_98927b2a4617__s5"
+  },
+  {
+    "task": "bbob_f23_d10",
+    "family": "BBOB",
+    "seed": 2,
+    "initial": 20,
+    "budget": 100,
+    "total": 120,
+    "visible_task_id": "task_cef5775daba7",
+    "case_id": "task_cef5775daba7__s2"
+  },
+  {
+    "task": "bbob_f23_d10",
+    "family": "BBOB",
+    "seed": 3,
+    "initial": 20,
+    "budget": 100,
+    "total": 120,
+    "visible_task_id": "task_cef5775daba7",
+    "case_id": "task_cef5775daba7__s3"
+  },
+  {
+    "task": "bbob_f23_d10",
+    "family": "BBOB",
+    "seed": 4,
+    "initial": 20,
+    "budget": 100,
+    "total": 120,
+    "visible_task_id": "task_cef5775daba7",
+    "case_id": "task_cef5775daba7__s4"
+  },
+  {
+    "task": "bbob_f23_d10",
+    "family": "BBOB",
+    "seed": 5,
+    "initial": 20,
+    "budget": 100,
+    "total": 120,
+    "visible_task_id": "task_cef5775daba7",
+    "case_id": "task_cef5775daba7__s5"
+  },
+  {
+    "task": "bbob_f24_d10",
+    "family": "BBOB",
+    "seed": 2,
+    "initial": 20,
+    "budget": 100,
+    "total": 120,
+    "visible_task_id": "task_228105dd861a",
+    "case_id": "task_228105dd861a__s2"
+  },
+  {
+    "task": "bbob_f24_d10",
+    "family": "BBOB",
+    "seed": 3,
+    "initial": 20,
+    "budget": 100,
+    "total": 120,
+    "visible_task_id": "task_228105dd861a",
+    "case_id": "task_228105dd861a__s3"
+  },
+  {
+    "task": "bbob_f24_d10",
+    "family": "BBOB",
+    "seed": 4,
+    "initial": 20,
+    "budget": 100,
+    "total": 120,
+    "visible_task_id": "task_228105dd861a",
+    "case_id": "task_228105dd861a__s4"
+  },
+  {
+    "task": "bbob_f24_d10",
+    "family": "BBOB",
+    "seed": 5,
+    "initial": 20,
+    "budget": 100,
+    "total": 120,
+    "visible_task_id": "task_228105dd861a",
+    "case_id": "task_228105dd861a__s5"
+  }
+]

@@ -1,5 +1,5 @@
 # Environment Setup
 
-Implementation source: `bbo/tasks/scientific/guacamol_smiles.py`, `_require_rdkit()`.
+The evaluator needs RDKit-compatible molecule parsing and the GuacaMol scoring dependencies available in the runtime environment.
 
-RDKit is required. The implementation error message points to `uv sync --extra dev --extra bo-tutorial`.
+No external services or task-specific runtime resources are required by the task description.

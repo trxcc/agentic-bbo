@@ -1,0 +1,10 @@
+{
+  "all_objectives": [
+    {
+      "direction": "minimize",
+      "name": "hpwl"
+    }
+  ],
+  "direction": "minimize",
+  "name": "hpwl"
+}

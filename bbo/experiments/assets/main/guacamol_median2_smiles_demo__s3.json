@@ -1,0 +1,542 @@
+{
+  "row": {
+    "task": "guacamol_median2_smiles_demo",
+    "family": "GuacaMol",
+    "seed": 3,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "guacamol_median2_smiles_demo",
+    "case_id": "guacamol_median2_smiles_demo__s3"
+  },
+  "short_task": "# GuacaMol Median Molecules 2 SMILES\n\nTask ID: `guacamol_median2_smiles_demo`.\n\nFind a molecule simultaneously similar in structure to tadalafil and sildenafil.\n\nObjective: minimize `median2_loss`.\n\nBudget: 50 shared initial observations and 200 new evaluations (250 total).\n\n## Submission\n\n1. Submit one molecule per candidate as a SMILES string in the smiles field, with a maximum length of 512.\n2. SMILES represents atoms and connections on one line: C and O denote carbon and oxygen, parentheses denote branches, paired digits mark ring closures, and = denotes a double bond.\n3. Scoring compares the molecular structures represented by the strings. Different SMILES strings can represent the same molecule.\n\n## References\n\n| Name | SMILES |\n| --- | --- |\n| Tadalafil | `O=C1N(CC(N2C1CC3=C(C2C4=CC5=C(OCO5)C=C4)NC6=C3C=CC=C6)=O)C` |\n| Sildenafil | `CCCC1=NN(C2=C1N=C(NC2=O)C3=C(C=CC(=C3)S(=O)(=O)N4CCN(CC4)C)OCC)C` |\n\n## Parameters\n\n| Parameter | Meaning | Type | Allowed values | Search transform |\n| --- | --- | --- | --- | --- |\n| `smiles` | Molecular structure encoded as SMILES. | string | SMILES string; maximum length 512 | — |\n\n## Read details as needed\n\nThere are 1 active parameters. get_search_space supports names, query, optional annotated groups and paged index/details views.\n\nget_task_context sections: overview, submission, scoring, mechanisms, references, additional. Read scoring rules and relevant mechanisms before choosing a candidate.\n\nget_trial_history and get_incumbent return scores first; request parameter_names to inspect selected values.\n\nFollow instructions.md: submit_candidate accepts a full config or workspace JSON file directly; write_candidate is optional.\n",
+  "visible_task_id": "guacamol_median2_smiles_demo",
+  "objective": {
+    "name": "median2_loss",
+    "direction": "minimize"
+  },
+  "evaluation_budget": {
+    "initial_observations": 50,
+    "new_evaluations": 200,
+    "total_observations": 250
+  },
+  "task_facts": {
+    "overview": "# GuacaMol Median Molecules 2 SMILES\n\nTask ID: `guacamol_median2_smiles_demo`.\n\nFind a molecule simultaneously similar in structure to tadalafil and sildenafil.\n\nObjective: minimize `median2_loss`.\n\nBudget: 50 shared initial observations and 200 new evaluations (250 total).",
+    "submission": "1. Submit one molecule per candidate as a SMILES string in the smiles field, with a maximum length of 512.\n2. SMILES represents atoms and connections on one line: C and O denote carbon and oxygen, parentheses denote branches, paired digits mark ring closures, and = denotes a double bond.\n3. Scoring compares the molecular structures represented by the strings. Different SMILES strings can represent the same molecule.",
+    "scoring": "1. The evaluator combines 2 component scores in [0,1] as score = (s1 * ... * s2)**(1/2). It returns loss = 1-score; lower loss is better. Only the combined objective is returned, not individual components.\n2. s1 and s2 are ECFP6 Tanimoto similarities to tadalafil and sildenafil, respectively.\n3. Empty or unparseable SMILES receive score 0 and loss 1. Only the listed scoring components are evaluated; this score does not measure clinical efficacy, safety, or synthetic feasibility.",
+    "mechanisms": "1. A molecular fingerprint summarizes structural features. Tanimoto similarity compares two fingerprints, from 0 for no overlap to 1 for identical fingerprint features; it does not compare SMILES text.\n2. ECFP6 uses Morgan count fingerprints for atomic environments within three bonds (radius 3).\n3. A low component limits the geometric mean; any zero component makes the combined score zero. Changing atoms, bonds, or rings can alter several components at once.\n4. Different SMILES can represent the same molecule. A small text edit need not imply a small change in structure or score.",
+    "references": "| Name | SMILES |\n| --- | --- |\n| Tadalafil | `O=C1N(CC(N2C1CC3=C(C2C4=CC5=C(OCO5)C=C4)NC6=C3C=CC=C6)=O)C` |\n| Sildenafil | `CCCC1=NN(C2=C1N=C(NC2=O)C3=C(C=CC(=C3)S(=O)(=O)N4CCN(CC4)C)OCC)C` |",
+    "additional": "**Fingerprint types (`fingerprint_types`)**\n\n`[\"ECFP6\"]`\n\n**Score aggregation (`aggregation`)**\n\ngeometric mean"
+  },
+  "parameter_definitions": [
+    {
+      "name": "smiles",
+      "type": "string",
+      "min_length": 0,
+      "max_length": 512,
+      "default": ""
+    }
+  ],
+  "initial_history": [
+    {
+      "trial_id": 0,
+      "config": {
+        "smiles": "CCC(C)(C)Br"
+      },
+      "objectives": {
+        "median2_loss": 0.9816715739549198
+      },
+      "status": "success"
+    },
+    {
+      "trial_id": 1,
+      "config": {
+        "smiles": "CCCN(CCc1cccc(-c2ccccc2)c1)C(=O)C1OC(C(=O)O)=CC(N)C1NC(C)=O"
+      },
+      "objectives": {
+        "median2_loss": 0.8862664368663121
+      },
+      "status": "success"
+    },
+    {
+      "trial_id": 2,
+      "config": {
+        "smiles": "CC1(C)OCC2OC3(C4OC(C)(C)OC4CO)OC(C)(C)OC3C2O1"
+      },
+      "objectives": {
+        "median2_loss": 0.9685846651025966
+      },
+      "status": "success"
+    },
+    {
+      "trial_id": 3,
+      "config": {
+        "smiles": "Cc1cc(COc2ccc(NC(=O)C3CN(C)CCC3C(=O)NO)cc2)c2ccccc2n1"
+      },
+      "objectives": {
+        "median2_loss": 0.8430232828860718
+      },
+      "status": "success"
+    },
+    {
+      "trial_id": 4,
+      "config": {
+        "smiles": "CCOC(=O)c1ccc(O)c(-n2cc3c(c2-c2ccccc2)c(=O)n(C)c(=O)n3C)c1"
+      },
+      "objectives": {
+        "median2_loss": 0.8321613405208671
+      },
+      "status": "success"
+    },
+    {
+      "trial_id": 5,
+      "config": {
+        "smiles": "CCCCC1(C)CC(CO)C(CCCC)(OC)OO1"
+      },
+      "objectives": {
+        "median2_loss": 0.9531946534007176
+      },
+      "status": "success"
+    },
+    {
+      "trial_id": 6,
+      "config": {
+        "smiles": "CCCCCCCCCCCCNc1ccc2c3c(cccc13)C(=O)N(CCCN1CCCNCCNCCCNCC1)C2=O"
+      },
+      "objectives": {
+        "median2_loss": 0.8801711942488492
+      },
+      "status": "success"
+    },
+    {
+      "trial_id": 7,
+      "config": {
+        "smiles": "Nc1cc(C2CCNCC2)cc(NC2CCCC2)n1"
+      },
+      "objectives": {
+        "median2_loss": 0.9230715359295726
+      },
+      "status": "success"
+    },
+    {
+      "trial_id": 8,
+      "config": {
+        "smiles": "COC(=O)C1CCC(C)C(c2ccc(C)cc2)N1C(=O)c1ccc(C=NOCC(O)COCc2ccco2)cc1"
+      },
+      "objectives": {
+        "median2_loss": 0.8911170286359306
+      },
+      "status": "success"
+    },
+    {
+      "trial_id": 9,
+      "config": {
+        "smiles": "CCOC(=O)C1(Cc2ccccc2C)CCCN(C(=O)CCC(=O)OC)C1"
+      },
+      "objectives": {
+        "median2_loss": 0.8809026222797598
+      },
+      "status": "success"
+    },
+    {
+      "trial_id": 10,
+      "config": {
+        "smiles": "O=C1Nc2ccccc2C(=O)N2C=C(c3ccc(Cl)c(Cl)c3)CC12"
+      },
+      "objectives": {
+        "median2_loss": 0.8440019925668651
+      },
+      "status": "success"
+    },
+    {
+      "trial_id": 11,
+      "config": {
+        "smiles": "N=C(N)Nc1cccnc1C1CC(O)C(NC(=N)N)CC1NC(=N)N"
+      },
+      "objectives": {
+        "median2_loss": 0.9462098223415079
+      },
+      "status": "success"
+    },
+    {
+      "trial_id": 12,
+      "config": {
+        "smiles": "CON(C)S(=O)(=O)c1ccc2c(c1)N(Cc1ccc(C)cc1)C(=O)C1CCCN21"
+      },
+      "objectives": {
+        "median2_loss": 0.8297564039814496
+      },
+      "status": "success"
+    },
+    {
+      "trial_id": 13,
+      "config": {
+        "smiles": "COc1ccc(C23Oc4cc(OC)cc(OC)c4C2(O)C(O)C(C(=O)NOCCO)C3c2ccccc2)cc1"
+      },
+      "objectives": {
+        "median2_loss": 0.8861192130849481
+      },
+      "status": "success"
+    },
+    {
+      "trial_id": 14,
+      "config": {
+        "smiles": "COc1cccc2cc(-c3nc4c(c(=O)n(C)c(=O)n4C)n3C)oc12"
+      },
+      "objectives": {
+        "median2_loss": 0.8334882040497597
+      },
+      "status": "success"
+    },
+    {
+      "trial_id": 15,
+      "config": {
+        "smiles": "N=C(O)C(N=C(O)c1cnc(N2CC(F)(F)C2)c(OCC2CC2)n1)c1ccc(Cl)cc1"
+      },
+      "objectives": {
+        "median2_loss": 0.8975628358125105
+      },
+      "status": "success"
+    },
+    {
+      "trial_id": 16,
+      "config": {
+        "smiles": "C=CCc1ccccc1OCC(O)CNC1(C)CCCC(C(C)(C)NC(=O)CBr)C1"
+      },
+      "objectives": {
+        "median2_loss": 0.9010570736075403
+      },
+      "status": "success"
+    },
+    {
+      "trial_id": 17,
+      "config": {
+        "smiles": "CN(C)c1ccc(C(=S)N2CCOCC2)cc1Br"
+      },
+      "objectives": {
+        "median2_loss": 0.894329506948548
+      },
+      "status": "success"
+    },
+    {
+      "trial_id": 18,
+      "config": {
+        "smiles": "CCCC(=O)N1CCC1(C)C(=O)NS(=O)(=O)c1cc2c(cc1C)CCCS2(=O)=O"
+      },
+      "objectives": {
+        "median2_loss": 0.8979510681414908
+      },
+      "status": "success"
+    },
+    {
+      "trial_id": 19,
+      "config": {
+        "smiles": "Cc1noc(C)c1C(=O)N1CCC(n2cccn2)CC1"
+      },
+      "objectives": {
+        "median2_loss": 0.8927035180916101
+      },
+      "status": "success"
+    },
+    {
+      "trial_id": 20,
+      "config": {
+        "smiles": "O=C(CCNC(=O)N1CC(=O)Nc2ccccc21)NCCc1cccc(F)c1"
+      },
+      "objectives": {
+        "median2_loss": 0.8693266015000104
+      },
+      "status": "success"
+    },
+    {
+      "trial_id": 21,
+      "config": {
+        "smiles": "CC1(C)C(=N)NC2(c3cc(NC(=O)c4ccc(Cl)cn4)ccc3F)COCC2S1(=O)=O"
+      },
+      "objectives": {
+        "median2_loss": 0.8824733303125571
+      },
+      "status": "success"
+    },
+    {
+      "trial_id": 22,
+      "config": {
+        "smiles": "NCCCCCCCCCCCCNc1ccn(C2CCC(CO)O2)c(=O)n1"
+      },
+      "objectives": {
+        "median2_loss": 0.9301779269997879
+      },
+      "status": "success"
+    },
+    {
+      "trial_id": 23,
+      "config": {
+        "smiles": "COc1cc(C=NNC(=O)C(OC)c2ccc3c(c2)OCCO3)ccc1Cl"
+      },
+      "objectives": {
+        "median2_loss": 0.8711902396649571
+      },
+      "status": "success"
+    },
+    {
+      "trial_id": 24,
+      "config": {
+        "smiles": "CC(=O)N1NC(=C2C(=O)N(C)C(=O)N(C)C2=O)CC1c1ccccc1"
+      },
+      "objectives": {
+        "median2_loss": 0.8332257022813232
+      },
+      "status": "success"
+    },
+    {
+      "trial_id": 25,
+      "config": {
+        "smiles": "CCN(CC)C(=S)Nc1sc(C(N)=O)c(C)c1C(=O)O"
+      },
+      "objectives": {
+        "median2_loss": 0.9411137421999378
+      },
+      "status": "success"
+    },
+    {
+      "trial_id": 26,
+      "config": {
+        "smiles": "CCc1cc(C(=O)NC2CC(C(=O)NCCOC)N(C(=O)c3coc4ccccc34)C2)n(C)n1"
+      },
+      "objectives": {
+        "median2_loss": 0.8465976022858059
+      },
+      "status": "success"
+    },
+    {
+      "trial_id": 27,
+      "config": {
+        "smiles": "Nc1nccc2c1ncn2C1CC(CBr)C(O)C1O"
+      },
+      "objectives": {
+        "median2_loss": 0.9279609775296539
+      },
+      "status": "success"
+    },
+    {
+      "trial_id": 28,
+      "config": {
+        "smiles": "Cc1c(C(=O)OCC(=O)N2CCCC2=O)oc2ccccc12"
+      },
+      "objectives": {
+        "median2_loss": 0.8485921328738814
+      },
+      "status": "success"
+    },
+    {
+      "trial_id": 29,
+      "config": {
+        "smiles": "COc1cc(C=NNc2nc3c(c(=O)n(C)c(=O)n3C)n2Cc2ccccc2)ccc1OC(=O)c1ccco1"
+      },
+      "objectives": {
+        "median2_loss": 0.8459839935832703
+      },
+      "status": "success"
+    },
+    {
+      "trial_id": 30,
+      "config": {
+        "smiles": "COc1cn(CC(N)=O)c(CSc2nccc(C)n2)cc1=O"
+      },
+      "objectives": {
+        "median2_loss": 0.8854680874455948
+      },
+      "status": "success"
+    },
+    {
+      "trial_id": 31,
+      "config": {
+        "smiles": "CN(C)CCOc1ccc(-n2ccnc2)cc1"
+      },
+      "objectives": {
+        "median2_loss": 0.9038382506820297
+      },
+      "status": "success"
+    },
+    {
+      "trial_id": 32,
+      "config": {
+        "smiles": "CC(C)CC(NC(=O)C(CC(C)C)NOC(=O)CN(C(=O)OCc1ccccc1)P(=O)(O)O)C(=O)O"
+      },
+      "objectives": {
+        "median2_loss": 0.9239576167762329
+      },
+      "status": "success"
+    },
+    {
+      "trial_id": 33,
+      "config": {
+        "smiles": "Cc1ccccc1-c1nc(N)nc(O)c1Cl"
+      },
+      "objectives": {
+        "median2_loss": 0.8904006751297618
+      },
+      "status": "success"
+    },
+    {
+      "trial_id": 34,
+      "config": {
+        "smiles": "CC(=O)Nc1cc(F)ccc1CN1Cc2c(c(O)c3ncccc3c2N(C)S(C)(=O)=O)C1=O"
+      },
+      "objectives": {
+        "median2_loss": 0.8483383072904268
+      },
+      "status": "success"
+    },
+    {
+      "trial_id": 35,
+      "config": {
+        "smiles": "C=CS(=O)(=O)c1cccc(Nc2cc(S(=O)(=O)O)c(N)c3c2C(=O)c2ccccc2C3=O)c1"
+      },
+      "objectives": {
+        "median2_loss": 0.8695223147398329
+      },
+      "status": "success"
+    },
+    {
+      "trial_id": 36,
+      "config": {
+        "smiles": "Cc1nn(-c2ccccc2)c(C)c1CC(=O)NC1CC(=O)N(C)C1"
+      },
+      "objectives": {
+        "median2_loss": 0.8424397743366501
+      },
+      "status": "success"
+    },
+    {
+      "trial_id": 37,
+      "config": {
+        "smiles": "C=C(C)C1CC=C(COC(C)=O)CCC(O)C(C)=CCC=C(C)CC1"
+      },
+      "objectives": {
+        "median2_loss": 0.9178670234954779
+      },
+      "status": "success"
+    },
+    {
+      "trial_id": 38,
+      "config": {
+        "smiles": "NS(=O)(=O)c1ccccc1CC(O)CC(Cc1ccccc1)C(=O)NC1c2ccccc2CC1O"
+      },
+      "objectives": {
+        "median2_loss": 0.8934124520557539
+      },
+      "status": "success"
+    },
+    {
+      "trial_id": 39,
+      "config": {
+        "smiles": "Cc1ccc(S(=O)(=O)NC2(C(F)(F)F)NC(=O)N(c3ccccc3F)C2=O)cc1"
+      },
+      "objectives": {
+        "median2_loss": 0.8593626302191705
+      },
+      "status": "success"
+    },
+    {
+      "trial_id": 40,
+      "config": {
+        "smiles": "CC(C)NC(=O)c1ccc(S(=O)(=O)N(C)C)cc1"
+      },
+      "objectives": {
+        "median2_loss": 0.8952227806214642
+      },
+      "status": "success"
+    },
+    {
+      "trial_id": 41,
+      "config": {
+        "smiles": "OCC1OC(n2cnc3c(NCC4=CCc5ccccc54)ncnc32)C(O)C1O"
+      },
+      "objectives": {
+        "median2_loss": 0.8923947310262004
+      },
+      "status": "success"
+    },
+    {
+      "trial_id": 42,
+      "config": {
+        "smiles": "Cc1ccc(S(=O)(=O)N=C(CC(C)Br)N(C)C)cc1"
+      },
+      "objectives": {
+        "median2_loss": 0.897944383127272
+      },
+      "status": "success"
+    },
+    {
+      "trial_id": 43,
+      "config": {
+        "smiles": "O=C(c1cc2cccc(F)c2[nH]1)N1CCNCC1"
+      },
+      "objectives": {
+        "median2_loss": 0.8762255694429084
+      },
+      "status": "success"
+    },
+    {
+      "trial_id": 44,
+      "config": {
+        "smiles": "Cc1ccc(C2=C(CC(=O)O)C(c3cccs3)NC(S)=N2)cc1"
+      },
+      "objectives": {
+        "median2_loss": 0.8908744456298282
+      },
+      "status": "success"
+    },
+    {
+      "trial_id": 45,
+      "config": {
+        "smiles": "O=C(CSc1nc(O)c2cnn(-c3ccccc3)c2n1)N1CCOCC1"
+      },
+      "objectives": {
+        "median2_loss": 0.8696611659621549
+      },
+      "status": "success"
+    },
+    {
+      "trial_id": 46,
+      "config": {
+        "smiles": "Cn1cc(C#N)cc1C(=O)Nc1ccc(CN2CCOCC2)cn1"
+      },
+      "objectives": {
+        "median2_loss": 0.8736918164748082
+      },
+      "status": "success"
+    },
+    {
+      "trial_id": 47,
+      "config": {
+        "smiles": "O=c1ccc(-n2ccnc2)nn1CCNS(=O)(=O)c1ccccc1Cl"
+      },
+      "objectives": {
+        "median2_loss": 0.8676224734941406
+      },
+      "status": "success"
+    },
+    {
+      "trial_id": 48,
+      "config": {
+        "smiles": "O=C1C=CCC(C(O)C(c2ccccc2)c2c(O)cc3c(c2O)C(=O)CC(c2ccccc2)O3)O1"
+      },
+      "objectives": {
+        "median2_loss": 0.8709303461605933
+      },
+      "status": "success"
+    },
+    {
+      "trial_id": 49,
+      "config": {
+        "smiles": "Cn1c(SCC(=O)Nc2nncs2)nnc1C1CC1"
+      },
+      "objectives": {
+        "median2_loss": 0.928392364436277
+      },
+      "status": "success"
+    }
+  ]
+}

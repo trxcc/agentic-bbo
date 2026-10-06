@@ -1,9 +1,9 @@
 # Background
 
-Implementation source: `bbo/tasks/scientific/guacamol_smiles.py`, `GUACAMOL_SMILES_TASK_DEFINITIONS["guacamol_sitagliptin_mpo_smiles_demo"]`.
+Find a structurally different replacement for sitagliptin that retains similar logP, polar surface area, and molecular formula.
 
-Source benchmark: `guacamol.standard_benchmarks.sitagliptin_replacement`.
+## Reference molecules
 
-Representation: direct SMILES string parameter named `smiles`.
-
-Target source: `SITAGLIPTIN_SMILES` and `SITAGLIPTIN_FORMULA` defined in `bbo/tasks/scientific/guacamol_smiles.py`.
+| Name | SMILES |
+| --- | --- |
+| Sitagliptin | `Fc1cc(c(F)cc1F)CC(N)CC(=O)N3Cc2nnc(n2CC3)C(F)(F)F` |

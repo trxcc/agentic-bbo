@@ -1,56 +1,10 @@
-"""Agentic algorithms and general-agent runtime exports."""
-from .general_agent import (
-    ClaudeCodeBBOAlgorithm,
-    GeneralAgentBBOAlgorithm,
-    GeneralAgentConfig,
-    GeneralAgentValidationError,
-    NanobotBBOAlgorithm,
-    OpenAICompatibleBBOAlgorithm,
-    parse_agent_candidate_payload,
-    search_space_schema,
-)
-from .general_agent_engines import (
-    AgentResult,
-    AgentWorkCopy,
-    ClaudeCodeEngine,
-    GeneralAgentEngine,
-    MockAgentEngine,
-    NanobotEngine,
-    OpenAICompatibleToolEngine,
-)
-from .llm_client import PabloProviderConfig, create_llm_client
-from .model_routing import PabloModelRoutingConfig, build_routing_table, resolve_role_model
-from .pablo import PabloAlgorithm
-from .prompts import build_explorer_prompt, build_planner_prompt, build_worker_prompt
-from .task_registry import TaskCard, TaskRegistry
-from .validation import PabloValidationError
-
-__all__ = [
-    "AgentResult",
-    "AgentWorkCopy",
-    "ClaudeCodeBBOAlgorithm",
-    "ClaudeCodeEngine",
-    "GeneralAgentBBOAlgorithm",
-    "GeneralAgentConfig",
-    "GeneralAgentEngine",
-    "GeneralAgentValidationError",
-    "MockAgentEngine",
-    "NanobotBBOAlgorithm",
-    "NanobotEngine",
-    "OpenAICompatibleBBOAlgorithm",
-    "OpenAICompatibleToolEngine",
-    "PabloAlgorithm",
-    "PabloModelRoutingConfig",
-    "PabloProviderConfig",
-    "PabloValidationError",
-    "TaskCard",
-    "TaskRegistry",
-    "build_explorer_prompt",
-    "build_planner_prompt",
-    "build_routing_table",
-    "build_worker_prompt",
-    "create_llm_client",
-    "parse_agent_candidate_payload",
-    "resolve_role_model",
-    "search_space_schema",
-]
+"""Persistent Codex workspace runtime and host-owned optimization interfaces."""
+from .raw_agentic_bbo import create_raw_agentic_bbo
+from .general_agent import (GeneralAgentBBOAlgorithm, GeneralAgentConfig, CodexBBOAlgorithm,
+    GeneralAgentValidationError, AGENT_EXECUTION_BACKENDS, AGENT_TOOL_MODE_CLI_CHOICES,
+    AGENT_TOOL_MODES, normalize_agent_tool_mode, normalize_agent_execution_backend,
+    parse_agent_candidate_payload, search_space_schema)
+from .general_agent_engines import AgentResult, AgentWorkCopy, CodexEngine, GeneralAgentEngine, MockAgentEngine
+from .evented_algorithm import EventedAlgorithm
+from .optimizer_backend import OptimizationBackend, StatefulOptimizerBackend
+from .method_spec import AGENTIC_METHOD_REGISTRY, create_agentic_method, get_agentic_method_spec

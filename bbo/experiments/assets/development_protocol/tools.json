@@ -1,0 +1,124 @@
+[
+  {
+    "function": {
+      "description": "Read context or search-space definitions for one allowed development task; cannot access evaluation tasks or hidden evaluators. The scoring section includes the exact development_score definition.",
+      "name": "get_development_context",
+      "parameters": {
+        "additionalProperties": false,
+        "properties": {
+          "section": {
+            "enum": [
+              "overview",
+              "parameters",
+              "scoring",
+              "mechanisms",
+              "domain_knowledge",
+              "solver_contract"
+            ],
+            "type": "string"
+          },
+          "task_alias": {
+            "enum": [
+              "dev_001",
+              "dev_002",
+              "dev_003",
+              "dev_004"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "task_alias",
+          "section"
+        ],
+        "type": "object"
+      }
+    },
+    "type": "function"
+  },
+  {
+    "function": {
+      "description": "Read actual feedback for an already evaluated version. Version 0 is the reference GP. Unavailable versions return pending; no evaluation is triggered.",
+      "name": "get_development_feedback",
+      "parameters": {
+        "additionalProperties": false,
+        "properties": {
+          "include_history": {
+            "default": false,
+            "type": "boolean"
+          },
+          "seed": {
+            "enum": [
+              0,
+              1
+            ],
+            "type": "integer"
+          },
+          "task_alias": {
+            "enum": [
+              "dev_001",
+              "dev_002",
+              "dev_003",
+              "dev_004"
+            ],
+            "type": "string"
+          },
+          "version": {
+            "maximum": 6,
+            "minimum": 0,
+            "type": "integer"
+          }
+        },
+        "required": [
+          "version"
+        ],
+        "type": "object"
+      }
+    },
+    "type": "function"
+  },
+  {
+    "function": {
+      "description": "Check a workspace Python program with compile/import and synthetic interface tests in a restricted worker. No real objective evaluations, model calls or package installation.",
+      "name": "check_program",
+      "parameters": {
+        "additionalProperties": false,
+        "properties": {
+          "path": {
+            "enum": [
+              "strategy.py"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "path"
+        ],
+        "type": "object"
+      }
+    },
+    "type": "function"
+  },
+  {
+    "function": {
+      "description": "Snapshot strategy.py as one new version for the fixed development panel. Consumes one of six version slots and ends the round. Invalid submitted programs also consume a slot; receipt is not a score.",
+      "name": "submit_program",
+      "parameters": {
+        "additionalProperties": false,
+        "properties": {
+          "path": {
+            "enum": [
+              "strategy.py"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "path"
+        ],
+        "type": "object"
+      }
+    },
+    "type": "function"
+  }
+]

@@ -1,10 +1,10 @@
-# Python 3.7 — .joblib 反序列化必须与「训练时 sklearn 大版本」一致。
-# 部分旧 RF joblib 使用 sklearn<0.22，pickle 可能引用 ``sklearn.ensemble.forest``；
-# scikit-learn>=0.22 起该模块路径变化，过新会在 load 时报 No module named 'sklearn.ensemble.forest'。
-# 若你仍报错，把下面版本改成你训练环境里 ``pip show scikit-learn`` 的版本。
+# Python 3.7: deserialize joblib files with a scikit-learn version compatible with training.
+# Older RF checkpoints may reference sklearn.ensemble.forest (scikit-learn < 0.22).
+# That module moved in 0.22; newer versions can fail to load these checkpoints.
+# If loading still fails, match the version reported by pip show scikit-learn at training time.
 numpy>=1.16.5,<1.20.0
 scikit-learn==0.21.3
-# 部分 .joblib 在 unpickle 时会间接 import pandas（Pipeline / 元数据 等）
+# Some checkpoints import pandas indirectly when unpickling pipelines or metadata.
 pandas>=1.0.0,<1.2.0
 joblib>=0.13.2,<1.2.0
 Flask>=1.1.0,<2.3.0

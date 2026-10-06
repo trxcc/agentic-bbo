@@ -1,0 +1,448 @@
+{
+  "row": {
+    "task": "coarse_geometry_task_001",
+    "seed": 3,
+    "initial": 16,
+    "budget": 48,
+    "total": 64,
+    "source_task": "coarse_geometry_task_001",
+    "visible_task_id": "task_24148cc409d9",
+    "family": "BBOB",
+    "prior": "support_geometry",
+    "id": "coarse_geometry_task_001__s3__support_geometry"
+  },
+  "documents": {
+    "protocol_version": 2,
+    "short_task": "# Anonymous scalar optimization\n\nOptimize an unknown scalar objective over 12 bounded numerical parameters. Evaluations are deterministic for this fixed task.\n\nObjective: minimize `value`.\n\nBudget: 16 shared initial observations and 48 new evaluations (64 total).\n\n## Submission\n\nProvide one complete finite configuration within the declared parameter types and bounds. Only the host returns objective observations.\n\n## Prior information\n\nUpstream evidence indicates that exactly four parameters affect the objective:\n`x2`, `x5`, `x9`, `x11`. The other eight parameters are inactive and can be held fixed\nwhile optimizing the active subspace.\n\nWithin the active subspace, the objective is smooth and separable: active\nparameters contribute independently, without cross-parameter interactions. There\nis one main basin with a single interior best region. Sensitivity may differ\nsubstantially between active directions.\n\n## Read details as needed\n\nThere are 12 optimizable coordinates. get_search_space supports names, query, optional annotated groups and paged index/details views.\n\nget_task_context sections: overview, submission, prior_information. Read scoring rules and relevant mechanisms before choosing a candidate.\n\nget_trial_history and get_incumbent return scores first; request parameter_names to inspect selected values.\n\nFollow instructions.md: submit_candidate accepts a full config or workspace JSON file directly; write_candidate is optional.\n",
+    "sections": {
+      "overview": "# Anonymous scalar optimization\n\nOptimize an unknown scalar objective over 12 bounded numerical parameters. Evaluations are deterministic for this fixed task.\n\nObjective: minimize `value`.\n\nBudget: 16 shared initial observations and 48 new evaluations (64 total).",
+      "submission": "Provide one complete finite configuration within the declared parameter types and bounds. Only the host returns objective observations.",
+      "prior_information": "Upstream evidence indicates that exactly four parameters affect the objective:\n`x2`, `x5`, `x9`, `x11`. The other eight parameters are inactive and can be held fixed\nwhile optimizing the active subspace.\n\nWithin the active subspace, the objective is smooth and separable: active\nparameters contribute independently, without cross-parameter interactions. There\nis one main basin with a single interior best region. Sensitivity may differ\nsubstantially between active directions."
+    },
+    "parameters": [
+      {
+        "name": "x1",
+        "type": "float",
+        "low": -5.0,
+        "high": 5.0,
+        "log": false,
+        "default": 0.0
+      },
+      {
+        "name": "x2",
+        "type": "float",
+        "low": -5.0,
+        "high": 5.0,
+        "log": false,
+        "default": 0.0
+      },
+      {
+        "name": "x3",
+        "type": "float",
+        "low": -5.0,
+        "high": 5.0,
+        "log": false,
+        "default": 0.0
+      },
+      {
+        "name": "x4",
+        "type": "float",
+        "low": -5.0,
+        "high": 5.0,
+        "log": false,
+        "default": 0.0
+      },
+      {
+        "name": "x5",
+        "type": "float",
+        "low": -5.0,
+        "high": 5.0,
+        "log": false,
+        "default": 0.0
+      },
+      {
+        "name": "x6",
+        "type": "float",
+        "low": -5.0,
+        "high": 5.0,
+        "log": false,
+        "default": 0.0
+      },
+      {
+        "name": "x7",
+        "type": "float",
+        "low": -5.0,
+        "high": 5.0,
+        "log": false,
+        "default": 0.0
+      },
+      {
+        "name": "x8",
+        "type": "float",
+        "low": -5.0,
+        "high": 5.0,
+        "log": false,
+        "default": 0.0
+      },
+      {
+        "name": "x9",
+        "type": "float",
+        "low": -5.0,
+        "high": 5.0,
+        "log": false,
+        "default": 0.0
+      },
+      {
+        "name": "x10",
+        "type": "float",
+        "low": -5.0,
+        "high": 5.0,
+        "log": false,
+        "default": 0.0
+      },
+      {
+        "name": "x11",
+        "type": "float",
+        "low": -5.0,
+        "high": 5.0,
+        "log": false,
+        "default": 0.0
+      },
+      {
+        "name": "x12",
+        "type": "float",
+        "low": -5.0,
+        "high": 5.0,
+        "log": false,
+        "default": 0.0
+      }
+    ]
+  },
+  "prefix": [
+    {
+      "trial_id": 0,
+      "config": {
+        "x1": 1.9941,
+        "x10": -4.9535,
+        "x11": 4.499,
+        "x12": 0.3689,
+        "x2": 0.3469,
+        "x3": -0.7968,
+        "x4": -1.1246,
+        "x5": -0.6254,
+        "x6": -0.1184,
+        "x7": -1.9016,
+        "x8": 4.7663,
+        "x9": -1.4402
+      },
+      "value": 2614.3839007989054
+    },
+    {
+      "trial_id": 1,
+      "config": {
+        "x1": -4.9561,
+        "x10": 3.0653,
+        "x11": -1.9816,
+        "x12": -3.4726,
+        "x2": -3.5538,
+        "x3": 3.1614,
+        "x4": 2.7908,
+        "x5": 3.3568,
+        "x6": 4.5514,
+        "x7": 0.0427,
+        "x8": -0.725,
+        "x9": 3.7384
+      },
+      "value": 332.28957201205685
+    },
+    {
+      "trial_id": 2,
+      "config": {
+        "x1": -1.9168,
+        "x10": 1.0755,
+        "x11": -3.8124,
+        "x12": -0.7221,
+        "x2": 2.7552,
+        "x3": -3.5613,
+        "x4": -3.5876,
+        "x5": 1.4697,
+        "x6": 1.7742,
+        "x7": -3.1698,
+        "x8": -3.3557,
+        "x9": 1.8456
+      },
+      "value": 447.27138422428425
+    },
+    {
+      "trial_id": 3,
+      "config": {
+        "x1": 4.8734,
+        "x10": -1.6894,
+        "x11": 1.2522,
+        "x12": 2.6531,
+        "x2": -0.8038,
+        "x3": 1.2354,
+        "x4": 0.0166,
+        "x5": -3.7675,
+        "x6": -3.5522,
+        "x7": 3.7738,
+        "x8": 2.3994,
+        "x9": -3.2939
+      },
+      "value": 841.2224234420084
+    },
+    {
+      "trial_id": 4,
+      "config": {
+        "x1": 2.5849,
+        "x10": 3.7997,
+        "x11": -3.7214,
+        "x12": 4.0891,
+        "x2": 4.8237,
+        "x3": 3.7937,
+        "x4": 1.445,
+        "x5": -2.7686,
+        "x6": -1.8544,
+        "x7": -4.7828,
+        "x8": -4.48,
+        "x9": 0.7301
+      },
+      "value": 361.6421738324917
+    },
+    {
+      "trial_id": 5,
+      "config": {
+        "x1": -0.625,
+        "x10": -3.201,
+        "x11": 1.2041,
+        "x12": -2.2354,
+        "x2": -1.6173,
+        "x3": -1.4682,
+        "x4": -4.9716,
+        "x5": 0.1192,
+        "x6": 3.4761,
+        "x7": 2.9605,
+        "x8": 1.0246,
+        "x9": -4.1354
+      },
+      "value": 968.5738472596178
+    },
+    {
+      "trial_id": 6,
+      "config": {
+        "x1": -2.5076,
+        "x10": -0.1566,
+        "x11": 3.0445,
+        "x12": -4.5171,
+        "x2": 2.0735,
+        "x3": 1.8092,
+        "x4": 3.9015,
+        "x5": 4.5114,
+        "x6": 0.0421,
+        "x7": -1.0931,
+        "x8": 3.6456,
+        "x9": -0.989
+      },
+      "value": 1688.3973555490797
+    },
+    {
+      "trial_id": 7,
+      "config": {
+        "x1": 0.5423,
+        "x10": 2.0589,
+        "x11": -0.4844,
+        "x12": 1.3362,
+        "x2": -4.0257,
+        "x3": -4.1741,
+        "x4": -2.2014,
+        "x5": -2.1315,
+        "x6": -4.6314,
+        "x7": 1.6507,
+        "x8": -2.1034,
+        "x9": 3.8374
+      },
+      "value": 286.75255786485934
+    },
+    {
+      "trial_id": 8,
+      "config": {
+        "x1": 1.2099,
+        "x10": -2.3876,
+        "x11": -1.1762,
+        "x12": 1.0724,
+        "x2": 3.5652,
+        "x3": 2.1521,
+        "x4": -4.0537,
+        "x5": 2.7142,
+        "x6": -2.6597,
+        "x7": -4.2612,
+        "x8": -3.8003,
+        "x9": 0.6003
+      },
+      "value": 106.19032804032139
+    },
+    {
+      "trial_id": 9,
+      "config": {
+        "x1": -3.2488,
+        "x10": 0.5335,
+        "x11": 3.7321,
+        "x12": -2.9254,
+        "x2": -0.366,
+        "x3": -4.5147,
+        "x4": 2.3629,
+        "x5": -0.023,
+        "x6": 2.0146,
+        "x7": 3.6205,
+        "x8": 0.3813,
+        "x9": -4.5391
+      },
+      "value": 2439.5426854268126
+    },
+    {
+      "trial_id": 10,
+      "config": {
+        "x1": -1.1287,
+        "x10": 3.451,
+        "x11": 0.4944,
+        "x12": -0.0185,
+        "x2": 0.8271,
+        "x3": 4.7008,
+        "x4": -1.2831,
+        "x5": -4.4101,
+        "x6": 4.1593,
+        "x7": -0.4928,
+        "x8": 3.0729,
+        "x9": -0.1854
+      },
+      "value": 317.89102894803807
+    },
+    {
+      "trial_id": 11,
+      "config": {
+        "x1": 3.1724,
+        "x10": -4.099,
+        "x11": -3.0173,
+        "x12": 3.2005,
+        "x2": -2.7818,
+        "x3": -2.3776,
+        "x4": 4.8198,
+        "x5": 2.072,
+        "x6": -1.1716,
+        "x7": 2.3883,
+        "x8": -1.4895,
+        "x9": 4.993
+      },
+      "value": 574.2397342412424
+    },
+    {
+      "trial_id": 12,
+      "config": {
+        "x1": 4.369,
+        "x10": 1.3509,
+        "x11": 1.9709,
+        "x12": 4.7918,
+        "x2": 1.5955,
+        "x3": -2.5933,
+        "x4": 3.7478,
+        "x5": 0.7656,
+        "x6": -4.0786,
+        "x7": -1.554,
+        "x8": 4.1403,
+        "x9": -2.2339
+      },
+      "value": 1035.0604218957822
+    },
+    {
+      "trial_id": 13,
+      "config": {
+        "x1": -1.3299,
+        "x10": -0.7084,
+        "x11": -4.5267,
+        "x12": -1.6889,
+        "x2": -4.7955,
+        "x3": 0.2698,
+        "x4": -0.1676,
+        "x5": -3.3772,
+        "x6": 1.2472,
+        "x7": 0.8767,
+        "x8": -0.0571,
+        "x9": 2.5924
+      },
+      "value": 775.7079732070248
+    },
+    {
+      "trial_id": 14,
+      "config": {
+        "x1": -4.2879,
+        "x10": -2.8055,
+        "x11": -1.2793,
+        "x12": -3.8145,
+        "x2": 4.0115,
+        "x3": -0.5148,
+        "x4": 0.974,
+        "x5": -1.485,
+        "x6": 2.7352,
+        "x7": -2.7447,
+        "x8": -2.739,
+        "x9": 1.9851
+      },
+      "value": 39.017089216697286
+    },
+    {
+      "trial_id": 15,
+      "config": {
+        "x1": 1.2535,
+        "x10": 4.6639,
+        "x11": 3.8022,
+        "x12": 1.8825,
+        "x2": -2.0572,
+        "x3": 2.877,
+        "x4": -2.6301,
+        "x5": 3.9028,
+        "x6": -1.9338,
+        "x7": 4.6866,
+        "x8": 1.8197,
+        "x9": -2.8803
+      },
+      "value": 2368.656485943845
+    }
+  ],
+  "definition": {
+    "active_variables": [
+      "x2",
+      "x5",
+      "x9",
+      "x11"
+    ],
+    "agent_task_id": "coarse_geometry_task_001",
+    "decoy_variables": [
+      "x1",
+      "x4",
+      "x8",
+      "x12"
+    ],
+    "family": "custom_separable_single_basin",
+    "reviewer_id": "reviewer_task_a",
+    "truth": {
+      "center": [
+        1.25,
+        -2.0,
+        0.75,
+        -1.5
+      ],
+      "quadratic_coefficients": [
+        0.7,
+        4.0,
+        18.0,
+        70.0
+      ],
+      "quartic_coefficients": [
+        0.03,
+        0.01,
+        0.002,
+        0.0005
+      ]
+    }
+  }
+}

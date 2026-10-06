@@ -1,0 +1,1789 @@
+{
+  "row": {
+    "task": "knob_http_surrogate_pg_20",
+    "family": "DBTune",
+    "seed": 4,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "knob_http_surrogate_pg_20",
+    "case_id": "knob_http_surrogate_pg_20__s4"
+  },
+  "short_task": "# PostgreSQL JOB 20 knobs\n\nTask ID: `knob_http_surrogate_pg_20`.\n\nTune 20 PostgreSQL settings for a JOB analytical join-query workload to minimize predicted query latency. A fixed, previously built surrogate predicts performance; optimization does not execute a live database workload.\n\nObjective: minimize `latency`.\n\nBudget: 50 shared initial observations and 200 new evaluations (250 total).\n\n## Submission\n\n1. Submit all 20 settings as floating-point numbers u in [0,1]. Names identify real database settings, but physical values and enumeration labels from the table must not be submitted directly.\n2. For integer settings, decode as round(min + u*(max-min)). For physical floating-point settings, decode as min + u*(max-min) without rounding.\n3. For K enumeration options, divide [0,1] into K equal-width intervals. Select enum_values[min(floor(u*K),K-1)] using zero-based indexing; u=1 selects the last option. Option order does not imply a performance ranking.\n4. Encoding example: bgwriter_delay has physical range 10...10000; input 0.25 decodes to 2508. This illustrates encoding, not a recommended configuration.\n5. Enumeration example: for wal_sync_method, input 0 selects \"fsync\", and 1 selects \"open_datasync\". The order is part of the encoding, not a performance ranking.\n\n## Read details as needed\n\nThere are 20 active parameters. get_search_space supports names, query, optional annotated groups and paged index/details views.\n\nget_task_context sections: overview, submission, scoring, mechanisms, domain_knowledge, additional. Read scoring rules and relevant mechanisms before choosing a candidate.\n\nget_trial_history and get_incumbent return scores first; request parameter_names to inspect selected values.\n\nFollow instructions.md: submit_candidate accepts a full config or workspace JSON file directly; write_candidate is optional.\n",
+  "visible_task_id": "knob_http_surrogate_pg_20",
+  "objective": {
+    "name": "latency",
+    "direction": "minimize"
+  },
+  "evaluation_budget": {
+    "initial_observations": 50,
+    "new_evaluations": 200,
+    "total_observations": 250
+  },
+  "task_facts": {
+    "overview": "# PostgreSQL JOB 20 knobs\n\nTask ID: `knob_http_surrogate_pg_20`.\n\nTune 20 PostgreSQL settings for a JOB analytical join-query workload to minimize predicted query latency. A fixed, previously built surrogate predicts performance; optimization does not execute a live database workload.\n\nObjective: minimize `latency`.\n\nBudget: 50 shared initial observations and 200 new evaluations (250 total).",
+    "submission": "1. Submit all 20 settings as floating-point numbers u in [0,1]. Names identify real database settings, but physical values and enumeration labels from the table must not be submitted directly.\n2. For integer settings, decode as round(min + u*(max-min)). For physical floating-point settings, decode as min + u*(max-min) without rounding.\n3. For K enumeration options, divide [0,1] into K equal-width intervals. Select enum_values[min(floor(u*K),K-1)] using zero-based indexing; u=1 selects the last option. Option order does not imply a performance ranking.\n4. Encoding example: bgwriter_delay has physical range 10...10000; input 0.25 decodes to 2508. This illustrates encoding, not a recommended configuration.\n5. Enumeration example: for wal_sync_method, input 0 selects \"fsync\", and 1 selects \"open_datasync\". The order is part of the encoding, not a performance ranking.",
+    "scoring": "1. The evaluator decodes inputs and returns surrogate-predicted latency; lower is better.\n2. Use the ranges, defaults, and enumeration order in this task's parameter table. A default is a reference configuration value, not a known optimum.",
+    "mechanisms": "1. Settings cover memory and caching, I/O, concurrency, query optimization, logging, replication, and authentication. Increasing every resource setting is not a general improvement rule.\n2. Some settings apply only to particular storage engines or enabled features; some are legacy settings. A parameter's real database meaning does not establish its importance in this surrogate.\n3. The available materials do not specify the full hardware and database-version configuration used to train the surrogate. Do not assume every described mechanism is active in this workload.",
+    "domain_knowledge": "1. effective_cache_size and page-cost settings influence planner estimates; they do not allocate cache or directly change disk speed. A changed estimate can select a different query plan.\n2. More work_mem may reduce sort or hash spills, but this is a per-operation budget. Several operations and sessions can consume it concurrently.\n3. WAL buffers and checkpoint pacing concern logging and background I/O. Their benefit depends on workload and storage conditions; the surrogate response must test any proposed direction.\n4. JOB contains analytical joins. Statistics, memory, caching, and plan selection can interact, so parameter changes need not produce smooth latency changes.",
+    "additional": "**Workload (`workload`)**\n\nJOB\n\n**Database (`database`)**\n\nPostgreSQL\n\n**Units (`units_policy`)**\n\nUse the units in this task's parameter definitions. Do not invent unit conversions for entries without an explicit unit."
+  },
+  "parameter_definitions": [
+    {
+      "name": "bgwriter_delay",
+      "type": "float",
+      "low": 0.0,
+      "high": 1.0,
+      "log": false,
+      "default": 0.5,
+      "meaning": "Delay between background-writer rounds.",
+      "physical_definition": {
+        "default": 200,
+        "type": "integer",
+        "min": 10,
+        "max": 10000
+      }
+    },
+    {
+      "name": "bgwriter_flush_after",
+      "type": "float",
+      "low": 0.0,
+      "high": 1.0,
+      "log": false,
+      "default": 0.5,
+      "meaning": "Amount written by the background writer before requesting operating-system writeback.",
+      "physical_definition": {
+        "default": 64,
+        "type": "integer",
+        "min": 0,
+        "max": 256
+      }
+    },
+    {
+      "name": "bgwriter_lru_maxpages",
+      "type": "float",
+      "low": 0.0,
+      "high": 1.0,
+      "log": false,
+      "default": 0.5,
+      "meaning": "Maximum buffers written per background-writer round.",
+      "physical_definition": {
+        "default": 100,
+        "type": "integer",
+        "min": 0,
+        "max": 1073741823
+      }
+    },
+    {
+      "name": "bgwriter_lru_multiplier",
+      "type": "float",
+      "low": 0.0,
+      "high": 1.0,
+      "log": false,
+      "default": 0.5,
+      "meaning": "Multiplier on recent buffer demand used to estimate background cleaning needs.",
+      "physical_definition": {
+        "default": 2.0,
+        "type": "float",
+        "min": 0.0,
+        "max": 10.0
+      }
+    },
+    {
+      "name": "checkpoint_completion_target",
+      "type": "float",
+      "low": 0.0,
+      "high": 1.0,
+      "log": false,
+      "default": 0.5,
+      "meaning": "Fraction of the checkpoint interval over which checkpoint writes are spread.",
+      "physical_definition": {
+        "default": 0.5,
+        "type": "float",
+        "min": 0.0,
+        "max": 1.0
+      }
+    },
+    {
+      "name": "checkpoint_flush_after",
+      "type": "float",
+      "low": 0.0,
+      "high": 1.0,
+      "log": false,
+      "default": 0.5,
+      "meaning": "Amount written during a checkpoint before requesting operating-system writeback.",
+      "physical_definition": {
+        "default": 32,
+        "type": "integer",
+        "min": 0,
+        "max": 256
+      }
+    },
+    {
+      "name": "checkpoint_timeout",
+      "type": "float",
+      "low": 0.0,
+      "high": 1.0,
+      "log": false,
+      "default": 0.5,
+      "meaning": "Maximum interval between automatic WAL checkpoints.",
+      "physical_definition": {
+        "default": 300,
+        "type": "integer",
+        "min": 30,
+        "max": 86400
+      }
+    },
+    {
+      "name": "commit_siblings",
+      "type": "float",
+      "low": 0.0,
+      "high": 1.0,
+      "log": false,
+      "default": 0.5,
+      "meaning": "Minimum concurrent open transactions considered before applying commit_delay.",
+      "physical_definition": {
+        "default": 5,
+        "type": "integer",
+        "min": 0,
+        "max": 1000
+      }
+    },
+    {
+      "name": "deadlock_timeout",
+      "type": "float",
+      "low": 0.0,
+      "high": 1.0,
+      "log": false,
+      "default": 0.5,
+      "meaning": "Lock-wait interval before checking for a deadlock.",
+      "physical_definition": {
+        "default": 1000,
+        "type": "integer",
+        "min": 1,
+        "max": 2147483647
+      }
+    },
+    {
+      "name": "default_statistics_target",
+      "type": "float",
+      "low": 0.0,
+      "high": 1.0,
+      "log": false,
+      "default": 0.5,
+      "meaning": "Default target controlling the detail of collected column statistics.",
+      "physical_definition": {
+        "default": 100,
+        "type": "integer",
+        "min": 1,
+        "max": 10000
+      }
+    },
+    {
+      "name": "effective_cache_size",
+      "type": "float",
+      "low": 0.0,
+      "high": 1.0,
+      "log": false,
+      "default": 0.5,
+      "meaning": "Planner estimate of cache available to a query; does not allocate memory.",
+      "physical_definition": {
+        "default": 524288,
+        "type": "integer",
+        "min": 1,
+        "max": 1000000
+      }
+    },
+    {
+      "name": "effective_io_concurrency",
+      "type": "float",
+      "low": 0.0,
+      "high": 1.0,
+      "log": false,
+      "default": 0.5,
+      "meaning": "Estimated concurrent disk I/O operations supported by the storage system.",
+      "physical_definition": {
+        "default": 1,
+        "type": "integer",
+        "min": 0,
+        "max": 1000
+      }
+    },
+    {
+      "name": "min_wal_size",
+      "type": "float",
+      "low": 0.0,
+      "high": 1.0,
+      "log": false,
+      "default": 0.5,
+      "meaning": "Lower WAL disk-usage threshold below which old WAL files are recycled for reuse.",
+      "physical_definition": {
+        "default": 80,
+        "type": "integer",
+        "min": 2,
+        "max": 8000
+      }
+    },
+    {
+      "name": "random_page_cost",
+      "type": "float",
+      "low": 0.0,
+      "high": 1.0,
+      "log": false,
+      "default": 0.5,
+      "meaning": "Planner cost estimate for a nonsequential disk-page read.",
+      "physical_definition": {
+        "default": 4.0,
+        "type": "float",
+        "min": 0.0,
+        "max": 100
+      }
+    },
+    {
+      "name": "seq_page_cost",
+      "type": "float",
+      "low": 0.0,
+      "high": 1.0,
+      "log": false,
+      "default": 0.5,
+      "meaning": "Planner cost estimate for a sequential disk-page read.",
+      "physical_definition": {
+        "default": 1.0,
+        "type": "float",
+        "min": 0.0,
+        "max": 100
+      }
+    },
+    {
+      "name": "temp_buffers",
+      "type": "float",
+      "low": 0.0,
+      "high": 1.0,
+      "log": false,
+      "default": 0.5,
+      "meaning": "Per-session buffer limit for access to temporary tables.",
+      "physical_definition": {
+        "default": 1024,
+        "type": "integer",
+        "min": 100,
+        "max": 10000
+      }
+    },
+    {
+      "name": "wal_buffers",
+      "type": "float",
+      "low": 0.0,
+      "high": 1.0,
+      "log": false,
+      "default": 0.5,
+      "meaning": "Shared buffer space for WAL data; physical value -1 selects automatic sizing.",
+      "physical_definition": {
+        "default": -1,
+        "type": "integer",
+        "min": -1,
+        "max": 262143
+      }
+    },
+    {
+      "name": "wal_sync_method",
+      "type": "float",
+      "low": 0.0,
+      "high": 1.0,
+      "log": false,
+      "default": 0.5,
+      "meaning": "Operating-system method used to force WAL updates to disk.",
+      "physical_definition": {
+        "default": "fdatasync",
+        "type": "enum",
+        "enum_values": [
+          "fsync",
+          "fdatasync",
+          "open_sync",
+          "open_datasync"
+        ]
+      }
+    },
+    {
+      "name": "wal_writer_delay",
+      "type": "float",
+      "low": 0.0,
+      "high": 1.0,
+      "log": false,
+      "default": 0.5,
+      "meaning": "Delay between WAL-writer activity rounds.",
+      "physical_definition": {
+        "default": 200,
+        "type": "integer",
+        "min": 1,
+        "max": 10000
+      }
+    },
+    {
+      "name": "work_mem",
+      "type": "float",
+      "low": 0.0,
+      "high": 1.0,
+      "log": false,
+      "default": 0.5,
+      "meaning": "Base memory limit per sort or hash operation before spilling to temporary disk files.",
+      "physical_definition": {
+        "default": 4096,
+        "type": "integer",
+        "min": 64,
+        "max": 1000000
+      }
+    }
+  ],
+  "initial_history": [
+    {
+      "trial_id": 0,
+      "config": {
+        "bgwriter_delay": 0.2144004325789165,
+        "bgwriter_flush_after": 0.40159101448507484,
+        "bgwriter_lru_maxpages": 0.9179550430877189,
+        "bgwriter_lru_multiplier": 0.1726645292853689,
+        "checkpoint_completion_target": 0.10618329243153013,
+        "checkpoint_flush_after": 0.22192817569031764,
+        "checkpoint_timeout": 0.9274756314280604,
+        "commit_siblings": 0.8004523514958085,
+        "deadlock_timeout": 0.1031660342307158,
+        "default_statistics_target": 0.8066523467023234,
+        "effective_cache_size": 0.8289200487784194,
+        "effective_io_concurrency": 0.19343561801924003,
+        "min_wal_size": 0.2766826434414502,
+        "random_page_cost": 0.8004478385429662,
+        "seq_page_cost": 0.396058242610681,
+        "temp_buffers": 0.15497227080241027,
+        "wal_buffers": 0.23604808973743452,
+        "wal_sync_method": 0.5366800081748135,
+        "wal_writer_delay": 0.06651509567958991,
+        "work_mem": 0.7651626025054384
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 44.41991145
+      }
+    },
+    {
+      "trial_id": 1,
+      "config": {
+        "bgwriter_delay": 0.5476388695870539,
+        "bgwriter_flush_after": 0.08671825263492183,
+        "bgwriter_lru_maxpages": 0.6058518837198799,
+        "bgwriter_lru_multiplier": 0.9345883638999081,
+        "checkpoint_completion_target": 0.8654841701850833,
+        "checkpoint_flush_after": 0.17779017424078447,
+        "checkpoint_timeout": 0.3002457395733247,
+        "commit_siblings": 0.6717014565164733,
+        "deadlock_timeout": 0.6269756024131301,
+        "default_statistics_target": 0.5723668016858915,
+        "effective_cache_size": 0.9088702894146864,
+        "effective_io_concurrency": 0.8480440882236346,
+        "min_wal_size": 0.08934620726539033,
+        "random_page_cost": 0.88231723987879,
+        "seq_page_cost": 0.731894708878718,
+        "temp_buffers": 0.8546483579913472,
+        "wal_buffers": 0.30984995729953557,
+        "wal_sync_method": 0.47358788758514514,
+        "wal_writer_delay": 0.8800507513611994,
+        "work_mem": 0.5059537757104153
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 44.742958083333335
+      }
+    },
+    {
+      "trial_id": 2,
+      "config": {
+        "bgwriter_delay": 0.9972788741721124,
+        "bgwriter_flush_after": 0.305111596432739,
+        "bgwriter_lru_maxpages": 0.8125923186346207,
+        "bgwriter_lru_multiplier": 0.471240086114993,
+        "checkpoint_completion_target": 0.34284326542215604,
+        "checkpoint_flush_after": 0.6263507455399034,
+        "checkpoint_timeout": 0.1955734943333154,
+        "commit_siblings": 0.04323846907224849,
+        "deadlock_timeout": 0.413946043131732,
+        "default_statistics_target": 0.20267061617239635,
+        "effective_cache_size": 0.41279465640732504,
+        "effective_io_concurrency": 0.27630483495968317,
+        "min_wal_size": 0.5346217948794222,
+        "random_page_cost": 0.632664981791019,
+        "seq_page_cost": 0.5989124721899894,
+        "temp_buffers": 0.4310430172933071,
+        "wal_buffers": 0.5083723753327516,
+        "wal_sync_method": 0.2804332116162187,
+        "wal_writer_delay": 0.16132060612160848,
+        "work_mem": 0.04632199900351264
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 32.735347499999996
+      }
+    },
+    {
+      "trial_id": 3,
+      "config": {
+        "bgwriter_delay": 0.042811187782019644,
+        "bgwriter_flush_after": 0.10097943871785953,
+        "bgwriter_lru_maxpages": 0.061610242040175844,
+        "bgwriter_lru_multiplier": 0.17753969349655696,
+        "checkpoint_completion_target": 0.45901875217017585,
+        "checkpoint_flush_after": 0.6154320751286971,
+        "checkpoint_timeout": 0.6972918814615184,
+        "commit_siblings": 0.22886944023876477,
+        "deadlock_timeout": 0.7469426809904626,
+        "default_statistics_target": 0.9547375983423451,
+        "effective_cache_size": 0.8959277791118226,
+        "effective_io_concurrency": 0.9598675916129511,
+        "min_wal_size": 0.3310669953717347,
+        "random_page_cost": 0.7348779564739258,
+        "seq_page_cost": 0.32066890324974195,
+        "temp_buffers": 0.5585289835833921,
+        "wal_buffers": 0.35583075460735203,
+        "wal_sync_method": 0.2374171698253259,
+        "wal_writer_delay": 0.9043151015306578,
+        "work_mem": 0.7651622413262759
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 42.06113970833336
+      }
+    },
+    {
+      "trial_id": 4,
+      "config": {
+        "bgwriter_delay": 0.3313072291991864,
+        "bgwriter_flush_after": 0.9433083673529813,
+        "bgwriter_lru_maxpages": 0.6205104714635291,
+        "bgwriter_lru_multiplier": 0.38163463472433135,
+        "checkpoint_completion_target": 0.9618136224069048,
+        "checkpoint_flush_after": 0.1914152048087393,
+        "checkpoint_timeout": 0.009396466339564591,
+        "commit_siblings": 0.8179278006982527,
+        "deadlock_timeout": 0.2889964679008432,
+        "default_statistics_target": 0.16956704381995513,
+        "effective_cache_size": 0.04479719292212525,
+        "effective_io_concurrency": 0.3627242669253443,
+        "min_wal_size": 0.13643762655591496,
+        "random_page_cost": 0.7837456748213549,
+        "seq_page_cost": 0.9660067569681229,
+        "temp_buffers": 0.7752394352251485,
+        "wal_buffers": 0.01818752529330747,
+        "wal_sync_method": 0.4441422394811759,
+        "wal_writer_delay": 0.4104276810688755,
+        "work_mem": 0.29341025365687634
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 25.054138166666668
+      }
+    },
+    {
+      "trial_id": 5,
+      "config": {
+        "bgwriter_delay": 0.12227325763441954,
+        "bgwriter_flush_after": 0.059339523778924264,
+        "bgwriter_lru_maxpages": 0.05527062518240078,
+        "bgwriter_lru_multiplier": 0.24905865133876315,
+        "checkpoint_completion_target": 0.9976365270880904,
+        "checkpoint_flush_after": 0.14964053486673146,
+        "checkpoint_timeout": 0.5292415864237204,
+        "commit_siblings": 0.16867027130376422,
+        "deadlock_timeout": 0.09710221319889101,
+        "default_statistics_target": 0.4093212310344887,
+        "effective_cache_size": 0.7737921252616178,
+        "effective_io_concurrency": 0.4777619630230422,
+        "min_wal_size": 0.490667615701743,
+        "random_page_cost": 0.987657384576361,
+        "seq_page_cost": 0.9817486495318765,
+        "temp_buffers": 0.4239525192717448,
+        "wal_buffers": 0.29033423640918543,
+        "wal_sync_method": 0.04089236666433538,
+        "wal_writer_delay": 0.2079168417574333,
+        "work_mem": 0.6768271175818056
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 43.29456233333332
+      }
+    },
+    {
+      "trial_id": 6,
+      "config": {
+        "bgwriter_delay": 0.14170176777999155,
+        "bgwriter_flush_after": 0.8893004166173706,
+        "bgwriter_lru_maxpages": 0.8310471193173511,
+        "bgwriter_lru_multiplier": 0.2314666540707253,
+        "checkpoint_completion_target": 0.8697095160312,
+        "checkpoint_flush_after": 0.25439366141995323,
+        "checkpoint_timeout": 0.05127372511495265,
+        "commit_siblings": 0.49857971957109937,
+        "deadlock_timeout": 0.41062248864724227,
+        "default_statistics_target": 0.5653442004088759,
+        "effective_cache_size": 0.928033175427591,
+        "effective_io_concurrency": 0.40296206595566275,
+        "min_wal_size": 0.20806549319860035,
+        "random_page_cost": 0.9905707133539692,
+        "seq_page_cost": 0.036869184814851685,
+        "temp_buffers": 0.42122096153722777,
+        "wal_buffers": 0.24186216621707513,
+        "wal_sync_method": 0.24238912407813318,
+        "wal_writer_delay": 0.2485859740334425,
+        "work_mem": 0.031650357222601455
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 24.544171500000008
+      }
+    },
+    {
+      "trial_id": 7,
+      "config": {
+        "bgwriter_delay": 0.8148261712490704,
+        "bgwriter_flush_after": 0.09290861658832106,
+        "bgwriter_lru_maxpages": 0.2109212944651223,
+        "bgwriter_lru_multiplier": 0.7995046593300813,
+        "checkpoint_completion_target": 0.6424939208853032,
+        "checkpoint_flush_after": 0.9245773715187279,
+        "checkpoint_timeout": 0.5280238927545994,
+        "commit_siblings": 0.8738062275372805,
+        "deadlock_timeout": 0.6539734666861452,
+        "default_statistics_target": 0.685959851750019,
+        "effective_cache_size": 0.6547321885928308,
+        "effective_io_concurrency": 0.9227999627007681,
+        "min_wal_size": 0.6569089999141473,
+        "random_page_cost": 0.26829904570080787,
+        "seq_page_cost": 0.7908577227395212,
+        "temp_buffers": 0.7447262856401745,
+        "wal_buffers": 0.900952157772835,
+        "wal_sync_method": 0.33658958447132015,
+        "wal_writer_delay": 0.49428802272284544,
+        "work_mem": 0.8997618551860671
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 49.33432783333333
+      }
+    },
+    {
+      "trial_id": 8,
+      "config": {
+        "bgwriter_delay": 0.7464945569912055,
+        "bgwriter_flush_after": 0.04454396959245033,
+        "bgwriter_lru_maxpages": 0.8989697219397559,
+        "bgwriter_lru_multiplier": 0.6351897900147457,
+        "checkpoint_completion_target": 0.5692059358372037,
+        "checkpoint_flush_after": 0.6671899173879098,
+        "checkpoint_timeout": 0.9274809464100172,
+        "commit_siblings": 0.1276327875764688,
+        "deadlock_timeout": 0.07438056810654337,
+        "default_statistics_target": 0.0032730267285946413,
+        "effective_cache_size": 0.21854146419475406,
+        "effective_io_concurrency": 0.01311027713126689,
+        "min_wal_size": 0.16726561403164808,
+        "random_page_cost": 0.9223619934673792,
+        "seq_page_cost": 0.9710882774001429,
+        "temp_buffers": 0.9617738174487724,
+        "wal_buffers": 0.9562790579824927,
+        "wal_sync_method": 0.060483111963271385,
+        "wal_writer_delay": 0.6683518826310155,
+        "work_mem": 0.9685349633503075
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 26.194301524999993
+      }
+    },
+    {
+      "trial_id": 9,
+      "config": {
+        "bgwriter_delay": 0.026393458835699768,
+        "bgwriter_flush_after": 0.5506083969280183,
+        "bgwriter_lru_maxpages": 0.878707468144288,
+        "bgwriter_lru_multiplier": 0.4715101191046449,
+        "checkpoint_completion_target": 0.5264086458060319,
+        "checkpoint_flush_after": 0.33064311607501784,
+        "checkpoint_timeout": 0.03418314975073167,
+        "commit_siblings": 0.20166944833026434,
+        "deadlock_timeout": 0.11588996943669883,
+        "default_statistics_target": 0.48883122623567477,
+        "effective_cache_size": 0.5944868409105872,
+        "effective_io_concurrency": 0.6081251485207142,
+        "min_wal_size": 0.7735738589192733,
+        "random_page_cost": 0.8647198249172529,
+        "seq_page_cost": 0.8098723424208862,
+        "temp_buffers": 0.7829697309515223,
+        "wal_buffers": 0.8764235843519795,
+        "wal_sync_method": 0.8917500269589722,
+        "wal_writer_delay": 0.8778778703684761,
+        "work_mem": 0.6714817926904405
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 43.66145216666668
+      }
+    },
+    {
+      "trial_id": 10,
+      "config": {
+        "bgwriter_delay": 0.9662786081437614,
+        "bgwriter_flush_after": 0.8376889627196834,
+        "bgwriter_lru_maxpages": 0.8275614758933684,
+        "bgwriter_lru_multiplier": 0.23370059399837007,
+        "checkpoint_completion_target": 0.4866520006617505,
+        "checkpoint_flush_after": 0.3811580256026439,
+        "checkpoint_timeout": 0.09511967060859683,
+        "commit_siblings": 0.08514101028344034,
+        "deadlock_timeout": 0.36256968289382685,
+        "default_statistics_target": 0.6209617316600201,
+        "effective_cache_size": 0.11445112463649654,
+        "effective_io_concurrency": 0.5124746486513734,
+        "min_wal_size": 0.3111693739043967,
+        "random_page_cost": 0.8853428912601056,
+        "seq_page_cost": 0.7675794875552631,
+        "temp_buffers": 0.522986292131511,
+        "wal_buffers": 0.13876171440911478,
+        "wal_sync_method": 0.7873874826473551,
+        "wal_writer_delay": 0.010551268584567564,
+        "work_mem": 0.5433786768747104
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 25.137012499999997
+      }
+    },
+    {
+      "trial_id": 11,
+      "config": {
+        "bgwriter_delay": 0.4942552287863299,
+        "bgwriter_flush_after": 0.19585267183882693,
+        "bgwriter_lru_maxpages": 0.30230546690337146,
+        "bgwriter_lru_multiplier": 0.17635094155911546,
+        "checkpoint_completion_target": 0.149306962836942,
+        "checkpoint_flush_after": 0.7983488705626961,
+        "checkpoint_timeout": 0.33858490927972695,
+        "commit_siblings": 0.8364419749280637,
+        "deadlock_timeout": 0.8578439556899257,
+        "default_statistics_target": 0.9040723368889024,
+        "effective_cache_size": 0.5418630314898528,
+        "effective_io_concurrency": 0.005562124014677927,
+        "min_wal_size": 0.8742871520133363,
+        "random_page_cost": 0.7105117080264377,
+        "seq_page_cost": 0.7765862378793907,
+        "temp_buffers": 0.06691787115180847,
+        "wal_buffers": 0.43395325106302496,
+        "wal_sync_method": 0.16737696805300517,
+        "wal_writer_delay": 0.8813249389880585,
+        "work_mem": 0.42246444611379863
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 36.77147800000001
+      }
+    },
+    {
+      "trial_id": 12,
+      "config": {
+        "bgwriter_delay": 0.31327256965700356,
+        "bgwriter_flush_after": 0.07568432778652445,
+        "bgwriter_lru_maxpages": 0.24544117906076357,
+        "bgwriter_lru_multiplier": 0.6767333526381805,
+        "checkpoint_completion_target": 0.6095348813208721,
+        "checkpoint_flush_after": 0.7666699303717416,
+        "checkpoint_timeout": 0.9127905287530395,
+        "commit_siblings": 0.8475701011229381,
+        "deadlock_timeout": 0.5449484743985434,
+        "default_statistics_target": 0.9114081305886738,
+        "effective_cache_size": 0.4670292495373869,
+        "effective_io_concurrency": 0.8675260879595657,
+        "min_wal_size": 0.6267005577809549,
+        "random_page_cost": 0.30565040511441843,
+        "seq_page_cost": 0.486506691472383,
+        "temp_buffers": 0.715586659319672,
+        "wal_buffers": 0.31181714028829965,
+        "wal_sync_method": 0.9858047579523114,
+        "wal_writer_delay": 0.4842494541876725,
+        "work_mem": 0.3567905666620208
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 35.228631700000015
+      }
+    },
+    {
+      "trial_id": 13,
+      "config": {
+        "bgwriter_delay": 0.5759824797056238,
+        "bgwriter_flush_after": 0.3621795548937914,
+        "bgwriter_lru_maxpages": 0.6620866756144462,
+        "bgwriter_lru_multiplier": 0.9019132997060115,
+        "checkpoint_completion_target": 0.3719881564191514,
+        "checkpoint_flush_after": 0.14393827077290033,
+        "checkpoint_timeout": 0.35044085737292974,
+        "commit_siblings": 0.13325474734157294,
+        "deadlock_timeout": 0.6129995108951581,
+        "default_statistics_target": 0.09346721378759504,
+        "effective_cache_size": 0.6208300283792468,
+        "effective_io_concurrency": 0.9361880787036225,
+        "min_wal_size": 0.1776687077087632,
+        "random_page_cost": 0.402547446233647,
+        "seq_page_cost": 0.44206549519156024,
+        "temp_buffers": 0.14066756704223315,
+        "wal_buffers": 0.7868493828233449,
+        "wal_sync_method": 0.8090222598770068,
+        "wal_writer_delay": 0.771042142786742,
+        "work_mem": 0.08256011162415733
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 47.75728976666669
+      }
+    },
+    {
+      "trial_id": 14,
+      "config": {
+        "bgwriter_delay": 0.5738644822874451,
+        "bgwriter_flush_after": 0.02009999397348472,
+        "bgwriter_lru_maxpages": 0.949392167885151,
+        "bgwriter_lru_multiplier": 0.5841688065755173,
+        "checkpoint_completion_target": 0.49524108812963663,
+        "checkpoint_flush_after": 0.8072501332528569,
+        "checkpoint_timeout": 0.9379115929968516,
+        "commit_siblings": 0.8297739482574774,
+        "deadlock_timeout": 0.654252591519755,
+        "default_statistics_target": 0.9684733970938466,
+        "effective_cache_size": 0.7602519014902914,
+        "effective_io_concurrency": 0.6515560707385143,
+        "min_wal_size": 0.15846574442387729,
+        "random_page_cost": 0.116824352532782,
+        "seq_page_cost": 0.32667251806425146,
+        "temp_buffers": 0.3005801430589279,
+        "wal_buffers": 0.17967562623059508,
+        "wal_sync_method": 0.95333243234752,
+        "wal_writer_delay": 0.023171369759509952,
+        "work_mem": 0.801104466311778
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 42.149754999999985
+      }
+    },
+    {
+      "trial_id": 15,
+      "config": {
+        "bgwriter_delay": 0.9964491684130127,
+        "bgwriter_flush_after": 0.9278217828851888,
+        "bgwriter_lru_maxpages": 0.4061114108639836,
+        "bgwriter_lru_multiplier": 0.32661745352466864,
+        "checkpoint_completion_target": 0.6267967263591346,
+        "checkpoint_flush_after": 0.7035894857430419,
+        "checkpoint_timeout": 0.8990177944514934,
+        "commit_siblings": 0.5990341248917107,
+        "deadlock_timeout": 0.7452016787392799,
+        "default_statistics_target": 0.40066003776723824,
+        "effective_cache_size": 0.40021691848549845,
+        "effective_io_concurrency": 0.28377127228893784,
+        "min_wal_size": 0.2303686048513136,
+        "random_page_cost": 0.8174912952864642,
+        "seq_page_cost": 0.6178669690093169,
+        "temp_buffers": 0.8312628765423884,
+        "wal_buffers": 0.6753965160722,
+        "wal_sync_method": 0.30967656796885434,
+        "wal_writer_delay": 0.3028650645373363,
+        "work_mem": 0.8968746549623886
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 31.107401000000003
+      }
+    },
+    {
+      "trial_id": 16,
+      "config": {
+        "bgwriter_delay": 0.6038036182242551,
+        "bgwriter_flush_after": 0.6147599058300363,
+        "bgwriter_lru_maxpages": 0.36430171433237324,
+        "bgwriter_lru_multiplier": 0.9878188567651475,
+        "checkpoint_completion_target": 0.9199641298309269,
+        "checkpoint_flush_after": 0.15605254107196997,
+        "checkpoint_timeout": 0.3122368597258188,
+        "commit_siblings": 0.9510661169040668,
+        "deadlock_timeout": 0.013183312500145039,
+        "default_statistics_target": 0.2579024619121397,
+        "effective_cache_size": 0.09133932557377056,
+        "effective_io_concurrency": 0.9282443037394073,
+        "min_wal_size": 0.9737900492926003,
+        "random_page_cost": 0.22216153621628,
+        "seq_page_cost": 0.18389230890110597,
+        "temp_buffers": 0.5401978005359699,
+        "wal_buffers": 0.411564443917084,
+        "wal_sync_method": 0.06771640820946867,
+        "wal_writer_delay": 0.693289366074909,
+        "work_mem": 0.6232292654210574
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 22.562041999999998
+      }
+    },
+    {
+      "trial_id": 17,
+      "config": {
+        "bgwriter_delay": 0.09676259164130996,
+        "bgwriter_flush_after": 0.9479283172405103,
+        "bgwriter_lru_maxpages": 0.16331961302390163,
+        "bgwriter_lru_multiplier": 0.5243670884176023,
+        "checkpoint_completion_target": 0.1575193684645606,
+        "checkpoint_flush_after": 0.5471352540927791,
+        "checkpoint_timeout": 0.03174901715846723,
+        "commit_siblings": 0.7904423593118721,
+        "deadlock_timeout": 0.7779189353159625,
+        "default_statistics_target": 0.12177126311233943,
+        "effective_cache_size": 0.31651838184851344,
+        "effective_io_concurrency": 0.992545572246149,
+        "min_wal_size": 0.26233579232191495,
+        "random_page_cost": 0.06125668345926194,
+        "seq_page_cost": 0.1487270438969135,
+        "temp_buffers": 0.23834946058004247,
+        "wal_buffers": 0.8925638392837991,
+        "wal_sync_method": 0.9592942635602917,
+        "wal_writer_delay": 0.29921358177544666,
+        "work_mem": 0.6806963653912492
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 25.424233499999996
+      }
+    },
+    {
+      "trial_id": 18,
+      "config": {
+        "bgwriter_delay": 0.8443355880537514,
+        "bgwriter_flush_after": 0.9526129300146847,
+        "bgwriter_lru_maxpages": 0.8784809388903478,
+        "bgwriter_lru_multiplier": 0.5025491894179654,
+        "checkpoint_completion_target": 0.1542013825107803,
+        "checkpoint_flush_after": 0.6937619149878481,
+        "checkpoint_timeout": 0.48419176420266474,
+        "commit_siblings": 0.7194334498145261,
+        "deadlock_timeout": 0.8902317854128811,
+        "default_statistics_target": 0.16803469630639734,
+        "effective_cache_size": 0.06780119520402872,
+        "effective_io_concurrency": 0.25607050593820757,
+        "min_wal_size": 0.552353897361319,
+        "random_page_cost": 0.87478297121568,
+        "seq_page_cost": 0.7019832296097597,
+        "temp_buffers": 0.7313264023452779,
+        "wal_buffers": 0.28905652172666607,
+        "wal_sync_method": 0.7237065127532326,
+        "wal_writer_delay": 0.6551793621104941,
+        "work_mem": 0.5599579391204446
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 24.318236499999998
+      }
+    },
+    {
+      "trial_id": 19,
+      "config": {
+        "bgwriter_delay": 0.2320182191675596,
+        "bgwriter_flush_after": 0.42308626309376085,
+        "bgwriter_lru_maxpages": 0.028051430572571645,
+        "bgwriter_lru_multiplier": 0.8485888511638497,
+        "checkpoint_completion_target": 0.8233975918246539,
+        "checkpoint_flush_after": 0.9600944205333599,
+        "checkpoint_timeout": 0.5535253063485996,
+        "commit_siblings": 0.8766519477681275,
+        "deadlock_timeout": 0.6821407027755657,
+        "default_statistics_target": 0.7185429076272154,
+        "effective_cache_size": 0.47670363568528906,
+        "effective_io_concurrency": 0.8254902098499874,
+        "min_wal_size": 0.15667403575752858,
+        "random_page_cost": 0.18509519014857545,
+        "seq_page_cost": 0.861596177522988,
+        "temp_buffers": 0.3284220708181237,
+        "wal_buffers": 0.3913235182862943,
+        "wal_sync_method": 0.15251309488579456,
+        "wal_writer_delay": 0.3868055422747203,
+        "work_mem": 0.01899955648182039
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 35.43362316666667
+      }
+    },
+    {
+      "trial_id": 20,
+      "config": {
+        "bgwriter_delay": 0.6001009176528554,
+        "bgwriter_flush_after": 0.8475074855430004,
+        "bgwriter_lru_maxpages": 0.833759088295121,
+        "bgwriter_lru_multiplier": 0.6468485059726203,
+        "checkpoint_completion_target": 0.89716234366157,
+        "checkpoint_flush_after": 0.6192469366124261,
+        "checkpoint_timeout": 0.03722581878828213,
+        "commit_siblings": 0.5872270031866011,
+        "deadlock_timeout": 0.7064581652697933,
+        "default_statistics_target": 0.25566905423234976,
+        "effective_cache_size": 0.6319479287564879,
+        "effective_io_concurrency": 0.6619502350019952,
+        "min_wal_size": 0.3051481465284538,
+        "random_page_cost": 0.8579638511112196,
+        "seq_page_cost": 0.921229546394717,
+        "temp_buffers": 0.9371234155994452,
+        "wal_buffers": 0.9964391867197878,
+        "wal_sync_method": 0.9117372509597729,
+        "wal_writer_delay": 0.37945831072501957,
+        "work_mem": 0.10716246422312825
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 44.030048499999985
+      }
+    },
+    {
+      "trial_id": 21,
+      "config": {
+        "bgwriter_delay": 0.08151058239590803,
+        "bgwriter_flush_after": 0.8916215243640161,
+        "bgwriter_lru_maxpages": 0.8931955271663913,
+        "bgwriter_lru_multiplier": 0.9874439757703913,
+        "checkpoint_completion_target": 0.35305939561356026,
+        "checkpoint_flush_after": 0.6987299698460181,
+        "checkpoint_timeout": 0.7135097760197235,
+        "commit_siblings": 0.8832644902434844,
+        "deadlock_timeout": 0.8956453016212751,
+        "default_statistics_target": 0.5456438051697493,
+        "effective_cache_size": 0.49808555483168326,
+        "effective_io_concurrency": 0.2498749497455991,
+        "min_wal_size": 0.5270921846937123,
+        "random_page_cost": 0.5978727542683951,
+        "seq_page_cost": 0.6250543656479822,
+        "temp_buffers": 0.3391466871449249,
+        "wal_buffers": 0.3073920367981142,
+        "wal_sync_method": 0.6046813899453629,
+        "wal_writer_delay": 0.834171444798332,
+        "work_mem": 0.6583378834692847
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 33.68021875
+      }
+    },
+    {
+      "trial_id": 22,
+      "config": {
+        "bgwriter_delay": 0.7330280838417981,
+        "bgwriter_flush_after": 0.1167808734443394,
+        "bgwriter_lru_maxpages": 0.9785167864617185,
+        "bgwriter_lru_multiplier": 0.6222551610653251,
+        "checkpoint_completion_target": 0.018265738268281484,
+        "checkpoint_flush_after": 0.0009014462790822853,
+        "checkpoint_timeout": 0.03429676600178033,
+        "commit_siblings": 0.8266850100821808,
+        "deadlock_timeout": 0.07134442282014786,
+        "default_statistics_target": 0.14486321220652976,
+        "effective_cache_size": 0.4780815891748724,
+        "effective_io_concurrency": 0.8901623840512731,
+        "min_wal_size": 0.6233620664046762,
+        "random_page_cost": 0.35983463562437834,
+        "seq_page_cost": 0.7815873593219952,
+        "temp_buffers": 0.9084620635049424,
+        "wal_buffers": 0.20084864404767933,
+        "wal_sync_method": 0.8438568281093831,
+        "wal_writer_delay": 0.6967104100328189,
+        "work_mem": 0.5093007671750268
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 33.99550083333334
+      }
+    },
+    {
+      "trial_id": 23,
+      "config": {
+        "bgwriter_delay": 0.4374020645159853,
+        "bgwriter_flush_after": 0.03404185304690188,
+        "bgwriter_lru_maxpages": 0.41229684273670897,
+        "bgwriter_lru_multiplier": 0.788835191783185,
+        "checkpoint_completion_target": 0.7045641370369308,
+        "checkpoint_flush_after": 0.862735707379345,
+        "checkpoint_timeout": 0.17486921857825566,
+        "commit_siblings": 0.9748869841092858,
+        "deadlock_timeout": 0.815917037297503,
+        "default_statistics_target": 0.8870067554504814,
+        "effective_cache_size": 0.017945382584704794,
+        "effective_io_concurrency": 0.27594508477562574,
+        "min_wal_size": 0.6907324812030463,
+        "random_page_cost": 0.9318330136816468,
+        "seq_page_cost": 0.2981263090514118,
+        "temp_buffers": 0.38846012675903796,
+        "wal_buffers": 0.7483918618035579,
+        "wal_sync_method": 0.2987720039475622,
+        "wal_writer_delay": 0.6048061207132585,
+        "work_mem": 0.7540409975545715
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 20.269760500000004
+      }
+    },
+    {
+      "trial_id": 24,
+      "config": {
+        "bgwriter_delay": 0.0867426316084835,
+        "bgwriter_flush_after": 0.6201162130397956,
+        "bgwriter_lru_maxpages": 0.2559881976220181,
+        "bgwriter_lru_multiplier": 0.13240153054090398,
+        "checkpoint_completion_target": 0.7582788267193523,
+        "checkpoint_flush_after": 0.26357081241087477,
+        "checkpoint_timeout": 0.9863487912881728,
+        "commit_siblings": 0.5111199325816032,
+        "deadlock_timeout": 0.4071126725517509,
+        "default_statistics_target": 0.09212983176873213,
+        "effective_cache_size": 0.165990714879364,
+        "effective_io_concurrency": 0.9330630023300682,
+        "min_wal_size": 0.9145037207119794,
+        "random_page_cost": 0.21160363357065914,
+        "seq_page_cost": 0.6275202775574421,
+        "temp_buffers": 0.8419077426907553,
+        "wal_buffers": 0.7557833932976467,
+        "wal_sync_method": 0.28714681175125045,
+        "wal_writer_delay": 0.3212077524534076,
+        "work_mem": 0.030082646034944593
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 24.59151574999999
+      }
+    },
+    {
+      "trial_id": 25,
+      "config": {
+        "bgwriter_delay": 0.6606374692228709,
+        "bgwriter_flush_after": 0.45562562026139986,
+        "bgwriter_lru_maxpages": 0.9903082937280451,
+        "bgwriter_lru_multiplier": 0.29660408101416,
+        "checkpoint_completion_target": 0.5672511874282722,
+        "checkpoint_flush_after": 0.8432472131798072,
+        "checkpoint_timeout": 0.9070179443528078,
+        "commit_siblings": 0.16646910528475245,
+        "deadlock_timeout": 0.8905536207715056,
+        "default_statistics_target": 0.846789739978012,
+        "effective_cache_size": 0.07571165756661091,
+        "effective_io_concurrency": 0.7182822879175534,
+        "min_wal_size": 0.9713945412345196,
+        "random_page_cost": 0.17927078827531884,
+        "seq_page_cost": 0.4992417824590736,
+        "temp_buffers": 0.11402178291600318,
+        "wal_buffers": 0.668756598354283,
+        "wal_sync_method": 0.11400405911759004,
+        "wal_writer_delay": 0.34049724048342356,
+        "work_mem": 0.24416080503968207
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 24.393126499999994
+      }
+    },
+    {
+      "trial_id": 26,
+      "config": {
+        "bgwriter_delay": 0.9514362078946668,
+        "bgwriter_flush_after": 0.32441734992990934,
+        "bgwriter_lru_maxpages": 0.32814071130714206,
+        "bgwriter_lru_multiplier": 0.21497307754690476,
+        "checkpoint_completion_target": 0.9560889009643335,
+        "checkpoint_flush_after": 0.3642830400637497,
+        "checkpoint_timeout": 0.6841178010382712,
+        "commit_siblings": 0.9829233420643295,
+        "deadlock_timeout": 0.7666665673347841,
+        "default_statistics_target": 0.057487083026803054,
+        "effective_cache_size": 0.9786332095325319,
+        "effective_io_concurrency": 0.7043199458802208,
+        "min_wal_size": 0.17187471505572993,
+        "random_page_cost": 0.9035617505155441,
+        "seq_page_cost": 0.18108030167669864,
+        "temp_buffers": 0.2061581854740373,
+        "wal_buffers": 0.027219830125046474,
+        "wal_sync_method": 0.9901092884120046,
+        "wal_writer_delay": 0.034855124307157315,
+        "work_mem": 0.6068045857830554
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 31.184678299999995
+      }
+    },
+    {
+      "trial_id": 27,
+      "config": {
+        "bgwriter_delay": 0.2192494444301467,
+        "bgwriter_flush_after": 0.47877391875811115,
+        "bgwriter_lru_maxpages": 0.5461572818151617,
+        "bgwriter_lru_multiplier": 0.03788196430527635,
+        "checkpoint_completion_target": 0.15291507808991922,
+        "checkpoint_flush_after": 0.7437103867963537,
+        "checkpoint_timeout": 0.23827299001578983,
+        "commit_siblings": 0.5406185785212455,
+        "deadlock_timeout": 0.8431238345344555,
+        "default_statistics_target": 0.1945387716520145,
+        "effective_cache_size": 0.5738178556058529,
+        "effective_io_concurrency": 0.3440739913559936,
+        "min_wal_size": 0.7585165420069476,
+        "random_page_cost": 0.6246685138156948,
+        "seq_page_cost": 0.10423802470312449,
+        "temp_buffers": 0.19957870839357073,
+        "wal_buffers": 0.6680781667707931,
+        "wal_sync_method": 0.8384248840526431,
+        "wal_writer_delay": 0.1377996757052239,
+        "work_mem": 0.3621946158260064
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 30.669289333333328
+      }
+    },
+    {
+      "trial_id": 28,
+      "config": {
+        "bgwriter_delay": 0.30623286813774786,
+        "bgwriter_flush_after": 0.9815619776733239,
+        "bgwriter_lru_maxpages": 0.21261043862400464,
+        "bgwriter_lru_multiplier": 0.49733100042618295,
+        "checkpoint_completion_target": 0.04135531150300098,
+        "checkpoint_flush_after": 0.8254130981116877,
+        "checkpoint_timeout": 0.7192061901253956,
+        "commit_siblings": 0.02695510624183406,
+        "deadlock_timeout": 0.7080806651105779,
+        "default_statistics_target": 0.1395877003315632,
+        "effective_cache_size": 0.392825239626579,
+        "effective_io_concurrency": 0.46374739222704486,
+        "min_wal_size": 0.9384335915822859,
+        "random_page_cost": 0.3756986082892213,
+        "seq_page_cost": 0.9443599300422307,
+        "temp_buffers": 0.19063501802075944,
+        "wal_buffers": 0.363679413017438,
+        "wal_sync_method": 0.7312872433782822,
+        "wal_writer_delay": 0.3482339842993124,
+        "work_mem": 0.19113683921748736
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 32.39957350000001
+      }
+    },
+    {
+      "trial_id": 29,
+      "config": {
+        "bgwriter_delay": 0.1811015146602073,
+        "bgwriter_flush_after": 0.7322407865246989,
+        "bgwriter_lru_maxpages": 0.4184191466232655,
+        "bgwriter_lru_multiplier": 0.9737482270257036,
+        "checkpoint_completion_target": 0.5269886110801544,
+        "checkpoint_flush_after": 0.5582927022452743,
+        "checkpoint_timeout": 0.6150693091828247,
+        "commit_siblings": 0.11490203686435863,
+        "deadlock_timeout": 0.44640989376589035,
+        "default_statistics_target": 0.599221274402596,
+        "effective_cache_size": 0.6000922570576439,
+        "effective_io_concurrency": 0.022872711589966066,
+        "min_wal_size": 0.48164541394518046,
+        "random_page_cost": 0.7246438761129024,
+        "seq_page_cost": 0.13629696106494682,
+        "temp_buffers": 0.0297648738571763,
+        "wal_buffers": 0.35592374955007045,
+        "wal_sync_method": 0.8946562862276729,
+        "wal_writer_delay": 0.7837036469784694,
+        "work_mem": 0.29553184358478746
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 32.87898299999998
+      }
+    },
+    {
+      "trial_id": 30,
+      "config": {
+        "bgwriter_delay": 0.9361978347963288,
+        "bgwriter_flush_after": 0.28555956656867787,
+        "bgwriter_lru_maxpages": 0.4351464565094566,
+        "bgwriter_lru_multiplier": 0.5443445046198406,
+        "checkpoint_completion_target": 0.9587097210621842,
+        "checkpoint_flush_after": 0.17009918190504647,
+        "checkpoint_timeout": 0.25800614503641783,
+        "commit_siblings": 0.3143745328556926,
+        "deadlock_timeout": 0.8003142370677956,
+        "default_statistics_target": 0.5376232790360783,
+        "effective_cache_size": 0.3350777325415224,
+        "effective_io_concurrency": 0.36582045682214837,
+        "min_wal_size": 0.6757496657726536,
+        "random_page_cost": 0.5440810632119112,
+        "seq_page_cost": 0.1382484929385872,
+        "temp_buffers": 0.0426826189009436,
+        "wal_buffers": 0.43695730888363105,
+        "wal_sync_method": 0.3455315524958691,
+        "wal_writer_delay": 0.18296109590794507,
+        "work_mem": 0.6344010708625853
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 23.92565750000001
+      }
+    },
+    {
+      "trial_id": 31,
+      "config": {
+        "bgwriter_delay": 0.9417031857896964,
+        "bgwriter_flush_after": 0.5956768631642894,
+        "bgwriter_lru_maxpages": 0.9877514403981718,
+        "bgwriter_lru_multiplier": 0.8741878341045327,
+        "checkpoint_completion_target": 0.0805304624824893,
+        "checkpoint_flush_after": 0.5968847709749041,
+        "checkpoint_timeout": 0.7849609392632937,
+        "commit_siblings": 0.14326163046893237,
+        "deadlock_timeout": 0.19692360978061585,
+        "default_statistics_target": 0.5438182814122791,
+        "effective_cache_size": 0.6045546095759349,
+        "effective_io_concurrency": 0.057277450674777186,
+        "min_wal_size": 0.8200399007364487,
+        "random_page_cost": 0.26314846891852983,
+        "seq_page_cost": 0.47117839625982394,
+        "temp_buffers": 0.11942308451188788,
+        "wal_buffers": 0.8626713816326937,
+        "wal_sync_method": 0.05143566085914408,
+        "wal_writer_delay": 0.8830896960768877,
+        "work_mem": 0.7111064578584184
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 42.41281799999998
+      }
+    },
+    {
+      "trial_id": 32,
+      "config": {
+        "bgwriter_delay": 0.07204699665461689,
+        "bgwriter_flush_after": 0.6909502800820463,
+        "bgwriter_lru_maxpages": 0.9596372921946958,
+        "bgwriter_lru_multiplier": 0.8535530188480361,
+        "checkpoint_completion_target": 0.8447911989712328,
+        "checkpoint_flush_after": 0.4169712219014313,
+        "checkpoint_timeout": 0.43337982652433893,
+        "commit_siblings": 0.8880501623484993,
+        "deadlock_timeout": 0.8659470400273601,
+        "default_statistics_target": 0.42445942602236186,
+        "effective_cache_size": 0.08004063219402935,
+        "effective_io_concurrency": 0.28352549820272777,
+        "min_wal_size": 0.5293618262069196,
+        "random_page_cost": 0.9128556253943813,
+        "seq_page_cost": 0.20910753788510128,
+        "temp_buffers": 0.4724831786773689,
+        "wal_buffers": 0.47546219738164985,
+        "wal_sync_method": 0.0026542793704180667,
+        "wal_writer_delay": 0.28249853498897937,
+        "work_mem": 0.28784453808349375
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 21.596797214285726
+      }
+    },
+    {
+      "trial_id": 33,
+      "config": {
+        "bgwriter_delay": 0.6677404878178559,
+        "bgwriter_flush_after": 0.9228541633540326,
+        "bgwriter_lru_maxpages": 0.9985856122760682,
+        "bgwriter_lru_multiplier": 0.09248220565380749,
+        "checkpoint_completion_target": 0.6405033866951243,
+        "checkpoint_flush_after": 0.29143716037121215,
+        "checkpoint_timeout": 0.6303491756323668,
+        "commit_siblings": 0.010591215552757105,
+        "deadlock_timeout": 0.955297486454009,
+        "default_statistics_target": 0.5492896889289961,
+        "effective_cache_size": 0.510621865781846,
+        "effective_io_concurrency": 0.06445700033886437,
+        "min_wal_size": 0.4240617011846489,
+        "random_page_cost": 0.6897886102063931,
+        "seq_page_cost": 0.8183867348131074,
+        "temp_buffers": 0.20194618191734437,
+        "wal_buffers": 0.8457196852384732,
+        "wal_sync_method": 0.5176702553410443,
+        "wal_writer_delay": 0.9182209949665643,
+        "work_mem": 0.0036051344563677867
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 35.216637
+      }
+    },
+    {
+      "trial_id": 34,
+      "config": {
+        "bgwriter_delay": 0.5452507484238863,
+        "bgwriter_flush_after": 0.33936834085738987,
+        "bgwriter_lru_maxpages": 0.2770842547189598,
+        "bgwriter_lru_multiplier": 0.15705276312798344,
+        "checkpoint_completion_target": 0.76766407692673,
+        "checkpoint_flush_after": 0.6411552922666527,
+        "checkpoint_timeout": 0.4249254895322042,
+        "commit_siblings": 0.5872471152644565,
+        "deadlock_timeout": 0.1354954979687022,
+        "default_statistics_target": 0.3592936021359182,
+        "effective_cache_size": 0.3042272149984653,
+        "effective_io_concurrency": 0.5247482982464148,
+        "min_wal_size": 0.9552037194753309,
+        "random_page_cost": 0.758872383479852,
+        "seq_page_cost": 0.10401989493501085,
+        "temp_buffers": 0.7620020770811914,
+        "wal_buffers": 0.4362493378213109,
+        "wal_sync_method": 0.07040156872413528,
+        "wal_writer_delay": 0.32432417954251,
+        "work_mem": 0.11819056853688681
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 25.890597
+      }
+    },
+    {
+      "trial_id": 35,
+      "config": {
+        "bgwriter_delay": 0.45167685258057344,
+        "bgwriter_flush_after": 0.6514407439541584,
+        "bgwriter_lru_maxpages": 0.5442066790602044,
+        "bgwriter_lru_multiplier": 0.725617368506498,
+        "checkpoint_completion_target": 0.9550403483000026,
+        "checkpoint_flush_after": 0.19388102189812528,
+        "checkpoint_timeout": 0.33271449179911994,
+        "commit_siblings": 0.580599282368748,
+        "deadlock_timeout": 0.24757720519274862,
+        "default_statistics_target": 0.3162704479524878,
+        "effective_cache_size": 0.3040341001785887,
+        "effective_io_concurrency": 0.31609929878859944,
+        "min_wal_size": 0.6838288871470225,
+        "random_page_cost": 0.30015551187257306,
+        "seq_page_cost": 0.6248469684455111,
+        "temp_buffers": 0.1705924494611386,
+        "wal_buffers": 0.5363842879012582,
+        "wal_sync_method": 0.9576778902640325,
+        "wal_writer_delay": 0.4824576005211638,
+        "work_mem": 0.570164039484876
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 26.947574499999988
+      }
+    },
+    {
+      "trial_id": 36,
+      "config": {
+        "bgwriter_delay": 0.005620994020047232,
+        "bgwriter_flush_after": 0.31519877237986726,
+        "bgwriter_lru_maxpages": 0.863372148819427,
+        "bgwriter_lru_multiplier": 0.994844625220671,
+        "checkpoint_completion_target": 0.03293399901018601,
+        "checkpoint_flush_after": 0.8344256668850033,
+        "checkpoint_timeout": 0.867101847700882,
+        "commit_siblings": 0.7975040219520314,
+        "deadlock_timeout": 0.4839916722271371,
+        "default_statistics_target": 0.6551456949384133,
+        "effective_cache_size": 0.002616009684124343,
+        "effective_io_concurrency": 0.22285290000877644,
+        "min_wal_size": 0.09582766126606568,
+        "random_page_cost": 0.5558223588653846,
+        "seq_page_cost": 0.2920605783840743,
+        "temp_buffers": 0.36847022816823827,
+        "wal_buffers": 0.2090814972921794,
+        "wal_sync_method": 0.176493498990415,
+        "wal_writer_delay": 0.6636026886539688,
+        "work_mem": 0.3285190510555841
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 21.430371500000014
+      }
+    },
+    {
+      "trial_id": 37,
+      "config": {
+        "bgwriter_delay": 0.7372734475453666,
+        "bgwriter_flush_after": 0.732171084227556,
+        "bgwriter_lru_maxpages": 0.29064488044229886,
+        "bgwriter_lru_multiplier": 0.9934810784752282,
+        "checkpoint_completion_target": 0.434175488977272,
+        "checkpoint_flush_after": 0.09612494099664559,
+        "checkpoint_timeout": 0.5577180029649013,
+        "commit_siblings": 0.08904488640799169,
+        "deadlock_timeout": 0.9671784538377375,
+        "default_statistics_target": 0.3431710787743343,
+        "effective_cache_size": 0.9748515142050544,
+        "effective_io_concurrency": 0.6821697215187006,
+        "min_wal_size": 0.004708121660712883,
+        "random_page_cost": 0.3494327133771782,
+        "seq_page_cost": 0.3934571846308875,
+        "temp_buffers": 0.2417973923128256,
+        "wal_buffers": 0.24550971666638866,
+        "wal_sync_method": 0.055400478887467686,
+        "wal_writer_delay": 0.4414593126519527,
+        "work_mem": 0.7907117682966764
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 47.84964217500001
+      }
+    },
+    {
+      "trial_id": 38,
+      "config": {
+        "bgwriter_delay": 0.12619915699215523,
+        "bgwriter_flush_after": 0.9368427066034065,
+        "bgwriter_lru_maxpages": 0.43277270013662505,
+        "bgwriter_lru_multiplier": 0.02728987553792872,
+        "checkpoint_completion_target": 0.2859760604832079,
+        "checkpoint_flush_after": 0.08642941302715368,
+        "checkpoint_timeout": 0.4565704050497159,
+        "commit_siblings": 0.730873876000111,
+        "deadlock_timeout": 0.3636037938046315,
+        "default_statistics_target": 0.7579728730132715,
+        "effective_cache_size": 0.7377397444058229,
+        "effective_io_concurrency": 0.3177191123465887,
+        "min_wal_size": 0.21072278731484018,
+        "random_page_cost": 0.8834665895035912,
+        "seq_page_cost": 0.7593139065693788,
+        "temp_buffers": 0.5728116721991291,
+        "wal_buffers": 0.0005664776743625755,
+        "wal_sync_method": 0.3875792512668086,
+        "wal_writer_delay": 0.48992643767511435,
+        "work_mem": 0.39242133615666
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 43.20196733333333
+      }
+    },
+    {
+      "trial_id": 39,
+      "config": {
+        "bgwriter_delay": 0.6217385766172147,
+        "bgwriter_flush_after": 0.9208184804077172,
+        "bgwriter_lru_maxpages": 0.8811185983983851,
+        "bgwriter_lru_multiplier": 0.8785333426847872,
+        "checkpoint_completion_target": 0.575843780154843,
+        "checkpoint_flush_after": 0.7108106276958169,
+        "checkpoint_timeout": 0.9243356766384969,
+        "commit_siblings": 0.9799949043190214,
+        "deadlock_timeout": 0.8891493438522015,
+        "default_statistics_target": 0.3352100292931526,
+        "effective_cache_size": 0.28466746303256385,
+        "effective_io_concurrency": 0.8778136057900798,
+        "min_wal_size": 0.7174535868175361,
+        "random_page_cost": 0.03553837925233683,
+        "seq_page_cost": 0.39589377415787474,
+        "temp_buffers": 0.913682153286639,
+        "wal_buffers": 0.6695140846746742,
+        "wal_sync_method": 0.43508654821910786,
+        "wal_writer_delay": 0.1029120668630491,
+        "work_mem": 0.8307857444648866
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 34.09024700000001
+      }
+    },
+    {
+      "trial_id": 40,
+      "config": {
+        "bgwriter_delay": 0.7635602456155169,
+        "bgwriter_flush_after": 0.8770459034887144,
+        "bgwriter_lru_maxpages": 0.35468801054170007,
+        "bgwriter_lru_multiplier": 0.011745995575972223,
+        "checkpoint_completion_target": 0.6991278039738922,
+        "checkpoint_flush_after": 0.8444450994295478,
+        "checkpoint_timeout": 0.4695757246187786,
+        "commit_siblings": 0.4219502913925113,
+        "deadlock_timeout": 0.6727655208412381,
+        "default_statistics_target": 0.28047517833936,
+        "effective_cache_size": 0.7418194245496927,
+        "effective_io_concurrency": 0.35989724958549096,
+        "min_wal_size": 0.8656122084119976,
+        "random_page_cost": 0.1410922507426179,
+        "seq_page_cost": 0.238056500361578,
+        "temp_buffers": 0.18454582821854915,
+        "wal_buffers": 0.6294867531481302,
+        "wal_sync_method": 0.12392143528565613,
+        "wal_writer_delay": 0.47870605611356565,
+        "work_mem": 0.41788983741121166
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 41.42514487500001
+      }
+    },
+    {
+      "trial_id": 41,
+      "config": {
+        "bgwriter_delay": 0.8998719307171464,
+        "bgwriter_flush_after": 0.7732324495892172,
+        "bgwriter_lru_maxpages": 0.7915845448959541,
+        "bgwriter_lru_multiplier": 0.7556707706005911,
+        "checkpoint_completion_target": 0.7866972235890269,
+        "checkpoint_flush_after": 0.7416180407791628,
+        "checkpoint_timeout": 0.7423618569766837,
+        "commit_siblings": 0.9699912033239372,
+        "deadlock_timeout": 0.7169313724960542,
+        "default_statistics_target": 0.2543391629457543,
+        "effective_cache_size": 0.6688526752209519,
+        "effective_io_concurrency": 0.18693901511158784,
+        "min_wal_size": 0.5083254040731261,
+        "random_page_cost": 0.6215646914709174,
+        "seq_page_cost": 0.5641660386009387,
+        "temp_buffers": 0.6607258168979301,
+        "wal_buffers": 0.2651023905073,
+        "wal_sync_method": 0.3478330345586369,
+        "wal_writer_delay": 0.975780527921007,
+        "work_mem": 0.9287685482584548
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 46.60853058333334
+      }
+    },
+    {
+      "trial_id": 42,
+      "config": {
+        "bgwriter_delay": 0.05644713094879661,
+        "bgwriter_flush_after": 0.30482998589007804,
+        "bgwriter_lru_maxpages": 0.04492282868952546,
+        "bgwriter_lru_multiplier": 0.5743554400696608,
+        "checkpoint_completion_target": 0.27387113715888567,
+        "checkpoint_flush_after": 0.15481318768374874,
+        "checkpoint_timeout": 0.0634144845283876,
+        "commit_siblings": 0.8186441900776981,
+        "deadlock_timeout": 0.1760320279441695,
+        "default_statistics_target": 0.7214720676581792,
+        "effective_cache_size": 0.4410205268197537,
+        "effective_io_concurrency": 0.22479021156652002,
+        "min_wal_size": 0.838463279972159,
+        "random_page_cost": 0.6382420602648533,
+        "seq_page_cost": 0.017655078020003656,
+        "temp_buffers": 0.9553825235838884,
+        "wal_buffers": 0.6469808633327414,
+        "wal_sync_method": 0.8170993278029552,
+        "wal_writer_delay": 0.869866449923097,
+        "work_mem": 0.7713239218290759
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 27.097871500000007
+      }
+    },
+    {
+      "trial_id": 43,
+      "config": {
+        "bgwriter_delay": 0.915455728151114,
+        "bgwriter_flush_after": 0.19359244043628643,
+        "bgwriter_lru_maxpages": 0.7957911878114192,
+        "bgwriter_lru_multiplier": 0.5772825340310754,
+        "checkpoint_completion_target": 0.7078230288181064,
+        "checkpoint_flush_after": 0.4825837412995202,
+        "checkpoint_timeout": 0.3383553077290735,
+        "commit_siblings": 0.21978040751186534,
+        "deadlock_timeout": 0.06312329727717125,
+        "default_statistics_target": 0.11856607062109936,
+        "effective_cache_size": 0.6349956668860525,
+        "effective_io_concurrency": 0.09610393686260432,
+        "min_wal_size": 0.5739519849855556,
+        "random_page_cost": 0.25124103772592576,
+        "seq_page_cost": 0.6140291926501511,
+        "temp_buffers": 0.1740554883798099,
+        "wal_buffers": 0.7981124485690155,
+        "wal_sync_method": 0.34901381481631044,
+        "wal_writer_delay": 0.005430727106629396,
+        "work_mem": 0.014050338425602327
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 49.71798900000001
+      }
+    },
+    {
+      "trial_id": 44,
+      "config": {
+        "bgwriter_delay": 0.7254800714984165,
+        "bgwriter_flush_after": 0.20687190973711178,
+        "bgwriter_lru_maxpages": 0.24806976356101718,
+        "bgwriter_lru_multiplier": 0.8720657906301922,
+        "checkpoint_completion_target": 0.8453499462222922,
+        "checkpoint_flush_after": 0.07009228275507196,
+        "checkpoint_timeout": 0.8240281898231726,
+        "commit_siblings": 0.48947434673657364,
+        "deadlock_timeout": 0.33765771911400966,
+        "default_statistics_target": 0.42802535379579154,
+        "effective_cache_size": 0.7038413713337045,
+        "effective_io_concurrency": 0.9178923420451375,
+        "min_wal_size": 0.6393774577768965,
+        "random_page_cost": 0.8187518967322726,
+        "seq_page_cost": 0.7105599273489761,
+        "temp_buffers": 0.877277998474581,
+        "wal_buffers": 0.8621130137023293,
+        "wal_sync_method": 0.8504734170321603,
+        "wal_writer_delay": 0.384654298937692,
+        "work_mem": 0.3873580721523332
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 44.57426586666665
+      }
+    },
+    {
+      "trial_id": 45,
+      "config": {
+        "bgwriter_delay": 0.5636335189051,
+        "bgwriter_flush_after": 0.5266925504208569,
+        "bgwriter_lru_maxpages": 0.8552297014093275,
+        "bgwriter_lru_multiplier": 0.007426479960306098,
+        "checkpoint_completion_target": 0.3982741660592143,
+        "checkpoint_flush_after": 0.24700731676305165,
+        "checkpoint_timeout": 0.8811508916377423,
+        "commit_siblings": 0.3664388727121224,
+        "deadlock_timeout": 0.14430566902907893,
+        "default_statistics_target": 0.92671238411014,
+        "effective_cache_size": 0.2863726301907653,
+        "effective_io_concurrency": 0.1575266757111512,
+        "min_wal_size": 0.27012477495336906,
+        "random_page_cost": 0.8116283053103504,
+        "seq_page_cost": 0.16983785950018526,
+        "temp_buffers": 0.4557363803156984,
+        "wal_buffers": 0.10752008982624162,
+        "wal_sync_method": 0.6401078049095318,
+        "wal_writer_delay": 0.8643480608280134,
+        "work_mem": 0.5655593233754073
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 24.263771499999997
+      }
+    },
+    {
+      "trial_id": 46,
+      "config": {
+        "bgwriter_delay": 0.4608438884790995,
+        "bgwriter_flush_after": 0.5437776530471314,
+        "bgwriter_lru_maxpages": 0.6507731093755184,
+        "bgwriter_lru_multiplier": 0.30623483681020947,
+        "checkpoint_completion_target": 0.080604527186101,
+        "checkpoint_flush_after": 0.8846253907071115,
+        "checkpoint_timeout": 0.09398989861531226,
+        "commit_siblings": 0.6130877867872915,
+        "deadlock_timeout": 0.9354295054991894,
+        "default_statistics_target": 0.27866932946896084,
+        "effective_cache_size": 0.5297007710271594,
+        "effective_io_concurrency": 0.7687819284248345,
+        "min_wal_size": 0.07129972287544051,
+        "random_page_cost": 0.8271748065707503,
+        "seq_page_cost": 0.9620518696455346,
+        "temp_buffers": 0.6919191313920509,
+        "wal_buffers": 0.7786606564223051,
+        "wal_sync_method": 0.5407373737029548,
+        "wal_writer_delay": 0.3903862659757803,
+        "work_mem": 0.1890985039045191
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 34.82092941666668
+      }
+    },
+    {
+      "trial_id": 47,
+      "config": {
+        "bgwriter_delay": 0.9755004755454493,
+        "bgwriter_flush_after": 0.00632532761987159,
+        "bgwriter_lru_maxpages": 0.3989738923497974,
+        "bgwriter_lru_multiplier": 0.7086554448915219,
+        "checkpoint_completion_target": 0.19034857935820793,
+        "checkpoint_flush_after": 0.4914371118031855,
+        "checkpoint_timeout": 0.9640656802418864,
+        "commit_siblings": 0.5987197444489328,
+        "deadlock_timeout": 0.8114874829016621,
+        "default_statistics_target": 0.7645757210854578,
+        "effective_cache_size": 0.16493475397871604,
+        "effective_io_concurrency": 0.031891434880507497,
+        "min_wal_size": 0.3435676243245408,
+        "random_page_cost": 0.33379905471740934,
+        "seq_page_cost": 0.5820680141367067,
+        "temp_buffers": 0.26985381937034303,
+        "wal_buffers": 0.18761956778656474,
+        "wal_sync_method": 0.8842526430125709,
+        "wal_writer_delay": 0.91117898577441,
+        "work_mem": 0.1626400033837353
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 24.172504499999988
+      }
+    },
+    {
+      "trial_id": 48,
+      "config": {
+        "bgwriter_delay": 0.8055698086281485,
+        "bgwriter_flush_after": 0.17169995467693333,
+        "bgwriter_lru_maxpages": 0.3651953755184961,
+        "bgwriter_lru_multiplier": 0.6903350782387482,
+        "checkpoint_completion_target": 0.7559173410990835,
+        "checkpoint_flush_after": 0.44925436648995387,
+        "checkpoint_timeout": 0.48461650514969046,
+        "commit_siblings": 0.5136925759146409,
+        "deadlock_timeout": 0.7288116405790346,
+        "default_statistics_target": 0.11199798963728147,
+        "effective_cache_size": 0.2601385947587238,
+        "effective_io_concurrency": 0.7485317397013382,
+        "min_wal_size": 0.9136217980707263,
+        "random_page_cost": 0.6574481372206548,
+        "seq_page_cost": 0.46519891129580204,
+        "temp_buffers": 0.5295564556322678,
+        "wal_buffers": 0.21092491737578556,
+        "wal_sync_method": 0.32792609177182397,
+        "wal_writer_delay": 0.1278946743131506,
+        "work_mem": 0.8204249273471136
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 23.80438083333334
+      }
+    },
+    {
+      "trial_id": 49,
+      "config": {
+        "bgwriter_delay": 0.17902985984820818,
+        "bgwriter_flush_after": 0.08577224067407163,
+        "bgwriter_lru_maxpages": 0.374764246842883,
+        "bgwriter_lru_multiplier": 0.17591182646082237,
+        "checkpoint_completion_target": 0.38393175215958686,
+        "checkpoint_flush_after": 0.6110683307731694,
+        "checkpoint_timeout": 0.3197614045430762,
+        "commit_siblings": 0.5454789482014445,
+        "deadlock_timeout": 0.9193209453990077,
+        "default_statistics_target": 0.3988647202599357,
+        "effective_cache_size": 0.6269096452169673,
+        "effective_io_concurrency": 0.46878651317158115,
+        "min_wal_size": 0.5082155532185738,
+        "random_page_cost": 0.16795134686837476,
+        "seq_page_cost": 0.5036219109156685,
+        "temp_buffers": 0.4888932756852431,
+        "wal_buffers": 0.9022164565983101,
+        "wal_sync_method": 0.15836378472330992,
+        "wal_writer_delay": 0.9648970399596215,
+        "work_mem": 0.6016366131779309
+      },
+      "status": "success",
+      "objectives": {
+        "latency": 46.42015225000001
+      }
+    }
+  ]
+}

@@ -1,0 +1,77 @@
+{
+  "task_id": "hpo_bayesmark_diabetes_svm",
+  "task_name": "Diabetes Progression / SVR",
+  "family": "HPO",
+  "objective": "minimize CV MSE",
+  "parameters": [
+    {
+      "name": "C",
+      "type": "float",
+      "low": 1.0,
+      "high": 1000.0,
+      "transform": "log",
+      "meaning": "Inverse regularization strength of the support vector model."
+    },
+    {
+      "name": "gamma",
+      "type": "float",
+      "low": 0.0001,
+      "high": 0.001,
+      "transform": "log",
+      "meaning": "RBF kernel coefficient controlling its distance scale."
+    },
+    {
+      "name": "tol",
+      "type": "float",
+      "low": 1e-05,
+      "high": 0.1,
+      "transform": "log",
+      "meaning": "Solver stopping tolerance."
+    }
+  ],
+  "prior_facts": [
+    "The estimator is SVR with an RBF kernel. Only C, gamma, and tol are tuned.",
+    "Regularization strength decreases as C increases. gamma controls the distance scale of the RBF kernel.",
+    "tol controls solver stopping tolerance; reducing it is not itself a guarantee of better cross-validation performance.",
+    "This is SVR regression with fixed epsilon=0.1."
+  ],
+  "evaluation_budget": {
+    "initial": 5,
+    "optimization": 25
+  },
+  "dataset": {
+    "key": "diabetes",
+    "display_name": "Diabetes Progression",
+    "problem_type": "regression",
+    "total_samples": 442,
+    "train_samples": 353,
+    "test_samples": 89,
+    "feature_count": 10,
+    "class_counts_train": []
+  },
+  "estimator": "SVR",
+  "fixed_estimator_parameters": {
+    "cache_size": 200,
+    "coef0": 0.0,
+    "degree": 3,
+    "epsilon": 0.1,
+    "kernel": "rbf",
+    "max_iter": -1,
+    "shrinking": true,
+    "verbose": false
+  },
+  "documentation": "https://scikit-learn.org/1.8/modules/generated/sklearn.svm.SVR.html",
+  "background": "Tune 3 hyperparameters of SVR on Diabetes Progression to reduce cross-validation prediction mean squared error.",
+  "input_instructions": [
+    "Submit every parameter listed below, using its declared integer or floating-point type and inclusive bounds.",
+    "Submit original hyperparameter values. The transform column describes search coordinates, not a transformation to apply before submission: for example, submit 0.1 itself rather than log(0.1) or logit(0.1)."
+  ],
+  "evaluation_details": [
+    "The fixed split has 353 training and 89 held-out samples, with 10 features per sample. Feedback uses five-fold KFold cross-validation on the training split, with shuffle=False.",
+    "The objective is mean cross-validation squared prediction error on the released standardized regression target; lower is better.",
+    "Held-out results are not optimization feedback. No extra input scaling or preprocessing is added to the released arrays. Fixed estimator settings are listed below."
+  ],
+  "domain_knowledge": [
+    "C and gamma jointly affect model flexibility. Their effects depend on the dataset feature scales, which are fixed in this task."
+  ]
+}

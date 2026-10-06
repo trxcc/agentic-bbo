@@ -1,9 +1,9 @@
 # Background
 
-Implementation source: `bbo/tasks/scientific/guacamol_smiles.py`, `GUACAMOL_SMILES_TASK_DEFINITIONS["guacamol_fexofenadine_mpo_smiles_demo"]`.
+Find a molecule similar to fexofenadine while favoring sufficient polar surface area and limiting logP.
 
-Source benchmark: `guacamol.standard_benchmarks.hard_fexofenadine`.
+## Reference molecules
 
-Representation: direct SMILES string parameter named `smiles`.
-
-Target SMILES source: `FEXOFENADINE_SMILES` imported from `bbo/tasks/scientific/guacamol_selfies.py`.
+| Name | SMILES |
+| --- | --- |
+| Fexofenadine | `CC(C)(C(=O)O)c1ccc(cc1)C(O)CCCN2CCC(CC2)C(O)(c3ccccc3)c4ccccc4` |

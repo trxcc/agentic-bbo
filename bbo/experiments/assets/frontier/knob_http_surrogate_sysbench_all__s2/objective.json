@@ -1,0 +1,10 @@
+{
+  "all_objectives": [
+    {
+      "direction": "maximize",
+      "name": "throughput"
+    }
+  ],
+  "direction": "maximize",
+  "name": "throughput"
+}

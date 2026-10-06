@@ -1,0 +1,812 @@
+{
+  "row": {
+    "task": "knob_http_surrogate_sysbench_5",
+    "family": "DBTune",
+    "seed": 2,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "knob_http_surrogate_sysbench_5",
+    "case_id": "knob_http_surrogate_sysbench_5__s2"
+  },
+  "short_task": "# MySQL SYSBENCH 5 knobs\n\nTask ID: `knob_http_surrogate_sysbench_5`.\n\nTune 5 MySQL settings for a SYSBENCH transactional workload to maximize predicted throughput. A fixed, previously built surrogate predicts performance; optimization does not execute a live database workload.\n\nObjective: maximize `throughput`.\n\nBudget: 50 shared initial observations and 200 new evaluations (250 total).\n\n## Submission\n\n1. Submit all 5 settings as floating-point numbers u in [0,1]. Names identify real database settings, but physical values and enumeration labels from the table must not be submitted directly.\n2. For integer settings, decode as round(min + u*(max-min)). For physical floating-point settings, decode as min + u*(max-min) without rounding.\n3. For K enumeration options, divide [0,1] into K equal-width intervals. Select enum_values[min(floor(u*K),K-1)] using zero-based indexing; u=1 selects the last option. Option order does not imply a performance ranking.\n4. Encoding example: innodb_thread_concurrency has physical range 0...1000; input 0.25 decodes to 250. This illustrates encoding, not a recommended configuration.\n5. Enumeration example: for innodb_doublewrite, input 0 selects \"ON\", and 1 selects \"OFF\". The order is part of the encoding, not a performance ranking.\n\n## Parameters\n\nEvery submitted parameter is a float in [0,1]. Physical definitions below are decoded using the rules above; they are not direct submission values.\n\n| Parameter | Meaning | Physical definition | Default |\n| --- | --- | --- | --- |\n| `innodb_doublewrite` | Controls doublewrite-buffer protection against incomplete data-page writes. | Enumeration: `[\"ON\",\"OFF\"]` | `\"ON\"` |\n| `innodb_thread_concurrency` | Maximum threads concurrently inside InnoDB; physical value 0 means no such cap. | Integer: `0` to `1000` | `0` |\n| `max_heap_table_size` | Size limit for user-created MEMORY tables; also constrains in-memory temporary tables. | Integer: `16384` to `1073741824` | `16777216` |\n| `query_prealloc_size` | Preallocated memory size for statement parsing and execution. | Integer: `8192` to `134217728` | `8192` |\n| `tmp_table_size` | Size limit for internal in-memory temporary tables, jointly constrained by max_heap_table_size. | Integer: `1024` to `1073741824` | `16777216` |\n\n## Read details as needed\n\nThere are 5 active parameters. get_search_space supports names, query, optional annotated groups and paged index/details views.\n\nget_task_context sections: overview, submission, scoring, mechanisms, domain_knowledge, additional. Read scoring rules and relevant mechanisms before choosing a candidate.\n\nget_trial_history and get_incumbent return scores first; request parameter_names to inspect selected values.\n\nFollow instructions.md: submit_candidate accepts a full config or workspace JSON file directly; write_candidate is optional.\n",
+  "visible_task_id": "knob_http_surrogate_sysbench_5",
+  "objective": {
+    "name": "throughput",
+    "direction": "maximize"
+  },
+  "evaluation_budget": {
+    "initial_observations": 50,
+    "new_evaluations": 200,
+    "total_observations": 250
+  },
+  "task_facts": {
+    "overview": "# MySQL SYSBENCH 5 knobs\n\nTask ID: `knob_http_surrogate_sysbench_5`.\n\nTune 5 MySQL settings for a SYSBENCH transactional workload to maximize predicted throughput. A fixed, previously built surrogate predicts performance; optimization does not execute a live database workload.\n\nObjective: maximize `throughput`.\n\nBudget: 50 shared initial observations and 200 new evaluations (250 total).",
+    "submission": "1. Submit all 5 settings as floating-point numbers u in [0,1]. Names identify real database settings, but physical values and enumeration labels from the table must not be submitted directly.\n2. For integer settings, decode as round(min + u*(max-min)). For physical floating-point settings, decode as min + u*(max-min) without rounding.\n3. For K enumeration options, divide [0,1] into K equal-width intervals. Select enum_values[min(floor(u*K),K-1)] using zero-based indexing; u=1 selects the last option. Option order does not imply a performance ranking.\n4. Encoding example: innodb_thread_concurrency has physical range 0...1000; input 0.25 decodes to 250. This illustrates encoding, not a recommended configuration.\n5. Enumeration example: for innodb_doublewrite, input 0 selects \"ON\", and 1 selects \"OFF\". The order is part of the encoding, not a performance ranking.",
+    "scoring": "1. The evaluator decodes inputs and returns surrogate-predicted throughput; higher is better.\n2. Use the ranges, defaults, and enumeration order in this task's parameter table. A default is a reference configuration value, not a known optimum.",
+    "mechanisms": "1. Settings cover memory and caching, I/O, concurrency, query optimization, logging, replication, and authentication. Increasing every resource setting is not a general improvement rule.\n2. Some settings apply only to particular storage engines or enabled features; some are legacy settings. A parameter's real database meaning does not establish its importance in this surrogate.\n3. The available materials do not specify the full hardware and database-version configuration used to train the surrogate. Do not assume every described mechanism is active in this workload.",
+    "domain_knowledge": "1. Client connection limits and internal InnoDB concurrency limits are different. More concurrency may increase throughput or intensify lock and resource contention. A physical innodb_thread_concurrency value of 0 means no such concurrency cap.\n2. Statistics and cache settings jointly affect query plans, temporary tables, and sorting. Directions suggested by these mechanisms still need to be checked against this task's evaluation feedback.",
+    "additional": "**Workload (`workload`)**\n\nSYSBENCH\n\n**Database (`database`)**\n\nMySQL\n\n**Units (`units_policy`)**\n\nUse the units in this task's parameter definitions. Do not invent unit conversions for entries without an explicit unit."
+  },
+  "parameter_definitions": [
+    {
+      "name": "innodb_doublewrite",
+      "type": "float",
+      "low": 0.0,
+      "high": 1.0,
+      "log": false,
+      "default": 0.5,
+      "meaning": "Controls doublewrite-buffer protection against incomplete data-page writes.",
+      "physical_definition": {
+        "default": "ON",
+        "enum_values": [
+          "ON",
+          "OFF"
+        ],
+        "type": "enum"
+      }
+    },
+    {
+      "name": "innodb_thread_concurrency",
+      "type": "float",
+      "low": 0.0,
+      "high": 1.0,
+      "log": false,
+      "default": 0.5,
+      "meaning": "Maximum threads concurrently inside InnoDB; physical value 0 means no such cap.",
+      "physical_definition": {
+        "default": 0,
+        "max": 1000,
+        "min": 0,
+        "type": "integer"
+      }
+    },
+    {
+      "name": "max_heap_table_size",
+      "type": "float",
+      "low": 0.0,
+      "high": 1.0,
+      "log": false,
+      "default": 0.5,
+      "meaning": "Size limit for user-created MEMORY tables; also constrains in-memory temporary tables.",
+      "physical_definition": {
+        "default": 16777216,
+        "max": 1073741824,
+        "min": 16384,
+        "type": "integer"
+      }
+    },
+    {
+      "name": "query_prealloc_size",
+      "type": "float",
+      "low": 0.0,
+      "high": 1.0,
+      "log": false,
+      "default": 0.5,
+      "meaning": "Preallocated memory size for statement parsing and execution.",
+      "physical_definition": {
+        "default": 8192,
+        "max": 134217728,
+        "min": 8192,
+        "type": "integer"
+      }
+    },
+    {
+      "name": "tmp_table_size",
+      "type": "float",
+      "low": 0.0,
+      "high": 1.0,
+      "log": false,
+      "default": 0.5,
+      "meaning": "Size limit for internal in-memory temporary tables, jointly constrained by max_heap_table_size.",
+      "physical_definition": {
+        "default": 16777216,
+        "max": 1073741824,
+        "min": 1024,
+        "type": "integer"
+      }
+    }
+  ],
+  "initial_history": [
+    {
+      "trial_id": 0,
+      "config": {
+        "innodb_doublewrite": 0.05655136772680869,
+        "innodb_thread_concurrency": 0.8354988781294496,
+        "max_heap_table_size": 0.9560342718892494,
+        "query_prealloc_size": 0.08487199515892163,
+        "tmp_table_size": 0.9478274870593494
+      },
+      "status": "success",
+      "objectives": {
+        "throughput": 334.7459005954398
+      }
+    },
+    {
+      "trial_id": 1,
+      "config": {
+        "innodb_doublewrite": 0.3081364575891442,
+        "innodb_thread_concurrency": 0.6068017336408379,
+        "max_heap_table_size": 0.7359699890685233,
+        "query_prealloc_size": 0.6059441656784624,
+        "tmp_table_size": 0.6697304014402209
+      },
+      "status": "success",
+      "objectives": {
+        "throughput": 335.55318275236533
+      }
+    },
+    {
+      "trial_id": 2,
+      "config": {
+        "innodb_doublewrite": 0.43066964029126864,
+        "innodb_thread_concurrency": 0.7230120812374659,
+        "max_heap_table_size": 0.5812040171120031,
+        "query_prealloc_size": 0.39353182020537136,
+        "tmp_table_size": 0.15838287025480557
+      },
+      "status": "success",
+      "objectives": {
+        "throughput": 342.12280156709846
+      }
+    },
+    {
+      "trial_id": 3,
+      "config": {
+        "innodb_doublewrite": 0.5441770474293208,
+        "innodb_thread_concurrency": 0.2682407416493281,
+        "max_heap_table_size": 0.9948195629497427,
+        "query_prealloc_size": 0.4448541887258536,
+        "tmp_table_size": 0.9493954730932436
+      },
+      "status": "success",
+      "objectives": {
+        "throughput": 312.5031534458969
+      }
+    },
+    {
+      "trial_id": 4,
+      "config": {
+        "innodb_doublewrite": 0.4648938620973121,
+        "innodb_thread_concurrency": 0.3800149219007116,
+        "max_heap_table_size": 0.03592432939285761,
+        "query_prealloc_size": 0.3184651278536774,
+        "tmp_table_size": 0.027444857090819008
+      },
+      "status": "success",
+      "objectives": {
+        "throughput": 347.98655804630823
+      }
+    },
+    {
+      "trial_id": 5,
+      "config": {
+        "innodb_doublewrite": 0.5605103610264989,
+        "innodb_thread_concurrency": 0.023858079140782196,
+        "max_heap_table_size": 0.8917894578282874,
+        "query_prealloc_size": 0.23612340711506208,
+        "tmp_table_size": 0.5257527691460283
+      },
+      "status": "success",
+      "objectives": {
+        "throughput": 338.8876336613595
+      }
+    },
+    {
+      "trial_id": 6,
+      "config": {
+        "innodb_doublewrite": 0.5102238458372012,
+        "innodb_thread_concurrency": 0.6744796973458701,
+        "max_heap_table_size": 0.32514292876116,
+        "query_prealloc_size": 0.998683568192552,
+        "tmp_table_size": 0.13669739298646666
+      },
+      "status": "success",
+      "objectives": {
+        "throughput": 306.6979161995163
+      }
+    },
+    {
+      "trial_id": 7,
+      "config": {
+        "innodb_doublewrite": 0.7967599214216395,
+        "innodb_thread_concurrency": 0.906593649897561,
+        "max_heap_table_size": 0.18184349682314438,
+        "query_prealloc_size": 0.7344016918939777,
+        "tmp_table_size": 0.8935715365829885
+      },
+      "status": "success",
+      "objectives": {
+        "throughput": 307.31474499730075
+      }
+    },
+    {
+      "trial_id": 8,
+      "config": {
+        "innodb_doublewrite": 0.3537869778416035,
+        "innodb_thread_concurrency": 0.9619009378982257,
+        "max_heap_table_size": 0.762885483833071,
+        "query_prealloc_size": 0.9809765730721266,
+        "tmp_table_size": 0.7897476374617632
+      },
+      "status": "success",
+      "objectives": {
+        "throughput": 341.9952354942676
+      }
+    },
+    {
+      "trial_id": 9,
+      "config": {
+        "innodb_doublewrite": 0.7151508982374535,
+        "innodb_thread_concurrency": 0.530355716123445,
+        "max_heap_table_size": 0.16118465330401888,
+        "query_prealloc_size": 0.4614066977419776,
+        "tmp_table_size": 0.7540040716518721
+      },
+      "status": "success",
+      "objectives": {
+        "throughput": 310.03579161366235
+      }
+    },
+    {
+      "trial_id": 10,
+      "config": {
+        "innodb_doublewrite": 0.5008410626306549,
+        "innodb_thread_concurrency": 0.3539242048687159,
+        "max_heap_table_size": 0.4900139218501913,
+        "query_prealloc_size": 0.8315244897918123,
+        "tmp_table_size": 0.9248320720945703
+      },
+      "status": "success",
+      "objectives": {
+        "throughput": 311.03006699695584
+      }
+    },
+    {
+      "trial_id": 11,
+      "config": {
+        "innodb_doublewrite": 0.46101216488163765,
+        "innodb_thread_concurrency": 0.9203304391919288,
+        "max_heap_table_size": 0.8828509185812531,
+        "query_prealloc_size": 0.5677050704202443,
+        "tmp_table_size": 0.8997005887566257
+      },
+      "status": "success",
+      "objectives": {
+        "throughput": 335.7697290404182
+      }
+    },
+    {
+      "trial_id": 12,
+      "config": {
+        "innodb_doublewrite": 0.22181101099101086,
+        "innodb_thread_concurrency": 0.6995716380702436,
+        "max_heap_table_size": 0.7237729538720183,
+        "query_prealloc_size": 0.324667243768898,
+        "tmp_table_size": 0.48660855486158505
+      },
+      "status": "success",
+      "objectives": {
+        "throughput": 340.33758914784346
+      }
+    },
+    {
+      "trial_id": 13,
+      "config": {
+        "innodb_doublewrite": 0.26813751289981635,
+        "innodb_thread_concurrency": 0.3095631249494607,
+        "max_heap_table_size": 0.16606968549412615,
+        "query_prealloc_size": 0.9113778358680468,
+        "tmp_table_size": 0.9079404966260946
+      },
+      "status": "success",
+      "objectives": {
+        "throughput": 352.9713760883503
+      }
+    },
+    {
+      "trial_id": 14,
+      "config": {
+        "innodb_doublewrite": 0.5042488169833176,
+        "innodb_thread_concurrency": 0.6514143989667908,
+        "max_heap_table_size": 0.957361711556158,
+        "query_prealloc_size": 0.5177477561485521,
+        "tmp_table_size": 0.7062058063676047
+      },
+      "status": "success",
+      "objectives": {
+        "throughput": 312.3894487073426
+      }
+    },
+    {
+      "trial_id": 15,
+      "config": {
+        "innodb_doublewrite": 0.20781847453792723,
+        "innodb_thread_concurrency": 0.9341543591337786,
+        "max_heap_table_size": 0.5879447117944846,
+        "query_prealloc_size": 0.5118916583552825,
+        "tmp_table_size": 0.3118443245510002
+      },
+      "status": "success",
+      "objectives": {
+        "throughput": 339.1383946686511
+      }
+    },
+    {
+      "trial_id": 16,
+      "config": {
+        "innodb_doublewrite": 0.8203999947120169,
+        "innodb_thread_concurrency": 0.9076536209513208,
+        "max_heap_table_size": 0.6232650867258723,
+        "query_prealloc_size": 0.7259492874772981,
+        "tmp_table_size": 0.0753753690740454
+      },
+      "status": "success",
+      "objectives": {
+        "throughput": 306.5102592106965
+      }
+    },
+    {
+      "trial_id": 17,
+      "config": {
+        "innodb_doublewrite": 0.058758896398655724,
+        "innodb_thread_concurrency": 0.27309973233714935,
+        "max_heap_table_size": 0.1914027333041175,
+        "query_prealloc_size": 0.6529099274345497,
+        "tmp_table_size": 0.7447827242773541
+      },
+      "status": "success",
+      "objectives": {
+        "throughput": 349.4303217619046
+      }
+    },
+    {
+      "trial_id": 18,
+      "config": {
+        "innodb_doublewrite": 0.10626598264552489,
+        "innodb_thread_concurrency": 0.853943007184872,
+        "max_heap_table_size": 0.22661652924476305,
+        "query_prealloc_size": 0.52236266535893,
+        "tmp_table_size": 0.8754911714482378
+      },
+      "status": "success",
+      "objectives": {
+        "throughput": 330.92452155079366
+      }
+    },
+    {
+      "trial_id": 19,
+      "config": {
+        "innodb_doublewrite": 0.8805817593662799,
+        "innodb_thread_concurrency": 0.7169610989049753,
+        "max_heap_table_size": 0.2448319779690169,
+        "query_prealloc_size": 0.42291764838969603,
+        "tmp_table_size": 0.2104789386956465
+      },
+      "status": "success",
+      "objectives": {
+        "throughput": 301.31175396904405
+      }
+    },
+    {
+      "trial_id": 20,
+      "config": {
+        "innodb_doublewrite": 0.17188099212573238,
+        "innodb_thread_concurrency": 0.08290317740457553,
+        "max_heap_table_size": 0.03187307012674512,
+        "query_prealloc_size": 0.6727654414135418,
+        "tmp_table_size": 0.36235691130324066
+      },
+      "status": "success",
+      "objectives": {
+        "throughput": 360.7143921487049
+      }
+    },
+    {
+      "trial_id": 21,
+      "config": {
+        "innodb_doublewrite": 0.7294235074418041,
+        "innodb_thread_concurrency": 0.2556900540574426,
+        "max_heap_table_size": 0.9545621653457477,
+        "query_prealloc_size": 0.02114486972315066,
+        "tmp_table_size": 0.025344714826901038
+      },
+      "status": "success",
+      "objectives": {
+        "throughput": 329.6661403172974
+      }
+    },
+    {
+      "trial_id": 22,
+      "config": {
+        "innodb_doublewrite": 0.1837388092509762,
+        "innodb_thread_concurrency": 0.38556588135256054,
+        "max_heap_table_size": 0.8133543874022758,
+        "query_prealloc_size": 0.6914954260135907,
+        "tmp_table_size": 0.1571182886867749
+      },
+      "status": "success",
+      "objectives": {
+        "throughput": 348.1072623959946
+      }
+    },
+    {
+      "trial_id": 23,
+      "config": {
+        "innodb_doublewrite": 0.15142010875655154,
+        "innodb_thread_concurrency": 0.34420100553679467,
+        "max_heap_table_size": 0.043160995797499324,
+        "query_prealloc_size": 0.03626899424341401,
+        "tmp_table_size": 0.9900015462028011
+      },
+      "status": "success",
+      "objectives": {
+        "throughput": 348.1184377063062
+      }
+    },
+    {
+      "trial_id": 24,
+      "config": {
+        "innodb_doublewrite": 0.11311490301807692,
+        "innodb_thread_concurrency": 0.03081085762668856,
+        "max_heap_table_size": 0.6152394833248576,
+        "query_prealloc_size": 0.33721377319664525,
+        "tmp_table_size": 0.7424596231257796
+      },
+      "status": "success",
+      "objectives": {
+        "throughput": 359.3749756122034
+      }
+    },
+    {
+      "trial_id": 25,
+      "config": {
+        "innodb_doublewrite": 0.7399466637207005,
+        "innodb_thread_concurrency": 0.7556621536750643,
+        "max_heap_table_size": 0.448653262492294,
+        "query_prealloc_size": 0.9020201583500368,
+        "tmp_table_size": 0.7659699365880781
+      },
+      "status": "success",
+      "objectives": {
+        "throughput": 307.9351393614588
+      }
+    },
+    {
+      "trial_id": 26,
+      "config": {
+        "innodb_doublewrite": 0.4727795120983127,
+        "innodb_thread_concurrency": 0.6608284986570139,
+        "max_heap_table_size": 0.8624457763254278,
+        "query_prealloc_size": 0.22552757034788762,
+        "tmp_table_size": 0.7053451400507655
+      },
+      "status": "success",
+      "objectives": {
+        "throughput": 335.57273222326165
+      }
+    },
+    {
+      "trial_id": 27,
+      "config": {
+        "innodb_doublewrite": 0.44782186141915115,
+        "innodb_thread_concurrency": 0.12753646461878787,
+        "max_heap_table_size": 0.3163059267282592,
+        "query_prealloc_size": 0.8747630413479673,
+        "tmp_table_size": 0.10204910504969822
+      },
+      "status": "success",
+      "objectives": {
+        "throughput": 362.6538589226556
+      }
+    },
+    {
+      "trial_id": 28,
+      "config": {
+        "innodb_doublewrite": 0.5148026967641771,
+        "innodb_thread_concurrency": 0.9597311864871608,
+        "max_heap_table_size": 0.5849556981106074,
+        "query_prealloc_size": 0.14382946397694396,
+        "tmp_table_size": 0.3929525501051674
+      },
+      "status": "success",
+      "objectives": {
+        "throughput": 301.76025265204464
+      }
+    },
+    {
+      "trial_id": 29,
+      "config": {
+        "innodb_doublewrite": 0.4197555456557469,
+        "innodb_thread_concurrency": 0.5579501238390799,
+        "max_heap_table_size": 0.2590964232522055,
+        "query_prealloc_size": 0.018033219124926614,
+        "tmp_table_size": 0.6060779390535027
+      },
+      "status": "success",
+      "objectives": {
+        "throughput": 337.21114290875954
+      }
+    },
+    {
+      "trial_id": 30,
+      "config": {
+        "innodb_doublewrite": 0.03355624624864695,
+        "innodb_thread_concurrency": 0.09587194363318319,
+        "max_heap_table_size": 0.14056937896133426,
+        "query_prealloc_size": 0.16116501518123416,
+        "tmp_table_size": 0.0567809958231964
+      },
+      "status": "success",
+      "objectives": {
+        "throughput": 349.6479119702178
+      }
+    },
+    {
+      "trial_id": 31,
+      "config": {
+        "innodb_doublewrite": 0.9834660940475277,
+        "innodb_thread_concurrency": 0.9945252332595031,
+        "max_heap_table_size": 0.6350756975386669,
+        "query_prealloc_size": 0.9341303186968067,
+        "tmp_table_size": 0.5082591840356436
+      },
+      "status": "success",
+      "objectives": {
+        "throughput": 310.68511592765276
+      }
+    },
+    {
+      "trial_id": 32,
+      "config": {
+        "innodb_doublewrite": 0.25078076184115716,
+        "innodb_thread_concurrency": 0.6241640507547823,
+        "max_heap_table_size": 0.23247384066781007,
+        "query_prealloc_size": 0.591237345547998,
+        "tmp_table_size": 0.4446974551196967
+      },
+      "status": "success",
+      "objectives": {
+        "throughput": 335.3538896519874
+      }
+    },
+    {
+      "trial_id": 33,
+      "config": {
+        "innodb_doublewrite": 0.256609288488035,
+        "innodb_thread_concurrency": 0.5261899437805846,
+        "max_heap_table_size": 0.8002074556343963,
+        "query_prealloc_size": 0.42301692276252156,
+        "tmp_table_size": 0.7094983038293496
+      },
+      "status": "success",
+      "objectives": {
+        "throughput": 330.4801555033348
+      }
+    },
+    {
+      "trial_id": 34,
+      "config": {
+        "innodb_doublewrite": 0.4087264177220743,
+        "innodb_thread_concurrency": 0.7237696728693049,
+        "max_heap_table_size": 0.00482478105362838,
+        "query_prealloc_size": 0.111174967229976,
+        "tmp_table_size": 0.035499411707764605
+      },
+      "status": "success",
+      "objectives": {
+        "throughput": 337.56631353441395
+      }
+    },
+    {
+      "trial_id": 35,
+      "config": {
+        "innodb_doublewrite": 0.1817600783004253,
+        "innodb_thread_concurrency": 0.21735363471835922,
+        "max_heap_table_size": 0.24086551444166326,
+        "query_prealloc_size": 0.23152542937714082,
+        "tmp_table_size": 0.09977308675499097
+      },
+      "status": "success",
+      "objectives": {
+        "throughput": 355.31092430535494
+      }
+    },
+    {
+      "trial_id": 36,
+      "config": {
+        "innodb_doublewrite": 0.309726070877413,
+        "innodb_thread_concurrency": 0.21244974199448974,
+        "max_heap_table_size": 0.5207363640478975,
+        "query_prealloc_size": 0.6417587576806747,
+        "tmp_table_size": 0.46440311114384025
+      },
+      "status": "success",
+      "objectives": {
+        "throughput": 359.6495185963441
+      }
+    },
+    {
+      "trial_id": 37,
+      "config": {
+        "innodb_doublewrite": 0.7289310455775243,
+        "innodb_thread_concurrency": 0.5115013422170477,
+        "max_heap_table_size": 0.9065626767316824,
+        "query_prealloc_size": 0.433733868789665,
+        "tmp_table_size": 0.9631166548292377
+      },
+      "status": "success",
+      "objectives": {
+        "throughput": 311.420450313046
+      }
+    },
+    {
+      "trial_id": 38,
+      "config": {
+        "innodb_doublewrite": 0.41801638848245637,
+        "innodb_thread_concurrency": 0.18122506082517154,
+        "max_heap_table_size": 0.5810763060401595,
+        "query_prealloc_size": 0.5250645323197618,
+        "tmp_table_size": 0.051234743605830024
+      },
+      "status": "success",
+      "objectives": {
+        "throughput": 353.0437643180335
+      }
+    },
+    {
+      "trial_id": 39,
+      "config": {
+        "innodb_doublewrite": 0.3661839665433979,
+        "innodb_thread_concurrency": 0.9214503475918693,
+        "max_heap_table_size": 0.09378678845831834,
+        "query_prealloc_size": 0.5192096900989855,
+        "tmp_table_size": 0.8026552087053861
+      },
+      "status": "success",
+      "objectives": {
+        "throughput": 332.0006255882407
+      }
+    },
+    {
+      "trial_id": 40,
+      "config": {
+        "innodb_doublewrite": 0.9835210735533187,
+        "innodb_thread_concurrency": 0.019055104809604595,
+        "max_heap_table_size": 0.6105103371030303,
+        "query_prealloc_size": 0.3722267099341341,
+        "tmp_table_size": 0.28958076753016326
+      },
+      "status": "success",
+      "objectives": {
+        "throughput": 336.3418354111714
+      }
+    },
+    {
+      "trial_id": 41,
+      "config": {
+        "innodb_doublewrite": 0.3059223607062649,
+        "innodb_thread_concurrency": 0.672571754644766,
+        "max_heap_table_size": 0.6853106723148695,
+        "query_prealloc_size": 0.8406116871188408,
+        "tmp_table_size": 0.10116187561315682
+      },
+      "status": "success",
+      "objectives": {
+        "throughput": 342.8329758952474
+      }
+    },
+    {
+      "trial_id": 42,
+      "config": {
+        "innodb_doublewrite": 0.41067437557350694,
+        "innodb_thread_concurrency": 0.20824689335779767,
+        "max_heap_table_size": 0.01572207221433819,
+        "query_prealloc_size": 0.48586294400200114,
+        "tmp_table_size": 0.45142345920198235
+      },
+      "status": "success",
+      "objectives": {
+        "throughput": 356.8833251312201
+      }
+    },
+    {
+      "trial_id": 43,
+      "config": {
+        "innodb_doublewrite": 0.2843593509803859,
+        "innodb_thread_concurrency": 0.9352704340485111,
+        "max_heap_table_size": 0.5887450621542083,
+        "query_prealloc_size": 0.37290210504696797,
+        "tmp_table_size": 0.07378931347525297
+      },
+      "status": "success",
+      "objectives": {
+        "throughput": 344.52092072986346
+      }
+    },
+    {
+      "trial_id": 44,
+      "config": {
+        "innodb_doublewrite": 0.19235912796682386,
+        "innodb_thread_concurrency": 0.39178097036424775,
+        "max_heap_table_size": 0.07654822036002029,
+        "query_prealloc_size": 0.5715527413293309,
+        "tmp_table_size": 0.7549841142478987
+      },
+      "status": "success",
+      "objectives": {
+        "throughput": 342.58240937614187
+      }
+    },
+    {
+      "trial_id": 45,
+      "config": {
+        "innodb_doublewrite": 0.3950425601578629,
+        "innodb_thread_concurrency": 0.12177009972153996,
+        "max_heap_table_size": 0.4632243822490074,
+        "query_prealloc_size": 0.12172948013366958,
+        "tmp_table_size": 0.7535805057357183
+      },
+      "status": "success",
+      "objectives": {
+        "throughput": 353.75736813696574
+      }
+    },
+    {
+      "trial_id": 46,
+      "config": {
+        "innodb_doublewrite": 0.6409915938310651,
+        "innodb_thread_concurrency": 0.6926525466546496,
+        "max_heap_table_size": 0.08051071775362983,
+        "query_prealloc_size": 0.9596685633958122,
+        "tmp_table_size": 0.8500708739048479
+      },
+      "status": "success",
+      "objectives": {
+        "throughput": 306.53618042967105
+      }
+    },
+    {
+      "trial_id": 47,
+      "config": {
+        "innodb_doublewrite": 0.7772119346497987,
+        "innodb_thread_concurrency": 0.4979495204296175,
+        "max_heap_table_size": 0.024668772654101057,
+        "query_prealloc_size": 0.7235182799831297,
+        "tmp_table_size": 0.6591596638439184
+      },
+      "status": "success",
+      "objectives": {
+        "throughput": 299.54879030815414
+      }
+    },
+    {
+      "trial_id": 48,
+      "config": {
+        "innodb_doublewrite": 0.7987220836796798,
+        "innodb_thread_concurrency": 0.5263037448063002,
+        "max_heap_table_size": 0.35758461773097183,
+        "query_prealloc_size": 0.26894249382765256,
+        "tmp_table_size": 0.457035713951785
+      },
+      "status": "success",
+      "objectives": {
+        "throughput": 301.3107326252915
+      }
+    },
+    {
+      "trial_id": 49,
+      "config": {
+        "innodb_doublewrite": 0.8043499769193377,
+        "innodb_thread_concurrency": 0.836005573572394,
+        "max_heap_table_size": 0.47755954205652185,
+        "query_prealloc_size": 0.9320538602182384,
+        "tmp_table_size": 0.9546968469613308
+      },
+      "status": "success",
+      "objectives": {
+        "throughput": 308.9658242548557
+      }
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "template_only": true,
+  "version": "{0..6}",
+  "source_sha256": "{actual_snapshot_hash}",
+  "eligible": "{all_eight_runs_complete}",
+  "development_score": "{actual_score_or_null}",
+  "completed_runs": "{actual_integer_0_to_8}",
+  "runs": [
+    {
+      "task_alias": "{dev_001..dev_004}",
+      "seed": "{0_or_1}",
+      "completed_new": "{actual_count}",
+      "final_objective": "{actual_value_or_null}",
+      "run_score": "{actual_score_or_null}",
+      "error": "{sanitized_error_or_null}"
+    }
+  ]
+}

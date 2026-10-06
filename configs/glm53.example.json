@@ -1,0 +1,12 @@
+{
+  "model": "z-ai/glm-5.3",
+  "reasoning_effort": "max",
+  "explicit_thinking_enabled": true,
+  "approved_response_model_ids": [
+    "z-ai/glm-5.3",
+    "zhipu/glm-5.3",
+    "glm-5.3"
+  ],
+  "api_base": "https://YOUR_PROVIDER.example/v1",
+  "api_key_env": "BBO_MODEL_API_KEY"
+}

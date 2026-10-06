@@ -1,53 +1,7 @@
-"""Algorithm packages and registry."""
-
-from .agentic import (
-    ClaudeCodeBBOAlgorithm,
-    GeneralAgentBBOAlgorithm,
-    NanobotBBOAlgorithm,
-    OpenAICompatibleBBOAlgorithm,
-    PabloAlgorithm,
-)
-from .llm_based import (
-    HeuristicLlamboBackend,
-    HeuristicOproBackend,
-    LlamboAlgorithm,
-    LlamboBackend,
-    OpenAICompatibleLlamboBackend,
-    OpenAICompatibleOproBackend,
-    OproAlgorithm,
-    OproBackend,
-)
-from .llm_based.skydiscover_interleaved import SkydiscoverInterleavedAlgorithm
-from .model_based import CustomPfnsBoAlgorithm, OptunaTpeAlgorithm, Pfns4BoAlgorithm, TabPfnV2BoAlgorithm
-from .molecular import GraphGAAlgorithm, GraphGPBOAlgorithm
-from .registry import ALGORITHM_REGISTRY, AlgorithmSpec, algorithms_by_family, create_algorithm
-from .traditional import PyCmaAlgorithm, RandomSearchAlgorithm
-
-__all__ = [
-    "ALGORITHM_REGISTRY",
-    "AlgorithmSpec",
-    "ClaudeCodeBBOAlgorithm",
-    "CustomPfnsBoAlgorithm",
-    "GeneralAgentBBOAlgorithm",
-    "GraphGAAlgorithm",
-    "GraphGPBOAlgorithm",
-    "HeuristicLlamboBackend",
-    "HeuristicOproBackend",
-    "LlamboAlgorithm",
-    "LlamboBackend",
-    "OpenAICompatibleLlamboBackend",
-    "OpenAICompatibleBBOAlgorithm",
-    "OpenAICompatibleOproBackend",
-    "OptunaTpeAlgorithm",
-    "OproAlgorithm",
-    "OproBackend",
-    "NanobotBBOAlgorithm",
-    "PabloAlgorithm",
-    "Pfns4BoAlgorithm",
-    "PyCmaAlgorithm",
-    "RandomSearchAlgorithm",
-    "SkydiscoverInterleavedAlgorithm",
-    "TabPfnV2BoAlgorithm",
-    "algorithms_by_family",
-    "create_algorithm",
-]
+"""Optimization algorithms and shared numerical defaults."""
+from .registry import ALGORITHM_REGISTRY, AlgorithmSpec, create_algorithm, algorithms_by_family
+from .baseline_factory import (COMPARABLE_BASELINE_BACKENDS, COMPARABLE_BASELINE_DEFAULTS,
+    create_comparable_baseline, comparable_baseline_kwargs, normalize_comparable_backend)
+from .traditional import RandomSearchAlgorithm, SobolSearchAlgorithm, PyCmaAlgorithm
+from .model_based import GpEiAlgorithm, GitBoAlgorithm, BotorchTurboAlgorithm, OptunaTpeAlgorithm
+from .agentic import GeneralAgentBBOAlgorithm, CodexBBOAlgorithm

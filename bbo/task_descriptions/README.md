@@ -1,6 +1,5 @@
 # Task Description Standard
 
-Chinese version: `bbo/task_descriptions/README.zh.md`
 
 This repository treats task descriptions as first-class benchmark artifacts.
 Each benchmark task should have its own directory under `bbo/task_descriptions/<task_name>/`.
@@ -72,12 +71,11 @@ The benchmark loader ignores `*.zh.md` and `*.en.md` files so the runtime task c
 
 ## Included examples
 
-- `bbo/task_descriptions/branin_demo/`: executable synthetic-function demo used by the README and tests
-- `bbo/task_descriptions/sphere_demo/`: lightweight sanity-check task
+- `bbo/task_descriptions/bbob_10d/`: shared, identity-safe description package for the official 24-function COCO/BBOB suite
 - `bbo/task_descriptions/bboplace_bench/`: service-backed BBOPlace-Bench task with explicit evaluator setup instructions
 - `bbo/task_descriptions/collaborator_problem_demo/`: a more complete collaborator-facing packaging example
 - `bbo/task_descriptions/_template/`: copyable scaffold for new tasks
-- **dbtune MariaDB / sysbench (eight tasks):** directories named `knob_http_mariadb_sysbench_<workload>_<5|all>/` where `<workload>` is `read_only`, `write_only`, `read_write`, or `point_select`, and `<5|all>` is the SHAP top-5 knob JSON or the full ~197-knob list. Each includes English docs plus `*.zh.md` companions. Rebuild the image in `bbo/tasks/dbtune/docker_mariadb/` after changing the evaluator.
-- **dbtune surrogates:** directories `knob_surrogate_sysbench_5/`, `knob_surrogate_job_5/`, etc. They describe the sklearn surrogate setting; on-disk assets and code live under the unified package `bbo/tasks/dbtune/` (`assets/`, `offline_surrogate_task.py`, optional `docker_surrogate/`). Paths inside these markdown files should reference `bbo/tasks/dbtune/...` (not the removed `database/` or `surrogate/` folders).
+- **dbtune surrogates:** active dbtune descriptions are the six directories `knob_surrogate_sysbench_5/`, `knob_surrogate_sysbench_all/`, `knob_surrogate_job_5/`, `knob_surrogate_job_all/`, `knob_surrogate_pg_5/`, and `knob_surrogate_pg_20/`. They describe the sklearn surrogate setting; on-disk assets and code live under the unified package `bbo/tasks/dbtune/` (`assets/`, `offline_surrogate_task.py`, optional `docker_surrogate/`). Paths inside these markdown files should reference `bbo/tasks/dbtune/...`.
+- **Legacy dbtune MariaDB / sysbench:** `knob_http_mariadb_sysbench_*` directories are retained for provenance only and are not part of the active dbtune task set.
 
 Legacy directories such as `bbo/task_descriptions/autoresearch_train/` are retained only for provenance and are not the recommended schema.

@@ -1,0 +1,125 @@
+{
+  "row": {
+    "task": "hpo_bayesmark_diabetes_svm",
+    "family": "HPO",
+    "seed": 5,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_diabetes_svm",
+    "case_id": "hpo_bayesmark_diabetes_svm__s5"
+  },
+  "short_task": "# Diabetes Progression / SVR\n\nTask ID: `hpo_bayesmark_diabetes_svm`.\n\nTune 3 hyperparameters of SVR on Diabetes Progression to reduce cross-validation prediction mean squared error.\n\nObjective: minimize `loss`.\n\nBudget: 5 shared initial observations and 25 new evaluations (30 total).\n\n## Submission\n\n1. Submit every parameter listed below, using its declared integer or floating-point type and inclusive bounds.\n2. Submit original hyperparameter values. The transform column describes search coordinates, not a transformation to apply before submission: for example, submit 0.1 itself rather than log(0.1) or logit(0.1).\n\n## Parameters\n\n| Parameter | Meaning | Type | Allowed values | Search transform |\n| --- | --- | --- | --- | --- |\n| `C` | Inverse regularization strength of the support vector model. | float | [1.0, 1000.0] | log |\n| `gamma` | RBF kernel coefficient controlling its distance scale. | float | [0.0001, 0.001] | log |\n| `tol` | Solver stopping tolerance. | float | [1e-05, 0.1] | log |\n\n## Read details as needed\n\nThere are 3 active parameters. get_search_space supports names, query, optional annotated groups and paged index/details views.\n\nget_task_context sections: overview, submission, scoring, mechanisms, domain_knowledge, additional. Read scoring rules and relevant mechanisms before choosing a candidate.\n\nget_trial_history and get_incumbent return scores first; request parameter_names to inspect selected values.\n\nFollow instructions.md: submit_candidate accepts a full config or workspace JSON file directly; write_candidate is optional.\n",
+  "visible_task_id": "hpo_bayesmark_diabetes_svm",
+  "objective": {
+    "name": "loss",
+    "direction": "minimize"
+  },
+  "evaluation_budget": {
+    "initial_observations": 5,
+    "new_evaluations": 25,
+    "total_observations": 30
+  },
+  "task_facts": {
+    "overview": "# Diabetes Progression / SVR\n\nTask ID: `hpo_bayesmark_diabetes_svm`.\n\nTune 3 hyperparameters of SVR on Diabetes Progression to reduce cross-validation prediction mean squared error.\n\nObjective: minimize `loss`.\n\nBudget: 5 shared initial observations and 25 new evaluations (30 total).",
+    "submission": "1. Submit every parameter listed below, using its declared integer or floating-point type and inclusive bounds.\n2. Submit original hyperparameter values. The transform column describes search coordinates, not a transformation to apply before submission: for example, submit 0.1 itself rather than log(0.1) or logit(0.1).",
+    "scoring": "1. The fixed split has 353 training and 89 held-out samples, with 10 features per sample. Feedback uses five-fold KFold cross-validation on the training split, with shuffle=False.\n2. The objective is mean cross-validation squared prediction error on the released standardized regression target; lower is better.\n3. Held-out results are not optimization feedback. No extra input scaling or preprocessing is added to the released arrays. Fixed estimator settings are listed below.",
+    "mechanisms": "1. The estimator is SVR with an RBF kernel. Only C, gamma, and tol are tuned.\n2. Regularization strength decreases as C increases. gamma controls the distance scale of the RBF kernel.\n3. tol controls solver stopping tolerance; reducing it is not itself a guarantee of better cross-validation performance.\n4. This is SVR regression with fixed epsilon=0.1.",
+    "domain_knowledge": "1. C and gamma jointly affect model flexibility. Their effects depend on the dataset feature scales, which are fixed in this task.",
+    "additional": "**Dataset (`dataset`)**\n\n| Field | Value |\n| --- | --- |\n| `key` | `\"diabetes\"` |\n| `display_name` | `\"Diabetes Progression\"` |\n| `problem_type` | `\"regression\"` |\n| `total_samples` | `442` |\n| `train_samples` | `353` |\n| `test_samples` | `89` |\n| `feature_count` | `10` |\n| `class_counts_train` | `[]` |\n\n**Estimator (`estimator`)**\n\nSVR\n\n**Fixed estimator settings (`fixed_estimator_parameters`)**\n\n| Field | Value |\n| --- | --- |\n| `cache_size` | `200` |\n| `coef0` | `0.0` |\n| `degree` | `3` |\n| `epsilon` | `0.1` |\n| `kernel` | `\"rbf\"` |\n| `max_iter` | `-1` |\n| `shrinking` | `true` |\n| `verbose` | `false` |"
+  },
+  "parameter_definitions": [
+    {
+      "name": "C",
+      "type": "float",
+      "low": 1.0,
+      "high": 1000.0,
+      "log": true,
+      "default": 31.622776601683793,
+      "meaning": "Inverse regularization strength of the support vector model.",
+      "transform": "log"
+    },
+    {
+      "name": "gamma",
+      "type": "float",
+      "low": 0.0001,
+      "high": 0.001,
+      "log": true,
+      "default": 0.00031622776601683794,
+      "meaning": "RBF kernel coefficient controlling its distance scale.",
+      "transform": "log"
+    },
+    {
+      "name": "tol",
+      "type": "float",
+      "low": 1e-05,
+      "high": 0.1,
+      "log": true,
+      "default": 0.001,
+      "meaning": "Solver stopping tolerance.",
+      "transform": "log"
+    }
+  ],
+  "initial_history": [
+    {
+      "trial_id": 0,
+      "config": {
+        "C": 4.634250583294876,
+        "gamma": 0.0007425612910809719,
+        "tol": 6.712381339142237e-05
+      },
+      "status": "success",
+      "objectives": {
+        "loss": 1.02364465548832
+      }
+    },
+    {
+      "trial_id": 1,
+      "config": {
+        "C": 569.9447057339409,
+        "gamma": 0.0003079010633739317,
+        "tol": 0.0027988231123708966
+      },
+      "status": "success",
+      "objectives": {
+        "loss": 0.6961484656330198
+      }
+    },
+    {
+      "trial_id": 2,
+      "config": {
+        "C": 198.48311604777234,
+        "gamma": 0.00032992709862707064,
+        "tol": 0.00015388702589035815
+      },
+      "status": "success",
+      "objectives": {
+        "loss": 0.8612617055085181
+      }
+    },
+    {
+      "trial_id": 3,
+      "config": {
+        "C": 3.657326105917763,
+        "gamma": 0.00012043182531873047,
+        "tol": 0.008990030906808324
+      },
+      "status": "success",
+      "objectives": {
+        "loss": 1.0321493421391097
+      }
+    },
+    {
+      "trial_id": 4,
+      "config": {
+        "C": 21.08276989264785,
+        "gamma": 0.00014398255227198898,
+        "tol": 0.03309391330085812
+      },
+      "status": "success",
+      "objectives": {
+        "loss": 1.0272812760583536
+      }
+    }
+  ]
+}

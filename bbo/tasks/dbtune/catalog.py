@@ -27,7 +27,7 @@ class SurrogateBenchmarkSpec:
     default_knobs_json_filename: str
     objective_name: str
     direction: ObjectiveDirection
-    """MAXIMIZE throughput/TPS-style metrics; MINIMIZE latency for JOB workloads."""
+    """MAXIMIZE throughput/TPS-style metrics; MINIMIZE latency workloads."""
     override_env_var: str | None = None
     """If set, ``os.environ[var]`` overrides the default joblib path when present."""
 
@@ -44,7 +44,7 @@ SURROGATE_BENCHMARKS: dict[str, SurrogateBenchmarkSpec] = {
     ),
     "knob_surrogate_sysbench_all": SurrogateBenchmarkSpec(
         task_id="knob_surrogate_sysbench_all",
-        display_name="Sysbench full-knob surrogate (196 dims, throughput)",
+        display_name="Sysbench full-active-knob surrogate (throughput)",
         default_joblib_filename="SYSBENCH_all.joblib",
         default_knobs_json_filename="knobs_mysql_all_197.json",
         objective_name="throughput",
@@ -62,7 +62,7 @@ SURROGATE_BENCHMARKS: dict[str, SurrogateBenchmarkSpec] = {
     ),
     "knob_surrogate_job_all": SurrogateBenchmarkSpec(
         task_id="knob_surrogate_job_all",
-        display_name="JOB full-knob surrogate (196 dims, latency)",
+        display_name="JOB full-active-knob surrogate (95th-percentile latency)",
         default_joblib_filename="JOB_all.joblib",
         default_knobs_json_filename="knobs_mysql_all_197.json",
         objective_name="latency",
@@ -71,20 +71,20 @@ SURROGATE_BENCHMARKS: dict[str, SurrogateBenchmarkSpec] = {
     ),
     "knob_surrogate_pg_5": SurrogateBenchmarkSpec(
         task_id="knob_surrogate_pg_5",
-        display_name="PostgreSQL 5-knob surrogate (throughput-style score)",
+        display_name="PostgreSQL JOB 5-knob RF surrogate (95th-percentile latency)",
         default_joblib_filename="pg_5.joblib",
         default_knobs_json_filename="knobs_pg_top5.json",
-        objective_name="throughput",
-        direction=ObjectiveDirection.MAXIMIZE,
+        objective_name="latency",
+        direction=ObjectiveDirection.MINIMIZE,
         override_env_var="AGENTIC_BBO_PG5_SURROGATE",
     ),
     "knob_surrogate_pg_20": SurrogateBenchmarkSpec(
         task_id="knob_surrogate_pg_20",
-        display_name="PostgreSQL 20-knob surrogate (throughput-style score)",
+        display_name="PostgreSQL JOB 20-knob RF surrogate (95th-percentile latency)",
         default_joblib_filename="pg_20.joblib",
         default_knobs_json_filename="knobs_pg_top20.json",
-        objective_name="throughput",
-        direction=ObjectiveDirection.MAXIMIZE,
+        objective_name="latency",
+        direction=ObjectiveDirection.MINIMIZE,
         override_env_var="AGENTIC_BBO_PG20_SURROGATE",
     ),
 }
@@ -93,18 +93,19 @@ SURROGATE_BENCHMARKS: dict[str, SurrogateBenchmarkSpec] = {
 def resolve_bundled_joblib_path(spec: SurrogateBenchmarkSpec) -> Path:
     """Resolve path to ``.joblib``: env override, then ``assets/<filename>``."""
     if spec.override_env_var:
-        v = os.environ.get(spec.override_env_var)
-        if v:
-            return Path(v).expanduser()
-    primary = _ASSETS / spec.default_joblib_filename
-    if primary.is_file():
-        return primary
-    # Sysbench 5: tiny placeholder from build_placeholder_surrogate
-    if spec.task_id == "knob_surrogate_sysbench_5":
-        tiny = _ASSETS / "sysbench_5knob_surrogate.joblib"
-        if tiny.is_file():
-            return tiny
-    return primary
+        value = os.environ.get(spec.override_env_var)
+        if value:
+            return Path(value).expanduser()
+
+    path = _ASSETS / spec.default_joblib_filename
+    if not path.is_file():
+        raise FileNotFoundError(
+            f"Required benchmark checkpoint not found: {path}. "
+            "Download the released checkpoint described in "
+            "bbo/tasks/dbtune/assets/README.md. "
+            "Placeholder surrogates are available only through *_smoke tasks."
+        )
+    return path
 
 
 def default_knobs_json_path(spec: SurrogateBenchmarkSpec) -> Path:

@@ -1,0 +1,22 @@
+services:
+  placement:
+    build:
+      context: .
+      dockerfile: docker/bboplace/Dockerfile
+    ports:
+      - "127.0.0.1:8070:8070"
+    read_only: true
+    tmpfs:
+      - /tmp
+  dbtune:
+    profiles: [dbtune]
+    build:
+      context: bbo/tasks/dbtune
+      dockerfile: docker_surrogate/Dockerfile
+    ports:
+      - "127.0.0.1:8090:8090"
+    volumes:
+      - "${BBO_DBTUNE_ASSETS:-./bbo/tasks/dbtune/assets}:/app/assets:ro"
+    read_only: true
+    tmpfs:
+      - /tmp

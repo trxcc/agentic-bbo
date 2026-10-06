@@ -19,6 +19,16 @@ DEFAULT_BBO_TOOL_NAMES = (
     "get_search_space",
     "get_trial_history",
     "get_incumbent",
+    "get_history_overview",
+    "compare_trials",
+    "find_nearest_trials",
+    "estimate_local_effects",
+    "measure_search_coverage",
+    "summarize_objective_metrics",
+    "fit_and_check_surrogate",
+    "score_virtual_candidates",
+    "get_recent_search_actions",
+    "validate_candidate",
     "validate_candidates",
     "sample_candidates",
     "analyze_history",
@@ -199,10 +209,10 @@ def _description_seed_files(task_spec: TaskSpec) -> list[str]:
 
 
 def _infer_family(task_name: str) -> str:
+    if task_name.startswith("bbob_"):
+        return "synthetic"
     if task_name.startswith("knob_"):
         return "dbtune"
-    if task_name in {"branin_demo", "sphere_demo", "budgeted_sphere_demo"}:
-        return "synthetic"
     if task_name == "bboplace_bench":
         return "bboplace"
     return "scientific" if task_name.endswith("_demo") else "unknown"

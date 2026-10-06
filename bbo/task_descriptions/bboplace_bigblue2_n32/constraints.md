@@ -1,0 +1,3 @@
+Inputs are floored to the grid. A deterministic geometry-only repair places larger-area macros first, breaking equal-area ties by their original index. Legal positions are retained; conflicts move to the nearest legal position in physical Manhattan distance, with x/y lexicographic ties. The repair reads no netlist or wire cost. HPWL is calculated on the complete repaired layout. If repair cannot finish, the host returns the fixed worst-HPWL legal shared-initial layout and its HPWL. Every submission uses one evaluation, including fallback.
+
+Provide one complete legal configuration using the declared coordinates. Only the host returns objective observations.

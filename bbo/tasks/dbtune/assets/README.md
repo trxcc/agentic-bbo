@@ -2,7 +2,7 @@
 
 ## Download large `*.joblib` files
 
-Large checkpoint files are **not** committed to this repository. **Download** them (same filenames as below) from the shared release folder, then place them under `bbo/tasks/dbtune/assets/`:
+Large checkpoint files are **not** committed to this repository. Download them (same filenames as below) from the DBTune checkpoint folder, then place them under `bbo/tasks/dbtune/assets/`:
 
 [https://drive.google.com/drive/folders/1qalYsF7fuCB6MewOTPvr8DDZzIj7tIRt?usp=sharing](https://drive.google.com/drive/folders/1qalYsF7fuCB6MewOTPvr8DDZzIj7tIRt?usp=sharing)
 
@@ -10,7 +10,7 @@ If `joblib.load` fails with **`EOF` / `reading array data`**, the file on disk i
 
 Each `*.joblib` is a **serialized sklearn surrogate** (RF, etc.): it maps physical knob feature vectors to a predicted metric (throughput or latency). Names map to workloads: **Sysbench/MySQL** (`RF_SYSBENCH_*`, `SYSBENCH_all`), **JOB** (`RF_JOB_*`, `JOB_all`), **PostgreSQL** (`pg_5`, `pg_20`). The matching `knobs_*.json` files in this folder define the BBO search space.
 
-`python -m bbo.run` registers **HTTP** tasks `knob_http_surrogate_*` only; the table’s `task_id` column is the **canonical** name (also used by Docker `GET /task/<task_id>`). For in-process loading, call `create_surrogate_knob_task("<task_id>", ...)` from Python.
+`python -m bbo.run` registers **HTTP** tasks `knob_http_surrogate_*` only; the table’s `task_id` column is the **canonical** name used by the Docker service at `GET /task/<task_id>`.
 
 ## Joblib files ↔ benchmark `task_id`
 
@@ -23,18 +23,19 @@ Each `*.joblib` is a **serialized sklearn surrogate** (RF, etc.): it maps physic
 | `pg_5.joblib` | `knob_surrogate_pg_5` | `AGENTIC_BBO_PG5_SURROGATE` |
 | `pg_20.joblib` | `knob_surrogate_pg_20` | `AGENTIC_BBO_PG20_SURROGATE` |
 
-For Sysbench-5, you can also use a **tiny** placeholder from `python -m bbo.tasks.dbtune.build_placeholder_surrogate` (`sysbench_5knob_surrogate.joblib`) for quick smoke tests.
+Formal benchmark task IDs require the released checkpoint files above. Placeholder surrogates are reserved for separately named smoke-test tasks and are not used as fallbacks by the active benchmark ids.
 
 ## Bundled knobs JSON
 
 `knobs_*.json` files in this directory define knob bounds and types; the mapping from task id to filename is in `bbo/tasks/dbtune/catalog.py` (`default_knobs_json_filename` per benchmark).
 
-## Tests / demo
+## Service check
 
 ```bash
-uv sync --extra dev --extra surrogate
-uv run pytest tests/test_surrogate_task_smoke.py tests/test_surrogate_knob_space.py -v
-uv run python examples/run_knob_surrogate_demo.py
+export BBO_DBTUNE_ASSETS=/absolute/path/to/complete/assets
+docker compose --profile dbtune up --build -d dbtune
+curl --fail http://127.0.0.1:8090/task/knob_surrogate_sysbench_5
 ```
 
-Use `create_surrogate_task("<task_id>")` from `bbo.tasks`.
+The task endpoint loads its matching checkpoint and returns an error if an asset is
+missing or incompatible. Run `uv run pytest` for the repository's offline checks.

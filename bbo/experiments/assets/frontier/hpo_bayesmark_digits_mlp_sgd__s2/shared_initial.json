@@ -1,0 +1,87 @@
+[
+  {
+    "trial_id": 0,
+    "config": {
+      "alpha": 3.883695706453229,
+      "batch_size": 237,
+      "hidden_layer_sizes": 78,
+      "learning_rate_init": 0.000868953200496221,
+      "momentum": 0.002905446742026661,
+      "power_t": 0.2022411350919729,
+      "tol": 0.0001,
+      "validation_fraction": 0.1
+    },
+    "objectives": {
+      "accuracy": 0.16139905149051492
+    },
+    "status": "success"
+  },
+  {
+    "trial_id": 1,
+    "config": {
+      "alpha": 5.244489926659613e-05,
+      "batch_size": 126,
+      "hidden_layer_sizes": 155,
+      "learning_rate_init": 0.0033958689528894794,
+      "momentum": 0.11188740474257428,
+      "power_t": 0.6036521056579498,
+      "tol": 0.0001,
+      "validation_fraction": 0.1
+    },
+    "objectives": {
+      "accuracy": 0.3563177506775068
+    },
+    "status": "success"
+  },
+  {
+    "trial_id": 2,
+    "config": {
+      "alpha": 0.033172779961338134,
+      "batch_size": 183,
+      "hidden_layer_sizes": 125,
+      "learning_rate_init": 0.0001081414891665223,
+      "momentum": 0.016662743799897742,
+      "power_t": 0.3320582261795402,
+      "tol": 0.0001,
+      "validation_fraction": 0.1
+    },
+    "objectives": {
+      "accuracy": 0.11273954703832756
+    },
+    "status": "success"
+  },
+  {
+    "trial_id": 3,
+    "config": {
+      "alpha": 6.573466211768384,
+      "batch_size": 81,
+      "hidden_layer_sizes": 77,
+      "learning_rate_init": 0.00014173439801472388,
+      "momentum": 0.0035083438432789134,
+      "power_t": 0.12908524487849404,
+      "tol": 0.0001,
+      "validation_fraction": 0.1
+    },
+    "objectives": {
+      "accuracy": 0.2971302748741773
+    },
+    "status": "success"
+  },
+  {
+    "trial_id": 4,
+    "config": {
+      "alpha": 0.024807944140628875,
+      "batch_size": 63,
+      "hidden_layer_sizes": 124,
+      "learning_rate_init": 0.01174802017475964,
+      "momentum": 0.003187109691163522,
+      "power_t": 0.3555428098245127,
+      "tol": 0.0001,
+      "validation_fraction": 0.1
+    },
+    "objectives": {
+      "accuracy": 0.8747314169570266
+    },
+    "status": "success"
+  }
+]

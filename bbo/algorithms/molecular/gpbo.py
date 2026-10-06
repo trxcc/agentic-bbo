@@ -2,12 +2,12 @@
 
 Adapted from local PMO sources:
 
-- /home/trx/lty/mol_opt/main/gpbo/run.py
-- /home/trx/lty/mol_opt/main/gpbo/bo/gp_bo.py
-- /home/trx/lty/mol_opt/main/gpbo/gp/tanimoto_gp.py
-- /home/trx/lty/mol_opt/main/gpbo/gp/gp_utils.py
-- /home/trx/lty/mol_opt/main/gpbo/bo/acquisition_funcs.py
-- /home/trx/lty/mol_opt/main/gpbo/fingerprints.py
+- PMO mol_opt/main/gpbo/run.py
+- PMO mol_opt/main/gpbo/bo/gp_bo.py
+- PMO mol_opt/main/gpbo/gp/tanimoto_gp.py
+- PMO mol_opt/main/gpbo/gp/gp_utils.py
+- PMO mol_opt/main/gpbo/bo/acquisition_funcs.py
+- PMO mol_opt/main/gpbo/fingerprints.py
 
 The framework adaptation is the same ask/tell split used for Graph GA: GPBO
 only asks the real task for the final selected SMILES. The internal Graph GA

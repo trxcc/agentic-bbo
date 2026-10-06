@@ -1,0 +1,448 @@
+{
+  "row": {
+    "task": "coarse_geometry_task_001",
+    "seed": 4,
+    "initial": 16,
+    "budget": 48,
+    "total": 64,
+    "source_task": "coarse_geometry_task_001",
+    "visible_task_id": "task_24148cc409d9",
+    "family": "BBOB",
+    "prior": "support",
+    "id": "coarse_geometry_task_001__s4__support"
+  },
+  "documents": {
+    "protocol_version": 2,
+    "short_task": "# Anonymous scalar optimization\n\nOptimize an unknown scalar objective over 12 bounded numerical parameters. Evaluations are deterministic for this fixed task.\n\nObjective: minimize `value`.\n\nBudget: 16 shared initial observations and 48 new evaluations (64 total).\n\n## Submission\n\nProvide one complete finite configuration within the declared parameter types and bounds. Only the host returns objective observations.\n\n## Prior information\n\nUpstream evidence indicates that exactly four parameters affect the objective:\n`x2`, `x5`, `x9`, `x11`. The other eight parameters are inactive and can be held fixed\nwhile optimizing the active subspace.\n\nNo reliable upstream information is available about separability, interactions,\nmodality, conditioning, or the geometry and location of low-loss regions.\n\n## Read details as needed\n\nThere are 12 optimizable coordinates. get_search_space supports names, query, optional annotated groups and paged index/details views.\n\nget_task_context sections: overview, submission, prior_information. Read scoring rules and relevant mechanisms before choosing a candidate.\n\nget_trial_history and get_incumbent return scores first; request parameter_names to inspect selected values.\n\nFollow instructions.md: submit_candidate accepts a full config or workspace JSON file directly; write_candidate is optional.\n",
+    "sections": {
+      "overview": "# Anonymous scalar optimization\n\nOptimize an unknown scalar objective over 12 bounded numerical parameters. Evaluations are deterministic for this fixed task.\n\nObjective: minimize `value`.\n\nBudget: 16 shared initial observations and 48 new evaluations (64 total).",
+      "submission": "Provide one complete finite configuration within the declared parameter types and bounds. Only the host returns objective observations.",
+      "prior_information": "Upstream evidence indicates that exactly four parameters affect the objective:\n`x2`, `x5`, `x9`, `x11`. The other eight parameters are inactive and can be held fixed\nwhile optimizing the active subspace.\n\nNo reliable upstream information is available about separability, interactions,\nmodality, conditioning, or the geometry and location of low-loss regions."
+    },
+    "parameters": [
+      {
+        "name": "x1",
+        "type": "float",
+        "low": -5.0,
+        "high": 5.0,
+        "log": false,
+        "default": 0.0
+      },
+      {
+        "name": "x2",
+        "type": "float",
+        "low": -5.0,
+        "high": 5.0,
+        "log": false,
+        "default": 0.0
+      },
+      {
+        "name": "x3",
+        "type": "float",
+        "low": -5.0,
+        "high": 5.0,
+        "log": false,
+        "default": 0.0
+      },
+      {
+        "name": "x4",
+        "type": "float",
+        "low": -5.0,
+        "high": 5.0,
+        "log": false,
+        "default": 0.0
+      },
+      {
+        "name": "x5",
+        "type": "float",
+        "low": -5.0,
+        "high": 5.0,
+        "log": false,
+        "default": 0.0
+      },
+      {
+        "name": "x6",
+        "type": "float",
+        "low": -5.0,
+        "high": 5.0,
+        "log": false,
+        "default": 0.0
+      },
+      {
+        "name": "x7",
+        "type": "float",
+        "low": -5.0,
+        "high": 5.0,
+        "log": false,
+        "default": 0.0
+      },
+      {
+        "name": "x8",
+        "type": "float",
+        "low": -5.0,
+        "high": 5.0,
+        "log": false,
+        "default": 0.0
+      },
+      {
+        "name": "x9",
+        "type": "float",
+        "low": -5.0,
+        "high": 5.0,
+        "log": false,
+        "default": 0.0
+      },
+      {
+        "name": "x10",
+        "type": "float",
+        "low": -5.0,
+        "high": 5.0,
+        "log": false,
+        "default": 0.0
+      },
+      {
+        "name": "x11",
+        "type": "float",
+        "low": -5.0,
+        "high": 5.0,
+        "log": false,
+        "default": 0.0
+      },
+      {
+        "name": "x12",
+        "type": "float",
+        "low": -5.0,
+        "high": 5.0,
+        "log": false,
+        "default": 0.0
+      }
+    ]
+  },
+  "prefix": [
+    {
+      "trial_id": 0,
+      "config": {
+        "x1": 3.9328,
+        "x10": 1.044,
+        "x11": -4.4253,
+        "x12": -3.3674,
+        "x2": -3.9425,
+        "x3": -4.111,
+        "x4": -3.6947,
+        "x5": -3.3917,
+        "x6": -4.3815,
+        "x7": 3.0267,
+        "x8": 2.1062,
+        "x9": 1.2024
+      },
+      "value": 651.2041304464854
+    },
+    {
+      "trial_id": 1,
+      "config": {
+        "x1": -3.9778,
+        "x10": -2.7401,
+        "x11": 1.1705,
+        "x12": 4.9131,
+        "x2": 4.7206,
+        "x3": 0.13,
+        "x4": 0.4949,
+        "x5": 4.1621,
+        "x6": 2.5417,
+        "x7": -4.062,
+        "x8": -3.2424,
+        "x9": -4.7078
+      },
+      "value": 1216.2746903743625
+    },
+    {
+      "trial_id": 2,
+      "config": {
+        "x1": -2.1814,
+        "x10": -1.9511,
+        "x11": 3.9436,
+        "x12": 1.0594,
+        "x2": -1.2832,
+        "x3": -0.2311,
+        "x4": -1.3518,
+        "x5": 1.4316,
+        "x6": 2.3412,
+        "x7": 1.6667,
+        "x8": -1.8458,
+        "x9": -0.24
+      },
+      "value": 2146.5950142470892
+    },
+    {
+      "trial_id": 3,
+      "config": {
+        "x1": 2.134,
+        "x10": 4.2746,
+        "x11": -0.324,
+        "x12": -1.911,
+        "x2": 2.38,
+        "x3": 4.3562,
+        "x4": 4.4003,
+        "x5": -0.9754,
+        "x6": -0.423,
+        "x7": -0.007,
+        "x8": 2.8776,
+        "x9": 3.7658
+      },
+      "value": 265.83859544425604
+    },
+    {
+      "trial_id": 4,
+      "config": {
+        "x1": 0.4464,
+        "x10": -4.7091,
+        "x11": 2.7114,
+        "x12": -0.046,
+        "x2": -0.2242,
+        "x3": 2.2799,
+        "x4": 2.9681,
+        "x5": -1.5054,
+        "x6": -3.6587,
+        "x7": 0.5372,
+        "x8": -0.8804,
+        "x9": -1.7097
+      },
+      "value": 1353.2871132478645
+    },
+    {
+      "trial_id": 5,
+      "config": {
+        "x1": -0.3937,
+        "x10": 1.409,
+        "x11": -1.6343,
+        "x12": 1.6748,
+        "x2": 0.9975,
+        "x3": -3.1329,
+        "x4": -1.0066,
+        "x5": 1.0485,
+        "x6": 4.241,
+        "x7": -1.5344,
+        "x8": 4.3902,
+        "x9": 3.0284
+      },
+      "value": 132.83819199850024
+    },
+    {
+      "trial_id": 6,
+      "config": {
+        "x1": -3.4412,
+        "x10": 3.2724,
+        "x11": -3.1574,
+        "x12": 2.9699,
+        "x2": -2.56,
+        "x3": 3.3806,
+        "x4": 2.1858,
+        "x5": 3.3197,
+        "x6": 0.8759,
+        "x7": 4.1433,
+        "x8": 0.474,
+        "x9": 1.9981
+      },
+      "value": 358.02449322929624
+    },
+    {
+      "trial_id": 7,
+      "config": {
+        "x1": 3.4915,
+        "x10": -0.5998,
+        "x11": 2.3601,
+        "x12": -4.0609,
+        "x2": 3.6618,
+        "x3": -2.3786,
+        "x4": -3.9764,
+        "x5": -4.0873,
+        "x6": -1.5367,
+        "x7": -2.523,
+        "x8": -4.1711,
+        "x9": -3.3356
+      },
+      "value": 1366.85649512196
+    },
+    {
+      "trial_id": 8,
+      "config": {
+        "x1": 2.5992,
+        "x10": 4.8647,
+        "x11": 1.7284,
+        "x12": -2.835,
+        "x2": -2.3269,
+        "x3": 2.9858,
+        "x4": -0.3431,
+        "x5": 4.7424,
+        "x6": -1.1599,
+        "x7": 0.7916,
+        "x8": -0.1688,
+        "x9": -2.2093
+      },
+      "value": 1103.7941922745563
+    },
+    {
+      "trial_id": 9,
+      "config": {
+        "x1": -2.6539,
+        "x10": -1.2533,
+        "x11": -2.5197,
+        "x12": 3.8821,
+        "x2": 1.5487,
+        "x3": -1.489,
+        "x4": 3.5532,
+        "x5": -2.7036,
+        "x6": 1.7398,
+        "x7": -2.4519,
+        "x8": 3.8567,
+        "x9": 3.703
+      },
+      "value": 231.9469095822744
+    },
+    {
+      "trial_id": 10,
+      "config": {
+        "x1": -0.7025,
+        "x10": -3.4281,
+        "x11": -2.2465,
+        "x12": 0.2236,
+        "x2": -4.9862,
+        "x3": 1.2755,
+        "x4": -4.5615,
+        "x5": -0.4342,
+        "x6": 3.3771,
+        "x7": 4.5146,
+        "x8": 1.2101,
+        "x9": 1.2665
+      },
+      "value": 126.27412462953498
+    },
+    {
+      "trial_id": 11,
+      "config": {
+        "x1": 0.6453,
+        "x10": 0.4442,
+        "x11": 3.3297,
+        "x12": -1.8084,
+        "x2": 3.8893,
+        "x3": -2.9214,
+        "x4": 1.5223,
+        "x5": 2.1587,
+        "x6": -4.0355,
+        "x7": -3.4799,
+        "x8": -4.69,
+        "x9": -2.7415
+      },
+      "value": 1931.3218048748606
+    },
+    {
+      "trial_id": 12,
+      "config": {
+        "x1": 1.769,
+        "x10": -1.2008,
+        "x11": -0.9422,
+        "x12": -1.2321,
+        "x2": -3.5452,
+        "x3": -1.2134,
+        "x4": 1.1583,
+        "x5": 0.3592,
+        "x6": -1.8827,
+        "x7": 3.3192,
+        "x8": 1.5312,
+        "x9": 0.5294
+      },
+      "value": 77.18635564378626
+    },
+    {
+      "trial_id": 13,
+      "config": {
+        "x1": -1.7261,
+        "x10": 2.5832,
+        "x11": 4.5558,
+        "x12": 2.0496,
+        "x2": 2.7719,
+        "x3": 4.5896,
+        "x4": -3.1092,
+        "x5": -2.0869,
+        "x6": 0.0405,
+        "x7": -4.9414,
+        "x8": -2.5722,
+        "x9": -4.2114
+      },
+      "value": 3013.8655361116435
+    },
+    {
+      "trial_id": 14,
+      "config": {
+        "x1": -4.9311,
+        "x10": 2.108,
+        "x11": 0.5326,
+        "x12": 3.2276,
+        "x2": -1.2093,
+        "x3": -4.5226,
+        "x4": 3.8147,
+        "x5": -4.8156,
+        "x6": 4.8424,
+        "x7": 1.9985,
+        "x8": -2.4061,
+        "x9": -0.8374
+      },
+      "value": 372.25072238818206
+    },
+    {
+      "trial_id": 15,
+      "config": {
+        "x1": 4.9716,
+        "x10": -4.1178,
+        "x11": -3.7935,
+        "x12": -4.7391,
+        "x2": 0.1076,
+        "x3": 1.0024,
+        "x4": -2.0152,
+        "x5": 2.7773,
+        "x6": -2.9218,
+        "x7": -1.0032,
+        "x8": 3.5722,
+        "x9": 4.4991
+      },
+      "value": 719.0861758784115
+    }
+  ],
+  "definition": {
+    "active_variables": [
+      "x2",
+      "x5",
+      "x9",
+      "x11"
+    ],
+    "agent_task_id": "coarse_geometry_task_001",
+    "decoy_variables": [
+      "x1",
+      "x4",
+      "x8",
+      "x12"
+    ],
+    "family": "custom_separable_single_basin",
+    "reviewer_id": "reviewer_task_a",
+    "truth": {
+      "center": [
+        1.25,
+        -2.0,
+        0.75,
+        -1.5
+      ],
+      "quadratic_coefficients": [
+        0.7,
+        4.0,
+        18.0,
+        70.0
+      ],
+      "quartic_coefficients": [
+        0.03,
+        0.01,
+        0.002,
+        0.0005
+      ]
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "model": "deepseek-v4-flash",
+  "reasoning_effort": "high",
+  "explicit_thinking_enabled": true,
+  "approved_response_model_ids": [
+    "deepseek-v4-flash",
+    "deepseek-v4.1-flash",
+    "deepseek-flash"
+  ],
+  "api_base": "https://api.deepseek.com",
+  "api_key_env": "BBO_MODEL_API_KEY"
+}

@@ -1,9 +1,10 @@
 # Background
 
-Implementation source: `bbo/tasks/scientific/guacamol_smiles.py`, `GUACAMOL_SMILES_TASK_DEFINITIONS["guacamol_median2_smiles_demo"]`.
+Find a molecule simultaneously similar in structure to tadalafil and sildenafil.
 
-Source benchmark: `guacamol.standard_benchmarks.median_tadalafil_sildenafil`.
+## Reference molecules
 
-Representation: direct SMILES string parameter named `smiles`.
-
-Target source: `TADALAFIL_SMILES` and `SILDENAFIL_SMILES` defined in `bbo/tasks/scientific/guacamol_smiles.py`.
+| Name | SMILES |
+| --- | --- |
+| Tadalafil | `O=C1N(CC(N2C1CC3=C(C2C4=CC5=C(OCO5)C=C4)NC6=C3C=CC=C6)=O)C` |
+| Sildenafil | `CCCC1=NN(C2=C1N=C(NC2=O)C3=C(C=CC(=C3)S(=O)(=O)N4CCN(CC4)C)OCC)C` |

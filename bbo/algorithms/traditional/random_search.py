@@ -8,6 +8,7 @@ from typing import Any
 
 from ...core import Incumbent, ObjectiveDirection, TaskSpec, TrialObservation, TrialSuggestion
 from ...core.algo import Algorithm
+from ..benchmark_protocol import FixedInitializationProtocol, resolve_fixed_initialization
 
 
 class RandomSearchAlgorithm(Algorithm):
@@ -19,6 +20,8 @@ class RandomSearchAlgorithm(Algorithm):
         self._best: Incumbent | None = None
         self._primary_name: str | None = None
         self._direction = ObjectiveDirection.MINIMIZE
+        self._fixed_initialization: FixedInitializationProtocol | None = None
+        self._observation_count = 0
 
     @property
     def name(self) -> str:
@@ -30,13 +33,22 @@ class RandomSearchAlgorithm(Algorithm):
         self._best = None
         self._primary_name = task_spec.primary_objective.name
         self._direction = task_spec.primary_objective.direction
+        self._fixed_initialization = resolve_fixed_initialization(task_spec, seed=int(seed))
+        self._observation_count = 0
 
     def ask(self) -> TrialSuggestion:
         if self._task_spec is None:
             raise RuntimeError("RandomSearchAlgorithm.setup() must be called before ask().")
+        if self._fixed_initialization is not None and self._observation_count < len(
+            self._fixed_initialization.configurations
+        ):
+            suggestion = self._fixed_initialization.suggestion(self._observation_count, algorithm=self.name)
+            suggestion.metadata["random_search_phase"] = "benchmark_initialization"
+            return suggestion
         return TrialSuggestion(config=self._task_spec.search_space.sample(self._rng))
 
     def tell(self, observation: TrialObservation) -> None:
+        self._observation_count += 1
         if self._primary_name is None or not observation.success:
             return
         if self._primary_name not in observation.objectives:

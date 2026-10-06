@@ -1,9 +1,9 @@
 # Background
 
-Implementation source: `bbo/tasks/scientific/guacamol_smiles.py`, `GUACAMOL_SMILES_TASK_DEFINITIONS["guacamol_valsartan_smarts_smiles_demo"]`.
+Find a molecule containing the required structural pattern while matching the reference molecule's logP, polar surface area, and structural complexity.
 
-Source benchmark: `guacamol.standard_benchmarks.valsartan_smarts`.
+## Reference molecules
 
-Representation: direct SMILES string parameter named `smiles`.
-
-Target source: `VALSARTAN_SMARTS` and `VALSARTAN_PROPERTY_TARGET_SMILES` defined in `bbo/tasks/scientific/guacamol_smiles.py`.
+| Name | SMILES |
+| --- | --- |
+| Property reference | `NC(CC(=O)N1CCn2c(nnc2C(F)(F)F)C1)Cc1cc(F)c(F)cc1F` |

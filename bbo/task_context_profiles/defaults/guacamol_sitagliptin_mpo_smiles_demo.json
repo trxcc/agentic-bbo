@@ -1,0 +1,52 @@
+{
+  "task_id": "guacamol_sitagliptin_mpo_smiles_demo",
+  "task_name": "GuacaMol Sitagliptin MPO SMILES",
+  "family": "GuacaMol",
+  "objective": "minimize (1 - GuacaMol score)",
+  "parameters": [
+    {
+      "name": "smiles",
+      "type": "string",
+      "max_length": 512,
+      "representation": "direct SMILES"
+    }
+  ],
+  "prior_facts": [
+    "A molecular fingerprint summarizes structural features. Tanimoto similarity compares two fingerprints, from 0 for no overlap to 1 for identical fingerprint features; it does not compare SMILES text.",
+    "ECFP4 uses Morgan count fingerprints for atomic environments within two bonds (radius 2).",
+    "G(x; mu, sigma) = exp(-0.5*((x-mu)/sigma)**2). It scores 1 at the target mu and decreases smoothly away from it; sigma controls tolerance. min/max inside G makes one side unpenalized.",
+    "logP estimates preference for an oil-like phase over water. TPSA is topological polar surface area, a structural measure of polar atom contributions. Both are computed molecular descriptors, not laboratory measurements here.",
+    "A molecular formula counts each element; it does not specify bonds. Its score is the geometric mean of G(element count; target count, 1) for target elements and G(total atom count including hydrogens; target total, 2).",
+    "A low component limits the geometric mean; any zero component makes the combined score zero. Changing atoms, bonds, or rings can alter several components at once.",
+    "Different SMILES can represent the same molecule. A small text edit need not imply a small change in structure or score."
+  ],
+  "evaluation_budget": {
+    "initial": 50,
+    "optimization": 200
+  },
+  "public_reference_smiles": [
+    "Fc1cc(c(F)cc1F)CC(N)CC(=O)N3Cc2nnc(n2CC3)C(F)(F)F"
+  ],
+  "fingerprint_types": [
+    "ECFP4"
+  ],
+  "aggregation": "geometric mean",
+  "source": "https://github.com/BenevolentAI/guacamol/blob/master/guacamol/standard_benchmarks.py",
+  "background": "Find a structurally different replacement for sitagliptin that retains similar logP, polar surface area, and molecular formula.",
+  "reference_names": [
+    "Sitagliptin"
+  ],
+  "input_instructions": [
+    "Submit one molecule per candidate as a SMILES string in the smiles field, with a maximum length of 512.",
+    "SMILES represents atoms and connections on one line: C and O denote carbon and oxygen, parentheses denote branches, paired digits mark ring closures, and = denotes a double bond.",
+    "Scoring compares the molecular structures represented by the strings. Different SMILES strings can represent the same molecule."
+  ],
+  "evaluation_details": [
+    "The evaluator combines 4 component scores in [0,1] as score = (s1 * ... * s4)**(1/4). It returns loss = 1-score; lower loss is better. Only the combined objective is returned, not individual components.",
+    "s1 = G(ECFP4 similarity to sitagliptin; 0, 0.1): lower structural similarity is preferred here.",
+    "s2 = G(logP; reference logP, 0.2), with the target computed from the supplied sitagliptin structure.",
+    "s3 = G(TPSA; reference TPSA, 5), with the target computed from the same reference.",
+    "s4 is the molecular-formula score for C16H15F6N5O.",
+    "Empty or unparseable SMILES receive score 0 and loss 1. Only the listed scoring components are evaluated; this score does not measure clinical efficacy, safety, or synthetic feasibility."
+  ]
+}

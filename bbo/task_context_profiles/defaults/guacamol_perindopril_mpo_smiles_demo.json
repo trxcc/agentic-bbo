@@ -1,0 +1,49 @@
+{
+  "task_id": "guacamol_perindopril_mpo_smiles_demo",
+  "task_name": "GuacaMol Perindopril MPO SMILES",
+  "family": "GuacaMol",
+  "objective": "minimize (1 - GuacaMol score)",
+  "parameters": [
+    {
+      "name": "smiles",
+      "type": "string",
+      "max_length": 512,
+      "representation": "direct SMILES"
+    }
+  ],
+  "prior_facts": [
+    "A molecular fingerprint summarizes structural features. Tanimoto similarity compares two fingerprints, from 0 for no overlap to 1 for identical fingerprint features; it does not compare SMILES text.",
+    "ECFP4 uses Morgan count fingerprints for atomic environments within two bonds (radius 2).",
+    "G(x; mu, sigma) = exp(-0.5*((x-mu)/sigma)**2). It scores 1 at the target mu and decreases smoothly away from it; sigma controls tolerance. min/max inside G makes one side unpenalized.",
+    "An aromatic ring is a cyclic conjugated structure recognized as aromatic by the molecular toolkit; this target counts aromatic rings, not all rings.",
+    "A low component limits the geometric mean; any zero component makes the combined score zero. Changing atoms, bonds, or rings can alter several components at once.",
+    "Different SMILES can represent the same molecule. A small text edit need not imply a small change in structure or score."
+  ],
+  "evaluation_budget": {
+    "initial": 50,
+    "optimization": 200
+  },
+  "public_reference_smiles": [
+    "O=C(OCC)C(NC(C(=O)N1C(C(=O)O)CC2CCCCC12)C)CCC"
+  ],
+  "fingerprint_types": [
+    "ECFP4"
+  ],
+  "aggregation": "geometric mean",
+  "source": "https://github.com/BenevolentAI/guacamol/blob/master/guacamol/standard_benchmarks.py",
+  "background": "Find a molecule similar to perindopril while favoring two aromatic rings.",
+  "reference_names": [
+    "Perindopril"
+  ],
+  "input_instructions": [
+    "Submit one molecule per candidate as a SMILES string in the smiles field, with a maximum length of 512.",
+    "SMILES represents atoms and connections on one line: C and O denote carbon and oxygen, parentheses denote branches, paired digits mark ring closures, and = denotes a double bond.",
+    "Scoring compares the molecular structures represented by the strings. Different SMILES strings can represent the same molecule."
+  ],
+  "evaluation_details": [
+    "The evaluator combines 2 component scores in [0,1] as score = (s1 * ... * s2)**(1/2). It returns loss = 1-score; lower loss is better. Only the combined objective is returned, not individual components.",
+    "s1 is ECFP4 Tanimoto similarity to perindopril.",
+    "s2 = G(aromatic ring count; 2, 0.5).",
+    "Empty or unparseable SMILES receive score 0 and loss 1. Only the listed scoring components are evaluated; this score does not measure clinical efficacy, safety, or synthetic feasibility."
+  ]
+}

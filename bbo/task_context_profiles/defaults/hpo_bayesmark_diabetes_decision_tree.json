@@ -1,0 +1,99 @@
+{
+  "task_id": "hpo_bayesmark_diabetes_decision_tree",
+  "task_name": "Diabetes Progression / DecisionTreeRegressor",
+  "family": "HPO",
+  "objective": "minimize CV MSE",
+  "parameters": [
+    {
+      "name": "max_depth",
+      "type": "integer",
+      "low": 1,
+      "high": 15,
+      "transform": "linear",
+      "meaning": "Maximum depth of each tree."
+    },
+    {
+      "name": "min_samples_split",
+      "type": "float",
+      "low": 0.01,
+      "high": 0.99,
+      "transform": "logit",
+      "meaning": "Minimum fraction of fitting samples required to split an internal node."
+    },
+    {
+      "name": "min_samples_leaf",
+      "type": "float",
+      "low": 0.01,
+      "high": 0.49,
+      "transform": "logit",
+      "meaning": "Minimum fraction of fitting samples required in each leaf after a split."
+    },
+    {
+      "name": "min_weight_fraction_leaf",
+      "type": "float",
+      "low": 0.01,
+      "high": 0.49,
+      "transform": "logit",
+      "meaning": "Minimum fraction of total fitting-sample weight required in a leaf."
+    },
+    {
+      "name": "max_features",
+      "type": "float",
+      "low": 0.01,
+      "high": 0.99,
+      "transform": "logit",
+      "meaning": "Fraction of input features considered at each split."
+    },
+    {
+      "name": "min_impurity_decrease",
+      "type": "float",
+      "low": 0.0,
+      "high": 0.5,
+      "transform": "linear",
+      "meaning": "Minimum weighted impurity decrease required for a split."
+    }
+  ],
+  "prior_facts": [
+    "Floating-point min_samples_split and min_samples_leaf become sample-count thresholds through ceil(fraction * number of samples fitted in the fold).",
+    "Without sample_weight, samples start with equal weights. min_weight_fraction_leaf constrains the fraction of total sample weight in each leaf.",
+    "Floating-point max_features becomes max(1, int(max_features * n_features_in_)) features per split. Different inputs can select the same number of features. Finding a valid split may require inspecting more features than this number.",
+    "Depth, leaf size, minimum split size, and minimum impurity decrease jointly constrain tree growth."
+  ],
+  "evaluation_budget": {
+    "initial": 5,
+    "optimization": 25
+  },
+  "dataset": {
+    "key": "diabetes",
+    "display_name": "Diabetes Progression",
+    "problem_type": "regression",
+    "total_samples": 442,
+    "train_samples": 353,
+    "test_samples": 89,
+    "feature_count": 10,
+    "class_counts_train": []
+  },
+  "estimator": "DecisionTreeRegressor",
+  "fixed_estimator_parameters": {
+    "ccp_alpha": 0.0,
+    "criterion": "squared_error",
+    "max_leaf_nodes": null,
+    "monotonic_cst": null,
+    "random_state": 0,
+    "splitter": "best"
+  },
+  "documentation": "https://scikit-learn.org/1.8/modules/generated/sklearn.tree.DecisionTreeRegressor.html",
+  "background": "Tune 6 hyperparameters of DecisionTreeRegressor on Diabetes Progression to reduce cross-validation prediction mean squared error.",
+  "input_instructions": [
+    "Submit every parameter listed below, using its declared integer or floating-point type and inclusive bounds.",
+    "Submit original hyperparameter values. The transform column describes search coordinates, not a transformation to apply before submission: for example, submit 0.1 itself rather than log(0.1) or logit(0.1)."
+  ],
+  "evaluation_details": [
+    "The fixed split has 353 training and 89 held-out samples, with 10 features per sample. Feedback uses five-fold KFold cross-validation on the training split, with shuffle=False.",
+    "The objective is mean cross-validation squared prediction error on the released standardized regression target; lower is better.",
+    "Held-out results are not optimization feedback. No extra input scaling or preprocessing is added to the released arrays. Fixed estimator settings are listed below."
+  ],
+  "domain_knowledge": [
+    "Deeper trees can fit finer patterns but can also overfit. Larger leaf and split thresholds restrict growth; evaluate their interactions rather than assuming maximum depth always helps."
+  ]
+}

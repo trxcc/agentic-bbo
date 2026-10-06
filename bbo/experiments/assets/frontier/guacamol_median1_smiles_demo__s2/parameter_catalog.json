@@ -1,0 +1,9 @@
+[
+  {
+    "default": "",
+    "max_length": 512,
+    "min_length": 0,
+    "name": "smiles",
+    "type": "string"
+  }
+]

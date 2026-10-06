@@ -15,22 +15,23 @@ from typing import Any, Dict, List, Optional, Tuple
 import numpy as np
 from flask import Flask, jsonify, request
 
-# 1. 解决 Random Forest 路径问题
+# 1. Support legacy Random Forest module paths.
 try:
     import sklearn.ensemble.forest
     sys.modules['sklearn.ensemble._forest'] = sys.modules['sklearn.ensemble.forest']
 except ImportError:
     pass
 
-# 2. 解决 Decision Tree 路径问题 (本次的新报错)
+# 2. Support legacy Decision Tree module paths.
 try:
     import sklearn.tree.tree
     sys.modules['sklearn.tree._classes'] = sys.modules['sklearn.tree.tree']
 except ImportError:
     pass
 
-# --- 与 catalog.SURROGATE_BENCHMARKS 同步 ---
-# 每项: (joblib, objective, maximize, env_override, knobs_json 文件名) — 解码在容器内用 knobs + X-name
+# Keep these definitions synchronized with catalog.SURROGATE_BENCHMARKS.
+# Entries: (joblib, objective, maximize, env_override, knobs_json filename).
+# Decode inside the container using knob definitions and feature names.
 TASK_DEFS = {
     "knob_surrogate_sysbench_5": (
         "RF_SYSBENCH_5knob.joblib",
@@ -62,27 +63,24 @@ TASK_DEFS = {
     ),
     "knob_surrogate_pg_5": (
         "pg_5.joblib",
-        "throughput",
-        True,
+        "latency",
+        False,
         "AGENTIC_BBO_PG5_SURROGATE",
         "knobs_pg_top5.json",
     ),
     "knob_surrogate_pg_20": (
         "pg_20.joblib",
-        "throughput",
-        True,
+        "latency",
+        False,
         "AGENTIC_BBO_PG20_SURROGATE",
         "knobs_pg_top20.json",
     ),
 }
 
-# 占位模型：与 catalog.resolve_bundled_joblib_path 中 sysbench_5 回退一致
-_PLACEHOLDER_SYSBENCH5 = "sysbench_5knob_surrogate.joblib"
-
 ASSETS_DIR = os.environ.get("SURROGATE_ASSETS_DIR", os.path.join(os.path.dirname(__file__), "assets"))
 
 _eval_lock = threading.RLock()
-# model, X-names, joblib 路径, KnobSpaceFromJson（[0,1] -> 物理量）
+# Model, feature names, joblib path, KnobSpaceFromJson (unit cube to physical values).
 _models = {}  # type: Dict[str, Tuple[Any, List[str], str, Any]]
 
 app = Flask(__name__)
@@ -96,10 +94,6 @@ def _resolve_joblib_path(task_id: str, default_name: str, env_var: Optional[str]
     primary = os.path.join(ASSETS_DIR, default_name)
     if os.path.isfile(primary):
         return primary
-    if task_id == "knob_surrogate_sysbench_5":
-        tiny = os.path.join(ASSETS_DIR, _PLACEHOLDER_SYSBENCH5)
-        if os.path.isfile(tiny):
-            return tiny
     return primary
 
 
@@ -153,7 +147,7 @@ def task_metadata(task_id):
     try:
         m = _get_model_and_space(task_id)
     except Exception as ex:
-        # 503: 服务在但资源未就绪（缺 .joblib / knobs json 等），避免与“路由 404”混淆
+        # Use 503 for unavailable assets, distinct from a missing route (404).
         return jsonify({"status": "error", "message": str(ex)}), 503
     _model, names, path, _kspace = m
     _file, objective, maximize, _envk, _kfn = TASK_DEFS[task_id]
@@ -172,7 +166,7 @@ def task_metadata(task_id):
 
 @app.route("/evaluate", methods=["POST"])
 def evaluate():
-    """主路径: ``{"task_id": "...", "x": [0..1]^d}`` -> ``y``。可选 ``features``(物理) 与旧版兼容。"""
+    """Map normalized ``x`` to ``y``; accept physical ``features`` for legacy clients."""
     payload = request.get_json(silent=True) or {}
     task_id = payload.get("task_id")
     if not task_id or not isinstance(task_id, (str, bytes)):
@@ -188,7 +182,7 @@ def evaluate():
         model, names, _path, kspace = m
         _fn, obj_name, _maximize, _e, _kjson = TASK_DEFS[task_id]
 
-        # (A) 归一化 x in [0,1]^d — 与 BBO 搜索空间直接对应，推荐
+        # (A) Preferred: normalized x in [0,1]^d, matching the BBO search space.
         if "x" in payload and payload.get("x") is not None:
             xn = payload.get("x")
             if not isinstance(xn, list):
@@ -211,7 +205,7 @@ def evaluate():
             phys = kspace.decode(xnorm)
             xpred = phys.reshape(1, -1)
         else:
-            # (B) 物理量 features — 与旧版 / 与 debug 工具兼容
+            # (B) Physical features for legacy clients and debugging tools.
             feats = payload.get("features")
             if not isinstance(feats, list):
                 return (
@@ -256,7 +250,7 @@ def evaluate():
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", "8090"))
-    # 禁止 reloader：容器里若开启会起子进程，易导致端口/健康检查异常
-    # threaded=True: /evaluate 与 /health 可并发
+    # Disable the reloader to avoid subprocess-related port and health-check issues.
+    # threaded=True lets /evaluate and /health run concurrently.
     print("agentbbo surrogate HTTP listening on 0.0.0.0:{0}".format(port), file=sys.stderr, flush=True)
     app.run(host="0.0.0.0", port=port, threaded=True, use_reloader=False)

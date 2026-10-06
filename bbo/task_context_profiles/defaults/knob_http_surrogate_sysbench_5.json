@@ -1,0 +1,110 @@
+{
+  "task_id": "knob_http_surrogate_sysbench_5",
+  "task_name": "MySQL SYSBENCH 5 knobs",
+  "family": "DBTune",
+  "objective": "maximize throughput",
+  "parameters": [
+    {
+      "name": "innodb_doublewrite",
+      "type": "float",
+      "low": 0,
+      "high": 1,
+      "physical_definition": {
+        "default": "ON",
+        "enum_values": [
+          "ON",
+          "OFF"
+        ],
+        "type": "enum"
+      },
+      "meaning": "Controls doublewrite-buffer protection against incomplete data-page writes."
+    },
+    {
+      "name": "innodb_thread_concurrency",
+      "type": "float",
+      "low": 0,
+      "high": 1,
+      "physical_definition": {
+        "default": 0,
+        "max": 1000,
+        "min": 0,
+        "type": "integer"
+      },
+      "meaning": "Maximum threads concurrently inside InnoDB; physical value 0 means no such cap."
+    },
+    {
+      "name": "max_heap_table_size",
+      "type": "float",
+      "low": 0,
+      "high": 1,
+      "physical_definition": {
+        "default": 16777216,
+        "max": 1073741824,
+        "min": 16384,
+        "type": "integer"
+      },
+      "meaning": "Size limit for user-created MEMORY tables; also constrains in-memory temporary tables."
+    },
+    {
+      "name": "query_prealloc_size",
+      "type": "float",
+      "low": 0,
+      "high": 1,
+      "physical_definition": {
+        "default": 8192,
+        "max": 134217728,
+        "min": 8192,
+        "type": "integer"
+      },
+      "meaning": "Preallocated memory size for statement parsing and execution."
+    },
+    {
+      "name": "tmp_table_size",
+      "type": "float",
+      "low": 0,
+      "high": 1,
+      "physical_definition": {
+        "default": 16777216,
+        "max": 1073741824,
+        "min": 1024,
+        "type": "integer"
+      },
+      "meaning": "Size limit for internal in-memory temporary tables, jointly constrained by max_heap_table_size."
+    }
+  ],
+  "prior_facts": [
+    "Settings cover memory and caching, I/O, concurrency, query optimization, logging, replication, and authentication. Increasing every resource setting is not a general improvement rule.",
+    "Some settings apply only to particular storage engines or enabled features; some are legacy settings. A parameter's real database meaning does not establish its importance in this surrogate.",
+    "The available materials do not specify the full hardware and database-version configuration used to train the surrogate. Do not assume every described mechanism is active in this workload."
+  ],
+  "evaluation_budget": {
+    "initial": 50,
+    "optimization": 200
+  },
+  "workload": "SYSBENCH",
+  "database": "MySQL",
+  "mechanism_sources": [
+    "https://docs.oracle.com/cd/E17952_01/mysql-5.7-en/server-system-variables.html",
+    "https://docs.oracle.com/cd/E17952_01/mysql-5.7-en/innodb-parameters.html",
+    "https://docs.oracle.com/cd/E17952_01/mysql-5.7-en/replication-options-binary-log.html",
+    "https://docs.oracle.com/cd/E17952_01/mysql-5.7-en/replication-options-source.html",
+    "https://docs.oracle.com/cd/E17952_01/mysql-5.7-en/replication-options-replica.html"
+  ],
+  "units_policy": "Use the units in this task's parameter definitions. Do not invent unit conversions for entries without an explicit unit.",
+  "background": "Tune 5 MySQL settings for a SYSBENCH transactional workload to maximize predicted throughput. A fixed, previously built surrogate predicts performance; optimization does not execute a live database workload.",
+  "input_instructions": [
+    "Submit all 5 settings as floating-point numbers u in [0,1]. Names identify real database settings, but physical values and enumeration labels from the table must not be submitted directly.",
+    "For integer settings, decode as round(min + u*(max-min)). For physical floating-point settings, decode as min + u*(max-min) without rounding.",
+    "For K enumeration options, divide [0,1] into K equal-width intervals. Select enum_values[min(floor(u*K),K-1)] using zero-based indexing; u=1 selects the last option. Option order does not imply a performance ranking.",
+    "Encoding example: innodb_thread_concurrency has physical range 0...1000; input 0.25 decodes to 250. This illustrates encoding, not a recommended configuration.",
+    "Enumeration example: for innodb_doublewrite, input 0 selects \"ON\", and 1 selects \"OFF\". The order is part of the encoding, not a performance ranking."
+  ],
+  "evaluation_details": [
+    "The evaluator decodes inputs and returns surrogate-predicted throughput; higher is better.",
+    "Use the ranges, defaults, and enumeration order in this task's parameter table. A default is a reference configuration value, not a known optimum."
+  ],
+  "domain_knowledge": [
+    "Client connection limits and internal InnoDB concurrency limits are different. More concurrency may increase throughput or intensify lock and resource contention. A physical innodb_thread_concurrency value of 0 means no such concurrency cap.",
+    "Statistics and cache settings jointly affect query plans, temporary tables, and sorting. Directions suggested by these mechanisms still need to be checked against this task's evaluation feedback."
+  ]
+}

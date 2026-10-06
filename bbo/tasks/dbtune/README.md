@@ -1,37 +1,21 @@
-# `bbo.tasks.dbtune` — database knob task family
+# DBTune Evaluator
 
-This package groups **all database-related knob benchmarks** in one place, in the same spirit as
-`bbo.tasks.scientific`: a small `registry.py` documents what exists, and co-located assets live under
-clear subfolders.
+The six benchmark tasks are HTTP surrogate evaluations: Sysbench-5, Sysbench-196,
+JOB-5, JOB-196, PostgreSQL-5 and PostgreSQL-20. No live database setup or placeholder
+model is part of the paper evaluator.
 
-## Layout
+The host sends a normalized vector in the declared feature order. The Python 3.7
+service decodes it using the matching knob JSON and evaluates the released sklearn
+checkpoint. The Python 3.11 HPO environment must not deserialize these old models.
 
-| Area | Role |
-|------|------|
-| `registry.py` | Re-exports catalog metadata for offline surrogates, MySQL 5.7 task specs, and surrogate-service id maps. |
-| `catalog.py` | Offline `*.joblib` benchmark specs (`SURROGATE_BENCHMARKS`). |
-| `http_mariadb_specs.py` | Eight real **MySQL 5.7 + sysbench** dbtune tasks (`DBTUNE_MARIADB_TASK_IDS`). |
-| `http_mariadb_task.py` | Task implementation: `HttpDatabaseKnobTask`. |
-| `offline_surrogate_task.py` | In-process sklearn surrogate: `SurrogateKnobTask`. |
-| `http_surrogate_task.py` | Remote evaluator service (Python 3.7 Docker) for the same surrogates. |
-| `cli_*.py` | Hooks for `bbo.tasks.registry` / `python -m bbo.run` (no changes to `bbo.run` needed for new task ids). |
-| `assets/` | Shared `knobs_*.json` and downloaded `*.joblib` (large files are not committed; see `assets/README.md`). |
-| `docker_mariadb/` | Image for the **live** MySQL 5.7 + sysbench evaluator (Flask API, legacy path name kept for compatibility). |
-| `docker_surrogate/` | Image for **offline** sklearn inference via JSON (isolated old numpy/sklearn). |
-| `gen_task_markdown.py` | One-off generator for `bbo/task_descriptions/knob_http_mariadb_sysbench_*/` packs. |
+Download the checkpoints listed in `assets/README.md`. Use a directory containing
+both the checkpoint files and their matching `knobs_*.json` files:
 
-## Import surface
-
-User code typically uses the stable exports from `bbo.tasks` / `bbo.tasks.registry` (e.g.
-`create_task("knob_http_surrogate_sysbench_5")` or the MySQL `knob_http_mariadb_sysbench_*` ids). In-process
-`create_surrogate_knob_task("knob_surrogate_sysbench_5", ...)` remains available but is not registered on
-`python -m bbo.run`. For a
-**direct** import, prefer:
-
-```python
-from bbo.tasks.dbtune import create_dbtune_mariadb_task, create_surrogate_knob_task
+```bash
+export BBO_DBTUNE_ASSETS=/absolute/path/to/complete/assets
+docker compose --profile dbtune up --build dbtune
 ```
 
-## See also
-
-- `bbo/tasks/scientific/` — same “family + registry + data/” pattern for non-database scientific benchmarks.
+The service listens on host loopback port 8090. The task constructor checks feature
+metadata and health before accepting a run. Missing checkpoints and invalid
+responses are errors, not zero scores or random surrogate replacements.

@@ -1,0 +1,10 @@
+{
+  "all_objectives": [
+    {
+      "direction": "minimize",
+      "name": "median1_loss"
+    }
+  ],
+  "direction": "minimize",
+  "name": "median1_loss"
+}

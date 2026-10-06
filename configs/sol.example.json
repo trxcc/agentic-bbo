@@ -1,0 +1,10 @@
+{
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "max",
+  "explicit_thinking_enabled": false,
+  "approved_response_model_ids": [
+    "gpt-5.6-sol"
+  ],
+  "api_base": "https://YOUR_PROVIDER.example/v1",
+  "api_key_env": "BBO_MODEL_API_KEY"
+}

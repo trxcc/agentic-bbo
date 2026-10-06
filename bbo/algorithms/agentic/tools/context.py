@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from pathlib import Path
+from typing import Any
 
 from ....core import BBOBenchmarkManifest, Incumbent, TaskDescriptionBundle, TaskSpec, TrialObservation
 from .memory import BBOMemoryStore
@@ -25,6 +26,10 @@ class BBOToolContext:
     web_search_provider: object | None = None
     source_logger: object | None = None
     seed: int = 0
+    optimizer_backend_allowlist: tuple[str, ...] = ()
+    agent_task_id: str | None = None
+    agent_description_sections: dict[str, str] | None = None
+    agent_manifest_payload: dict[str, Any] | None = None
 
 
 __all__ = ["BBOToolContext"]

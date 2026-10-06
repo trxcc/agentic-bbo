@@ -1,3 +1,5 @@
-# Evaluation
+# Evaluation Protocol
 
-`y = model.predict(decode(x))` with `[0,1]^d` design vector `x`.
+The evaluator decodes inputs and returns surrogate-predicted latency; lower is better.
+
+Use the ranges, defaults, and enumeration order in this task's parameter table. A default is a reference configuration value, not a known optimum.

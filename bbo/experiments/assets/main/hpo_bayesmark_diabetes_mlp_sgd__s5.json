@@ -1,0 +1,200 @@
+{
+  "row": {
+    "task": "hpo_bayesmark_diabetes_mlp_sgd",
+    "family": "HPO",
+    "seed": 5,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_diabetes_mlp_sgd",
+    "case_id": "hpo_bayesmark_diabetes_mlp_sgd__s5"
+  },
+  "short_task": "# Diabetes Progression / MLPRegressor\n\nTask ID: `hpo_bayesmark_diabetes_mlp_sgd`.\n\nTune 8 hyperparameters of MLPRegressor on Diabetes Progression to reduce cross-validation prediction mean squared error.\n\nObjective: minimize `loss`.\n\nBudget: 5 shared initial observations and 25 new evaluations (30 total).\n\n## Submission\n\n1. Submit every parameter listed below, using its declared integer or floating-point type and inclusive bounds.\n2. Submit original hyperparameter values. The transform column describes search coordinates, not a transformation to apply before submission: for example, submit 0.1 itself rather than log(0.1) or logit(0.1).\n\n## Parameters\n\n| Parameter | Meaning | Type | Allowed values | Search transform |\n| --- | --- | --- | --- | --- |\n| `hidden_layer_sizes` | Number of neurons in the single hidden layer. | integer | [50, 200] | linear |\n| `alpha` | L2 regularization strength. | float | [1e-05, 10.0] | log |\n| `batch_size` | Mini-batch size for stochastic gradient descent. | integer | [10, 250] | linear |\n| `learning_rate_init` | Initial SGD learning rate before inverse scaling. | float | [1e-05, 0.1] | log |\n| `power_t` | Exponent controlling the inverse-scaling learning-rate schedule. | float | [0.1, 0.9] | logit |\n| `tol` | Minimum improvement in the internal validation score for early stopping. | float | [1e-05, 0.1] | log |\n| `momentum` | Momentum coefficient in SGD updates. | float | [0.001, 0.999] | logit |\n| `validation_fraction` | Fraction held out from each fitting fold for internal early stopping. | float | [0.1, 0.9] | logit |\n\n## Read details as needed\n\nThere are 8 active parameters. get_search_space supports names, query, optional annotated groups and paged index/details views.\n\nget_task_context sections: overview, submission, scoring, mechanisms, domain_knowledge, additional. Read scoring rules and relevant mechanisms before choosing a candidate.\n\nget_trial_history and get_incumbent return scores first; request parameter_names to inspect selected values.\n\nFollow instructions.md: submit_candidate accepts a full config or workspace JSON file directly; write_candidate is optional.\n",
+  "visible_task_id": "hpo_bayesmark_diabetes_mlp_sgd",
+  "objective": {
+    "name": "loss",
+    "direction": "minimize"
+  },
+  "evaluation_budget": {
+    "initial_observations": 5,
+    "new_evaluations": 25,
+    "total_observations": 30
+  },
+  "task_facts": {
+    "overview": "# Diabetes Progression / MLPRegressor\n\nTask ID: `hpo_bayesmark_diabetes_mlp_sgd`.\n\nTune 8 hyperparameters of MLPRegressor on Diabetes Progression to reduce cross-validation prediction mean squared error.\n\nObjective: minimize `loss`.\n\nBudget: 5 shared initial observations and 25 new evaluations (30 total).",
+    "submission": "1. Submit every parameter listed below, using its declared integer or floating-point type and inclusive bounds.\n2. Submit original hyperparameter values. The transform column describes search coordinates, not a transformation to apply before submission: for example, submit 0.1 itself rather than log(0.1) or logit(0.1).",
+    "scoring": "1. The fixed split has 353 training and 89 held-out samples, with 10 features per sample. Feedback uses five-fold KFold cross-validation on the training split, with shuffle=False.\n2. The objective is mean cross-validation squared prediction error on the released standardized regression target; lower is better.\n3. Held-out results are not optimization feedback. No extra input scaling or preprocessing is added to the released arrays. Fixed estimator settings are listed below.",
+    "mechanisms": "1. hidden_layer_sizes is one integer: the width of one hidden layer, not a list of layer sizes.\n2. The solver is SGD with inverse-scaling learning rate, early stopping, and Nesterov momentum. random_state=0 and max_iter=40 are fixed.\n3. The effective learning rate follows learning_rate_init / t**power_t; t is the training time counter, not simply an epoch index.\n4. batch_size controls mini-batches, and momentum controls the contribution of accumulated update direction. Nesterov momentum is active when momentum is positive.\n5. Each fitting fold reserves validation_fraction for internal early stopping. tol is the required validation-score improvement; n_iter_no_change=10 consecutive epochs without it trigger stopping.\n6. max_iter limits epochs, not individual gradient updates. The L2 penalty controlled by alpha is divided by the sample count when added to the loss.\n7. The fixed activation is tanh. The internal early-stopping metric is R-squared, whereas the outer objective is CV mean squared error.",
+    "domain_knowledge": "1. Learning rate, its decay, momentum, and batch size jointly affect training within the 40-epoch limit. A larger validation fraction leaves fewer samples for fitting inside each fold.",
+    "additional": "**Dataset (`dataset`)**\n\n| Field | Value |\n| --- | --- |\n| `key` | `\"diabetes\"` |\n| `display_name` | `\"Diabetes Progression\"` |\n| `problem_type` | `\"regression\"` |\n| `total_samples` | `442` |\n| `train_samples` | `353` |\n| `test_samples` | `89` |\n| `feature_count` | `10` |\n| `class_counts_train` | `[]` |\n\n**Estimator (`estimator`)**\n\nMLPRegressor\n\n**Fixed estimator settings (`fixed_estimator_parameters`)**\n\n| Field | Value |\n| --- | --- |\n| `activation` | `\"tanh\"` |\n| `beta_1` | `0.9` |\n| `beta_2` | `0.999` |\n| `early_stopping` | `true` |\n| `epsilon` | `1e-08` |\n| `learning_rate` | `\"invscaling\"` |\n| `loss` | `\"squared_error\"` |\n| `max_fun` | `15000` |\n| `max_iter` | `40` |\n| `n_iter_no_change` | `10` |\n| `nesterovs_momentum` | `true` |\n| `random_state` | `0` |\n| `shuffle` | `true` |\n| `solver` | `\"sgd\"` |\n| `verbose` | `false` |\n| `warm_start` | `false` |"
+  },
+  "parameter_definitions": [
+    {
+      "name": "hidden_layer_sizes",
+      "type": "int",
+      "low": 50,
+      "high": 200,
+      "log": false,
+      "default": 125,
+      "meaning": "Number of neurons in the single hidden layer.",
+      "transform": "linear"
+    },
+    {
+      "name": "alpha",
+      "type": "float",
+      "low": 1e-05,
+      "high": 10.0,
+      "log": true,
+      "default": 0.01,
+      "meaning": "L2 regularization strength.",
+      "transform": "log"
+    },
+    {
+      "name": "batch_size",
+      "type": "int",
+      "low": 10,
+      "high": 250,
+      "log": false,
+      "default": 130,
+      "meaning": "Mini-batch size for stochastic gradient descent.",
+      "transform": "linear"
+    },
+    {
+      "name": "learning_rate_init",
+      "type": "float",
+      "low": 1e-05,
+      "high": 0.1,
+      "log": true,
+      "default": 0.001,
+      "meaning": "Initial SGD learning rate before inverse scaling.",
+      "transform": "log"
+    },
+    {
+      "name": "power_t",
+      "type": "float",
+      "low": 0.1,
+      "high": 0.9,
+      "log": false,
+      "default": 0.5000000000000001,
+      "meaning": "Exponent controlling the inverse-scaling learning-rate schedule.",
+      "transform": "logit"
+    },
+    {
+      "name": "tol",
+      "type": "float",
+      "low": 1e-05,
+      "high": 0.1,
+      "log": true,
+      "default": 0.001,
+      "meaning": "Minimum improvement in the internal validation score for early stopping.",
+      "transform": "log"
+    },
+    {
+      "name": "momentum",
+      "type": "float",
+      "low": 0.001,
+      "high": 0.999,
+      "log": false,
+      "default": 0.4999999999999999,
+      "meaning": "Momentum coefficient in SGD updates.",
+      "transform": "logit"
+    },
+    {
+      "name": "validation_fraction",
+      "type": "float",
+      "low": 0.1,
+      "high": 0.9,
+      "log": false,
+      "default": 0.5000000000000001,
+      "meaning": "Fraction held out from each fitting fold for internal early stopping.",
+      "transform": "logit"
+    }
+  ],
+  "initial_history": [
+    {
+      "trial_id": 0,
+      "config": {
+        "hidden_layer_sizes": 58,
+        "alpha": 0.9726733314666519,
+        "batch_size": 97,
+        "learning_rate_init": 0.08275228539305446,
+        "power_t": 0.12181788428012347,
+        "tol": 0.0001,
+        "momentum": 0.015489501067079223,
+        "validation_fraction": 0.1
+      },
+      "status": "success",
+      "objectives": {
+        "loss": 0.985109719339745
+      }
+    },
+    {
+      "trial_id": 1,
+      "config": {
+        "hidden_layer_sizes": 103,
+        "alpha": 0.008314343846587151,
+        "batch_size": 248,
+        "learning_rate_init": 0.017105143900736794,
+        "power_t": 0.416621112737509,
+        "tol": 0.0001,
+        "momentum": 0.28711924847813325,
+        "validation_fraction": 0.1
+      },
+      "status": "success",
+      "objectives": {
+        "loss": 1.0400046149637268
+      }
+    },
+    {
+      "trial_id": 2,
+      "config": {
+        "hidden_layer_sizes": 86,
+        "alpha": 0.38568757833618067,
+        "batch_size": 37,
+        "learning_rate_init": 6.55569879276572e-05,
+        "power_t": 0.12991097815821193,
+        "tol": 0.0001,
+        "momentum": 0.42986071285403027,
+        "validation_fraction": 0.1
+      },
+      "status": "success",
+      "objectives": {
+        "loss": 0.9454722102065837
+      }
+    },
+    {
+      "trial_id": 3,
+      "config": {
+        "hidden_layer_sizes": 129,
+        "alpha": 0.008970486390256775,
+        "batch_size": 186,
+        "learning_rate_init": 1.1437286611053356e-05,
+        "power_t": 0.12276963806369298,
+        "tol": 0.0001,
+        "momentum": 0.30151130367796736,
+        "validation_fraction": 0.1
+      },
+      "status": "success",
+      "objectives": {
+        "loss": 1.014111643184237
+      }
+    },
+    {
+      "trial_id": 4,
+      "config": {
+        "hidden_layer_sizes": 175,
+        "alpha": 2.26186199275213,
+        "batch_size": 240,
+        "learning_rate_init": 0.0017593347551361478,
+        "power_t": 0.12201280585739721,
+        "tol": 0.0001,
+        "momentum": 0.9717039547524512,
+        "validation_fraction": 0.1
+      },
+      "status": "success",
+      "objectives": {
+        "loss": 0.9701380696964075
+      }
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+[
+  {
+    "task_alias": "dev_001",
+    "display_name": "dev_001",
+    "directory": "tasks/dev_001",
+    "initial": 20,
+    "new_evaluations": 50,
+    "optimization_seeds": [
+      0,
+      1
+    ]
+  },
+  {
+    "task_alias": "dev_002",
+    "display_name": "dev_002",
+    "directory": "tasks/dev_002",
+    "initial": 20,
+    "new_evaluations": 50,
+    "optimization_seeds": [
+      0,
+      1
+    ]
+  },
+  {
+    "task_alias": "dev_003",
+    "display_name": "dev_003",
+    "directory": "tasks/dev_003",
+    "initial": 20,
+    "new_evaluations": 50,
+    "optimization_seeds": [
+      0,
+      1
+    ]
+  },
+  {
+    "task_alias": "dev_004",
+    "display_name": "dev_004",
+    "directory": "tasks/dev_004",
+    "initial": 20,
+    "new_evaluations": 50,
+    "optimization_seeds": [
+      0,
+      1
+    ]
+  }
+]

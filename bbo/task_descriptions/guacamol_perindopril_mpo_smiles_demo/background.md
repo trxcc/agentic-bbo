@@ -1,9 +1,9 @@
 # Background
 
-Implementation source: `bbo/tasks/scientific/guacamol_smiles.py`, `GUACAMOL_SMILES_TASK_DEFINITIONS["guacamol_perindopril_mpo_smiles_demo"]`.
+Find a molecule similar to perindopril while favoring two aromatic rings.
 
-Source benchmark: `guacamol.standard_benchmarks.perindopril_rings`.
+## Reference molecules
 
-Representation: direct SMILES string parameter named `smiles`.
-
-Target source: `PERINDOPRIL_SMILES` defined in `bbo/tasks/scientific/guacamol_smiles.py`.
+| Name | SMILES |
+| --- | --- |
+| Perindopril | `O=C(OCC)C(NC(C(=O)N1C(C(=O)O)CC2CCCCC12)C)CCC` |

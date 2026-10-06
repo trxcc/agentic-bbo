@@ -1,9 +1,10 @@
 # Background
 
-Implementation source: `bbo/tasks/scientific/guacamol_smiles.py`, `GUACAMOL_SMILES_TASK_DEFINITIONS["guacamol_median1_smiles_demo"]`.
+Find a molecule whose structure is simultaneously similar to camphor and menthol.
 
-Source benchmark: `guacamol.standard_benchmarks.median_camphor_menthol`.
+## Reference molecules
 
-Representation: direct SMILES string parameter named `smiles`.
-
-Target SMILES sources: `CAMPHOR_SMILES` and `MENTHOL_SMILES` imported from `bbo/tasks/scientific/guacamol_selfies.py`.
+| Name | SMILES |
+| --- | --- |
+| Camphor | `CC1(C)C2CCC1(C)C(=O)C2` |
+| Menthol | `CC(C)C1CCC(C)CC1O` |

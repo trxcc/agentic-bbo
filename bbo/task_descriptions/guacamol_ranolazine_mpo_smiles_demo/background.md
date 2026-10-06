@@ -1,9 +1,9 @@
 # Background
 
-Implementation source: `bbo/tasks/scientific/guacamol_smiles.py`, `GUACAMOL_SMILES_TASK_DEFINITIONS["guacamol_ranolazine_mpo_smiles_demo"]`.
+Find a molecule similar to ranolazine while favoring logP at least 7, polar surface area at least 95, and one fluorine atom.
 
-Source benchmark: `guacamol.standard_benchmarks.ranolazine_mpo`.
+## Reference molecules
 
-Representation: direct SMILES string parameter named `smiles`.
-
-Target source: `RANOLAZINE_SMILES` defined in `bbo/tasks/scientific/guacamol_smiles.py`.
+| Name | SMILES |
+| --- | --- |
+| Ranolazine | `COc1ccccc1OCC(O)CN2CCN(CC(=O)Nc3c(C)cccc3C)CC2` |

@@ -15,6 +15,7 @@ from ...core import (
     TrialSuggestion,
     build_continuous_converter,
 )
+from ..benchmark_protocol import FixedInitializationProtocol, resolve_fixed_initialization
 
 
 @dataclass
@@ -32,7 +33,7 @@ class PyCmaAlgorithm(ExternalOptimizerAdapter):
         self,
         *,
         sigma_fraction: float = 0.25,
-        popsize: int | None = None,
+        popsize: int | None = 2,
         inopts: dict[str, Any] | None = None,
         failure_penalty: float = 1e12,
     ) -> None:
@@ -49,6 +50,10 @@ class PyCmaAlgorithm(ExternalOptimizerAdapter):
         self._current_batch_size: int = 0
         self._batch_id: int = 0
         self._continuous_converter: ContinuousSearchSpaceConverter | None = None
+        self._seed = 0
+        self._fixed_initialization: FixedInitializationProtocol | None = None
+        self._initialization_count = 0
+        self._seeded_observation_count = 0
 
     @property
     def name(self) -> str:
@@ -58,6 +63,7 @@ class PyCmaAlgorithm(ExternalOptimizerAdapter):
         if len(task_spec.objectives) != 1:
             raise ValueError("PyCmaAlgorithm currently supports exactly one objective.")
         self.bind_task_spec(task_spec)
+        self._seed = int(seed)
         search_space = self.require_search_space()
         try:
             bounds = search_space.numeric_bounds()
@@ -65,7 +71,31 @@ class PyCmaAlgorithm(ExternalOptimizerAdapter):
         except TypeError:
             self._continuous_converter = build_continuous_converter(search_space, strategy="onehot")
             bounds = self._continuous_converter.continuous_bounds()
-        initial_config = task_spec.metadata.get("cma_initial_config", search_space.defaults())
+        self._fixed_initialization = resolve_fixed_initialization(
+            task_spec, seed=self._seed
+        )
+        self._strategy = None
+        self._pending = []
+        self._evaluated_batch = {}
+        self._current_batch_size = 0
+        self._batch_id = 0
+        self._initialization_count = 0
+        self._seeded_observation_count = 0
+
+    def _initialize_strategy(self) -> None:
+        search_space = self.require_search_space()
+        if self._continuous_converter is None:
+            bounds = search_space.numeric_bounds()
+        else:
+            bounds = self._continuous_converter.continuous_bounds()
+        incumbents = self.incumbents()
+        initial_config = (
+            dict(incumbents[0].config)
+            if incumbents
+            else self._task_spec.metadata.get(
+                "cma_initial_config", search_space.defaults()
+            )
+        )
         if self._continuous_converter is None:
             x0 = search_space.to_numeric_vector(initial_config)
         else:
@@ -76,7 +106,7 @@ class PyCmaAlgorithm(ExternalOptimizerAdapter):
 
         options = {
             "bounds": [bounds[:, 0].tolist(), bounds[:, 1].tolist()],
-            "seed": int(seed),
+            "seed": self._seed,
             "verbose": -9,
             "verb_disp": 0,
         }
@@ -91,6 +121,18 @@ class PyCmaAlgorithm(ExternalOptimizerAdapter):
         self._batch_id = 0
 
     def ask(self) -> TrialSuggestion:
+        if (
+            self._fixed_initialization is not None
+            and self._initialization_count
+            < len(self._fixed_initialization.configurations)
+        ):
+            suggestion = self._fixed_initialization.suggestion(
+                self._initialization_count, algorithm=self.name
+            )
+            suggestion.metadata["pycma_phase"] = "benchmark_initialization"
+            return suggestion
+        if self._strategy is None:
+            self._initialize_strategy()
         strategy = self._require_strategy()
         search_space = self.require_search_space()
         converter = self._continuous_converter
@@ -100,25 +142,30 @@ class PyCmaAlgorithm(ExternalOptimizerAdapter):
             self._evaluated_batch = {}
             self._current_batch_size = len(raw_vectors)
             for candidate_index, raw_vector in enumerate(raw_vectors):
+                latent_vector = np.asarray(raw_vector, dtype=float)
                 if converter is None:
-                    config = search_space.from_numeric_vector(raw_vector, clip=True)
-                    clipped_vector = search_space.to_numeric_vector(config)
+                    config = search_space.from_numeric_vector(latent_vector, clip=True)
                 else:
-                    config = converter.decode_vector(raw_vector, clip=True)
-                    clipped_vector = converter.encode_vector(config)
+                    config = converter.decode_vector(latent_vector, clip=True)
                 suggestion = TrialSuggestion(
                     config=config,
                     metadata={
                         "pycma_batch_id": self._batch_id,
                         "pycma_candidate_index": candidate_index,
-                        "pycma_vector": clipped_vector.tolist(),
+                        "pycma_seeded_observations": self._seeded_observation_count,
+                        # Fitness belongs to the exact latent point returned by
+                        # CMA ask(). Integer rounding and categorical decoding
+                        # only affect the evaluated config. Telling CMA the
+                        # re-encoded config turns every rounded point into an
+                        # injected solution and corrupts ask/tell bookkeeping.
+                        "pycma_vector": latent_vector.tolist(),
                     },
                 )
                 self._pending.append(
                     _PendingCandidate(
                         batch_id=self._batch_id,
                         candidate_index=candidate_index,
-                        vector=clipped_vector,
+                        vector=latent_vector,
                         suggestion=suggestion,
                     )
                 )
@@ -131,6 +178,14 @@ class PyCmaAlgorithm(ExternalOptimizerAdapter):
         )
 
     def tell(self, observation: TrialObservation) -> None:
+        if (
+            self._fixed_initialization is not None
+            and self._initialization_count
+            < len(self._fixed_initialization.configurations)
+        ):
+            self._initialization_count += 1
+            self.update_best_incumbent(observation)
+            return
         strategy = self._require_strategy()
         candidate_index = observation.suggestion.metadata.get("pycma_candidate_index")
         if observation.suggestion.metadata.get("pycma_batch_id") is None or candidate_index is None:
@@ -155,6 +210,23 @@ class PyCmaAlgorithm(ExternalOptimizerAdapter):
             strategy.tell(vectors, fitnesses)
             self._evaluated_batch = {}
             self._current_batch_size = 0
+
+    def seed(self, observation: TrialObservation) -> None:
+        """Warm-start CMA from shared/external history without inventing fitness."""
+
+        if (
+            self._fixed_initialization is not None
+            and self._initialization_count
+            < len(self._fixed_initialization.configurations)
+        ):
+            expected = self.ask()
+            self.assert_matching_config(
+                expected.config, observation.suggestion.config
+            )
+            self.tell(self.make_replay_observation(expected, observation))
+            return
+        self._seeded_observation_count += 1
+        self.update_best_incumbent(observation)
 
     def _require_strategy(self) -> cma.CMAEvolutionStrategy:
         if self._strategy is None:

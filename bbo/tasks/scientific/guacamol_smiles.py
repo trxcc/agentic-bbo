@@ -21,27 +21,14 @@ from ...core import (
     TrialStatus,
     TrialSuggestion,
 )
-from .guacamol import GUACAMOL_SOURCE_REPO_URL
-from .guacamol_selfies import (
-    ARIPIPRAZOLE_SMILES,
-    CAMPHOR_SMILES,
-    CELECOXIB_SMILES,
-    FEXOFENADINE_SMILES,
-    MENTHOL_SMILES,
-    TROGLITAZONE_SMILES,
-)
-
 PACKAGE_ROOT = Path(__file__).resolve().parents[2]
 TASK_DESCRIPTION_ROOT = PACKAGE_ROOT / "task_descriptions"
 GUACAMOL_SMILES_DEFAULT_MAX_EVALUATIONS = 40
 GUACAMOL_SMILES_DEFAULT_MAX_LENGTH = 512
 GUACAMOL_SMILES_SCHEMA_DEFAULT = ""
 GUACAMOL_SMILES_SOURCE = "guacamol.goal_directed_suite"
+GUACAMOL_SOURCE_REPO_URL = "https://github.com/BenevolentAI/guacamol"
 
-GUACAMOL_QED_SMILES_TASK_NAME = "guacamol_qed_smiles_demo"
-GUACAMOL_CELECOXIB_REDISCOVERY_SMILES_TASK_NAME = "guacamol_celecoxib_rediscovery_smiles_demo"
-GUACAMOL_TROGLITAZONE_REDISCOVERY_SMILES_TASK_NAME = "guacamol_troglitazone_rediscovery_smiles_demo"
-GUACAMOL_ARIPIPRAZOLE_SIMILARITY_SMILES_TASK_NAME = "guacamol_aripiprazole_similarity_smiles_demo"
 GUACAMOL_FEXOFENADINE_MPO_SMILES_TASK_NAME = "guacamol_fexofenadine_mpo_smiles_demo"
 GUACAMOL_MEDIAN1_SMILES_TASK_NAME = "guacamol_median1_smiles_demo"
 GUACAMOL_AMLODIPINE_MPO_SMILES_TASK_NAME = "guacamol_amlodipine_mpo_smiles_demo"
@@ -53,6 +40,9 @@ GUACAMOL_SITAGLIPTIN_MPO_SMILES_TASK_NAME = "guacamol_sitagliptin_mpo_smiles_dem
 GUACAMOL_VALSARTAN_SMARTS_SMILES_TASK_NAME = "guacamol_valsartan_smarts_smiles_demo"
 GUACAMOL_ZALEPLON_MPO_SMILES_TASK_NAME = "guacamol_zaleplon_mpo_smiles_demo"
 
+FEXOFENADINE_SMILES = "CC(C)(C(=O)O)c1ccc(cc1)C(O)CCCN2CCC(CC2)C(O)(c3ccccc3)c4ccccc4"
+CAMPHOR_SMILES = "CC1(C)C2CCC1(C)C(=O)C2"
+MENTHOL_SMILES = "CC(C)C1CCC(C)CC1O"
 AMLODIPINE_SMILES = r"Clc1ccccc1C2C(=C(/N/C(=C2/C(=O)OCC)COCCN)C)\C(=O)OC"
 OSIMERTINIB_SMILES = "COc1cc(N(C)CCN(C)C)c(NC(=O)C=C)cc1Nc2nccc(n2)c3cn(C)c4ccccc34"
 PERINDOPRIL_SMILES = "O=C(OCC)C(NC(C(=O)N1C(C(=O)O)CC2CCCCC12)C)CCC"
@@ -290,14 +280,6 @@ class GuacamolSmilesTask(Task):
 
     def _score_mol(self, mol: Any) -> float:
         name = self.definition.task_name
-        if name == GUACAMOL_QED_SMILES_TASK_NAME:
-            return float(self._descriptors.qed(mol))
-        if name == GUACAMOL_CELECOXIB_REDISCOVERY_SMILES_TASK_NAME:
-            return self._clipped_score(self._tanimoto(mol, CELECOXIB_SMILES, "ECFP4"), 1.0)
-        if name == GUACAMOL_TROGLITAZONE_REDISCOVERY_SMILES_TASK_NAME:
-            return self._clipped_score(self._tanimoto(mol, TROGLITAZONE_SMILES, "ECFP4"), 1.0)
-        if name == GUACAMOL_ARIPIPRAZOLE_SIMILARITY_SMILES_TASK_NAME:
-            return self._clipped_score(self._tanimoto(mol, ARIPIPRAZOLE_SMILES, "FCFP4"), 0.75)
         if name == GUACAMOL_FEXOFENADINE_MPO_SMILES_TASK_NAME:
             similarity = self._clipped_score(self._tanimoto(mol, FEXOFENADINE_SMILES, "AP"), 0.8)
             tpsa_over_90 = self._max_gaussian(float(self._rd_mol_descriptors.CalcTPSA(mol)), 90.0, 10.0)
@@ -447,44 +429,6 @@ def _definition(
 
 
 GUACAMOL_SMILES_TASK_DEFINITIONS: dict[str, GuacamolSmilesBenchmarkDefinition] = {
-    GUACAMOL_QED_SMILES_TASK_NAME: _definition(
-        GUACAMOL_QED_SMILES_TASK_NAME,
-        "GuacaMol QED SMILES",
-        "guacamol_qed",
-        "guacamol.standard_benchmarks.qed_benchmark",
-        category="property",
-        description="Maximize RDKit QED.",
-    ),
-    GUACAMOL_CELECOXIB_REDISCOVERY_SMILES_TASK_NAME: _definition(
-        GUACAMOL_CELECOXIB_REDISCOVERY_SMILES_TASK_NAME,
-        "GuacaMol Celecoxib Rediscovery SMILES",
-        "celecoxib_rediscovery",
-        "guacamol.standard_benchmarks.similarity(rediscovery=True, name='Celecoxib')",
-        target_smiles=(CELECOXIB_SMILES,),
-        fingerprint_types=("ECFP4",),
-        category="rediscovery",
-        description="Rediscover Celecoxib with ECFP4 Tanimoto similarity.",
-    ),
-    GUACAMOL_TROGLITAZONE_REDISCOVERY_SMILES_TASK_NAME: _definition(
-        GUACAMOL_TROGLITAZONE_REDISCOVERY_SMILES_TASK_NAME,
-        "GuacaMol Troglitazone Rediscovery SMILES",
-        "troglitazone_rediscovery",
-        "guacamol.standard_benchmarks.similarity(rediscovery=True, name='Troglitazone')",
-        target_smiles=(TROGLITAZONE_SMILES,),
-        fingerprint_types=("ECFP4",),
-        category="rediscovery",
-        description="Rediscover Troglitazone with ECFP4 Tanimoto similarity.",
-    ),
-    GUACAMOL_ARIPIPRAZOLE_SIMILARITY_SMILES_TASK_NAME: _definition(
-        GUACAMOL_ARIPIPRAZOLE_SIMILARITY_SMILES_TASK_NAME,
-        "GuacaMol Aripiprazole Similarity SMILES",
-        "aripiprazole_similarity",
-        "guacamol.standard_benchmarks.similarity(name='Aripiprazole', fp_type='FCFP4', threshold=0.75)",
-        target_smiles=(ARIPIPRAZOLE_SMILES,),
-        fingerprint_types=("FCFP4",),
-        category="similarity",
-        description="Generate molecules similar to Aripiprazole using thresholded FCFP4 Tanimoto similarity.",
-    ),
     GUACAMOL_FEXOFENADINE_MPO_SMILES_TASK_NAME: _definition(
         GUACAMOL_FEXOFENADINE_MPO_SMILES_TASK_NAME,
         "GuacaMol Fexofenadine MPO SMILES",
@@ -616,10 +560,6 @@ def _factory(task_name: str) -> Callable[..., GuacamolSmilesTask]:
     return create_task
 
 
-create_guacamol_qed_smiles_task = _factory(GUACAMOL_QED_SMILES_TASK_NAME)
-create_guacamol_celecoxib_rediscovery_smiles_task = _factory(GUACAMOL_CELECOXIB_REDISCOVERY_SMILES_TASK_NAME)
-create_guacamol_troglitazone_rediscovery_smiles_task = _factory(GUACAMOL_TROGLITAZONE_REDISCOVERY_SMILES_TASK_NAME)
-create_guacamol_aripiprazole_similarity_smiles_task = _factory(GUACAMOL_ARIPIPRAZOLE_SIMILARITY_SMILES_TASK_NAME)
 create_guacamol_fexofenadine_mpo_smiles_task = _factory(GUACAMOL_FEXOFENADINE_MPO_SMILES_TASK_NAME)
 create_guacamol_median1_smiles_task = _factory(GUACAMOL_MEDIAN1_SMILES_TASK_NAME)
 create_guacamol_amlodipine_mpo_smiles_task = _factory(GUACAMOL_AMLODIPINE_MPO_SMILES_TASK_NAME)
@@ -635,14 +575,11 @@ GUACAMOL_SMILES_TASK_NAMES: tuple[str, ...] = tuple(GUACAMOL_SMILES_TASK_DEFINIT
 
 __all__ = [
     "GUACAMOL_AMLODIPINE_MPO_SMILES_TASK_NAME",
-    "GUACAMOL_ARIPIPRAZOLE_SIMILARITY_SMILES_TASK_NAME",
-    "GUACAMOL_CELECOXIB_REDISCOVERY_SMILES_TASK_NAME",
     "GUACAMOL_FEXOFENADINE_MPO_SMILES_TASK_NAME",
     "GUACAMOL_MEDIAN1_SMILES_TASK_NAME",
     "GUACAMOL_MEDIAN2_SMILES_TASK_NAME",
     "GUACAMOL_OSIMERTINIB_MPO_SMILES_TASK_NAME",
     "GUACAMOL_PERINDOPRIL_MPO_SMILES_TASK_NAME",
-    "GUACAMOL_QED_SMILES_TASK_NAME",
     "GUACAMOL_RANOLAZINE_MPO_SMILES_TASK_NAME",
     "GUACAMOL_SITAGLIPTIN_MPO_SMILES_TASK_NAME",
     "GUACAMOL_SMILES_DEFAULT_MAX_EVALUATIONS",
@@ -650,25 +587,20 @@ __all__ = [
     "GUACAMOL_SMILES_SCHEMA_DEFAULT",
     "GUACAMOL_SMILES_TASK_DEFINITIONS",
     "GUACAMOL_SMILES_TASK_NAMES",
-    "GUACAMOL_TROGLITAZONE_REDISCOVERY_SMILES_TASK_NAME",
     "GUACAMOL_VALSARTAN_SMARTS_SMILES_TASK_NAME",
     "GUACAMOL_ZALEPLON_MPO_SMILES_TASK_NAME",
     "GuacamolSmilesBenchmarkDefinition",
     "GuacamolSmilesTask",
     "GuacamolSmilesTaskConfig",
     "create_guacamol_amlodipine_mpo_smiles_task",
-    "create_guacamol_aripiprazole_similarity_smiles_task",
-    "create_guacamol_celecoxib_rediscovery_smiles_task",
     "create_guacamol_fexofenadine_mpo_smiles_task",
     "create_guacamol_median1_smiles_task",
     "create_guacamol_median2_smiles_task",
     "create_guacamol_osimertinib_mpo_smiles_task",
     "create_guacamol_perindopril_mpo_smiles_task",
-    "create_guacamol_qed_smiles_task",
     "create_guacamol_ranolazine_mpo_smiles_task",
     "create_guacamol_sitagliptin_mpo_smiles_task",
     "create_guacamol_smiles_task",
-    "create_guacamol_troglitazone_rediscovery_smiles_task",
     "create_guacamol_valsartan_smarts_smiles_task",
     "create_guacamol_zaleplon_mpo_smiles_task",
 ]

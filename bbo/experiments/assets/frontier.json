@@ -1,0 +1,52 @@
+[
+  {
+    "task": "hpo_bayesmark_digits_mlp_sgd",
+    "family": "HPO",
+    "seed": 2,
+    "initial": 5,
+    "budget": 25,
+    "total": 30,
+    "visible_task_id": "hpo_bayesmark_digits_mlp_sgd",
+    "id": "hpo_bayesmark_digits_mlp_sgd__s2"
+  },
+  {
+    "task": "knob_http_surrogate_sysbench_all",
+    "family": "DBTune",
+    "seed": 2,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "knob_http_surrogate_sysbench_all",
+    "id": "knob_http_surrogate_sysbench_all__s2"
+  },
+  {
+    "task": "guacamol_median1_smiles_demo",
+    "family": "GuacaMol",
+    "seed": 2,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "guacamol_median1_smiles_demo",
+    "id": "guacamol_median1_smiles_demo__s2"
+  },
+  {
+    "task": "bbob_f15_d10",
+    "family": "BBOB",
+    "seed": 2,
+    "initial": 20,
+    "budget": 100,
+    "total": 120,
+    "visible_task_id": "task_005",
+    "id": "bbob_f15_d10__s2"
+  },
+  {
+    "task": "bboplace_bigblue1_n32",
+    "family": "BBOPlace",
+    "seed": 2,
+    "initial": 50,
+    "budget": 200,
+    "total": 250,
+    "visible_task_id": "bboplace_bigblue1_n32",
+    "id": "bboplace_bigblue1_n32__s2"
+  }
+]

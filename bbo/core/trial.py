@@ -80,6 +80,24 @@ class TrialObservation:
     def success(self) -> bool:
         return self.status == TrialStatus.SUCCESS
 
+    def to_dict(self) -> dict[str, Any]:
+        """Return a JSON-serializable representation of this observation."""
+
+        return {
+            "trial_id": self.suggestion.trial_id,
+            "config": dict(self.suggestion.config),
+            "budget": self.suggestion.budget,
+            "suggestion_metadata": dict(self.suggestion.metadata),
+            "status": self.status.value,
+            "objectives": dict(self.objectives),
+            "metrics": dict(self.metrics),
+            "elapsed_seconds": self.elapsed_seconds,
+            "error_type": self.error_type,
+            "error_message": self.error_message,
+            "timestamp": self.timestamp,
+            "metadata": dict(self.metadata),
+        }
+
     @classmethod
     def from_evaluation(
         cls,

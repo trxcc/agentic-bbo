@@ -1,0 +1,107 @@
+{
+  "task_id": "knob_http_surrogate_pg_5",
+  "task_name": "PostgreSQL JOB 5 knobs",
+  "family": "DBTune",
+  "objective": "minimize latency",
+  "parameters": [
+    {
+      "name": "backend_flush_after",
+      "type": "float",
+      "low": 0,
+      "high": 1,
+      "physical_definition": {
+        "default": 0,
+        "type": "integer",
+        "min": 0,
+        "max": 256
+      },
+      "meaning": "Amount written by one backend before requesting operating-system writeback."
+    },
+    {
+      "name": "checkpoint_completion_target",
+      "type": "float",
+      "low": 0,
+      "high": 1,
+      "physical_definition": {
+        "default": 0.5,
+        "type": "float",
+        "min": 0.0,
+        "max": 1.0
+      },
+      "meaning": "Fraction of the checkpoint interval over which checkpoint writes are spread."
+    },
+    {
+      "name": "max_worker_processes",
+      "type": "float",
+      "low": 0,
+      "high": 1,
+      "physical_definition": {
+        "default": 8,
+        "type": "integer",
+        "min": 0,
+        "max": 262143
+      },
+      "meaning": "Maximum background worker processes supported by the server."
+    },
+    {
+      "name": "shared_buffers",
+      "type": "float",
+      "low": 0,
+      "high": 1,
+      "physical_definition": {
+        "default": 1024,
+        "type": "integer",
+        "min": 16,
+        "max": 1000000
+      },
+      "meaning": "Memory allocated to shared database-page buffers."
+    },
+    {
+      "name": "wal_buffers",
+      "type": "float",
+      "low": 0,
+      "high": 1,
+      "physical_definition": {
+        "default": -1,
+        "type": "integer",
+        "min": -1,
+        "max": 262143
+      },
+      "meaning": "Shared buffer space for WAL data; physical value -1 selects automatic sizing."
+    }
+  ],
+  "prior_facts": [
+    "Settings cover memory and caching, I/O, concurrency, query optimization, logging, replication, and authentication. Increasing every resource setting is not a general improvement rule.",
+    "Some settings apply only to particular storage engines or enabled features; some are legacy settings. A parameter's real database meaning does not establish its importance in this surrogate.",
+    "The available materials do not specify the full hardware and database-version configuration used to train the surrogate. Do not assume every described mechanism is active in this workload."
+  ],
+  "evaluation_budget": {
+    "initial": 50,
+    "optimization": 200
+  },
+  "workload": "JOB",
+  "database": "PostgreSQL",
+  "mechanism_sources": [
+    "https://www.postgresql.org/docs/14/runtime-config-resource.html",
+    "https://www.postgresql.org/docs/14/runtime-config-query.html",
+    "https://www.postgresql.org/docs/14/runtime-config-wal.html",
+    "https://www.postgresql.org/docs/14/runtime-config-locks.html"
+  ],
+  "units_policy": "Use the units in this task's parameter definitions. Do not invent unit conversions for entries without an explicit unit.",
+  "background": "Tune 5 PostgreSQL settings for a JOB analytical join-query workload to minimize predicted query latency. A fixed, previously built surrogate predicts performance; optimization does not execute a live database workload.",
+  "input_instructions": [
+    "Submit all 5 settings as floating-point numbers u in [0,1]. Names identify real database settings, but physical values and enumeration labels from the table must not be submitted directly.",
+    "For integer settings, decode as round(min + u*(max-min)). For physical floating-point settings, decode as min + u*(max-min) without rounding.",
+    "For K enumeration options, divide [0,1] into K equal-width intervals. Select enum_values[min(floor(u*K),K-1)] using zero-based indexing; u=1 selects the last option. Option order does not imply a performance ranking.",
+    "Encoding example: backend_flush_after has physical range 0...256; input 0.25 decodes to 64. This illustrates encoding, not a recommended configuration."
+  ],
+  "evaluation_details": [
+    "The evaluator decodes inputs and returns surrogate-predicted latency; lower is better.",
+    "Use the ranges, defaults, and enumeration order in this task's parameter table. A default is a reference configuration value, not a known optimum."
+  ],
+  "domain_knowledge": [
+    "shared_buffers allocates database-page cache. More cache may reduce reads, but it competes with other database memory and the operating-system cache.",
+    "WAL buffers and checkpoint pacing concern logging and background I/O. Their benefit depends on workload and storage conditions; the surrogate response must test any proposed direction.",
+    "JOB contains analytical joins. Statistics, memory, caching, and plan selection can interact, so parameter changes need not produce smooth latency changes."
+  ]
+}

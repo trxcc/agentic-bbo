@@ -14,6 +14,9 @@ from pathlib import Path
 from types import MappingProxyType
 from typing import Any, Callable
 
+import numpy as np
+from scipy.stats import qmc
+
 from ...core import (
     EvaluationResult,
     FloatParam,
@@ -31,17 +34,19 @@ _TASK_FILE = Path(__file__).resolve()
 PACKAGE_ROOT = _TASK_FILE.parents[2]
 TASK_DESCRIPTION_ROOT = PACKAGE_ROOT / "task_descriptions"
 
-BBOPLACE_TASK_KEY = "bboplace_bench"
-# 宿主机默认 8070，避免与 MariaDB HTTP 评估器默认 8080 冲突；容器内服务仍为 8080，用 -p 8070:8080
+BBOPLACE_TASK_KEY = "bboplace_adaptec1_n32"
+# Default host port 8070 avoids the MariaDB evaluator on port 8080.
+# For a container listening on 8080, map it with -p 8070:8080.
 DEFAULT_BASE_URL = "http://127.0.0.1:8070"
 DEFAULT_EVALUATE_PATH = "/evaluate"
 DEFAULT_N_GRID = 224
 DEFAULT_N_MACRO = 32
 DEFAULT_BENCHMARK = "adaptec1"
-DEFAULT_PLACER = "mgo"
+DEFAULT_PLACER = "geometry_repair"
 DEFAULT_HTTP_TIMEOUT_S = 300.0
+BBOPLACE_COMPACT_INITIAL_DESIGN_SIZE = 50
 
-# 已知 benchmark 在 MGO 下可取的最大 macro 数（与 evaluator 的 min(available, requested) 一致，防止客户端维度过大）
+# Macro counts in the source placement instances.
 BENCHMARK_MAX_N_MACRO: Mapping[str, int] = MappingProxyType(
     {
         "adaptec1": 543,
@@ -108,6 +113,53 @@ def _build_macro_placement_space(*, n_macro: int, n_grid_x: int, n_grid_y: int) 
     return SearchSpace(params)
 
 
+def bboplace_compact_initial_configurations(
+    *, seed: int, n_macro: int, n_grid_x: int, n_grid_y: int
+) -> tuple[dict[str, float], ...]:
+    """Return the shared compact scrambled-Sobol initialization.
+
+    Every compared optimizer receives the same 50 configurations. Their
+    geometry-repaired outcomes and fallback layout are frozen in the bundle.
+    """
+
+    dimension = 2 * int(n_macro)
+    sampler = qmc.Sobol(d=dimension, scramble=True, seed=int(seed))
+    points = sampler.random_base2(m=math.ceil(math.log2(BBOPLACE_COMPACT_INITIAL_DESIGN_SIZE)))
+    lower = np.zeros(dimension, dtype=float)
+    upper = np.asarray(
+        ([float(n_grid_x)] * int(n_macro)) + ([float(n_grid_y)] * int(n_macro)),
+        dtype=float,
+    )
+    scaled = qmc.scale(points[:BBOPLACE_COMPACT_INITIAL_DESIGN_SIZE], lower, upper)
+    names = ([f"x_{i}" for i in range(int(n_macro))] + [f"y_{i}" for i in range(int(n_macro))])
+    return tuple(
+        {name: float(value) for name, value in zip(names, point, strict=True)}
+        for point in scaled
+    )
+
+
+def bboplace_compact_protocol_metadata(
+    *, seed: int, n_macro: int, n_grid_x: int, n_grid_y: int
+) -> dict[str, Any]:
+    configurations = bboplace_compact_initial_configurations(
+        seed=seed, n_macro=n_macro, n_grid_x=n_grid_x, n_grid_y=n_grid_y
+    )
+    return {
+        "name": "bboplace_geometry_repair_v1",
+        "upstream_protocol": "geometry_repair_worst_initial_v1",
+        "variant": "geometry_repair_worst_initial_fallback",
+        "initialization": {
+            "strategy": "fixed_configurations",
+            "sampling": "scrambled_sobol",
+            "seed": int(seed),
+            "count": len(configurations),
+            "configurations": [dict(config) for config in configurations],
+            "source": "scipy.stats.qmc.Sobol(scramble=True):first_50_points",
+            "scope": "shared_by_task_seed_across_all_algorithms",
+        },
+    }
+
+
 def _default_post_json(url: str, payload: dict[str, Any], timeout: float) -> dict[str, Any]:
     """POST JSON and parse response (stdlib only)."""
     data = json.dumps(payload).encode("utf-8")
@@ -156,11 +208,11 @@ def default_bboplace_definition(
     n_grid_x: int = DEFAULT_N_GRID,
     n_grid_y: int = DEFAULT_N_GRID,
     benchmark: str = DEFAULT_BENCHMARK,
-    bench_seed: int = 1,
+    bench_seed: int = 2,
     placer: str = DEFAULT_PLACER,
     base_url: str | None = None,
     evaluate_path: str = DEFAULT_EVALUATE_PATH,
-    default_max_evaluations: int = 40,
+    default_max_evaluations: int = 250,
     description_dir: Path | None = None,
 ) -> BBOPlaceDefinition:
     """Default BBOPlace task matching the published evaluator contract."""
@@ -196,11 +248,12 @@ class BBOPlaceTaskConfig:
 
     problem: str = BBOPLACE_TASK_KEY
     max_evaluations: int | None = None
-    seed: int = 0
+    seed: int = 2
     definition: BBOPlaceDefinition | None = None
     http_timeout_seconds: float = DEFAULT_HTTP_TIMEOUT_S
     post_json: PostJsonFn | None = None
     metadata: dict[str, str] = field(default_factory=dict)
+    repair_bundle_sha256: str | None = None
 
 
 class BBOPlaceTask(Task):
@@ -213,6 +266,8 @@ class BBOPlaceTask(Task):
     ) -> None:
         self.config = config
         self.definition = definition or config.definition or default_bboplace_definition()
+        if self.definition.placer != "geometry_repair" or not config.repair_bundle_sha256:
+            raise ValueError("A frozen geometry-repair bundle is required; use create_bboplace_task")
         self._post_json: PostJsonFn = config.post_json or _default_post_json
         search_space = self.definition.search_space
         cma_initial = search_space.defaults()
@@ -234,12 +289,26 @@ class BBOPlaceTask(Task):
                 "bench_seed": int(config.seed),
                 "bench_seed_default": int(self.definition.bench_seed),
                 "base_url": self.definition.base_url,
+                "benchmark_protocol": bboplace_compact_protocol_metadata(
+                    seed=int(config.seed),
+                    n_macro=int(self.definition.n_macro),
+                    n_grid_x=int(self.definition.n_grid_x),
+                    n_grid_y=int(self.definition.n_grid_y),
+                ),
                 "known_optimum": None,
                 "cma_initial_config": cma_initial,
                 "task_family": "bboplace",
                 **config.metadata,
             },
         )
+        if config.repair_bundle_sha256:
+            self._spec.metadata["placer"] = "geometry_repair"
+            self._spec.metadata["evaluation_protocol"] = "geometry_repair_worst_initial_v1"
+            self._spec.metadata["repair_bundle_sha256"] = config.repair_bundle_sha256
+            protocol = self._spec.metadata["benchmark_protocol"]
+            protocol["name"] = "bboplace_geometry_repair_v1"
+            protocol["variant"] = "geometry_repair_worst_initial_fallback"
+            protocol.pop("upstream_protocol", None)
 
     @property
     def spec(self) -> TaskSpec:
@@ -257,8 +326,10 @@ class BBOPlaceTask(Task):
             "n_macro": self.definition.n_macro,
             "placer": self.definition.placer,
             "x": [row],
-            # "eval_gp_hpwl": True,
         }
+        if self.config.repair_bundle_sha256:
+            payload.update(protocol="geometry_repair_worst_initial_v1", placer="geometry_repair",
+                           bundle_sha256=self.config.repair_bundle_sha256)
         try:
             response = self._post_json(url, payload, self.config.http_timeout_seconds)
         except (urllib.error.URLError, OSError, TimeoutError, json.JSONDecodeError) as exc:
@@ -273,6 +344,12 @@ class BBOPlaceTask(Task):
                 metadata={"problem_key": self.definition.key},
             )
         elapsed = time.perf_counter() - start
+        if self.config.repair_bundle_sha256 and (
+            response.get("protocol") != "geometry_repair_worst_initial_v1"
+            or response.get("bundle_sha256") != self.config.repair_bundle_sha256
+        ):
+            return EvaluationResult(status=TrialStatus.FAILED, error_type="ProtocolMismatch",
+                                    error_message="Service did not use the frozen geometry repair bundle")
         hpwl_raw = response.get("hpwl")
         if not isinstance(hpwl_raw, list) or not hpwl_raw:
             return EvaluationResult(
@@ -306,6 +383,19 @@ class BBOPlaceTask(Task):
                 error_message=f"Response `hpwl[0]` must be finite, got {hpwl!r}.",
                 metadata={"problem_key": self.definition.key},
             )
+        if hpwl < 0.0:
+            return EvaluationResult(
+                status=TrialStatus.FAILED,
+                objectives={},
+                metrics={"dimension": float(self.definition.dimension)},
+                elapsed_seconds=elapsed,
+                error_type="DegenerateObjective",
+                error_message=(
+                    "BBOPlace returned an impossible or sentinel HPWL "
+                    f"value: {hpwl!r}. Check the benchmark/macro subset."
+                ),
+                metadata={"problem_key": self.definition.key},
+            )
         metrics: dict[str, Any] = {
             "dimension": float(self.definition.dimension),
             "n_macro": float(self.definition.n_macro),
@@ -320,6 +410,8 @@ class BBOPlaceTask(Task):
             metadata={
                 "problem_key": self.definition.key,
                 "display_name": self.definition.display_name,
+                **({"repair": response["repair"][0], "repair_bundle_sha256": self.config.repair_bundle_sha256}
+                   if self.config.repair_bundle_sha256 else {}),
             },
         )
 
@@ -349,23 +441,42 @@ class BBOPlaceTask(Task):
 def create_bboplace_task(
     *,
     max_evaluations: int | None = None,
-    seed: int = 0,
+    seed: int = 2,
     definition: BBOPlaceDefinition | None = None,
     post_json: PostJsonFn | None = None,
     http_timeout_seconds: float = DEFAULT_HTTP_TIMEOUT_S,
     metadata: dict[str, str] | None = None,
+    bundle_root: Path | None = None,
     **_kwargs: Any,
 ) -> BBOPlaceTask:
-    """Factory for the default BBOPlace-Bench task."""
+    """Factory for the public geometry-repair BBOPlace task."""
+    resolved_definition = definition or default_bboplace_definition(placer=DEFAULT_PLACER)
+    bundle_root = bundle_root or Path(__file__).resolve().parent / "assets" / "repair_bundles"
+    bundle = bundle_root / f"{resolved_definition.benchmark}__s{seed}.json"
+    if not bundle.exists():
+        raise FileNotFoundError(f"No geometry-repair bundle for {resolved_definition.benchmark} seed {seed}: {bundle}")
+    from .repair_backend import RepairEvaluator
+    packet = json.loads(bundle.read_text())
+    evaluator = RepairEvaluator(packet)
+    if (len(evaluator.data.names) != resolved_definition.n_macro
+            or tuple(evaluator.data.grid) != (resolved_definition.n_grid_x, resolved_definition.n_grid_y)
+            or packet["seed"] != seed or packet["benchmark"] != resolved_definition.benchmark):
+        raise ValueError("Bundle does not match the requested placement task")
+    repair_bundle_sha256 = evaluator.sha256
     config = BBOPlaceTaskConfig(
         max_evaluations=max_evaluations,
         seed=seed,
-        definition=definition,
+        definition=resolved_definition,
         post_json=post_json,
         http_timeout_seconds=http_timeout_seconds,
         metadata=dict(metadata or {}),
+        repair_bundle_sha256=str(repair_bundle_sha256),
     )
-    return BBOPlaceTask(config=config, definition=definition)
+    task = BBOPlaceTask(config=config, definition=resolved_definition)
+    task.bundle = packet
+    task.spec.metadata["benchmark_protocol"]["initialization"]["configurations"] = [
+        o["config"] for o in packet["initializations"]]
+    return task
 
 
 BBOPLACE_DEFAULT_DEFINITION = default_bboplace_definition()
@@ -373,12 +484,15 @@ BBOPLACE_DEFAULT_DEFINITION = default_bboplace_definition()
 __all__ = [
     "BBOPLACE_DEFAULT_DEFINITION",
     "BBOPLACE_TASK_KEY",
+    "BBOPLACE_COMPACT_INITIAL_DESIGN_SIZE",
     "BENCHMARK_MAX_N_MACRO",
     "BBOPlaceDefinition",
     "BBOPlaceTask",
     "BBOPlaceTaskConfig",
     "DEFAULT_BASE_URL",
     "default_bboplace_definition",
+    "bboplace_compact_initial_configurations",
+    "bboplace_compact_protocol_metadata",
     "create_bboplace_task",
     "max_n_macro_for_benchmark",
     "n_macro_over_benchmark_cap_message",

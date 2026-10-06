@@ -1,0 +1,482 @@
+{
+  "task_id": "bboplace_adaptec1_n32",
+  "task_name": "adaptec1 32-macro placement",
+  "family": "BBOPlace",
+  "objective": "minimize HPWL",
+  "parameters": [
+    {
+      "name": "x_0",
+      "type": "float",
+      "low": 0,
+      "high": 224,
+      "meaning": "Horizontal guide coordinate for macro 0."
+    },
+    {
+      "name": "x_1",
+      "type": "float",
+      "low": 0,
+      "high": 224,
+      "meaning": "Horizontal guide coordinate for macro 1."
+    },
+    {
+      "name": "x_2",
+      "type": "float",
+      "low": 0,
+      "high": 224,
+      "meaning": "Horizontal guide coordinate for macro 2."
+    },
+    {
+      "name": "x_3",
+      "type": "float",
+      "low": 0,
+      "high": 224,
+      "meaning": "Horizontal guide coordinate for macro 3."
+    },
+    {
+      "name": "x_4",
+      "type": "float",
+      "low": 0,
+      "high": 224,
+      "meaning": "Horizontal guide coordinate for macro 4."
+    },
+    {
+      "name": "x_5",
+      "type": "float",
+      "low": 0,
+      "high": 224,
+      "meaning": "Horizontal guide coordinate for macro 5."
+    },
+    {
+      "name": "x_6",
+      "type": "float",
+      "low": 0,
+      "high": 224,
+      "meaning": "Horizontal guide coordinate for macro 6."
+    },
+    {
+      "name": "x_7",
+      "type": "float",
+      "low": 0,
+      "high": 224,
+      "meaning": "Horizontal guide coordinate for macro 7."
+    },
+    {
+      "name": "x_8",
+      "type": "float",
+      "low": 0,
+      "high": 224,
+      "meaning": "Horizontal guide coordinate for macro 8."
+    },
+    {
+      "name": "x_9",
+      "type": "float",
+      "low": 0,
+      "high": 224,
+      "meaning": "Horizontal guide coordinate for macro 9."
+    },
+    {
+      "name": "x_10",
+      "type": "float",
+      "low": 0,
+      "high": 224,
+      "meaning": "Horizontal guide coordinate for macro 10."
+    },
+    {
+      "name": "x_11",
+      "type": "float",
+      "low": 0,
+      "high": 224,
+      "meaning": "Horizontal guide coordinate for macro 11."
+    },
+    {
+      "name": "x_12",
+      "type": "float",
+      "low": 0,
+      "high": 224,
+      "meaning": "Horizontal guide coordinate for macro 12."
+    },
+    {
+      "name": "x_13",
+      "type": "float",
+      "low": 0,
+      "high": 224,
+      "meaning": "Horizontal guide coordinate for macro 13."
+    },
+    {
+      "name": "x_14",
+      "type": "float",
+      "low": 0,
+      "high": 224,
+      "meaning": "Horizontal guide coordinate for macro 14."
+    },
+    {
+      "name": "x_15",
+      "type": "float",
+      "low": 0,
+      "high": 224,
+      "meaning": "Horizontal guide coordinate for macro 15."
+    },
+    {
+      "name": "x_16",
+      "type": "float",
+      "low": 0,
+      "high": 224,
+      "meaning": "Horizontal guide coordinate for macro 16."
+    },
+    {
+      "name": "x_17",
+      "type": "float",
+      "low": 0,
+      "high": 224,
+      "meaning": "Horizontal guide coordinate for macro 17."
+    },
+    {
+      "name": "x_18",
+      "type": "float",
+      "low": 0,
+      "high": 224,
+      "meaning": "Horizontal guide coordinate for macro 18."
+    },
+    {
+      "name": "x_19",
+      "type": "float",
+      "low": 0,
+      "high": 224,
+      "meaning": "Horizontal guide coordinate for macro 19."
+    },
+    {
+      "name": "x_20",
+      "type": "float",
+      "low": 0,
+      "high": 224,
+      "meaning": "Horizontal guide coordinate for macro 20."
+    },
+    {
+      "name": "x_21",
+      "type": "float",
+      "low": 0,
+      "high": 224,
+      "meaning": "Horizontal guide coordinate for macro 21."
+    },
+    {
+      "name": "x_22",
+      "type": "float",
+      "low": 0,
+      "high": 224,
+      "meaning": "Horizontal guide coordinate for macro 22."
+    },
+    {
+      "name": "x_23",
+      "type": "float",
+      "low": 0,
+      "high": 224,
+      "meaning": "Horizontal guide coordinate for macro 23."
+    },
+    {
+      "name": "x_24",
+      "type": "float",
+      "low": 0,
+      "high": 224,
+      "meaning": "Horizontal guide coordinate for macro 24."
+    },
+    {
+      "name": "x_25",
+      "type": "float",
+      "low": 0,
+      "high": 224,
+      "meaning": "Horizontal guide coordinate for macro 25."
+    },
+    {
+      "name": "x_26",
+      "type": "float",
+      "low": 0,
+      "high": 224,
+      "meaning": "Horizontal guide coordinate for macro 26."
+    },
+    {
+      "name": "x_27",
+      "type": "float",
+      "low": 0,
+      "high": 224,
+      "meaning": "Horizontal guide coordinate for macro 27."
+    },
+    {
+      "name": "x_28",
+      "type": "float",
+      "low": 0,
+      "high": 224,
+      "meaning": "Horizontal guide coordinate for macro 28."
+    },
+    {
+      "name": "x_29",
+      "type": "float",
+      "low": 0,
+      "high": 224,
+      "meaning": "Horizontal guide coordinate for macro 29."
+    },
+    {
+      "name": "x_30",
+      "type": "float",
+      "low": 0,
+      "high": 224,
+      "meaning": "Horizontal guide coordinate for macro 30."
+    },
+    {
+      "name": "x_31",
+      "type": "float",
+      "low": 0,
+      "high": 224,
+      "meaning": "Horizontal guide coordinate for macro 31."
+    },
+    {
+      "name": "y_0",
+      "type": "float",
+      "low": 0,
+      "high": 224,
+      "meaning": "Vertical guide coordinate for macro 0."
+    },
+    {
+      "name": "y_1",
+      "type": "float",
+      "low": 0,
+      "high": 224,
+      "meaning": "Vertical guide coordinate for macro 1."
+    },
+    {
+      "name": "y_2",
+      "type": "float",
+      "low": 0,
+      "high": 224,
+      "meaning": "Vertical guide coordinate for macro 2."
+    },
+    {
+      "name": "y_3",
+      "type": "float",
+      "low": 0,
+      "high": 224,
+      "meaning": "Vertical guide coordinate for macro 3."
+    },
+    {
+      "name": "y_4",
+      "type": "float",
+      "low": 0,
+      "high": 224,
+      "meaning": "Vertical guide coordinate for macro 4."
+    },
+    {
+      "name": "y_5",
+      "type": "float",
+      "low": 0,
+      "high": 224,
+      "meaning": "Vertical guide coordinate for macro 5."
+    },
+    {
+      "name": "y_6",
+      "type": "float",
+      "low": 0,
+      "high": 224,
+      "meaning": "Vertical guide coordinate for macro 6."
+    },
+    {
+      "name": "y_7",
+      "type": "float",
+      "low": 0,
+      "high": 224,
+      "meaning": "Vertical guide coordinate for macro 7."
+    },
+    {
+      "name": "y_8",
+      "type": "float",
+      "low": 0,
+      "high": 224,
+      "meaning": "Vertical guide coordinate for macro 8."
+    },
+    {
+      "name": "y_9",
+      "type": "float",
+      "low": 0,
+      "high": 224,
+      "meaning": "Vertical guide coordinate for macro 9."
+    },
+    {
+      "name": "y_10",
+      "type": "float",
+      "low": 0,
+      "high": 224,
+      "meaning": "Vertical guide coordinate for macro 10."
+    },
+    {
+      "name": "y_11",
+      "type": "float",
+      "low": 0,
+      "high": 224,
+      "meaning": "Vertical guide coordinate for macro 11."
+    },
+    {
+      "name": "y_12",
+      "type": "float",
+      "low": 0,
+      "high": 224,
+      "meaning": "Vertical guide coordinate for macro 12."
+    },
+    {
+      "name": "y_13",
+      "type": "float",
+      "low": 0,
+      "high": 224,
+      "meaning": "Vertical guide coordinate for macro 13."
+    },
+    {
+      "name": "y_14",
+      "type": "float",
+      "low": 0,
+      "high": 224,
+      "meaning": "Vertical guide coordinate for macro 14."
+    },
+    {
+      "name": "y_15",
+      "type": "float",
+      "low": 0,
+      "high": 224,
+      "meaning": "Vertical guide coordinate for macro 15."
+    },
+    {
+      "name": "y_16",
+      "type": "float",
+      "low": 0,
+      "high": 224,
+      "meaning": "Vertical guide coordinate for macro 16."
+    },
+    {
+      "name": "y_17",
+      "type": "float",
+      "low": 0,
+      "high": 224,
+      "meaning": "Vertical guide coordinate for macro 17."
+    },
+    {
+      "name": "y_18",
+      "type": "float",
+      "low": 0,
+      "high": 224,
+      "meaning": "Vertical guide coordinate for macro 18."
+    },
+    {
+      "name": "y_19",
+      "type": "float",
+      "low": 0,
+      "high": 224,
+      "meaning": "Vertical guide coordinate for macro 19."
+    },
+    {
+      "name": "y_20",
+      "type": "float",
+      "low": 0,
+      "high": 224,
+      "meaning": "Vertical guide coordinate for macro 20."
+    },
+    {
+      "name": "y_21",
+      "type": "float",
+      "low": 0,
+      "high": 224,
+      "meaning": "Vertical guide coordinate for macro 21."
+    },
+    {
+      "name": "y_22",
+      "type": "float",
+      "low": 0,
+      "high": 224,
+      "meaning": "Vertical guide coordinate for macro 22."
+    },
+    {
+      "name": "y_23",
+      "type": "float",
+      "low": 0,
+      "high": 224,
+      "meaning": "Vertical guide coordinate for macro 23."
+    },
+    {
+      "name": "y_24",
+      "type": "float",
+      "low": 0,
+      "high": 224,
+      "meaning": "Vertical guide coordinate for macro 24."
+    },
+    {
+      "name": "y_25",
+      "type": "float",
+      "low": 0,
+      "high": 224,
+      "meaning": "Vertical guide coordinate for macro 25."
+    },
+    {
+      "name": "y_26",
+      "type": "float",
+      "low": 0,
+      "high": 224,
+      "meaning": "Vertical guide coordinate for macro 26."
+    },
+    {
+      "name": "y_27",
+      "type": "float",
+      "low": 0,
+      "high": 224,
+      "meaning": "Vertical guide coordinate for macro 27."
+    },
+    {
+      "name": "y_28",
+      "type": "float",
+      "low": 0,
+      "high": 224,
+      "meaning": "Vertical guide coordinate for macro 28."
+    },
+    {
+      "name": "y_29",
+      "type": "float",
+      "low": 0,
+      "high": 224,
+      "meaning": "Vertical guide coordinate for macro 29."
+    },
+    {
+      "name": "y_30",
+      "type": "float",
+      "low": 0,
+      "high": 224,
+      "meaning": "Vertical guide coordinate for macro 30."
+    },
+    {
+      "name": "y_31",
+      "type": "float",
+      "low": 0,
+      "high": 224,
+      "meaning": "Vertical guide coordinate for macro 31."
+    }
+  ],
+  "prior_facts": [],
+  "evaluation_budget": {
+    "initial": 50,
+    "optimization": 200
+  },
+  "n_macro": 32,
+  "grid": [
+    224,
+    224
+  ],
+  "decoder": "Deterministic area-first, netlist-blind geometry repair followed by weighted pin HPWL.",
+  "initialization": "50 frozen, geometry-re-evaluated shared observations for the selected task and seed.",
+  "canvas_size": [
+    10692,
+    10680
+  ],
+  "background": "Minimize HPWL for a fixed 32-macro placement task. The 64 coordinates x_0 through x_31 and y_0 through y_31 refer to the same ordered macro list. Coordinates lie in [0,224] on a 224 by 224 grid.",
+  "input_instructions": [
+    "Provide one complete legal configuration using the declared coordinates. Only the host returns objective observations."
+  ],
+  "evaluation_details": [
+    "Inputs are floored to the grid. A deterministic geometry-only repair places larger-area macros first, breaking equal-area ties by their original index. Legal positions are retained; conflicts move to the nearest legal position in physical Manhattan distance, with x/y lexicographic ties. The repair reads no netlist or wire cost. HPWL is calculated on the complete repaired layout. If repair cannot finish, the host returns the fixed worst-HPWL legal shared-initial layout and its HPWL. Every submission uses one evaluation, including fallback."
+  ],
+  "domain_knowledge": [
+    "Both axes belong to the same macros. Floor quantization can make sub-cell changes equivalent. Coordinate interactions arise from non-overlap constraints and connected pins; repairing an early macro can displace later ones. Smaller wire bounding boxes reduce HPWL, but clustering can require repair. Changes to a few macros and varied alternative layouts can test these effects using evaluated history."
+  ]
+}

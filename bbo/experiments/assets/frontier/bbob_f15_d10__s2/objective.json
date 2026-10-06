@@ -1,0 +1,10 @@
+{
+  "all_objectives": [
+    {
+      "direction": "minimize",
+      "name": "value"
+    }
+  ],
+  "direction": "minimize",
+  "name": "value"
+}

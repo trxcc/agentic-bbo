@@ -1,0 +1,216 @@
+{
+  "datasets": {
+    "breast": {
+      "arrays": {
+        "test_x": {
+          "dtype": "float64",
+          "sha256": "ab99bed743245a4f2839a3faa0c125d8077e8f04c6eabeca5ce16b30e8505a3d",
+          "shape": [
+            114,
+            30
+          ]
+        },
+        "test_y": {
+          "dtype": "int64",
+          "sha256": "50594e7358140d90a06e00828c7231bc01f371b6c5d11a67f3b189f9675a7adf",
+          "shape": [
+            114
+          ]
+        },
+        "train_x": {
+          "dtype": "float64",
+          "sha256": "bc4169fb47afcdae836fa974d942785e664febc90a0f7c13c80008b1f72e6a0b",
+          "shape": [
+            455,
+            30
+          ]
+        },
+        "train_y": {
+          "dtype": "int64",
+          "sha256": "a722b7a4c0b912b1ff63d2301e6ac02771b8314ae3b3d21bd9a564c92c412f35",
+          "shape": [
+            455
+          ]
+        }
+      },
+      "asset": "breast.npz",
+      "asset_sha256": "ded38121ffeede95f4544b7e2d45a8aacedc8da8ff1659b6f49bdb0716b0dace",
+      "source_pickle_sha256": "60390f5fcf50aee9e873ffb65f6536b360c03e3f493a2bf4727e8f7cfe445163",
+      "source_url": "https://raw.githubusercontent.com/tennisonliu/LLAMBO/196fe237f60a3d3a2fa53cbf8f474ec20a01dd57/bayesmark/data/breast.pickle"
+    },
+    "diabetes": {
+      "arrays": {
+        "test_x": {
+          "dtype": "float64",
+          "sha256": "d160215f8653042ee701b34d33c461877dcff6022a584706fbf91a8533ce9031",
+          "shape": [
+            89,
+            10
+          ]
+        },
+        "test_y": {
+          "dtype": "float64",
+          "sha256": "6b9a09ff1835d7b12391d053223307c2fd6175b7d0c608e9ad33cdc6d810e8e5",
+          "shape": [
+            89
+          ]
+        },
+        "train_x": {
+          "dtype": "float64",
+          "sha256": "9bc0998dd32eaf05b408c248bcc419a9f97d514df4fbdc66925fdeffc1754f20",
+          "shape": [
+            353,
+            10
+          ]
+        },
+        "train_y": {
+          "dtype": "float64",
+          "sha256": "2b23ab806fd723f09e439c854e21c15f2cb38f8108b03e0b10dd953732100e51",
+          "shape": [
+            353
+          ]
+        }
+      },
+      "asset": "diabetes.npz",
+      "asset_sha256": "c27ee3ef90a34cb33dcc13794029ecebfc4d44b7f9e1a6386d2a8b17d070fb60",
+      "source_pickle_sha256": "2f5fd7a46947024051d7953dfb0020b36f23aa93e08ee74f5fbe1b48e83aa094",
+      "source_url": "https://raw.githubusercontent.com/tennisonliu/LLAMBO/196fe237f60a3d3a2fa53cbf8f474ec20a01dd57/bayesmark/data/diabetes.pickle"
+    },
+    "digits": {
+      "arrays": {
+        "test_x": {
+          "dtype": "float64",
+          "sha256": "8409cc41a3aa8d9af608899c397a53d39c398c92c0e57cc543ada0706c6cdc0d",
+          "shape": [
+            360,
+            64
+          ]
+        },
+        "test_y": {
+          "dtype": "int64",
+          "sha256": "69072ac7ad2bb21d5fd263881f476a02d7a00339ceea56c44124966c55be2873",
+          "shape": [
+            360
+          ]
+        },
+        "train_x": {
+          "dtype": "float64",
+          "sha256": "713fc3b629a214845b7ea92e276f5a0aa62051514f142e68cab97a0213388a8f",
+          "shape": [
+            1437,
+            64
+          ]
+        },
+        "train_y": {
+          "dtype": "int64",
+          "sha256": "6c0aab26018daeee0aa327ca8f8e79b3d83572bcfcea578b452c34b3b1d24047",
+          "shape": [
+            1437
+          ]
+        }
+      },
+      "asset": "digits.npz",
+      "asset_sha256": "f6266b028cbcd0547fe40802a1916bee645a3ac93a0fa990911a82b33fc612f6",
+      "source_pickle_sha256": "fa483b9ea75539b351ec329d15e36b6980f6856d159c7b4538175b9ffe2bf455",
+      "source_url": "https://raw.githubusercontent.com/tennisonliu/LLAMBO/196fe237f60a3d3a2fa53cbf8f474ec20a01dd57/bayesmark/data/digits.pickle"
+    },
+    "iris": {
+      "arrays": {
+        "test_x": {
+          "dtype": "float64",
+          "sha256": "0987945266b30cca9d50f622d9d095f73c7ed7c51840011d7f2489d34f65746d",
+          "shape": [
+            30,
+            4
+          ]
+        },
+        "test_y": {
+          "dtype": "int64",
+          "sha256": "6b94c18c78f2b07358363a4669ca2aba834e9ef5acbab82a1ba3973ef0658900",
+          "shape": [
+            30
+          ]
+        },
+        "train_x": {
+          "dtype": "float64",
+          "sha256": "8e4e422d6c45c5f191e135e34738e806185d30844803d64da4528ec262bae094",
+          "shape": [
+            120,
+            4
+          ]
+        },
+        "train_y": {
+          "dtype": "int64",
+          "sha256": "609bfbf1ad7e27860e3ba0bfa9a3d6b73d3b620ebe76ccd2100efb6b92e60c9c",
+          "shape": [
+            120
+          ]
+        }
+      },
+      "asset": "iris.npz",
+      "asset_sha256": "1012e66b17c802211d2d86098bd5c538985d7d28af815c3b883bdea920eba999",
+      "source_pickle_sha256": "4e70c997d86da134e105be11342e798b7ff66fc70ad98531b37357d12ac28cb6",
+      "source_url": "https://raw.githubusercontent.com/tennisonliu/LLAMBO/196fe237f60a3d3a2fa53cbf8f474ec20a01dd57/bayesmark/data/iris.pickle"
+    },
+    "wine": {
+      "arrays": {
+        "test_x": {
+          "dtype": "float64",
+          "sha256": "5e87aafe012c61258293a11041830a8f206a31edcf506d326bc7c7fddd475e9a",
+          "shape": [
+            36,
+            13
+          ]
+        },
+        "test_y": {
+          "dtype": "int64",
+          "sha256": "465d6410db9877a5895cc0baa8ffd57f680faf46f1c534995d0366f1bd17ff73",
+          "shape": [
+            36
+          ]
+        },
+        "train_x": {
+          "dtype": "float64",
+          "sha256": "ea7594e0ebc231e33ea607138c6dad7008500c1a702057fa7c3f4d17e9bbb5d9",
+          "shape": [
+            142,
+            13
+          ]
+        },
+        "train_y": {
+          "dtype": "int64",
+          "sha256": "2ee24fc62fd79b1592dbc89be8cf823c23fed45853702f292804cd38a9ddad9a",
+          "shape": [
+            142
+          ]
+        }
+      },
+      "asset": "wine.npz",
+      "asset_sha256": "10beaf6363c8ff5fb9d387dd46772f96103ba4887d4fe776317d3f3bc905ab60",
+      "source_pickle_sha256": "65eb94652a23c71b6c6c4ef0b444cf7ea655f792dfd332d20096dbf5826ee20e",
+      "source_url": "https://raw.githubusercontent.com/tennisonliu/LLAMBO/196fe237f60a3d3a2fa53cbf8f474ec20a01dd57/bayesmark/data/wine.pickle"
+    }
+  },
+  "format": "npz_without_pickle",
+  "initializations": {
+    "asset": "llambo_initializations.json",
+    "asset_sha256": "e384825e3e40913ebeed01e5b614221f8fb56845c411af61cf2003bd1b6a09e4",
+    "count_per_model_seed": 5,
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "source_commit": "196fe237f60a3d3a2fa53cbf8f474ec20a01dd57",
+    "source_file_count": 50
+  },
+  "source_commit": "196fe237f60a3d3a2fa53cbf8f474ec20a01dd57",
+  "source_repository": "https://github.com/tennisonliu/LLAMBO"
+}

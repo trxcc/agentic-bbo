@@ -1,6 +1,6 @@
 """Standalone Graph GA algorithm for SMILES tasks.
 
-Adapted from /home/trx/lty/mol_opt/main/graph_ga/run.py.
+Adapted from PMO mol_opt/main/graph_ga/run.py.
 
 PMO's original loop evaluates whole offspring batches by calling the oracle
 inside the optimizer. This wrapper preserves the molecular operators and

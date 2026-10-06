@@ -116,6 +116,17 @@ class Task(ABC):
     def evaluate(self, suggestion: TrialSuggestion) -> EvaluationResult:
         """Evaluate one suggestion and return the observed result."""
 
+    def evaluate_final(self, suggestion: TrialSuggestion) -> EvaluationResult | None:
+        """Evaluate a frozen incumbent without returning feedback to the optimizer.
+
+        Tasks with a hidden holdout split can override this hook. The experimenter
+        calls it at most once, after optimization has stopped and the incumbent has
+        been selected. The result is stored only in the run summary.
+        """
+
+        del suggestion
+        return None
+
     def get_description(self) -> TaskDescriptionBundle:
         if self.spec.description_ref is None:
             return TaskDescriptionBundle.empty(task_id=self.spec.name)

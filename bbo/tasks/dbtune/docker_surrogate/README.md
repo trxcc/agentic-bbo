@@ -35,15 +35,17 @@ docker run -d --name agentbbo_surrogate_http -p 8090:8090 \
   agentbbo-surrogate-http-py37:v1
 ```
 
-## API（与主仓库 ``HttpSurrogateKnobTask`` 一致）
+## API (matches `HttpSurrogateKnobTask`)
 
-- `GET /health` → `{"status":"ok"}`
-- `GET /task/<canonical_task_id>` (e.g. `knob_surrogate_sysbench_5`) → `feature_names`, `objective_name`, `maximize`, `input_contract` hint, …
-- **`POST /evaluate`（主路径）** → `{"task_id": "<canonical_id>", "x": [u1,...,ud]}`，其中每个 `u_i` 为 **\[0,1\]** 上的归一化坐标（与 BBO 搜索空间一致）。容器内用 `assets/knobs_*.json` 解码为物理量，再 `predict`。
-- **响应** → `{"status":"success", "y": <float>, <objective_name>: <float>}`
+- `GET /health` returns `{"status":"ok"}`.
+- `GET /task/<canonical_task_id>` (e.g. `knob_surrogate_sysbench_5`) returns feature names, objective name, optimization direction, and the input contract.
+- `POST /evaluate` accepts `{"task_id": "<canonical_id>", "x": [u1,...,ud]}`. Each coordinate is normalized to `[0,1]`, matching the BBO search space. The container decodes it with `assets/knobs_*.json` and runs prediction.
+- A successful evaluation returns `{"status":"success", "y": <float>, <objective_name>: <float>}`.
 
-**兼容**：若请求体为 `{"task_id", "features": [...]}` 且**没有** `x`，则把 `features` 当作**已解码的物理**特征向量直送模型（旧行为 / 调试用）。主路径应使用 `x`。
-`canonical_task_id` 是仓库里注册的 surrogate 名（`knob_surrogate_sysbench_5` 等），**不是**宿主机 BBO 的 `knob_http_surrogate_*`（后者由客户端映射到 canonical `task_id`）。
+For legacy clients and debugging, a request containing `features` instead of `x`
+passes already decoded physical features directly to the model. Prefer `x` for
+benchmark runs. Canonical IDs use `knob_surrogate_*`; the host client maps its
+`knob_http_surrogate_*` IDs to these server IDs.
 
 ## Host-side (Python 3.11) tasks
 

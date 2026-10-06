@@ -1,0 +1,91 @@
+{
+  "task_id": "hpo_bayesmark_digits_svm",
+  "task_name": "Optical Digits / SVC",
+  "family": "HPO",
+  "objective": "minimize (1 - mean CV accuracy)",
+  "parameters": [
+    {
+      "name": "C",
+      "type": "float",
+      "low": 1.0,
+      "high": 1000.0,
+      "transform": "log",
+      "meaning": "Inverse regularization strength of the support vector model."
+    },
+    {
+      "name": "gamma",
+      "type": "float",
+      "low": 0.0001,
+      "high": 0.001,
+      "transform": "log",
+      "meaning": "RBF kernel coefficient controlling its distance scale."
+    },
+    {
+      "name": "tol",
+      "type": "float",
+      "low": 1e-05,
+      "high": 0.1,
+      "transform": "log",
+      "meaning": "Solver stopping tolerance."
+    }
+  ],
+  "prior_facts": [
+    "The estimator is SVC with an RBF kernel. Only C, gamma, and tol are tuned.",
+    "Regularization strength decreases as C increases. gamma controls the distance scale of the RBF kernel.",
+    "tol controls solver stopping tolerance; reducing it is not itself a guarantee of better cross-validation performance."
+  ],
+  "evaluation_budget": {
+    "initial": 5,
+    "optimization": 25
+  },
+  "dataset": {
+    "key": "digits",
+    "display_name": "Optical Digits",
+    "problem_type": "classification",
+    "total_samples": 1797,
+    "train_samples": 1437,
+    "test_samples": 360,
+    "feature_count": 64,
+    "class_counts_train": [
+      151,
+      147,
+      141,
+      154,
+      151,
+      142,
+      137,
+      140,
+      135,
+      139
+    ]
+  },
+  "estimator": "SVC",
+  "fixed_estimator_parameters": {
+    "break_ties": false,
+    "cache_size": 200,
+    "class_weight": null,
+    "coef0": 0.0,
+    "decision_function_shape": "ovr",
+    "degree": 3,
+    "kernel": "rbf",
+    "max_iter": -1,
+    "probability": true,
+    "random_state": 0,
+    "shrinking": true,
+    "verbose": false
+  },
+  "documentation": "https://scikit-learn.org/1.8/modules/generated/sklearn.svm.SVC.html",
+  "background": "Tune 3 hyperparameters of SVC on Optical Digits to reduce cross-validation classification error.",
+  "input_instructions": [
+    "Submit every parameter listed below, using its declared integer or floating-point type and inclusive bounds.",
+    "Submit original hyperparameter values. The transform column describes search coordinates, not a transformation to apply before submission: for example, submit 0.1 itself rather than log(0.1) or logit(0.1)."
+  ],
+  "evaluation_details": [
+    "The fixed split has 1437 training and 360 held-out samples, with 64 features per sample. Feedback uses five-fold StratifiedKFold cross-validation on the training split, with shuffle=False.",
+    "Cross-validation error is 1 - mean fold accuracy. Minimizing this error is equivalent to maximizing mean accuracy. The run objective below specifies which metric the interface returns; held-out results are not optimization feedback.",
+    "Held-out results are not optimization feedback. No extra input scaling or preprocessing is added to the released arrays. Fixed estimator settings are listed below."
+  ],
+  "domain_knowledge": [
+    "C and gamma jointly affect model flexibility. Their effects depend on the dataset feature scales, which are fixed in this task."
+  ]
+}

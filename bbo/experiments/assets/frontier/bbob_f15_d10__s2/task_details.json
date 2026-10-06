@@ -1,0 +1,4 @@
+{
+  "overview": "# Anonymous optimization task\n\nOptimize an unknown scalar objective over 10 bounded numerical parameters. Evaluations are deterministic for this fixed task.\n\nObjective: minimize `value`.\n\nBudget: 20 shared initial observations and 100 new evaluations (120 total).",
+  "submission": "Submit one complete finite configuration within the declared parameter types and bounds. Use the exact coordinates in the search space."
+}

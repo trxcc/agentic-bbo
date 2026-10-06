@@ -14,7 +14,7 @@ def _require_surrogate_deps() -> None:
         import joblib  # noqa: F401
     except ImportError as exc:  # pragma: no cover - optional extra
         raise ImportError(
-            "Surrogate tasks require optional dependencies. Install with: uv sync --extra surrogate"
+            "Surrogate tasks require optional dependencies. Install with: uv sync --extra hpo"
         ) from exc
 
 

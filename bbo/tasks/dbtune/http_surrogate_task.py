@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import os
+import math
 import time
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -21,7 +22,7 @@ from ...core import (
     TrialSuggestion,
 )
 from ..http_json import get_json, post_json
-from .catalog import SURROGATE_BENCHMARKS, default_knobs_json_path, resolve_bundled_joblib_path
+from .catalog import SURROGATE_BENCHMARKS, default_knobs_json_path
 from .http_surrogate_specs import (
     DBTUNE_SURROGATE_SERVICE_TASK_IDS,
     _DEFAULT_BASE_URL,
@@ -31,7 +32,7 @@ from .http_surrogate_specs import (
     canonical_id_from_http_task_id,
     is_dbtune_surrogate_service_task_id,
 )
-# 与 Docker server 的 JSON 协议一致
+# Match the Docker server JSON protocol.
 _EVALUATE_PATH = "/evaluate"
 _HEALTH_PATH = "/health"
 _TASK_META_PATH = "/task"  # GET {base}/task/<canonical_task_id>
@@ -73,10 +74,11 @@ class HttpSurrogateKnobTaskConfig:
 
 class HttpSurrogateKnobTask(Task):
     """
-    与真实库任务一样：宿主机只发请求，评估在 Docker 内完成。
+    The host sends requests; evaluation runs inside Docker.
 
-    搜索域是单位超立方体 ``[0,1]^d``；每次评估 ``POST /evaluate`` 发送 **归一化向量** ``x``，
-    容器内用 knobs JSON 解码并 ``predict``，返回 **标量** ``y``（throughput / latency 等）。
+    The search domain is the unit cube ``[0,1]^d``. Each ``POST /evaluate``
+    sends normalized coordinates ``x``. The container decodes them using the knobs
+    JSON, runs ``predict``, and returns a scalar ``y`` (throughput or latency).
     """
 
     def __init__(self, config: HttpSurrogateKnobTaskConfig) -> None:
@@ -89,13 +91,13 @@ class HttpSurrogateKnobTask(Task):
         self._canonical_id = canonical_id_from_http_task_id(config.http_task_id)
         self._bench = SURROGATE_BENCHMARKS[self._canonical_id]
 
-        self._surrogate_path = resolve_bundled_joblib_path(self._bench)
+        self._surrogate_path_ref = self._resolve_host_surrogate_path_ref()
         self._knobs_path = default_knobs_json_path(self._bench)
 
         self._base_url = _resolve_base_url(config.base_url)
         self._timeout_sec = _resolve_timeout_sec(config.request_timeout_sec)
 
-        # 从 Py3.7 服务拉取维度与名字；不在本机加载 .joblib，不在本机做 decode
+        # Fetch dimensions and names from the Python 3.7 service; load and decode remotely.
         meta = get_json(
             self._base_url,
             f"{_TASK_META_PATH.rstrip('/')}/{self._canonical_id}",
@@ -113,7 +115,7 @@ class HttpSurrogateKnobTask(Task):
         package_root = Path(__file__).resolve().parents[2]
         description_dir = config.description_dir
         if description_dir is None:
-            # 复用同语义 canonical 任务文档，避免维护两套长文
+            # Reuse the equivalent canonical task documentation.
             description_dir = package_root / "task_descriptions" / self._canonical_id
 
         max_eval = config.max_evaluations if config.max_evaluations is not None else 60
@@ -131,7 +133,7 @@ class HttpSurrogateKnobTask(Task):
                 "dimension": float(len(names)),
                 "canonical_task_id": self._canonical_id,
                 "http_base_url": self._base_url,
-                "surrogate_path_ref": str(self._surrogate_path.resolve()),
+                "surrogate_path_ref": self._surrogate_path_ref,
                 "knobs_json_path": str(self._knobs_path.resolve()),
                 "feature_order": list(names),
                 "problem_family": "dbtune_surrogate_service",
@@ -146,6 +148,13 @@ class HttpSurrogateKnobTask(Task):
     @property
     def spec(self) -> TaskSpec:
         return self._spec
+
+    def _resolve_host_surrogate_path_ref(self) -> str:
+        if self._bench.override_env_var:
+            value = os.environ.get(self._bench.override_env_var)
+            if value:
+                return str(Path(value).expanduser())
+        return str((Path(__file__).resolve().parent / "assets" / self._bench.default_joblib_filename).resolve())
 
     def _probe_health(self) -> None:
         try:
@@ -178,7 +187,11 @@ class HttpSurrogateKnobTask(Task):
             raise RuntimeError(f"Surrogate HTTP returned non-success: {msg!r}")
 
         obj_key = self.spec.primary_objective.name
-        y = float(raw.get("y", raw.get(obj_key, 0.0)))
+        if "y" not in raw and obj_key not in raw:
+            raise RuntimeError("Surrogate response does not contain an objective")
+        y = float(raw["y"] if "y" in raw else raw[obj_key])
+        if not math.isfinite(y):
+            raise RuntimeError("Surrogate returned a nonfinite objective")
         elapsed = time.perf_counter() - start
 
         metrics: dict[str, float] = {
@@ -210,7 +223,7 @@ def create_http_surrogate_knob_task(
     request_timeout_sec: float | None = None,
     skip_health_check: bool = False,
 ) -> HttpSurrogateKnobTask:
-    """Factory: ``http_task_id`` 形如 ``knob_http_surrogate_sysbench_5``。"""
+    """Create an HTTP task, e.g. ``knob_http_surrogate_sysbench_5``."""
     return HttpSurrogateKnobTask(
         HttpSurrogateKnobTaskConfig(
             http_task_id=http_task_id,

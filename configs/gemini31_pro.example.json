@@ -1,0 +1,11 @@
+{
+  "model": "gemini-3.1-pro-preview",
+  "reasoning_effort": "high",
+  "explicit_thinking_enabled": false,
+  "approved_response_model_ids": [
+    "gemini-3.1-pro-preview"
+  ],
+  "api_base": "https://generativelanguage.googleapis.com",
+  "api_key_env": "BBO_MODEL_API_KEY",
+  "transport": "gemini_native"
+}

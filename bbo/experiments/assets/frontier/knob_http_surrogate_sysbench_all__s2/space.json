@@ -1,0 +1,1572 @@
+{
+  "parameters": [
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "autocommit",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "automatic_sp_privileges",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "back_log",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "binlog_cache_size",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "binlog_direct_non_transactional_updates",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "binlog_error_action",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "binlog_format",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "binlog_group_commit_sync_delay",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "binlog_group_commit_sync_no_delay_count",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "binlog_order_commits",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "binlog_row_image",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "binlog_rows_query_log_events",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "binlog_stmt_cache_size",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "bulk_insert_buffer_size",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "check_proxy_users",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "concurrent_insert",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "connect_timeout",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "default_week_format",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "delay_key_write",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "div_precision_increment",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "end_markers_in_json",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "eq_range_index_dive_limit",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "expire_logs_days",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "explicit_defaults_for_timestamp",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "flush",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "flush_time",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "ft_min_word_len",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "ft_query_expansion_limit",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "general_log",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "group_concat_max_len",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "host_cache_size",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "innodb_adaptive_flushing",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "innodb_adaptive_flushing_lwm",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "innodb_adaptive_hash_index_parts",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "innodb_adaptive_max_sleep_delay",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "innodb_api_bk_commit_interval",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "innodb_api_disable_rowlock",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "innodb_api_enable_binlog",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "innodb_api_enable_mdl",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "innodb_autoextend_increment",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "innodb_buffer_pool_size",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "innodb_change_buffer_max_size",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "innodb_change_buffering",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "innodb_cmp_per_index_enabled",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "innodb_commit_concurrency",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "innodb_compression_failure_threshold_pct",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "innodb_compression_level",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "innodb_compression_pad_pct_max",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "innodb_concurrency_tickets",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "innodb_deadlock_detect",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "innodb_default_row_format",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "innodb_disable_sort_file_cache",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "innodb_doublewrite",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "innodb_file_per_table",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "innodb_fill_factor",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "innodb_flush_log_at_timeout",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "innodb_flush_log_at_trx_commit",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "innodb_flush_neighbors",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "innodb_flush_sync",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "innodb_flushing_avg_loops",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "innodb_ft_cache_size",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "innodb_ft_enable_diag_print",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "innodb_ft_enable_stopword",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "innodb_ft_max_token_size",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "innodb_ft_min_token_size",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "innodb_ft_num_word_optimize",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "innodb_ft_result_cache_limit",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "innodb_ft_sort_pll_degree",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "innodb_ft_total_cache_size",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "innodb_io_capacity",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "innodb_io_capacity_max",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "innodb_log_buffer_size",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "innodb_log_compressed_pages",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "innodb_log_file_size",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "innodb_log_files_in_group",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "innodb_log_write_ahead_size",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "innodb_lru_scan_depth",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "innodb_max_dirty_pages_pct",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "innodb_max_dirty_pages_pct_lwm",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "innodb_max_purge_lag",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "innodb_max_purge_lag_delay",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "innodb_max_undo_log_size",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "innodb_old_blocks_time",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "innodb_online_alter_log_max_size",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "innodb_open_files",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "innodb_optimize_fulltext_only",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "innodb_page_cleaners",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "innodb_print_all_deadlocks",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "innodb_purge_batch_size",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "innodb_purge_rseg_truncate_frequency",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "innodb_purge_threads",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "innodb_random_read_ahead",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "innodb_read_ahead_threshold",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "innodb_read_io_threads",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "innodb_replication_delay",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "innodb_rollback_on_timeout",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "innodb_rollback_segments",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "innodb_sort_buffer_size",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "innodb_spin_wait_delay",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "innodb_stats_auto_recalc",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "innodb_stats_include_delete_marked",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "innodb_stats_method",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "innodb_stats_on_metadata",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "innodb_stats_persistent",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "innodb_stats_transient_sample_pages",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "innodb_strict_mode",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "innodb_sync_array_size",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "innodb_sync_spin_loops",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "innodb_table_locks",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "innodb_thread_concurrency",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "innodb_thread_sleep_delay",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "innodb_undo_log_truncate",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "innodb_use_native_aio",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "innodb_write_io_threads",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "join_buffer_size",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "keep_files_on_create",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "key_buffer_size",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "key_cache_age_threshold",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "key_cache_block_size",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "key_cache_division_limit",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "local_infile",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "log_bin_trust_function_creators",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "log_bin_use_v1_row_events",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "log_builtin_as_identified_by_password",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "log_output",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "log_queries_not_using_indexes",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "log_slave_updates",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "log_slow_admin_statements",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "log_statements_unsafe_for_binlog",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "log_syslog_include_pid",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "log_timestamps",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "long_query_time",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "low_priority_updates",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "lower_case_table_names",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "master_verify_checksum",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "max_allowed_packet",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "max_binlog_cache_size",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "max_binlog_size",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "max_binlog_stmt_cache_size",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "max_connections",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "max_delayed_threads",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "max_digest_length",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "max_error_count",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "max_heap_table_size",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "max_join_size",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "max_length_for_sort_data",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "max_points_in_geometry",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "max_prepared_stmt_count",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "max_seeks_for_key",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "max_sort_length",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "max_user_connections",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "max_write_lock_count",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "multi_range_count",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "mysql_native_password_proxy_users",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "net_buffer_length",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "net_read_timeout",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "net_write_timeout",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "ngram_token_size",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "offline_mode",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "old_alter_table",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "old_passwords",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "open_files_limit",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "optimizer_prune_level",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "optimizer_search_depth",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "preload_buffer_size",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "query_alloc_block_size",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "query_cache_limit",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "query_cache_min_res_unit",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "query_cache_size",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "query_cache_wlock_invalidate",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "query_prealloc_size",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "range_alloc_block_size",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "read_buffer_size",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "read_rnd_buffer_size",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "require_secure_transport",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "session_track_gtids",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "session_track_schema",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "session_track_state_change",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "session_track_transaction_info",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "show_compatibility_56",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "skip_external_locking",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "skip_name_resolve",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "skip_networking",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "slow_query_log",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "sort_buffer_size",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "stored_program_cache",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "sync_binlog",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "sync_frm",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "table_definition_cache",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "table_open_cache",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "table_open_cache_instances",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "thread_cache_size",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "tmp_table_size",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "transaction_alloc_block_size",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "transaction_prealloc_size",
+      "type": "float"
+    },
+    {
+      "default": 0.5,
+      "high": 1.0,
+      "log": false,
+      "low": 0.0,
+      "name": "updatable_views_with_limit",
+      "type": "float"
+    }
+  ]
+}

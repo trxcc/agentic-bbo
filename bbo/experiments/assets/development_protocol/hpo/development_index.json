@@ -1,0 +1,46 @@
+[
+  {
+    "task_alias": "dev_001",
+    "display_name": "hpo_bayesmark_iris_svm",
+    "directory": "tasks/dev_001",
+    "initial": 5,
+    "new_evaluations": 25,
+    "optimization_seeds": [
+      0,
+      1
+    ]
+  },
+  {
+    "task_alias": "dev_002",
+    "display_name": "hpo_bayesmark_digits_svm",
+    "directory": "tasks/dev_002",
+    "initial": 5,
+    "new_evaluations": 25,
+    "optimization_seeds": [
+      0,
+      1
+    ]
+  },
+  {
+    "task_alias": "dev_003",
+    "display_name": "hpo_bayesmark_wine_random_forest",
+    "directory": "tasks/dev_003",
+    "initial": 5,
+    "new_evaluations": 25,
+    "optimization_seeds": [
+      0,
+      1
+    ]
+  },
+  {
+    "task_alias": "dev_004",
+    "display_name": "hpo_bayesmark_digits_random_forest",
+    "directory": "tasks/dev_004",
+    "initial": 5,
+    "new_evaluations": 25,
+    "optimization_seeds": [
+      0,
+      1
+    ]
+  }
+]

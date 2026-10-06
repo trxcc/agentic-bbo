@@ -2,10 +2,10 @@
 
 Adapted from local PMO sources:
 
-- /home/trx/lty/mol_opt/main/gpbo/graph_ga/graph_ga.py
-- /home/trx/lty/mol_opt/main/gpbo/graph_ga/crossover.py
-- /home/trx/lty/mol_opt/main/gpbo/graph_ga/mutate.py
-- /home/trx/lty/mol_opt/main/graph_ga/run.py
+- PMO mol_opt/main/gpbo/graph_ga/graph_ga.py
+- PMO mol_opt/main/gpbo/graph_ga/crossover.py
+- PMO mol_opt/main/gpbo/graph_ga/mutate.py
+- PMO mol_opt/main/graph_ga/run.py
 
 This module is an operator, not a task oracle. Callers provide a batch scoring
 function; GPBO passes an acquisition function, while standalone Graph GA uses
@@ -487,7 +487,7 @@ class GraphGACandidateOptimizer:
     """Graph GA maximizer reusable by molecular algorithms.
 
     The loop follows PMO
-    /home/trx/lty/mol_opt/main/gpbo/graph_ga/graph_ga.py::run_ga_maximization.
+    PMO mol_opt/main/gpbo/graph_ga/graph_ga.py::run_ga_maximization.
     """
 
     max_generations: int

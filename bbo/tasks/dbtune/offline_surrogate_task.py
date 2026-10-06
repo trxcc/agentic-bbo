@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import time
 from dataclasses import dataclass, field
+from hashlib import sha256
 from pathlib import Path
 from typing import Any
 
@@ -30,6 +31,16 @@ from .catalog import (
 )
 from .joblib_surrogate import JoblibSurrogate
 from .knob_space import KnobSpaceFromJson
+
+_PLACEHOLDER_FILENAMES = frozenset({"sysbench_5knob_surrogate.joblib"})
+
+
+def _sha256_file(path: Path) -> str:
+    h = sha256()
+    with path.open("rb") as fh:
+        for chunk in iter(lambda: fh.read(1024 * 1024), b""):
+            h.update(chunk)
+    return h.hexdigest()
 
 
 def _build_unit_hypercube_space(feature_names: tuple[str, ...]) -> SearchSpace:
@@ -79,7 +90,12 @@ class SurrogateKnobTask(Task):
             Path(config.surrogate_path)
             if config.surrogate_path is not None
             else resolve_bundled_joblib_path(bench)
-        )
+        ).expanduser()
+        if self._surrogate_path.name in _PLACEHOLDER_FILENAMES:
+            raise ValueError(
+                f"Placeholder surrogate checkpoint is not valid for formal task `{config.task_id}`: "
+                f"{self._surrogate_path}"
+            )
         self._knobs_path = (
             Path(config.knobs_json_path)
             if config.knobs_json_path is not None
@@ -87,6 +103,7 @@ class SurrogateKnobTask(Task):
         )
 
         self._surrogate = JoblibSurrogate.from_path(self._surrogate_path)
+        surrogate_sha256 = _sha256_file(self._surrogate_path)
         names = list(self._surrogate.feature_names)
         self._knob_space = KnobSpaceFromJson(self._knobs_path, names)
 
@@ -109,8 +126,14 @@ class SurrogateKnobTask(Task):
                 "display_name": display,
                 "dimension": float(len(names)),
                 "surrogate_path": str(self._surrogate_path.resolve()),
+                "surrogate_source": "paper_release",
+                "surrogate_sha256": surrogate_sha256,
+                "surrogate_filename": self._surrogate_path.name,
                 "knobs_json_path": str(self._knobs_path.resolve()),
+                "knob_metadata_filename": self._knobs_path.name,
                 "feature_order": names,
+                "feature_count": len(names),
+                "is_placeholder": False,
                 "problem_family": "surrogate_knob",
                 "workload": bench.task_id,
                 **config.metadata,

@@ -1,0 +1,64 @@
+{
+  "task_id": "hpo_bayesmark_diabetes_adaboost",
+  "task_name": "Diabetes Progression / AdaBoostRegressor",
+  "family": "HPO",
+  "objective": "minimize CV MSE",
+  "parameters": [
+    {
+      "name": "n_estimators",
+      "type": "integer",
+      "low": 10,
+      "high": 100,
+      "transform": "linear",
+      "meaning": "Maximum number of boosting rounds."
+    },
+    {
+      "name": "learning_rate",
+      "type": "float",
+      "low": 0.0001,
+      "high": 10.0,
+      "transform": "log",
+      "meaning": "Weight scaling for each boosting learner."
+    }
+  ],
+  "prior_facts": [
+    "n_estimators is an upper bound on boosting rounds; fitting can stop early after a perfect fit.",
+    "learning_rate scales learner contributions and interacts with the number of rounds.",
+    "With estimator=None, this regressor uses a default decision tree of maximum depth 3 as its weak learner.",
+    "random_state is fixed at 0. Other fixed settings are listed below."
+  ],
+  "evaluation_budget": {
+    "initial": 5,
+    "optimization": 25
+  },
+  "dataset": {
+    "key": "diabetes",
+    "display_name": "Diabetes Progression",
+    "problem_type": "regression",
+    "total_samples": 442,
+    "train_samples": 353,
+    "test_samples": 89,
+    "feature_count": 10,
+    "class_counts_train": []
+  },
+  "estimator": "AdaBoostRegressor",
+  "fixed_estimator_parameters": {
+    "estimator": null,
+    "loss": "linear",
+    "random_state": 0
+  },
+  "documentation": "https://scikit-learn.org/1.8/modules/generated/sklearn.ensemble.AdaBoostRegressor.html",
+  "background": "Tune 2 hyperparameters of AdaBoostRegressor on Diabetes Progression to reduce cross-validation prediction mean squared error.",
+  "input_instructions": [
+    "Submit every parameter listed below, using its declared integer or floating-point type and inclusive bounds.",
+    "Submit original hyperparameter values. The transform column describes search coordinates, not a transformation to apply before submission: for example, submit 0.1 itself rather than log(0.1) or logit(0.1)."
+  ],
+  "evaluation_details": [
+    "The fixed split has 353 training and 89 held-out samples, with 10 features per sample. Feedback uses five-fold KFold cross-validation on the training split, with shuffle=False.",
+    "The objective is mean cross-validation squared prediction error on the released standardized regression target; lower is better.",
+    "Held-out results are not optimization feedback. No extra input scaling or preprocessing is added to the released arrays. Fixed estimator settings are listed below."
+  ],
+  "domain_knowledge": [
+    "Learning rate and round count jointly determine how the ensemble fits the data. A larger value for either is not automatically an improvement."
+  ]
+}

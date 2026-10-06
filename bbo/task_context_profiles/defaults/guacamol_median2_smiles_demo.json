@@ -1,0 +1,48 @@
+{
+  "task_id": "guacamol_median2_smiles_demo",
+  "task_name": "GuacaMol Median Molecules 2 SMILES",
+  "family": "GuacaMol",
+  "objective": "minimize (1 - GuacaMol score)",
+  "parameters": [
+    {
+      "name": "smiles",
+      "type": "string",
+      "max_length": 512,
+      "representation": "direct SMILES"
+    }
+  ],
+  "prior_facts": [
+    "A molecular fingerprint summarizes structural features. Tanimoto similarity compares two fingerprints, from 0 for no overlap to 1 for identical fingerprint features; it does not compare SMILES text.",
+    "ECFP6 uses Morgan count fingerprints for atomic environments within three bonds (radius 3).",
+    "A low component limits the geometric mean; any zero component makes the combined score zero. Changing atoms, bonds, or rings can alter several components at once.",
+    "Different SMILES can represent the same molecule. A small text edit need not imply a small change in structure or score."
+  ],
+  "evaluation_budget": {
+    "initial": 50,
+    "optimization": 200
+  },
+  "public_reference_smiles": [
+    "O=C1N(CC(N2C1CC3=C(C2C4=CC5=C(OCO5)C=C4)NC6=C3C=CC=C6)=O)C",
+    "CCCC1=NN(C2=C1N=C(NC2=O)C3=C(C=CC(=C3)S(=O)(=O)N4CCN(CC4)C)OCC)C"
+  ],
+  "fingerprint_types": [
+    "ECFP6"
+  ],
+  "aggregation": "geometric mean",
+  "source": "https://github.com/BenevolentAI/guacamol/blob/master/guacamol/standard_benchmarks.py",
+  "background": "Find a molecule simultaneously similar in structure to tadalafil and sildenafil.",
+  "reference_names": [
+    "Tadalafil",
+    "Sildenafil"
+  ],
+  "input_instructions": [
+    "Submit one molecule per candidate as a SMILES string in the smiles field, with a maximum length of 512.",
+    "SMILES represents atoms and connections on one line: C and O denote carbon and oxygen, parentheses denote branches, paired digits mark ring closures, and = denotes a double bond.",
+    "Scoring compares the molecular structures represented by the strings. Different SMILES strings can represent the same molecule."
+  ],
+  "evaluation_details": [
+    "The evaluator combines 2 component scores in [0,1] as score = (s1 * ... * s2)**(1/2). It returns loss = 1-score; lower loss is better. Only the combined objective is returned, not individual components.",
+    "s1 and s2 are ECFP6 Tanimoto similarities to tadalafil and sildenafil, respectively.",
+    "Empty or unparseable SMILES receive score 0 and loss 1. Only the listed scoring components are evaluated; this score does not measure clinical efficacy, safety, or synthetic feasibility."
+  ]
+}
